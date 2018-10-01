@@ -1,22 +1,32 @@
 <template>
     <div>
-        <gauss :data="data" :labels="labels" ref="chart"></gauss>
-        Erwartungswert: {{ mean }}
-        <input type="range" min="0" max="100" :step="stepSize" style="width: 100%" v-model="mean"/>
-        Standartabweichung: {{ stdDev }}
-        <input type="range" min="1" max="100" step="1" style="width: 100%" v-model="stdDev"/>
+        <gauss :data="data" :labels="labels" ref="chart" :title="label"></gauss>
+        Erwartungswert: {{ params.mean }}
+        <input type="range" min="0" max="100" :step="stepSize" style="width: 100%" v-model="params.mean"/>
+        Standartabweichung: {{ params.stdDev }}
+        <input type="range" min="1" max="100" step="1" style="width: 100%" v-model="params.stdDev"/>
     </div>
 </template>
 
 <script>
     export default {
         name: "gauss-wrapper",
+        props: ['label', 'value'],
         data() {
             return {
                 chartData: [],
-                stdDev: 20,  // Standard deviation => Standardabweichung
-                mean: 100,  // => Erwartungswert
+                params: this.value,  // Standard deviation => Standardabweichung
                 stepSize: 5
+            }
+        },
+        created() {
+            if (!this.params.stdDev) {
+                this.params.stdDev = Math.round(Math.random() * 100);
+                this.$emit('input', this.params);
+            }
+            if (!this.params.mean) {
+                this.params.mean = Math.round(Math.random() * 100);
+                this.$emit('input', this.params);
             }
         },
         methods: {
@@ -24,8 +34,8 @@
              * @return {number}
              */
             NormalDensity(x) {
-                let a = x - this.mean;
-                let stdDev = this.stdDev;
+                let a = x - this.params.mean;
+                let stdDev = this.params.stdDev;
                 return Math.exp(-(a * a) / (2 * stdDev * stdDev)) / (Math.sqrt(2 * Math.PI) * stdDev);
             }
         },

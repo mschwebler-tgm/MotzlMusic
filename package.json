@@ -28,6 +28,7 @@
         "bootflat": "^2.0.4",
         "chart.js": "^2.7.2",
         "chartjs": "^0.3.24",
-        "vue-chartjs": "^3.4.0"
+        "vue-chartjs": "^3.4.0",
+        "vue-router": "^3.0.1"
     }
 }

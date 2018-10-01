@@ -14,6 +14,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/ideabox', function () {
-    return view('ideas');
-});
+
+Route::get('/{any}', function () {
+    return view('welcome');
+})->where('any', '^(?!api\/|storage\/).+');

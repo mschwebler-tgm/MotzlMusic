@@ -14,9 +14,6 @@ try {
     require('bootstrap');
 } catch (e) {}
 
-require('bootflat/bootflat/js/icheck.min');
-require('bootflat/bootflat/js/jquery.fs.selecter.min');
-require('bootflat/bootflat/js/jquery.fs.stepper.min');
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests

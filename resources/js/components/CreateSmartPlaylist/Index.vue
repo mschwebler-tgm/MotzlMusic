@@ -1,5 +1,7 @@
 <template>
-    <h1>Create smart playlist</h1>
+    <div>
+        <h1>Create smart playlist</h1>
+    </div>
 </template>
 
 <script>

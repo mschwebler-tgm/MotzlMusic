@@ -3,7 +3,7 @@ require('./bootstrap');
 import VueRouter from 'vue-router';
 import router from './router';
 import Buefy from 'buefy';
-import 'buefy/dist/buefy.min';
+// import 'buefy/src/scss/buefy.scss';
 
 window.Vue = require('vue');
 

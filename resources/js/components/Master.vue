@@ -60,7 +60,7 @@
                 </ul>
                 <button class="button is-danger is-large is-fullwidth is-outlined" id="upload-button">Upload</button>
             </aside>
-            <div class="content">
+            <div class="my-content">
                 <router-view></router-view>
             </div>
         </div>
@@ -68,10 +68,7 @@
 </template>
 
 <script>
-    import Index from "./Ideas/Gauss/Index";
-
     export default {
-        components: {Index},
         name: "master",
         mounted() {
             this.initMobileNav();
@@ -142,7 +139,7 @@
     .content-wrapper > aside {
         width: $menu-width;
     }
-    .content-wrapper > .content {
+    .content-wrapper > .my-content {
         flex: 1;
         padding: 20px;
     }

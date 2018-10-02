@@ -149,7 +149,7 @@
 
     .menu {
         padding: 15px;
-        border-right: 1px solid $turquoise;
+        border-right: 1px solid $grey-lighter;
     }
     #upload-button {
         width: $menu-width - 30px;

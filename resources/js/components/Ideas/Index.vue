@@ -11,7 +11,7 @@
                 <a href="#" class="list-group-item">Coming soon...</a>
             </div>
         </div>
-        <div class="content">
+        <div class="my-content">
             <router-view></router-view>
         </div>
     </div>
@@ -33,7 +33,7 @@
         width: 300px;
         border-right: 1px solid darkgray;
     }
-    .content {
+    .my-content {
         padding: 50px;
         flex: 1;
         overflow-y: scroll;

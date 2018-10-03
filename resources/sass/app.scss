@@ -6,10 +6,8 @@
 @import 'variables';
 
 // Bootstrap
-@import '~bootstrap/scss/bootstrap';
+@import '~buefy/src/scss/buefy-build.scss';
 
-// Bootflat
-@import '~bootflat/bootflat/scss/bootflat';
 
 .navbar-laravel {
   background-color: #fff;

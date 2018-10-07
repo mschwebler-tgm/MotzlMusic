@@ -1,13 +1,9 @@
-
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Nunito');
-
 // Variables
 @import 'variables';
-
 // Bootstrap
 @import '~buefy/src/scss/buefy-build.scss';
-
 
 html {
   height: 100vh;
@@ -33,4 +29,23 @@ html {
 
 .space-around {
   justify-content: space-around;
+}
+
+section.tab-scroll {
+  flex: 1;
+}
+
+.tab-scroll .b-tabs {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.tab-scroll .tab-content {
+  overflow-y: scroll;
+}
+
+.tab-content::-webkit-scrollbar, .tab-content::-webkit-scrollbar-track,
+.tab-content::-webkit-scrollbar-thumb, .tab-content::-webkit-scrollbar-thumb:hover {
+  display: none;
 }

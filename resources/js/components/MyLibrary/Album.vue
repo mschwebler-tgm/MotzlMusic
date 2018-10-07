@@ -8,8 +8,8 @@
         <div class="card-content">
             <div class="media">
                 <div class="media-content">
-                    <p class="title is-5">No use for a name</p>
-                    <p class="subtitle is-6">Playlist</p>
+                    <p class="title is-5">{{ data.artist }}</p>
+                    <p class="subtitle is-6">{{ data.title }}</p>
                 </div>
             </div>
         </div>
@@ -18,11 +18,12 @@
 
 <script>
     export default {
-        name: "playlist"
+        name: "album",
+        props: ['data']
     }
 </script>
 
-<style scoped lang="scss">
+<style scoped>
     .card {
         width: 200px;
         margin-right: 20px;

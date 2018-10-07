@@ -141,8 +141,14 @@
     }
     .content-wrapper > .my-content {
         overflow-y: scroll;
+        display: flex;
+        height: calc(100vh - 52px);
         flex: 1;
         padding: 20px;
+    }
+    .my-content::-webkit-scrollbar, .my-content::-webkit-scrollbar-track,
+    .my-content::-webkit-scrollbar-thumb, .my-content::-webkit-scrollbar-thumb:hover {
+        display: none;
     }
 
     .menu {

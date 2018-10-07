@@ -26,7 +26,7 @@
 
             <template slot-scope="props">
                 <b-table-column>
-                    <figure class="image" style="width: 24px; height: 24px">
+                    <figure class="image is-24x24">
                         <img src="https://t3.ftcdn.net/jpg/01/00/13/64/240_F_100136429_HP2NJnj6FDdn3XnrrsGxqxoMED7K8ENG.jpg" alt="Placeholder image">
                     </figure>
                 </b-table-column>

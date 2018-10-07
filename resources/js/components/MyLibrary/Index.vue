@@ -4,7 +4,7 @@
             <b-tabs v-model="activeTab">
                 <b-tab-item label="Playlists">
                     <h2 class="has-text-weight-light title is-9">Newest</h2>
-                    <div class="flex flex-wrap playlist-wrapper">
+                    <div class="flex flex-wrap">
                         <playlist></playlist>
                         <playlist></playlist>
                         <playlist></playlist>
@@ -14,14 +14,14 @@
                         <playlist></playlist>
                     </div>
                     <h2 class="has-text-weight-light title is-9">Automatic Playlists</h2>
-                    <div class="flex flex-wrap playlist-wrapper">
+                    <div class="flex flex-wrap">
                         <playlist></playlist>
                         <playlist></playlist>
                         <playlist></playlist>
                         <playlist></playlist>
                     </div>
                     <h2 class="has-text-weight-light title is-9">Subscribed Playlists</h2>
-                    <div class="flex flex-wrap playlist-wrapper">
+                    <div class="flex flex-wrap">
                         <playlist></playlist>
                         <playlist></playlist>
                     </div>
@@ -33,11 +33,30 @@
                     <tracks></tracks>
                 </b-tab-item>
                 <b-tab-item label="Artists">
-                    Lorem <br>
-                    ipsum <br>
-                    dolor <br>
-                    sit <br>
-                    amet.
+                    <div class="flex flex-wrap space-around">
+                        <artist></artist>
+                        <artist></artist>
+                        <artist></artist>
+                        <artist></artist>
+                        <artist></artist>
+                        <artist></artist>
+                        <artist></artist>
+                        <artist></artist>
+                        <artist></artist>
+                        <artist></artist>
+                        <artist></artist>
+                        <artist></artist>
+                        <artist></artist>
+                        <artist></artist>
+                        <artist></artist>
+                        <artist></artist>
+                        <artist></artist>
+                        <artist></artist>
+                        <artist></artist>
+                        <artist></artist>
+                        <artist></artist>
+                        <artist></artist>
+                    </div>
                 </b-tab-item>
                 <b-tab-item label="Albums">
                     Lorem <br>
@@ -55,9 +74,11 @@
     import BSwitch from "buefy/src/components/switch/Switch";
     import Playlist from "./Playlist";
     import Tracks from "./Tracks";
+    import Artist from "./Artist";
 
     export default {
         components: {
+            Artist,
             Tracks,
             Playlist,
             BSwitch},

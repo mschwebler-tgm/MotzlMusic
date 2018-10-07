@@ -140,6 +140,7 @@
         width: $menu-width;
     }
     .content-wrapper > .my-content {
+        overflow-y: scroll;
         flex: 1;
         padding: 20px;
     }

@@ -9,7 +9,24 @@
 @import '~buefy/src/scss/buefy-build.scss';
 
 
+html {
+  height: 100vh;
+  overflow: hidden;
+}
+
 .navbar-laravel {
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.space-between {
+  justify-content: space-between;
 }

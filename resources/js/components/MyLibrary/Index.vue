@@ -3,11 +3,31 @@
         <section>
             <b-tabs v-model="activeTab">
                 <b-tab-item label="Playlists">
-                    Lorem <br>
-                    ipsum <br>
-                    dolor <br>
-                    sit <br>
-                    amet.
+                    <h2 class="has-text-weight-light title is-9">Newest</h2>
+                    <div class="flex flex-wrap playlist-wrapper">
+                        <playlist></playlist>
+                        <playlist></playlist>
+                        <playlist></playlist>
+                        <playlist></playlist>
+                        <playlist></playlist>
+                        <playlist></playlist>
+                        <playlist></playlist>
+                    </div>
+                    <h2 class="has-text-weight-light title is-9">Automatic Playlists</h2>
+                    <div class="flex flex-wrap playlist-wrapper">
+                        <playlist></playlist>
+                        <playlist></playlist>
+                        <playlist></playlist>
+                        <playlist></playlist>
+                    </div>
+                    <h2 class="has-text-weight-light title is-9">Subscribed Playlists</h2>
+                    <div class="flex flex-wrap playlist-wrapper">
+                        <playlist></playlist>
+                        <playlist></playlist>
+                    </div>
+                    <div class="has-text-centered" style="padding: 65px;">
+                        No more playlists found. <a href="#">Create new!</a>
+                    </div>
                 </b-tab-item>
                 <b-tab-item label="Tracks">
                     Lorem <br>
@@ -37,9 +57,12 @@
 
 <script>
     import BSwitch from "buefy/src/components/switch/Switch";
+    import Playlist from "./Playlist";
 
     export default {
-        components: {BSwitch},
+        components: {
+            Playlist,
+            BSwitch},
         name: "index",
         data() {
             return {

@@ -30,11 +30,7 @@
                     </div>
                 </b-tab-item>
                 <b-tab-item label="Tracks">
-                    Lorem <br>
-                    ipsum <br>
-                    dolor <br>
-                    sit <br>
-                    amet.
+                    <tracks></tracks>
                 </b-tab-item>
                 <b-tab-item label="Artists">
                     Lorem <br>
@@ -58,9 +54,11 @@
 <script>
     import BSwitch from "buefy/src/components/switch/Switch";
     import Playlist from "./Playlist";
+    import Tracks from "./Tracks";
 
     export default {
         components: {
+            Tracks,
             Playlist,
             BSwitch},
         name: "index",

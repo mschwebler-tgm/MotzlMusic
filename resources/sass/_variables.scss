@@ -95,4 +95,5 @@ $menu-item-radius: 0;
 
 // Table
 
-$table-row-active-background-color: mix($observatory, white, 55);
+$table-row-active-background-color: transparentize($observatory, .8);
+$table-row-active-color: hsl(0, 0%, 40%);

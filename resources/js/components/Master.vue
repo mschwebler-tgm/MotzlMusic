@@ -63,12 +63,42 @@
             <div class="my-content">
                 <router-view></router-view>
             </div>
+            <div class="my-sub-content is-hidden-mobile-only is-hidden-tablet-only pad" style="padding-top: 60px;">
+                <div class="box flex space-around">
+                    <div class="image" style="width: 350px; height: 300px;">
+                        <img src="https://camo.githubusercontent.com/c0224976d49b4712dfeb10d4d9e804bab5379b4e/687474703a2f2f7777342e73696e61696d672e636e2f6d773639302f3639333237363337677731663178633363306b65616a323063623061397133682e6a7067">
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="flex space-between">
+                        <span>365 - Amaranthe</span>
+                        <span>0:59</span>
+                    </div>
+                    <div class="flex space-around pad">
+                        <b-icon size="is-large" icon="skip-previous"></b-icon>
+                        <b-icon size="is-large" icon="pause-circle-outline"></b-icon>
+                        <b-icon size="is-large" icon="skip-next"></b-icon>
+                    </div>
+                </div>
+                <div class="box">
+                    <tracks :data="[
+                    { title: 'Broken Lives', duration: '4:24', artist: 'Our Last Night', rating: Math.round(Math.random()*50)/10 },
+                    { title: 'Coming for You', duration: '2:33', artist: 'The Offspring', rating: Math.round(Math.random()*50)/10 },
+                    { title: 'Crazy Train', duration: '4:27', artist: 'Ozzy Osbourne', rating: Math.round(Math.random()*50)/10 },
+                    { title: 'Animal', duration: '2:45', artist: 'Smash into Pieces', rating: Math.round(Math.random()*50)/10 },
+                    { title: 'The Anthem', duration: '2:12', artist: 'Good Charlotte', rating: Math.round(Math.random()*50)/10 },
+                    ]"></tracks>
+                </div>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
+    import Tracks from "./MyLibrary/Tracks";
+
     export default {
+        components: {Tracks},
         name: "master",
         mounted() {
             this.initMobileNav();
@@ -143,7 +173,8 @@
         overflow-y: scroll;
         display: flex;
         height: calc(100vh - 52px);
-        flex: 1;
+        /*flex: 1;*/
+        width: 1172px;
         padding: 20px;
     }
     .my-content::-webkit-scrollbar, .my-content::-webkit-scrollbar-track,

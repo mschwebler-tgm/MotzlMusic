@@ -60,6 +60,8 @@ $widescreen-enabled: true !default
 $fullhd: 1344px + (2 * $gap) !default
 $fullhd-enabled: true !default
 
+$dimensions: 16 24 32 48 64 96 128 256 300 350;
+
 // Miscellaneous
 
 $easing: ease-out !default
@@ -85,13 +87,18 @@ $navbar-item-active-background-color: mix($observatory, black, 80);
 // Side menu
 
 $menu-width: 300px;
-$menu-item-active-background-color: $observatory;
+$menu-item-active-background-color: transparentize($observatory, .3);
 $menu-item-radius: 0;
 
 // Buttons
 
 //$button-background-color: $turquoise;
 //$button-color: $white;
+
+// Tabs
+
+$tabs-link-active-border-bottom-color: $observatory;
+$tabs-link-active-color: $observatory;
 
 // Table
 

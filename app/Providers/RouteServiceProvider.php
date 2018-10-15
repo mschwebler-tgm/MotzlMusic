@@ -15,6 +15,7 @@ class RouteServiceProvider extends ServiceProvider
      * @var string
      */
     protected $namespace = 'App\Http\Controllers';
+    protected $spotifyNamespace = 'App\Http\Controllers\Spotify';
 
     /**
      * Define your route model bindings, pattern filters, etc.
@@ -37,9 +38,9 @@ class RouteServiceProvider extends ServiceProvider
     {
         $this->mapApiRoutes();
 
-        $this->mapWebRoutes();
+        $this->mapSpotifyRoutes();
 
-        //
+        $this->mapWebRoutes();
     }
 
     /**
@@ -69,5 +70,12 @@ class RouteServiceProvider extends ServiceProvider
              ->middleware('api')
              ->namespace($this->namespace)
              ->group(base_path('routes/api.php'));
+    }
+
+    protected function mapSpotifyRoutes()
+    {
+        Route::prefix('spotify')
+             ->namespace($this->spotifyNamespace)
+             ->group(base_path('routes/spotify.php'));
     }
 }

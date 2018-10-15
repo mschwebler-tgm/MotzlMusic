@@ -3,6 +3,7 @@
 return [
 
     'auth_path' => 'https://accounts.spotify.com/authorize',
+    'auth_redirect' => env('APP_URL') . '/spotify/authorize/landing',
     'client_id' => env('SPOTIFY_CLIENT_ID'),
     'client_secret' => env('SPOTIFY_CLIENT_SECRET'),
     'scopes' => [
@@ -17,6 +18,7 @@ return [
         'playlist-read-collaborative',
         'user-read-recently-played',
         'user-top-read'
-    ]
+    ],
+    'token_url' => 'https://accounts.spotify.com/api/token',
 
 ];

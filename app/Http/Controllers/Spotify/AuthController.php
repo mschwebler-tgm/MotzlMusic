@@ -27,7 +27,8 @@ class AuthController extends Controller
         if (Input::has('code')) {
             $authResponse = $this->authService->requestAccessToken(Input::get('code'));
             $userData = $this->authService->requestUserData($authResponse->access_token);
-            return $userDao->createFromSpotifyAuthorization($authResponse, $userData);
+            $userToken = $userDao->createFromSpotifyAuthorization($authResponse, $userData);
+            return redirect('/')->withCookie(cookie('remember', $userToken, 525600));  // remember for 1 year
         } else {
             return abort(403);
         }

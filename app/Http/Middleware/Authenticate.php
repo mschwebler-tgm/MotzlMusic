@@ -2,7 +2,10 @@
 
 namespace App\Http\Middleware;
 
+use Closure;
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 
 class Authenticate extends Middleware
 {
@@ -15,5 +18,16 @@ class Authenticate extends Middleware
     protected function redirectTo($request)
     {
         return route('login');
+    }
+
+    protected function authenticate($request, array $guards)
+    {
+        $userToken = unserialize(Cookie::get('remember'));
+        list($password, $email) = explode(':', $userToken);
+        $credentials = compact(['password', 'email']);
+
+        if (!Auth::attempt($credentials)) {
+            parent::authenticate($request, $guards);
+        }
     }
 }

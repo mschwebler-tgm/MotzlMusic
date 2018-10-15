@@ -17,7 +17,7 @@
     </head>
     <body>
         <div id="root">
-            <router-view></router-view>
+            <router-view :user="{{ \Illuminate\Support\Facades\Auth::user()->toJson() }}"></router-view>
         </div>
     </body>
 </html>

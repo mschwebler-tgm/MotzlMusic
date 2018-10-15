@@ -13,6 +13,8 @@ class UserDao
         $user = User::firstOrCreate([
             'spotify_id' => $userData->id
         ]);
+        $password = str_random(20);
+        $localToken = encrypt($password . ':' . $userData->email);
         $user->fill([
             'name' => $userData->display_name,
             'email' => $userData->email,
@@ -20,9 +22,10 @@ class UserDao
             'spotify_access_token' => $authResponse->access_token,
             'spotify_refresh_token' => $authResponse->refresh_token,
             'birthdate' => $userData->birthdate,
-            'email_verified_at' => Carbon::now()
+            'email_verified_at' => Carbon::now(),
+            'password' => bcrypt($password)
         ]);
         $user->save();
-        return $user;
+        return $localToken;
     }
 }

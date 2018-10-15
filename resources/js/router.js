@@ -18,6 +18,7 @@ export default new VueRouter({
             path: '/',
             name: 'master',
             component: Master,
+            props: true,
             children: [
                 {
                     path: 'global-library',
@@ -39,7 +40,7 @@ export default new VueRouter({
                     name: 'new_uploads',
                     component: NewUploads,
                 }
-            ]
+            ],
         },
         {
             path: '/ideas',

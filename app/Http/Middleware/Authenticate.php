@@ -23,10 +23,14 @@ class Authenticate extends Middleware
     protected function authenticate($request, array $guards)
     {
         $userToken = unserialize(Cookie::get('remember'));
-        list($password, $email) = explode(':', $userToken);
-        $credentials = compact(['password', 'email']);
+        if ($userToken) {
+            list($password, $email) = explode(':', $userToken);
+            $credentials = compact(['password', 'email']);
 
-        if (!Auth::attempt($credentials)) {
+            if (!Auth::attempt($credentials)) {
+                parent::authenticate($request, $guards);
+            }
+        } else {
             parent::authenticate($request, $guards);
         }
     }

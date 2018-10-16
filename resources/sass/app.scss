@@ -70,3 +70,9 @@ section.tab-scroll {
 .tab-content::-webkit-scrollbar-thumb, .tab-content::-webkit-scrollbar-thumb:hover {
   display: none;
 }
+
+// Fixes
+
+.navbar-dropdown a {
+  color: $grey-dark;
+}

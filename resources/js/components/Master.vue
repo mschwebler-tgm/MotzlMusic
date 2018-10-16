@@ -23,16 +23,20 @@
                 </div>
 
                 <div class="navbar-end">
-                    <div class="navbar-item">
-                        {{ user.name }}
-                        <!--<div class="buttons">-->
-                            <!--<a class="button is-primary">-->
-                                <!--<strong>Sign up</strong>-->
-                            <!--</a>-->
-                            <!--<a class="button is-light">-->
-                                <!--Log in-->
-                            <!--</a>-->
-                        <!--</div>-->
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a class="navbar-link">
+                            {{ user.name }}
+                        </a>
+
+                        <div class="navbar-dropdown">
+                            <a class="navbar-item">
+                                Settings
+                            </a>
+                            <hr class="navbar-divider">
+                            <a class="navbar-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                Logout
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -1,0 +1,29 @@
+.manual-login {
+  width: 50%;
+  min-width: 420px;
+  padding-right: 30px;
+  border-right: 1px solid $grey-light;
+  margin-right: 30px;
+}
+
+.spotify-button {
+  font-size: 1.5rem;
+  background-color: $spotify-primary;
+  color: $spotify-secondary;
+  padding: 10px 30px;
+  -webkit-border-radius: 100px;
+  -moz-border-radius: 100px;
+  border-radius: 100px;
+  display: flex;
+  align-items: center;
+}
+
+.spotify-button:hover {
+  background-color: mix($spotify-primary, $spotify-secondary, 90);
+}
+
+.spotify-button svg {
+  width: 30px;
+  height: 30px;
+  margin-right: 8px;
+}

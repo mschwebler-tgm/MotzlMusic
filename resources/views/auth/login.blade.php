@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <div class="flex flex-wrap">
+        <div class="login-options-wrapper">
             <div class="manual-login">
                 <h1 class="is-size-1">{{ __('Login') }}</h1>
 

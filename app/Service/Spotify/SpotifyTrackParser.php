@@ -25,7 +25,7 @@ class SpotifyTrackParser
     {
         if (str_contains($propName, '.')) {
             $nestedPropName = $this->getFirstNestedProp($propName);
-            $result[$nestedPropName] = [];
+            $this->assureResultKey($result, $nestedPropName);
             $remainingNestedPropNames = $this->getDescendingProperties($propName);
             $nestedObject = $this->getPropFromTrack($nestedPropName, $track);
             if ($this->isAsteriskWildCard($remainingNestedPropNames)) {
@@ -42,7 +42,7 @@ class SpotifyTrackParser
     private function pushAllNestedProps(&$result, $track, $propToExtract)
     {
         foreach ($track as $key => $wildCardItem) {
-            $result[$key] = [];
+            $this->assureResultKey($result, $key);
             $this->pushPropFromTrack($result[$key], $wildCardItem, $propToExtract);
         }
     }
@@ -79,5 +79,12 @@ class SpotifyTrackParser
     private function getDescendingProperties($propName)
     {
         return substr($propName, strpos($propName, '.') + 1);
+    }
+
+    private function assureResultKey(&$result, $key)
+    {
+        if (!isset($result[$key])) {
+            $result[$key] = [];
+        }
     }
 }

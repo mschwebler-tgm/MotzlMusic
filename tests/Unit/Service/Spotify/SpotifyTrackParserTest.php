@@ -94,8 +94,10 @@ class SpotifyTrackParserTest extends TestCase
     {
         $first = new \stdClass();
         $first->name = 'first name';
+        $first->type = 'bruh';
         $second = new \stdClass();
         $second->name = 'second name';
+        $second->type = 'bruh2';
         $spotifyResult = new \stdClass();
         $spotifyResult->names = [
             'first' => $first,
@@ -103,15 +105,17 @@ class SpotifyTrackParserTest extends TestCase
         ];
         $trackParser = new SpotifyTrackParser($spotifyResult);
 
-        $trackParserReturnValue = $trackParser->get('names.*.name');
+        $trackParserReturnValue = $trackParser->get('names.*.name', 'names.*.type');
 
         $this->assertEquals([
             'names' => [
                 'first' => [
-                    'name' => 'first name'
+                    'name' => 'first name',
+                    'type' => 'bruh',
                 ],
                 'second' => [
-                    'name' => 'second name'
+                    'name' => 'second name',
+                    'type' => 'bruh2',
                 ]
             ],
         ], $trackParserReturnValue);

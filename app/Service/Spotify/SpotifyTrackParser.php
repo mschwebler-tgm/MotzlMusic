@@ -36,6 +36,9 @@ class SpotifyTrackParser
 
     private function getPropFromTrack($propName, $track)
     {
+        if (is_array($track) && preg_match('/\d+/', $propName)) {
+            return isset($track[(int)$propName]) ? $track[(int)$propName] : null;
+        }
         return isset($track->$propName) ? $track->$propName : null;
     }
 

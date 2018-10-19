@@ -74,4 +74,19 @@ class SpotifyTrackParserTest extends TestCase
             ]
         ], $trackParserReturnValue);
     }
+
+    public function testGetMethodWorksWithArrays()
+    {
+        $spotifyResult = new \stdClass();
+        $spotifyResult->names = ['first', 'second'];
+        $trackParser = new SpotifyTrackParser($spotifyResult);
+
+        $trackParserReturnValue = $trackParser->get('names.0');
+
+        $this->assertEquals([
+            'names' => [
+                'first'
+            ],
+        ], $trackParserReturnValue);
+    }
 }

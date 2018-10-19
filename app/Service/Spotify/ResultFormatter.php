@@ -3,56 +3,56 @@
 namespace App\Service\Spotify;
 
 
-class SpotifyTrackParser
+class ResultFormatter
 {
-    private $track;
+    private $objectToTransform;
 
-    public function __construct($track)
+    public function __construct($objectToTransform)
     {
-        $this->track = $track;
+        $this->objectToTransform = $objectToTransform;
     }
 
     public function get(...$props)
     {
         $result = [];
         foreach (func_get_args() as $prop) {
-            $this->pushPropFromTrack($result, $this->track, $prop);
+            $this->pushPropFromObject($result, $this->objectToTransform, $prop);
         }
         return $result;
     }
 
-    private function pushPropFromTrack(&$result, $track, $propName)
+    private function pushPropFromObject(&$result, $objectToTransform, $propName)
     {
         if (str_contains($propName, '.')) {
             $nestedPropName = $this->getFirstNestedProp($propName);
             $this->assureResultKey($result, $nestedPropName);
             $remainingNestedPropNames = $this->getDescendingProperties($propName);
-            $nestedObject = $this->getPropFromTrack($nestedPropName, $track);
+            $nestedObject = $this->getPropFromObject($nestedPropName, $objectToTransform);
             if ($this->isAsteriskWildCard($remainingNestedPropNames)) {
                 $propToExtract = $this->getDescendingProperties($remainingNestedPropNames);
                 $this->pushAllNestedProps($result[$nestedPropName], $nestedObject, $propToExtract);
             } else {
-                $this->pushPropFromTrack($result[$nestedPropName], $nestedObject, $remainingNestedPropNames);
+                $this->pushPropFromObject($result[$nestedPropName], $nestedObject, $remainingNestedPropNames);
             }
         } else {
-            $result[$propName] = $this->getPropFromTrack($propName, $track);
+            $result[$propName] = $this->getPropFromObject($propName, $objectToTransform);
         }
     }
 
-    private function pushAllNestedProps(&$result, $track, $propToExtract)
+    private function pushAllNestedProps(&$result, $objectToTransform, $propToExtract)
     {
-        foreach ($track as $key => $wildCardItem) {
+        foreach ($objectToTransform as $key => $wildCardItem) {
             $this->assureResultKey($result, $key);
-            $this->pushPropFromTrack($result[$key], $wildCardItem, $propToExtract);
+            $this->pushPropFromObject($result[$key], $wildCardItem, $propToExtract);
         }
     }
 
-    private function getPropFromTrack($propName, $track)
+    private function getPropFromObject($propName, $objectToTransform)
     {
-        if (is_array($track) && preg_match('/\d+/', $propName)) {
-            return isset($track[(int)$propName]) ? $track[(int)$propName] : null;
+        if (is_array($objectToTransform) && preg_match('/\d+/', $propName)) {
+            return isset($objectToTransform[(int)$propName]) ? $objectToTransform[(int)$propName] : null;
         }
-        return isset($track->$propName) ? $track->$propName : null;
+        return isset($objectToTransform->$propName) ? $objectToTransform->$propName : null;
     }
 
     /**

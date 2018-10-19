@@ -2,17 +2,17 @@
 
 namespace Tests\Unit\Service\Spotify;
 
-use App\Service\Spotify\SpotifyTrackParser;
+use App\Service\Spotify\ResultFormatter;
 use Tests\TestCase;
 
-class SpotifyTrackParserTest extends TestCase
+class ResultFormatterTest extends TestCase
 {
     public function testGetMethodReturnsMultipleValuesAsArray()
     {
         $spotifyResult = new \stdClass();
         $spotifyResult->name = 'test name';
         $spotifyResult->type = 'test';
-        $trackParser = new SpotifyTrackParser($spotifyResult);
+        $trackParser = new ResultFormatter($spotifyResult);
 
         $trackParserReturnValue = $trackParser->get('name', 'type');
 
@@ -26,7 +26,7 @@ class SpotifyTrackParserTest extends TestCase
     {
         $spotifyResult = new \stdClass();
         $spotifyResult->name = 'test name';
-        $trackParser = new SpotifyTrackParser($spotifyResult);
+        $trackParser = new ResultFormatter($spotifyResult);
 
         $trackParserReturnValue = $trackParser->get('name', 'type');
 
@@ -43,7 +43,7 @@ class SpotifyTrackParserTest extends TestCase
         $nestedObj = new \stdClass();
         $nestedObj->name = 'i am nested';
         $spotifyResult->nested = $nestedObj;
-        $trackParser = new SpotifyTrackParser($spotifyResult);
+        $trackParser = new ResultFormatter($spotifyResult);
 
         $trackParserReturnValue = $trackParser->get('name', 'nested.name');
 
@@ -59,7 +59,7 @@ class SpotifyTrackParserTest extends TestCase
     {
         $spotifyResult = new \stdClass();
         $spotifyResult->name = 'test name';
-        $trackParser = new SpotifyTrackParser($spotifyResult);
+        $trackParser = new ResultFormatter($spotifyResult);
 
         $trackParserReturnValue = $trackParser->get('name', 'non.existing.object.name');
 
@@ -79,7 +79,7 @@ class SpotifyTrackParserTest extends TestCase
     {
         $spotifyResult = new \stdClass();
         $spotifyResult->names = ['first', 'second'];
-        $trackParser = new SpotifyTrackParser($spotifyResult);
+        $trackParser = new ResultFormatter($spotifyResult);
 
         $trackParserReturnValue = $trackParser->get('names.0');
 
@@ -103,7 +103,7 @@ class SpotifyTrackParserTest extends TestCase
             'first' => $first,
             'second' => $second
         ];
-        $trackParser = new SpotifyTrackParser($spotifyResult);
+        $trackParser = new ResultFormatter($spotifyResult);
 
         $trackParserReturnValue = $trackParser->get('names.*.name', 'names.*.type');
 

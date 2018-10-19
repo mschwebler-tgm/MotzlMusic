@@ -23,6 +23,6 @@ class SpotifyTrackParser
 
     private function getPropFromTrack($prop)
     {
-        return $this->track->$prop;
+        return isset($this->track->$prop) ? $this->track->$prop : null;
     }
 }

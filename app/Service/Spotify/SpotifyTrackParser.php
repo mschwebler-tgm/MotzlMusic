@@ -25,12 +25,25 @@ class SpotifyTrackParser
     {
         if (str_contains($propName, '.')) {
             $nestedPropName = $this->getFirstNestedProp($propName);
-            $remainingNestedPropNames = substr($propName, strlen($nestedPropName) + 1, strlen($propName) - strlen($nestedPropName));
             $result[$nestedPropName] = [];
+            $remainingNestedPropNames = $this->getDescendingProperties($propName);
             $nestedObject = $this->getPropFromTrack($nestedPropName, $track);
-            $this->pushPropFromTrack($result[$nestedPropName], $nestedObject, $remainingNestedPropNames);
+            if ($this->isAsteriskWildCard($remainingNestedPropNames)) {
+                $propToExtract = $this->getDescendingProperties($remainingNestedPropNames);
+                $this->pushAllNestedProps($result[$nestedPropName], $nestedObject, $propToExtract);
+            } else {
+                $this->pushPropFromTrack($result[$nestedPropName], $nestedObject, $remainingNestedPropNames);
+            }
         } else {
             $result[$propName] = $this->getPropFromTrack($propName, $track);
+        }
+    }
+
+    private function pushAllNestedProps(&$result, $track, $propToExtract)
+    {
+        foreach ($track as $key => $wildCardItem) {
+            $result[$key] = [];
+            $this->pushPropFromTrack($result[$key], $wildCardItem, $propToExtract);
         }
     }
 
@@ -52,5 +65,19 @@ class SpotifyTrackParser
     private function getFirstNestedProp($prop)
     {
         return explode('.', $prop)[0];
+    }
+
+    private function isAsteriskWildCard($prop)
+    {
+        return $prop[0] === '*';
+    }
+
+    /**
+     * @param $propName
+     * @return bool|string
+     */
+    private function getDescendingProperties($propName)
+    {
+        return substr($propName, strpos($propName, '.') + 1);
     }
 }

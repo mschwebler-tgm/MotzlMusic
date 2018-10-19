@@ -89,4 +89,31 @@ class SpotifyTrackParserTest extends TestCase
             ],
         ], $trackParserReturnValue);
     }
+
+    public function testGetMethodWorksWithAsteriskWildcard()
+    {
+        $first = new \stdClass();
+        $first->name = 'first name';
+        $second = new \stdClass();
+        $second->name = 'second name';
+        $spotifyResult = new \stdClass();
+        $spotifyResult->names = [
+            'first' => $first,
+            'second' => $second
+        ];
+        $trackParser = new SpotifyTrackParser($spotifyResult);
+
+        $trackParserReturnValue = $trackParser->get('names.*.name');
+
+        $this->assertEquals([
+            'names' => [
+                'first' => [
+                    'name' => 'first name'
+                ],
+                'second' => [
+                    'name' => 'second name'
+                ]
+            ],
+        ], $trackParserReturnValue);
+    }
 }

@@ -12,12 +12,14 @@ class SpotifyTrackParserTest extends TestCase
     {
         $spotifyResult = new \stdClass();
         $spotifyResult->name = 'test name';
+        $spotifyResult->type = 'test';
         $trackParser = new SpotifyTrackParser($spotifyResult);
 
-        $trackParserReturnValue = $trackParser->get('name');
+        $trackParserReturnValue = $trackParser->get('name', 'type');
 
         $this->assertEquals([
-            'name' => 'test name'
+            'name' => 'test name',
+            'type' => 'test'
         ], $trackParserReturnValue);
     }
 }

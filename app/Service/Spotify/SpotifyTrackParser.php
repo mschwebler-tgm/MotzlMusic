@@ -23,10 +23,6 @@ class SpotifyTrackParser
 
     private function pushPropFromTrack(&$result, $track, $propName)
     {
-        if (!$track) {
-            return;
-        }
-
         if (str_contains($propName, '.')) {
             $nestedPropName = $this->getFirstNestedProp($propName);
             $remainingNestedPropNames = substr($propName, strlen($nestedPropName) + 1, strlen($propName) - strlen($nestedPropName));

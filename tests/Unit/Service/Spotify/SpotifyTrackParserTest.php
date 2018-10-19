@@ -45,12 +45,32 @@ class SpotifyTrackParserTest extends TestCase
         $spotifyResult->nested = $nestedObj;
         $trackParser = new SpotifyTrackParser($spotifyResult);
 
-        $trackParserReturnValue = $trackParser->get('name', 'nested2.name');
+        $trackParserReturnValue = $trackParser->get('name', 'nested.name');
 
         $this->assertEquals([
             'name' => 'test name',
             'nested' => [
                 'name' => 'i am nested'
+            ]
+        ], $trackParserReturnValue);
+    }
+
+    public function testGetMethodForcesGivenStructure()
+    {
+        $spotifyResult = new \stdClass();
+        $spotifyResult->name = 'test name';
+        $trackParser = new SpotifyTrackParser($spotifyResult);
+
+        $trackParserReturnValue = $trackParser->get('name', 'non.existing.object.name');
+
+        $this->assertEquals([
+            'name' => 'test name',
+            'non' => [
+                'existing' => [
+                    'object' => [
+                        'name' => null
+                    ]
+                ]
             ]
         ], $trackParserReturnValue);
     }

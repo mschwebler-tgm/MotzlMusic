@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Transformer\UserTransformer;
+use Illuminate\Support\Facades\Auth;
+
 class HomeController extends Controller
 {
     public function __construct()
@@ -9,8 +12,9 @@ class HomeController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(UserTransformer $transformer)
     {
-        return view('master');
+        $user = json_encode($transformer->transform(Auth::user()));
+        return view('master')->with(['user' => $user]);
     }
 }

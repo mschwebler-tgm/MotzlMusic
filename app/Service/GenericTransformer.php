@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Service\Spotify;
+namespace App\Service;
 
 
-class ResultFormatter
+class GenericTransformer
 {
     private $objectToTransform;
 

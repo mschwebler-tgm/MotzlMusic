@@ -12,10 +12,15 @@
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="//cdn.materialdesignicons.com/2.8.94/css/materialdesignicons.min.css">
+
     </head>
     <body>
         <div id="root">
-            <router-view></router-view>
+            <router-view :user="{{ \Illuminate\Support\Facades\Auth::user()->toJson() }}"></router-view>
         </div>
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            @csrf
+        </form>
     </body>
 </html>

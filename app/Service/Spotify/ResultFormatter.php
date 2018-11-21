@@ -16,12 +16,18 @@ class ResultFormatter
     {
         $result = [];
         foreach (func_get_args() as $prop) {
-            $this->pushPropFromObject($result, $this->objectToTransform, $prop);
+            if (is_array($prop)) {
+                foreach ($prop as $propName => $propKeyOverwrite) {
+                    $this->pushPropFromObject($result, $this->objectToTransform, $propName, $propKeyOverwrite);
+                }
+            } else {
+                $this->pushPropFromObject($result, $this->objectToTransform, $prop);
+            }
         }
         return $result;
     }
 
-    private function pushPropFromObject(&$result, $objectToTransform, $propName)
+    private function pushPropFromObject(&$result, $objectToTransform, $propName, $propKeyOverwrite = null)
     {
         if (str_contains($propName, '.')) {
             $nestedPropName = $this->getFirstNestedProp($propName);
@@ -32,10 +38,14 @@ class ResultFormatter
                 $propToExtract = $this->getDescendingProperties($remainingNestedPropNames);
                 $this->pushAllNestedProps($result[$nestedPropName], $nestedObject, $propToExtract);
             } else {
-                $this->pushPropFromObject($result[$nestedPropName], $nestedObject, $remainingNestedPropNames);
+                if ($propKeyOverwrite) {
+                    $this->pushPropFromObject($result, $nestedObject, $remainingNestedPropNames, $propKeyOverwrite);
+                } else {
+                    $this->pushPropFromObject($result[$nestedPropName], $nestedObject, $remainingNestedPropNames);
+                }
             }
         } else {
-            $result[$propName] = $this->getPropFromObject($propName, $objectToTransform);
+            $result[$propKeyOverwrite ?: $propName] = $this->getPropFromObject($propName, $objectToTransform);
         }
     }
 

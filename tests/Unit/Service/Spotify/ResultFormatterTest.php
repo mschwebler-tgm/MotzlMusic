@@ -22,6 +22,21 @@ class ResultFormatterTest extends TestCase
         ], $trackParserReturnValue);
     }
 
+    public function testAttributeNameOverwriting()
+    {
+        $spotifyResult = new \stdClass();
+        $spotifyResult->name = 'test name';
+        $spotifyResult->type = 'test';
+        $trackParser = new ResultFormatter($spotifyResult);
+
+        $trackParserReturnValue = $trackParser->get('type', ['name' => 'myName']);
+
+        $this->assertEquals([
+            'myName' => 'test name',
+            'type' => 'test'
+        ], $trackParserReturnValue);
+    }
+
     public function testGetMethodReturnsNullForNonExistingValues()
     {
         $spotifyResult = new \stdClass();

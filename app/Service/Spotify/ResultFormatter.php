@@ -31,7 +31,9 @@ class ResultFormatter
     {
         if (str_contains($propName, '.')) {
             $nestedPropName = $this->getFirstNestedProp($propName);
-            $this->assureResultKey($result, $nestedPropName);
+            if (!$propKeyOverwrite) {
+                $this->assureResultKey($result, $nestedPropName);
+            }
             $remainingNestedPropNames = $this->getDescendingProperties($propName);
             $nestedObject = $this->getPropFromObject($nestedPropName, $objectToTransform);
             if ($this->isAsteriskWildCard($remainingNestedPropNames)) {

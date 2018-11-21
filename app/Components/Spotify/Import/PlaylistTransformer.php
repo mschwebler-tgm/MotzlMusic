@@ -18,6 +18,6 @@ class PlaylistTransformer
     private function transformItem($item)
     {
         $resultFormatter = new ResultFormatter($item);
-        return $resultFormatter->get( 'name', 'id', 'owner', 'href', ['tracks.total' => 'tracks'], ['images.1.url' => 'image']);
+        return $resultFormatter->get('name', 'id', 'owner', 'href', ['tracks.total' => 'tracks'], ['images.1.url' => 'image']);
     }
 }

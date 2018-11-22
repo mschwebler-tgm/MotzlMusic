@@ -20,4 +20,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 # Spotify
 Route::prefix('spotify')->namespace('Spotify')->group(function () {
     Route::get('/playlists/my', 'ImportController@playlists');
+    Route::get('/tracks/my', 'ImportController@tracks');
 });

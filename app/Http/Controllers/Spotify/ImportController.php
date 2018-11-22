@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Spotify;
 
 use App\Components\Spotify\Import\PlaylistTransformer;
+use App\Components\Spotify\Import\TrackService;
 use App\Service\Spotify\SpotifyApiService;
 
 class ImportController
@@ -11,5 +12,10 @@ class ImportController
     {
         $playlists = $apiService->getAllMyPlaylists();
         return $playlistTransformer->transform($playlists);
+    }
+
+    public function tracks(TrackService $trackService)
+    {
+        return $trackService->paginate();
     }
 }

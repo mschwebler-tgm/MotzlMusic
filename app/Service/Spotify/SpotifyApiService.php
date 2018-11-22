@@ -2,8 +2,11 @@
 
 namespace App\Service\Spotify;
 
+use App\Exceptions\FailedSpotifyTokenRefreshException;
 use App\Exceptions\NoUserTokenProvidedException;
 use App\User;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 use SpotifyWebAPI\SpotifyWebAPI;
 use SpotifyWebAPI\Session;
 use SpotifyWebAPI\SpotifyWebAPIException;
@@ -12,18 +15,20 @@ class SpotifyApiService extends SpotifyWebAPI
 {
     /** @var User */
     private $user;
+    private $session;
 
     public function __construct($request = null)
     {
         parent::__construct($request);
-        $session = new Session(
+        $this->session = new Session(
             env('SPOTIFY_CLIENT_ID'),
             env('SPOTIFY_CLIENT_SECRET'),
             config('spotify.auth_redirect')
         );
-        $session->requestCredentialsToken();
-        $accessToken = $session->getAccessToken();
-        $this->setAccessToken($accessToken);
+        $this->session->requestCredentialsToken();
+        // only needed for application requests
+//        $accessToken = $this->session->getAccessToken();
+//        $this->setAccessToken($accessToken);
     }
 
     public function setUser(User $user)
@@ -63,5 +68,25 @@ class SpotifyApiService extends SpotifyWebAPI
             $offset += $itemsPerPage;
         } while (count($playlists) < $response->total);
         return $playlists;
+    }
+
+    /** @throws FailedSpotifyTokenRefreshException */
+    public function refreshUserTokenIfNeeded()
+    {
+        if (!$this->user || $this->user->spotify_token_expire > Carbon::now()->subHour()) {
+            return;
+        }
+
+        $success = $this->session->refreshAccessToken($this->user->spotify_refresh_token);
+        if (!$success) {
+            Log::error("Failed to regenerate access token for user {$this->user->name} (ID: {$this->user->id}) with refresh token");
+            throw new FailedSpotifyTokenRefreshException();
+        }
+        $newAccessToken = $this->session->getAccessToken();
+        $this->setAccessToken($newAccessToken);
+        $this->user->update([
+            'spotify_access_token' => $newAccessToken,
+            'spotify_token_expire' => Carbon::now()->addHour()->toDateTimeString()
+        ]);
     }
 }

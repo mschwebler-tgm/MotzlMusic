@@ -7,7 +7,7 @@ import MyLibrary from './components/MyLibrary/Index.vue';
 import CreateSmartPlaylist from './components/CreateSmartPlaylist/Index.vue';
 import NewUploads from './components/NewUploads/Index.vue';
 
-import Master from './components/Master.vue';
+import Master from './components/Layout/Master.vue';
 
 export default new VueRouter({
     mode: 'history',

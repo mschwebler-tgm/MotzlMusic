@@ -1,5 +1,8 @@
 <template>
     <div id="master">
+        <b-modal :active.sync="$root.showSpotifyImport" has-modal-card>
+            <spotify-importer></spotify-importer>
+        </b-modal>
         <nav-bar></nav-bar>
         <div class="content-wrapper">
             <aside class="menu">
@@ -61,9 +64,12 @@
 
 <script>
     import Tracks from "../MyLibrary/Tracks";
+    import NavBar from "./Navbar";
+    import SpotifyImporter from "../SpotifyImport/Importer";
+    import BModal from "buefy/src/components/modal/Modal";
 
     export default {
-        components: {Tracks},
+        components: {BModal, Tracks, NavBar, SpotifyImporter},
         name: "master",
         props: ['user'],
         mounted() {
@@ -96,36 +102,6 @@
         height: 100vh;
         display: flex;
         flex-direction: column;
-    }
-    .navbar-search {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex: 1;
-        padding-left: 10%;
-        padding-right: 10%;
-    }
-    .navbar-search > input {
-        width: 100%;
-        max-width: 550px;
-        background-color: mix($observatory, black, 70);
-        font-size: 20px;
-        color: white;
-        border: none;
-        border-radius: 40px;
-        padding: 8px 8px 8px 25px;
-        outline: none;
-        -webkit-transition: background-color .3s;
-        -moz-transition: background-color .3s;
-        -ms-transition: background-color .3s;
-        -o-transition: background-color .3s;
-        transition: background-color .3s;
-    }
-    .navbar-search > input:focus {
-        background-color: mix($observatory, black, 50);
-    }
-    .navbar-search > input::placeholder {
-        color: rgba(255, 255, 255, 0.68);
     }
 
     .content-wrapper {

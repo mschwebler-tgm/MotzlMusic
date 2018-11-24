@@ -22,6 +22,40 @@ class GenericTransformerTest extends TestCase
         ], $trackParserReturnValue);
     }
 
+    public function testAttributeNameOverwriting()
+    {
+        $spotifyResult = new \stdClass();
+        $spotifyResult->name = 'test name';
+        $spotifyResult->type = 'test';
+        $trackParser = new ResultFormatter($spotifyResult);
+
+        $trackParserReturnValue = $trackParser->get('type', ['name' => 'myName']);
+
+        $this->assertEquals([
+            'myName' => 'test name',
+            'type' => 'test'
+        ], $trackParserReturnValue);
+    }
+
+    public function testNestedAttributeNameOverwriting()
+    {
+        $spotifyResult = new \stdClass();
+        $spotifyResult->name = 'test name';
+        $doubleNestedObject = new \stdClass();
+        $doubleNestedObject->name = 'i am nested';
+        $nestedObj = new \stdClass();
+        $nestedObj->test = $doubleNestedObject;
+        $spotifyResult->nested = $nestedObj;
+        $trackParser = new ResultFormatter($spotifyResult);
+
+        $trackParserReturnValue = $trackParser->get(['nested.test.name' => 'myName'], 'name');
+
+        $this->assertEquals([
+            'myName' => 'i am nested',
+            'name' => 'test name'
+        ], $trackParserReturnValue);
+    }
+
     public function testGetMethodReturnsNullForNonExistingValues()
     {
         $spotifyResult = new \stdClass();

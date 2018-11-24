@@ -10,6 +10,11 @@ use Illuminate\Support\ServiceProvider;
 
 class SpotifyApiProvider extends ServiceProvider
 {
+    /**
+     * @param Encrypter $encrypter
+     * @param SpotifyApiService $spotifyApiService
+     * @throws \App\Exceptions\FailedSpotifyTokenRefreshException
+     */
     public function boot(Encrypter $encrypter, SpotifyApiService $spotifyApiService)
     {
         $userToken = Cookie::get('remember');
@@ -18,6 +23,7 @@ class SpotifyApiProvider extends ServiceProvider
             list($password, $email) = explode(':', $encryptedToken);
             $user = User::where('email', $email)->first();
             $spotifyApiService->setApiUser($user);
+            $spotifyApiService->refreshUserTokenIfNeeded();
         }
     }
 

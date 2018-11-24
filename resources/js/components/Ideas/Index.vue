@@ -36,5 +36,6 @@
     .my-content {
         padding: 50px;
         flex: 1;
+        overflow-y: scroll;
     }
 </style>

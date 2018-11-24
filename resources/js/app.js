@@ -16,4 +16,9 @@ Vue.use(Buefy);
 const app = new Vue({
     el: '#root',
     router,
+    data() {
+        return {
+            showSpotifyImport: false
+        }
+    }
   });

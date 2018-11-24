@@ -16,3 +16,9 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+# Spotify
+Route::prefix('spotify')->namespace('Spotify')->group(function () {
+    Route::get('/playlists/my', 'ImportController@playlists');
+    Route::get('/tracks/my', 'ImportController@tracks');
+});

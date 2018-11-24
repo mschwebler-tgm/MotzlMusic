@@ -3,7 +3,7 @@
 
     export default {
         name: "gauss",
-        props: ['data', 'labels'],
+        props: ['data', 'labels', 'title'],
         extends: Line,
         mounted () {
             this.drawChart();
@@ -19,7 +19,7 @@
                     labels: this.labels,
                     datasets: [
                         {
-                            label: 'Energy',
+                            label: this.title,
                             backgroundColor: 'rgba(121, 121, 121, .1)',
                             borderColor: '#17a089',
                             data: this.data,

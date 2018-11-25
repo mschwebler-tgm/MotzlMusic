@@ -161,6 +161,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         App\Providers\SpotifyApiProvider::class,
+        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
     ],
 
     /*

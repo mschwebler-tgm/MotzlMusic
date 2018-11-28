@@ -7,13 +7,19 @@
         <section class="modal-card-body">
             You can import your favourite tracks, albums and playlists from spotify.<br><br>
             <div class="field">
-                <b-checkbox>Import saved tracks</b-checkbox>
+                <b-checkbox v-model="toImport" native-value="tracks">
+                    Import saved tracks&nbsp;&nbsp;&nbsp;<span class="is-size-7" :class="_colorClass('tracks')">{{ tracks.total }} Tracks</span>
+                </b-checkbox>
             </div>
             <div class="field">
-                <b-checkbox>Import albums</b-checkbox>
+                <b-checkbox v-model="toImport" native-value="albums">
+                    Import albums
+                </b-checkbox>
             </div>
             <div class="field">
-                <b-checkbox>Import playlists</b-checkbox>
+                <b-checkbox v-model="toImport" native-value="playlists">
+                    Import playlists&nbsp;&nbsp;&nbsp;<span class="is-size-7" :class="_colorClass('playlists')">{{ playlists.length }} Playlists</span>
+                </b-checkbox>
             </div>
         </section>
         <footer class="modal-card-foot">
@@ -25,7 +31,36 @@
 
 <script>
     export default {
-        name: "Importer"
+        name: "Importer",
+        data() {
+            return {
+                tracks: {},
+                playlists: [],
+                toImport: []
+            }
+        },
+        created() {
+            this.loadTracks();
+            this.loadPlaylists();
+        },
+        methods: {
+            loadTracks() {
+                axios.get('/api/spotify/tracks/my').then(res => {
+                    this.tracks = res.data;
+                });
+            },
+            loadPlaylists() {
+                axios.get('/api/spotify/playlists/my').then(res => {
+                    this.playlists = res.data;
+                });
+            },
+            _colorClass(toImport) {
+                if (this.toImport.indexOf(toImport) !== -1) {
+                    return 'has-text-spotify';
+                }
+                return 'has-text-grey';
+            }
+        }
     }
 </script>
 

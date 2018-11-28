@@ -31,10 +31,16 @@ class SpotifyApiService extends SpotifyWebAPI
 //        $this->setAccessToken($accessToken);
     }
 
-    public function setUser(User $user)
+    public function setApiUser(User $user)
     {
-        $this->setAccessToken($user->spotify_access_token);
         $this->user = $user;
+        $this->setAccessToken($user->spotify_access_token);
+        return $this;
+    }
+
+    public function getApiUser()
+    {
+        return $this->user;
     }
 
     /**
@@ -47,7 +53,15 @@ class SpotifyApiService extends SpotifyWebAPI
             return parent::me();
         } catch (SpotifyWebAPIException $e) {
             // MotzlMusic application token was used to submit the request.
-            // use setUser() before, to get access to user specific data
+            // use setApiUser() before, to get access to user specific data
+            throw new NoUserTokenProvidedException();
+        }
+    }
+
+    /** @throws NoUserTokenProvidedException */
+    public function forceSpotifyUser()
+    {
+        if (!$this->user) {
             throw new NoUserTokenProvidedException();
         }
     }

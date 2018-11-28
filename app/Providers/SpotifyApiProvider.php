@@ -22,7 +22,7 @@ class SpotifyApiProvider extends ServiceProvider
             $encryptedToken = $encrypter->decrypt($userToken);
             list($password, $email) = explode(':', $encryptedToken);
             $user = User::where('email', $email)->first();
-            $spotifyApiService->setUser($user);
+            $spotifyApiService->setApiUser($user);
             $spotifyApiService->refreshUserTokenIfNeeded();
         }
     }

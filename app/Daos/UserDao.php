@@ -10,6 +10,8 @@ class UserDao
     {
         /** @var User $user */
         $user = User::firstOrCreate([
+            'name' => $oauth2User->name,
+            'email' => $oauth2User->email,
             'spotify_id' => $oauth2User->id
         ]);
         $user->fill([

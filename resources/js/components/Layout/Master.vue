@@ -89,6 +89,9 @@
                     });
                 }
             }
+        },
+        created() {
+            axios.get('/api/user').then(res => console.log(res));
         }
     }
 </script>

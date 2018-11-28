@@ -4,33 +4,22 @@ namespace App\Http\Controllers\Spotify;
 
 use App\Daos\UserDao;
 use App\Http\Controllers\Controller;
-use App\Service\Spotify\SpotifyAuthService;
-use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Auth;
+use Laravel\Socialite\Facades\Socialite;
 
 class AuthController extends Controller
 {
-    private $authService;
-
-    public function __construct(SpotifyAuthService $authService)
-    {
-
-        $this->authService = $authService;
-    }
-
     public function requestAuthCode()
     {
-        return redirect($this->authService->generateAuthUrl());
+        return Socialite::driver('spotify')->scopes(config('spotify.scopes'))->redirect();
     }
 
     public function authorizeUser(UserDao $userDao)
     {
-        if (Input::has('code')) {
-            $authResponse = $this->authService->requestAccessToken(Input::get('code'));
-            $userData = $this->authService->requestUserData($authResponse->access_token);
-            $userToken = $userDao->createFromSpotifyAuthorization($authResponse, $userData);
-            return redirect('/')->withCookie(cookie('remember', $userToken, 525600));  // remember for 1 year
-        } else {
-            return abort(403);
-        }
+        /** @var \SocialiteProviders\Manager\OAuth2\User $oauth2User */
+        $oauth2User = Socialite::driver('spotify')->user();
+        $user = $userDao->createFromSpotifyAuthorization($oauth2User);
+        Auth::login($user, true);
+        return redirect('/');
     }
 }

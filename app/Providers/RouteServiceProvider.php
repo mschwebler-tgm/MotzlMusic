@@ -75,7 +75,7 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapSpotifyRoutes()
     {
         Route::prefix('spotify')
-             ->middleware('api')
+            ->middleware('web')
              ->namespace($this->spotifyNamespace)
              ->group(base_path('routes/spotify.php'));
     }

@@ -21,23 +21,38 @@ html {
   display: flex;
 }
 
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .flex-wrap {
   flex-wrap: wrap;
 }
 
 .space-between {
+  display: flex;
   justify-content: space-between;
 }
 
 .space-around {
+  display: flex;
   justify-content: space-around;
 }
 
 .justify-center {
+  display: flex;
   justify-content: center;
 }
 
 .align-center {
+  display: flex;
   align-items: center;
 }
 
@@ -45,8 +60,16 @@ html {
   flex: 1;
 }
 
+.w-100 {
+  width: 100%;
+}
+
 .h-100 {
   height: 100%;
+}
+
+.h-80 {
+  height: 80%;
 }
 
 .pad {

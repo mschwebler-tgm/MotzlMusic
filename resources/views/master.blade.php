@@ -17,7 +17,7 @@
     </head>
     <body>
         <div id="root">
-            <router-view :user="{{ $user }}"></router-view>
+            <router-view :user="{{ $user ?: 'null' }}"></router-view>
         </div>
         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
             @csrf

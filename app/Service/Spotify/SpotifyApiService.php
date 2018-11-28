@@ -31,8 +31,12 @@ class SpotifyApiService extends SpotifyWebAPI
 //        $this->setAccessToken($accessToken);
     }
 
-    public function setApiUser(User $user)
+    public function setApiUser(User $user = null)
     {
+        if (!$user) {
+            return $this;
+        }
+
         $this->user = $user;
         $this->setAccessToken($user->spotify_access_token);
         return $this;

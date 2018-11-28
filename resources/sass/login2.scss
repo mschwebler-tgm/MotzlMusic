@@ -1,0 +1,45 @@
+@import "variables";
+
+.full {
+  width: 100vw;
+  min-height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#landing-image {
+  background-image: url('/images/landingBack.svg');
+  -webkit-background-size: cover;
+  background-size: cover;
+}
+
+#github-link {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  width: 48px;
+  height: 48px;
+  color: white;
+  cursor: pointer;
+}
+
+#github-link circle, #github-link path {
+  -webkit-transition: r .1s ease-out, fill .3s ease-out;
+  -moz-transition: r .1s ease-out, fill .3s ease-out;
+  -ms-transition: r .1s ease-out, fill .3s ease-out;
+  -o-transition: r .1s ease-out, fill .3s ease-out;
+  transition: r .1s ease-out, fill .3s ease-out;
+}
+
+#github-link:hover #growing-circle {
+  r: 13;
+}
+
+#github-link:hover circle {
+  stroke: white;
+}
+
+#github-link:hover path {
+  fill: white;
+}

@@ -52,31 +52,31 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapWebRoutes()
     {
         Route::middleware('web')
-             ->namespace($this->namespace)
-             ->group(base_path('routes/web.php'));
+            ->namespace($this->namespace)
+            ->group(base_path('routes/web.php'));
     }
 
     protected function mapPublicApiRoutes()
     {
         Route::prefix('api')
-             ->middleware('api')
-             ->namespace($this->namespace)
-             ->group(base_path('routes/publicApi.php'));
+            ->middleware('api')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/publicApi.php'));
     }
 
     protected function mapPrivateApiRoutes()
     {
         Route::prefix('api')
-             ->middleware('auth:api')
-             ->namespace($this->namespace)
-             ->group(base_path('routes/privateApi.php'));
+            ->middleware('auth:api')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/privateApi.php'));
     }
 
     protected function mapSpotifyRoutes()
     {
         Route::prefix('spotify')
             ->middleware('web')
-             ->namespace($this->spotifyNamespace)
-             ->group(base_path('routes/spotify.php'));
+            ->namespace($this->spotifyNamespace)
+            ->group(base_path('routes/spotify.php'));
     }
 }

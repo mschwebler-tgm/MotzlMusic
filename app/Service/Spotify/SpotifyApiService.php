@@ -91,7 +91,7 @@ class SpotifyApiService extends SpotifyWebAPI
     /** @throws FailedSpotifyTokenRefreshException */
     public function refreshUserTokenIfNeeded()
     {
-        if (!$this->user || $this->user->spotify_token_expire > Carbon::now()->subHour()) {
+        if (!$this->user || $this->user->spotify_token_expire > Carbon::now()) {
             return;
         }
 

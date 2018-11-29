@@ -7,19 +7,50 @@
         <section class="modal-card-body">
             You can import your favourite tracks, albums and playlists from spotify.<br><br>
             <div class="field">
-                <b-checkbox v-model="toImport" native-value="tracks">
-                    Import saved tracks&nbsp;&nbsp;&nbsp;<span class="is-size-7" :class="_colorClass('tracks')" v-if="tracks.total">{{ tracks.total }} tracks</span>
+                <b-checkbox v-model="importAllTracks">
+                    Import saved tracks&nbsp;&nbsp;&nbsp;
+                    <span class="is-size-7" v-if="tracks.total">
+                        {{ tracks.total }} tracks
+                    </span>
                 </b-checkbox>
             </div>
             <div class="field">
-                <b-checkbox v-model="toImport" native-value="albums">
-                    Import albums&nbsp;&nbsp;&nbsp;<span class="is-size-7" :class="_colorClass('albums')" v-if="albumsTracksTotal">{{ albumsTracksTotal }} tracks in {{ albums.total }} albums</span>
+                <b-checkbox @input="selectAllAlbums" ref="albumCheckbox">
+                    Import albums&nbsp;&nbsp;&nbsp;
+                    <span class="is-size-7" v-if="albumsTracksTotal">
+                        {{ albumsTracksTotal }} tracks in {{ albums.total }} albums
+                    </span>
                 </b-checkbox>
+                &nbsp;&nbsp;&nbsp;<span class="has-text-grey is-size-7 customize" v-if="albumsToImport.length > 0" @click="customizeAlbums = !customizeAlbums">customize</span>
+            </div>
+            <div class="item-picker" v-show="customizeAlbums">
+                <div v-for="album in albums.items" :key="album.id" :class="{selected: isItemSelected(albumsToImport, album)}">
+                    <div class="item" :style="{backgroundImage: 'url(' + album.image + ')'}" @click="handleItemClick(albumsToImport, album, $refs.albumCheckbox)">
+                        <div class="is-overlay select-check">
+                            <b-icon icon="check" size="is-large" type="is-white" v-if="isItemSelected(albumsToImport, album)"></b-icon>
+                        </div>
+                    </div>
+                    <div class="has-text-centered has-text-wrapped item-name" @click="handleItemClick(albumsToImport, album, $refs.albumCheckbox)">{{ album.name }}</div>
+                </div>
             </div>
             <div class="field">
-                <b-checkbox v-model="toImport" native-value="playlists">
-                    Import playlists&nbsp;&nbsp;&nbsp;<span class="is-size-7" :class="_colorClass('playlists')" v-if="playlistTracksTotal">{{ playlistTracksTotal }} tracks in {{ playlists.total }} playlists</span>
+                <b-checkbox @input="selectAllPlaylists" ref="playlistCheckbox">
+                    Import playlists&nbsp;&nbsp;&nbsp;
+                    <span class="is-size-7" v-if="playlistTracksTotal">
+                        {{ playlistTracksTotal }} tracks in {{ playlists.total }} playlists
+                    </span>
                 </b-checkbox>
+                &nbsp;&nbsp;&nbsp;<span class="has-text-grey is-size-7 customize" v-if="playlistsToImport.length > 0" @click="customizePlaylists = !customizePlaylists">customize</span>
+            </div>
+            <div class="item-picker" v-show="customizePlaylists">
+                <div v-for="playlist in playlists.items" :key="playlist.id" :class="{selected: isItemSelected(playlistsToImport, playlist)}">
+                    <div class="item" :style="{backgroundImage: 'url(' + playlist.image + ')'}" @click="handleItemClick(playlistsToImport, playlist, $refs.playlistCheckbox)">
+                        <div class="is-overlay select-check">
+                            <b-icon icon="check" size="is-large" type="is-white" v-if="isItemSelected(playlistsToImport, playlist)"></b-icon>
+                        </div>
+                    </div>
+                    <div class="has-text-centered has-text-wrapped item-name" @click="handleItemClick(playlistsToImport, playlist, $refs.playlistCheckbox)">{{ playlist.name }}</div>
+                </div>
             </div>
         </section>
         <footer class="modal-card-foot">
@@ -31,14 +62,20 @@
 </template>
 
 <script>
+    import BIcon from "buefy/src/components/icon/Icon";
     export default {
         name: "Importer",
+        components: {BIcon},
         data() {
             return {
                 tracks: {},
                 playlists: {},
                 albums: {},
-                toImport: [],
+                importAllTracks: false,
+                albumsToImport: [],
+                playlistsToImport: [],
+                customizeAlbums: false,
+                customizePlaylists: false,
                 totalTracksToImport: 0,
             }
         },
@@ -66,11 +103,30 @@
                     this.albums = res.data;
                 });
             },
-            _colorClass(toImport) {
-                if (this.toImport.indexOf(toImport) !== -1) {
-                    return 'has-text-spotify';
+            selectAllAlbums(isSelected) {
+                if (isSelected) {
+                    this.albumsToImport = _.clone(this.albums.items);
+                } else {
+                    this.albumsToImport = [];
                 }
-                return 'has-text-grey';
+            },
+            selectAllPlaylists(isSelected) {
+                if (isSelected) {
+                    this.playlistsToImport = _.clone(this.playlists.items);
+                } else {
+                    this.playlistsToImport = [];
+                }
+            },
+            handleItemClick(toImport, item, checkbox) {
+                if (this.isItemSelected(toImport, item)) {
+                    toImport.splice(toImport.map(a => a.id).indexOf(item.id), 1);
+                } else {
+                    toImport.push(item);
+                }
+                checkbox.newValue = toImport.length !== 0;
+            },
+            isItemSelected(items, paramItem) {
+                return !!items.filter(item => item.id === paramItem.id).length;
             },
         },
         watch: {
@@ -83,7 +139,10 @@
                     total += this.playlistTracksTotal;
                 }
                 if (this.willImportAlbums) {
+                    this.albumsToImport = _.clone(this.albums.items);
                     total += this.albumsTracksTotal;
+                } else {
+                    this.albumsToImport = [];
                 }
                 TweenLite.to(this.$data, 0.5, { totalTracksToImport: Math.round(total) });
             }
@@ -122,6 +181,46 @@
 
     .total-tracks {
         margin-left: auto;
+    }
+
+    .customize:hover {
+        text-decoration: underline;
+        cursor: pointer;
+    }
+
+    .item-picker {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 3px 15px 15px;
+    }
+
+    .item-picker > div {
+        width: 150px;
+        margin-right: 30px;
+        cursor: pointer;
+    }
+
+    .item {
+        position: relative;
+        width: 150px;
+        height: 150px;
+        background-position: center center;
+        background-size: cover;
+    }
+
+    .select-check {
+        display: none;
+        background-color: transparentize($spotify-primary, .5);
+    }
+
+    .item-picker > div:hover .select-check, .item-picker > div.selected .select-check {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .item-picker > div:hover .item-name, .item-picker > div.selected .item-name {
+        color: $spotify-primary;
     }
 
 </style>

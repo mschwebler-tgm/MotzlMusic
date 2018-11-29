@@ -27,7 +27,7 @@ class TrackService
             'to' => $offset + $limit,
             'limit' => $limit,
             'total' => $response->total,
-            'tracks' => $this->trackTransformer->transform($response->items)
+            'items' => $this->trackTransformer->transform($response->items)
         ];
     }
 }

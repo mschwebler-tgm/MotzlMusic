@@ -26,6 +26,6 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Passport::routes();
-        Passport::cookie(env('APP_NAME') . '_api_token');
+        Passport::cookie(config('auth.api_token_name'));
     }
 }

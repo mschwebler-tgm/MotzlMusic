@@ -35,6 +35,7 @@
                         <div class="is-overlay select-check">
                             <b-icon icon="check" size="is-large" type="is-white"
                                     v-if="isItemSelected(albumsToImport, album)"></b-icon>
+                            <span class="has-text-white">{{ album.tracks }} tracks</span>
                         </div>
                     </div>
                     <div class="has-text-centered has-text-wrapped item-name"
@@ -62,8 +63,11 @@
                          :style="{backgroundImage: 'url(' + playlist.image + ')'}"
                          @click="handleItemClick(playlistsToImport, playlist, $refs.playlistCheckbox)">
                         <div class="is-overlay select-check">
+                            <div class="check">
                             <b-icon icon="check" size="is-large" type="is-white"
                                     v-if="isItemSelected(playlistsToImport, playlist)"></b-icon>
+                            <span class="has-text-white">{{ playlist.tracks }} tracks</span>
+                            </div>
                         </div>
                     </div>
                     <div class="has-text-centered has-text-wrapped item-name"
@@ -197,6 +201,7 @@
     .item-picker > div {
         width: 150px;
         margin-right: 30px;
+        margin-bottom: 10px;
         cursor: pointer;
     }
 
@@ -210,13 +215,21 @@
 
     .select-check {
         display: none;
-        background-color: transparentize($spotify-primary, .5);
+        background-color: transparentize($spotify-primary, .7);
     }
 
-    .item-picker > div:hover .select-check, .item-picker > div.selected .select-check {
+    .select-check .check {
+        padding: 5px;
+        background-color: $spotify-secondary;
+        display: flex;
+        align-items: center;
+    }
+
+    .item-picker > div.selected .select-check {
         display: flex;
         justify-content: center;
         align-items: center;
+        flex-direction: column;
     }
 
     .item-picker > div:hover .item-name, .item-picker > div.selected .item-name {

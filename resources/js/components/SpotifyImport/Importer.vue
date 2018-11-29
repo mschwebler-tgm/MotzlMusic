@@ -21,16 +21,26 @@
                         {{ albumsTracksTotal }} tracks in {{ albums.total }} albums
                     </span>
                 </b-checkbox>
-                &nbsp;&nbsp;&nbsp;<span class="has-text-grey is-size-7 customize" v-if="albumsToImport.length > 0" @click="customizeAlbums = !customizeAlbums">customize</span>
+                &nbsp;&nbsp;&nbsp;
+                <span class="has-text-grey is-size-7 customize" v-if="albumsToImport.length > 0"
+                      @click="customizeAlbums = !customizeAlbums">
+                    customize
+                </span>
             </div>
             <div class="item-picker" v-show="customizeAlbums">
-                <div v-for="album in albums.items" :key="album.id" :class="{selected: isItemSelected(albumsToImport, album)}">
-                    <div class="item" :style="{backgroundImage: 'url(' + album.image + ')'}" @click="handleItemClick(albumsToImport, album, $refs.albumCheckbox)">
+                <div v-for="album in albums.items" :key="album.id"
+                     :class="{selected: isItemSelected(albumsToImport, album)}">
+                    <div class="item" :style="{backgroundImage: 'url(' + album.image + ')'}"
+                         @click="handleItemClick(albumsToImport, album, $refs.albumCheckbox)">
                         <div class="is-overlay select-check">
-                            <b-icon icon="check" size="is-large" type="is-white" v-if="isItemSelected(albumsToImport, album)"></b-icon>
+                            <b-icon icon="check" size="is-large" type="is-white"
+                                    v-if="isItemSelected(albumsToImport, album)"></b-icon>
                         </div>
                     </div>
-                    <div class="has-text-centered has-text-wrapped item-name" @click="handleItemClick(albumsToImport, album, $refs.albumCheckbox)">{{ album.name }}</div>
+                    <div class="has-text-centered has-text-wrapped item-name"
+                         @click="handleItemClick(albumsToImport, album, $refs.albumCheckbox)">
+                        {{ album.name }}
+                    </div>
                 </div>
             </div>
             <div class="field">
@@ -40,16 +50,26 @@
                         {{ playlistTracksTotal }} tracks in {{ playlists.total }} playlists
                     </span>
                 </b-checkbox>
-                &nbsp;&nbsp;&nbsp;<span class="has-text-grey is-size-7 customize" v-if="playlistsToImport.length > 0" @click="customizePlaylists = !customizePlaylists">customize</span>
+                &nbsp;&nbsp;&nbsp;
+                <span class="has-text-grey is-size-7 customize"
+                      v-if="playlistsToImport.length > 0"
+                      @click="customizePlaylists = !customizePlaylists">customize</span>
             </div>
             <div class="item-picker" v-show="customizePlaylists">
-                <div v-for="playlist in playlists.items" :key="playlist.id" :class="{selected: isItemSelected(playlistsToImport, playlist)}">
-                    <div class="item" :style="{backgroundImage: 'url(' + playlist.image + ')'}" @click="handleItemClick(playlistsToImport, playlist, $refs.playlistCheckbox)">
+                <div v-for="playlist in playlists.items" :key="playlist.id"
+                     :class="{selected: isItemSelected(playlistsToImport, playlist)}">
+                    <div class="item"
+                         :style="{backgroundImage: 'url(' + playlist.image + ')'}"
+                         @click="handleItemClick(playlistsToImport, playlist, $refs.playlistCheckbox)">
                         <div class="is-overlay select-check">
-                            <b-icon icon="check" size="is-large" type="is-white" v-if="isItemSelected(playlistsToImport, playlist)"></b-icon>
+                            <b-icon icon="check" size="is-large" type="is-white"
+                                    v-if="isItemSelected(playlistsToImport, playlist)"></b-icon>
                         </div>
                     </div>
-                    <div class="has-text-centered has-text-wrapped item-name" @click="handleItemClick(playlistsToImport, playlist, $refs.playlistCheckbox)">{{ playlist.name }}</div>
+                    <div class="has-text-centered has-text-wrapped item-name"
+                         @click="handleItemClick(playlistsToImport, playlist, $refs.playlistCheckbox)">
+                        {{ playlist.name }}
+                    </div>
                 </div>
             </div>
         </section>
@@ -63,6 +83,7 @@
 
 <script>
     import BIcon from "buefy/src/components/icon/Icon";
+
     export default {
         name: "Importer",
         components: {BIcon},
@@ -86,9 +107,7 @@
         },
         methods: {
             loadTracks() {
-                axios.get('/api/spotify/tracks/my').then(res => {
-                    this.tracks = res.data;
-                });
+                axios.get('/api/spotify/tracks/my').then(res => this.tracks = res.data);
             },
             loadPlaylists() {
                 axios.get('/api/spotify/playlists/my').then(res => {
@@ -99,23 +118,13 @@
                 });
             },
             loadAlbums() {
-                axios.get('/api/spotify/albums/my').then(res => {
-                    this.albums = res.data;
-                });
+                axios.get('/api/spotify/albums/my').then(res => this.albums = res.data);
             },
             selectAllAlbums(isSelected) {
-                if (isSelected) {
-                    this.albumsToImport = _.clone(this.albums.items);
-                } else {
-                    this.albumsToImport = [];
-                }
+                this.albumsToImport = isSelected ? _.clone(this.albums.items) : [];
             },
             selectAllPlaylists(isSelected) {
-                if (isSelected) {
-                    this.playlistsToImport = _.clone(this.playlists.items);
-                } else {
-                    this.playlistsToImport = [];
-                }
+                this.playlistsToImport = isSelected ? _.clone(this.playlists.items) : [];
             },
             handleItemClick(toImport, item, checkbox) {
                 if (this.isItemSelected(toImport, item)) {
@@ -128,37 +137,28 @@
             isItemSelected(items, paramItem) {
                 return !!items.filter(item => item.id === paramItem.id).length;
             },
+            updateTotalTracksToImport() {
+                let total = 0;
+                total += this.importAllTracks ? this.tracks.total : 0;
+                total += this.albumsToImport.reduce((acc, item) => acc + item.tracks, 0);
+                total += this.playlistsToImport.reduce((acc, item) => acc + item.tracks, 0);
+                TweenLite.to(this.$data, 0.5, {totalTracksToImport: total});
+            }
         },
         watch: {
-            toImport() {
-                let total = 0;
-                if (this.willImportTracks) {
-                    total += this.tracks.total;
-                }
-                if (this.willImportPlaylists) {
-                    total += this.playlistTracksTotal;
-                }
-                if (this.willImportAlbums) {
-                    this.albumsToImport = _.clone(this.albums.items);
-                    total += this.albumsTracksTotal;
-                } else {
-                    this.albumsToImport = [];
-                }
-                TweenLite.to(this.$data, 0.5, { totalTracksToImport: Math.round(total) });
-            }
+            importAllTracks() {
+                this.updateTotalTracksToImport()
+            },
+            playlistsToImport() {
+                this.updateTotalTracksToImport()
+            },
+            albumsToImport() {
+                this.updateTotalTracksToImport()
+            },
         },
         computed: {
             animatedTotalTracksToImport() {
                 return this.totalTracksToImport.toFixed(0);
-            },
-            willImportTracks() {
-                return this.toImport.filter(item => item === 'tracks').length > 0;
-            },
-            willImportPlaylists() {
-                return this.toImport.filter(item => item === 'playlists').length > 0;
-            },
-            willImportAlbums() {
-                return this.toImport.filter(item => item === 'albums').length > 0;
             },
             playlistTracksTotal() {
                 if (!this.playlists.items) {

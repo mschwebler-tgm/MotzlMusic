@@ -27,7 +27,7 @@ class AlbumService
             'to' => $offset + $limit,
             'limit' => $limit,
             'total' => $response->total,
-            'albums' => $this->albumTransformer->transform($response->items)
+            'items' => $this->albumTransformer->transform($response->items)
         ];
     }
 }

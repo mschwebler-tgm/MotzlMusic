@@ -13,7 +13,7 @@
             </div>
             <div class="field">
                 <b-checkbox v-model="toImport" native-value="albums">
-                    Import albums
+                    Import albums&nbsp;&nbsp;&nbsp;<span class="is-size-7" :class="_colorClass('albums')" v-if="albumsTracksTotal">{{ albumsTracksTotal }} tracks in {{ albums.total }} albums</span>
                 </b-checkbox>
             </div>
             <div class="field">
@@ -37,6 +37,7 @@
             return {
                 tracks: {},
                 playlists: {},
+                albums: {},
                 toImport: [],
                 totalTracksToImport: 0,
             }
@@ -44,6 +45,7 @@
         created() {
             this.loadTracks();
             this.loadPlaylists();
+            this.loadAlbums();
         },
         methods: {
             loadTracks() {
@@ -57,6 +59,11 @@
                         items: res.data,
                         total: res.data.length
                     };
+                });
+            },
+            loadAlbums() {
+                axios.get('/api/spotify/albums/my').then(res => {
+                    this.albums = res.data;
                 });
             },
             _colorClass(toImport) {
@@ -74,6 +81,9 @@
                 }
                 if (this.willImportPlaylists) {
                     total += this.playlistTracksTotal;
+                }
+                if (this.willImportAlbums) {
+                    total += this.albumsTracksTotal;
                 }
                 TweenLite.to(this.$data, 0.5, { totalTracksToImport: Math.round(total) });
             }
@@ -96,6 +106,12 @@
                     return null;
                 }
                 return this.playlists.items.reduce((acc, item) => acc + item.tracks, 0);
+            },
+            albumsTracksTotal() {
+                if (!this.albums.items) {
+                    return null;
+                }
+                return this.albums.items.reduce((acc, item) => acc + item.tracks, 0);
             }
         }
     }

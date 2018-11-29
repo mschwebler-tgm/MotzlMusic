@@ -11,4 +11,5 @@ Route::get('/user', function (Request $request) {
 Route::prefix('spotify')->namespace('Spotify')->group(function () {
     Route::get('/playlists/my', 'ImportController@playlists');
     Route::get('/tracks/my', 'ImportController@tracks');
+    Route::get('/albums/my', 'ImportController@albums');
 });

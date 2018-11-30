@@ -22,7 +22,7 @@
                 <b-checkbox @input="selectAllAlbums" ref="albumCheckbox">
                     Import albums&nbsp;&nbsp;&nbsp;
                     <span class="is-size-7" v-if="albumsTracksTotal">
-                        {{ albumsTracksTotal }} tracks in {{ albums.total }} albums
+                        {{ albumsTracksTotal }} tracks in {{ albumsToImport.length || albums.total }} albums
                     </span>
                 </b-checkbox>
                 &nbsp;&nbsp;&nbsp;
@@ -56,7 +56,7 @@
                 <b-checkbox @input="selectAllPlaylists" ref="playlistCheckbox">
                     Import playlists&nbsp;&nbsp;&nbsp;
                     <span class="is-size-7" v-if="playlistTracksTotal">
-                        {{ playlistTracksTotal }} tracks in {{ playlists.total }} playlists
+                        {{ playlistTracksTotal }} tracks in {{ playlistsToImport.length || playlists.total }} playlists
                     </span>
                 </b-checkbox>
                 &nbsp;&nbsp;&nbsp;
@@ -173,16 +173,16 @@
                 return this.totalTracksToImport.toFixed(0);
             },
             playlistTracksTotal() {
-                if (!this.playlists.items) {
-                    return null;
+                if (!this.playlistsToImport.length && this.playlists.items) {
+                    return this.playlists.items.reduce((acc, item) => acc + item.tracks, 0);
                 }
-                return this.playlists.items.reduce((acc, item) => acc + item.tracks, 0);
+                return this.playlistsToImport.reduce((acc, item) => acc + item.tracks, 0);
             },
             albumsTracksTotal() {
-                if (!this.albums.items) {
-                    return null;
+                if (!this.albumsToImport.length && this.albums.items) {
+                    return this.albums.items.reduce((acc, item) => acc + item.tracks, 0);
                 }
-                return this.albums.items.reduce((acc, item) => acc + item.tracks, 0);
+                return this.albumsToImport.reduce((acc, item) => acc + item.tracks, 0);
             }
         }
     }

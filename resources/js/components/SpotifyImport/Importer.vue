@@ -86,8 +86,8 @@
             </div>
         </section>
         <footer class="modal-card-foot">
-            <button class="button is-success">Import</button>
-            <button class="button">Cancel</button>
+            <button class="button is-success" @click="importSelected">Import</button>
+            <button class="button" @click="cancel">Cancel</button>
             <span class="total-tracks has-text-spotify is-size-5">{{ animatedTotalTracksToImport }} tracks </span>
         </footer>
     </div>
@@ -155,6 +155,19 @@
                 total += this.albumsToImport.reduce((acc, item) => acc + item.tracks, 0);
                 total += this.playlistsToImport.reduce((acc, item) => acc + item.tracks, 0);
                 TweenLite.to(this.$data, 0.5, {totalTracksToImport: total});
+            },
+            cancel() {
+                this.$root.showSpotifyImport = false;
+            },
+            importSelected() {
+                const payload = {
+                    tracks: this.importAllTracks ? this.tracks.items.map(item => item.id) : [],
+                    playlists: this.playlistsToImport.map(item => item.id),
+                    albums: this.albumsToImport.map(item => item.id)
+                };
+                axios.post('/api/spotify/import', payload).then(res => {
+
+                });
             }
         },
         watch: {

@@ -6,6 +6,7 @@ use App\Components\Spotify\Import\AlbumService;
 use App\Components\Spotify\Import\PlaylistTransformer;
 use App\Components\Spotify\Import\TrackService;
 use App\Service\Spotify\SpotifyApiService;
+use Illuminate\Http\Request;
 
 class ImportController
 {
@@ -23,5 +24,10 @@ class ImportController
     public function albums(AlbumService $albumService)
     {
         return $albumService->paginate();
+    }
+
+    public function import(Request $request)
+    {
+        dd($request->all());
     }
 }

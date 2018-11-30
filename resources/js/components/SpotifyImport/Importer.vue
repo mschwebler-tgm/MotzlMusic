@@ -6,6 +6,8 @@
         </header>
         <section class="modal-card-body">
             You can import your favourite tracks, albums and playlists from spotify.<br><br>
+
+            <!-- TRACKS -->
             <div class="field">
                 <b-checkbox v-model="importAllTracks">
                     Import saved tracks&nbsp;&nbsp;&nbsp;
@@ -14,6 +16,8 @@
                     </span>
                 </b-checkbox>
             </div>
+
+            <!-- ALBUMS -->
             <div class="field">
                 <b-checkbox @input="selectAllAlbums" ref="albumCheckbox">
                     Import albums&nbsp;&nbsp;&nbsp;
@@ -27,15 +31,17 @@
                     customize
                 </span>
             </div>
-            <div class="item-picker" v-show="customizeAlbums">
+            <div class="item-picker" v-show="customizeAlbums && albumsToImport.length !== 0">
                 <div v-for="album in albums.items" :key="album.id"
                      :class="{selected: isItemSelected(albumsToImport, album)}">
                     <div class="item" :style="{backgroundImage: 'url(' + album.image + ')'}"
                          @click="handleItemClick(albumsToImport, album, $refs.albumCheckbox)">
                         <div class="is-overlay select-check">
-                            <b-icon icon="check" size="is-large" type="is-white"
-                                    v-if="isItemSelected(albumsToImport, album)"></b-icon>
-                            <span class="has-text-white">{{ album.tracks }} tracks</span>
+                            <div class="check">
+                                <b-icon icon="check" size="is-large" type="is-white"
+                                        v-if="isItemSelected(albumsToImport, album)"></b-icon>
+                                <span class="has-text-white">{{ album.tracks }} tracks</span>
+                            </div>
                         </div>
                     </div>
                     <div class="has-text-centered has-text-wrapped item-name"
@@ -44,6 +50,8 @@
                     </div>
                 </div>
             </div>
+
+            <!-- PLAYLISTS -->
             <div class="field">
                 <b-checkbox @input="selectAllPlaylists" ref="playlistCheckbox">
                     Import playlists&nbsp;&nbsp;&nbsp;
@@ -56,7 +64,7 @@
                       v-if="playlistsToImport.length > 0"
                       @click="customizePlaylists = !customizePlaylists">customize</span>
             </div>
-            <div class="item-picker" v-show="customizePlaylists">
+            <div class="item-picker" v-show="customizePlaylists && playlistsToImport.length !== 0">
                 <div v-for="playlist in playlists.items" :key="playlist.id"
                      :class="{selected: isItemSelected(playlistsToImport, playlist)}">
                     <div class="item"

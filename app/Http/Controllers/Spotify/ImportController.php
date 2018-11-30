@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Spotify;
 
 use App\Components\Spotify\Import\AlbumService;
+use App\Components\Spotify\Import\Importers\SpotifyTrackImporter;
 use App\Components\Spotify\Import\PlaylistTransformer;
 use App\Components\Spotify\Import\TrackService;
+use App\Jobs\ProcessSpotifyImport;
 use App\Service\Spotify\SpotifyApiService;
 use Illuminate\Http\Request;
 
@@ -26,8 +28,12 @@ class ImportController
         return $albumService->paginate();
     }
 
-    public function import(Request $request)
+    public function import(Request $request, SpotifyApiService $apiService)
     {
-        dd($request->all());
+        $tracks = $apiService->getTracks($request->get('tracks', []));
+        $albums = $apiService->getAlbums($request->get('albums', []));
+        $playlists = $apiService->getAlbums($request->get('playlists', []));
+
+        ProcessSpotifyImport::dispatch(new SpotifyTrackImporter(), $request->get('tracks', []));
     }
 }

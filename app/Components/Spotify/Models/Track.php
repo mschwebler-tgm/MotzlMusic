@@ -80,21 +80,4 @@ class Track extends BaseModel
         }
         $this->artists = $artistCollection;
     }
-
-    /**
-     * @return object
-     */
-    public function getApiResponseTrack()
-    {
-        return $this->apiResponseTrack;
-    }
-
-    /**
-     * @param object $apiResponseTrack
-     */
-    public function setApiResponseTrack($apiResponseTrack): void
-    {
-        $this->apiResponseTrack = $apiResponseTrack;
-    }
-
 }

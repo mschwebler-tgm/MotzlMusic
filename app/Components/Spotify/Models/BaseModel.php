@@ -23,4 +23,20 @@ abstract class BaseModel
         $responseProperty = $responseProperty ?: $property;
         $this->{$property} = $this->apiResponse->{$responseProperty} ?? null;
     }
+
+    /**
+     * @return object
+     */
+    public function getApiResponse()
+    {
+        return $this->apiResponse;
+    }
+
+    /**
+     * @param object $apiResponse
+     */
+    public function setApiResponse($apiResponse): void
+    {
+        $this->apiResponse = $apiResponse;
+    }
 }

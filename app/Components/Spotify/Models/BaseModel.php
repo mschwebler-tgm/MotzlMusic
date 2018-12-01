@@ -5,6 +5,8 @@ namespace App\Components\Spotify\Models;
 
 abstract class BaseModel
 {
+    protected $apiResponse;
+
     protected function setAttributesFromResponse(array $attributes)
     {
         foreach ($attributes as $key => $attribute) {
@@ -19,6 +21,6 @@ abstract class BaseModel
     protected function setAttributeFromResponse(string $property, string $responseProperty = null)
     {
         $responseProperty = $responseProperty ?: $property;
-        $this->{$property} = $this->apiResponseTrack->{$responseProperty} ?? null;
+        $this->{$property} = $this->apiResponse->{$responseProperty} ?? null;
     }
 }

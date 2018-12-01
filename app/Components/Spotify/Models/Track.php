@@ -6,8 +6,6 @@ use Illuminate\Support\Collection;
 
 class Track extends BaseModel
 {
-    protected $apiResponseTrack;
-
     /** @var string */
     public $id;
     /** @var string */
@@ -45,7 +43,7 @@ class Track extends BaseModel
 
     public function __construct($apiResponseTrack)
     {
-        $this->apiResponseTrack = $apiResponseTrack;
+        $this->apiResponse = $apiResponseTrack;
 
         $this->setAlbumFromResponse($apiResponseTrack->album);
         $this->setArtistsFromResponse($apiResponseTrack->artists);

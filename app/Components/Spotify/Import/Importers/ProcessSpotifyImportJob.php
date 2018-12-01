@@ -9,18 +9,18 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 
-class ProcessSpotifyImport implements ShouldQueue
+class ProcessSpotifyImportJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /** @var SpotifyImporter $importer */
     private $importer;
-    private $idsToImport;
+    private $importOptions;
 
-    public function __construct(SpotifyImporter $importer, $ids)
+    public function __construct(SpotifyImporter $importer, $options)
     {
         $this->importer = $importer;
-        $this->idsToImport = $ids;
+        $this->importOptions = $options;
     }
 
     /**
@@ -30,7 +30,7 @@ class ProcessSpotifyImport implements ShouldQueue
      */
     public function handle()
     {
-        $this->importer->import($this->idsToImport);
+        $this->importer->import($this->importOptions);
         // TODO implement
     }
 }

@@ -8,6 +8,7 @@ import CreateSmartPlaylist from './components/CreateSmartPlaylist/Index.vue';
 import NewUploads from './components/NewUploads/Index.vue';
 
 import Master from './components/Layout/Master.vue';
+import NotFoundPage from './components/Layout/NotFoundPage.vue';
 
 export default new VueRouter({
     mode: 'history',
@@ -55,5 +56,10 @@ export default new VueRouter({
                 },
             ],
         },
+        {
+            path: '*',
+            name: '404',
+            component: NotFoundPage
+        }
     ],
 });

@@ -2,7 +2,7 @@
 
 namespace App\Components\Spotify\Import;
 
-use App\Service\Spotify\ResultFormatter;
+use App\Service\GenericTransformer;
 
 class PlaylistTransformer
 {
@@ -17,7 +17,7 @@ class PlaylistTransformer
 
     private function transformItem($item)
     {
-        $resultFormatter = new ResultFormatter($item);
+        $resultFormatter = new GenericTransformer($item);
         return $resultFormatter->get('name', 'id', 'owner', 'href', ['tracks.total' => 'tracks'], ['images.1.url' => 'image']);
     }
 }

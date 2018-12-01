@@ -6,24 +6,24 @@ use App\User;
 
 class UserDao
 {
-    public function createFromSpotifyAuthorization($authResponse, $userData)
+    public function createFromSpotifyAuthorization(\SocialiteProviders\Manager\OAuth2\User $oauth2User)
     {
         /** @var User $user */
         $user = User::firstOrCreate([
-            'spotify_id' => $userData->id,
-            'name' => $userData->display_name,
-            'email' => $userData->email
+            'name' => $oauth2User->name,
+            'email' => $oauth2User->email,
+            'spotify_id' => $oauth2User->id
         ]);
-        $password = str_random(20);
-        $localToken = encrypt($password . ':' . $userData->email);
         $user->fill([
-            'spotify_id' => $userData->id,
-            'spotify_access_token' => $authResponse->access_token,
-            'spotify_refresh_token' => $authResponse->refresh_token,
-            'birthdate' => $userData->birthdate,
-            'password' => bcrypt($password)
+            'name' => $oauth2User->name,
+            'email' => $oauth2User->email,
+            'spotify_id' => $oauth2User->id,
+            'spotify_access_token' => $oauth2User->token,
+            'spotify_refresh_token' => $oauth2User->refreshToken,
+            'birthdate' => $oauth2User->user['birthdate'],
+            'password' => bcrypt(str_random(20))
         ]);
         $user->save();
-        return $localToken;
+        return $user;
     }
 }

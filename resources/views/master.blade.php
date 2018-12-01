@@ -9,6 +9,7 @@
 
         <link rel="stylesheet" href="/css/app.css">
         <script src="/js/app.js" defer></script>
+        <script src="/js/greenSock.js" async></script>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
@@ -17,7 +18,7 @@
     </head>
     <body>
         <div id="root">
-            <router-view :user="{{ $user }}"></router-view>
+            <router-view :user="{{ $user ?: 'null' }}"></router-view>
         </div>
         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
             @csrf

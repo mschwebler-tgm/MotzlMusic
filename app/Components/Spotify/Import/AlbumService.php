@@ -4,22 +4,22 @@ namespace App\Components\Spotify\Import;
 
 use App\Service\Spotify\SpotifyApiService;
 
-class TrackService
+class AlbumService
 {
     private $apiService;
-    private $trackTransformer;
+    private $albumTransformer;
 
-    public function __construct(SpotifyApiService $apiService, TrackTransformer $trackTransformer)
+    public function __construct(SpotifyApiService $apiService, AlbumTransformer $trackTransformer)
     {
         $this->apiService = $apiService;
-        $this->trackTransformer = $trackTransformer;
+        $this->albumTransformer = $trackTransformer;
     }
 
     public function paginate()
     {
         $limit = request('limit', 20);
         $offset = (request('page', 1) - 1) * $limit;
-        $response = $this->apiService->getMySavedTracks(['limit' => $limit, 'offset' => $offset]);
+        $response = $this->apiService->getMySavedAlbums(['limit' => $limit, 'offset' => $offset]);
 
         return [
             'page' => request('page', 1),
@@ -27,7 +27,7 @@ class TrackService
             'to' => $offset + $limit,
             'limit' => $limit,
             'total' => $response->total,
-            'items' => $this->trackTransformer->transform($response->items)
+            'items' => $this->albumTransformer->transform($response->items)
         ];
     }
 }

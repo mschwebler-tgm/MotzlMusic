@@ -2,6 +2,8 @@
 
 return [
 
+    'api_token_name' => env('APP_NAME') . '_api_token',
+
     /*
     |--------------------------------------------------------------------------
     | Authentication Defaults
@@ -42,7 +44,7 @@ return [
         ],
 
         'api' => [
-            'driver' => 'token',
+            'driver' => 'passport',
             'provider' => 'users',
         ],
     ],

@@ -2,7 +2,7 @@
 
 namespace App\Components\Spotify\Import;
 
-use App\Service\Spotify\ResultFormatter;
+use App\Service\GenericTransformer;
 
 class TrackTransformer
 {
@@ -17,7 +17,7 @@ class TrackTransformer
 
     private function transformItem($track)
     {
-        $resultFormatter = new ResultFormatter($track->track);
+        $resultFormatter = new GenericTransformer($track->track);
         return $resultFormatter->get('name', ['artists.0.name' => 'artist'], 'id', 'uri', ['duration_ms' => 'duration']);
     }
 }

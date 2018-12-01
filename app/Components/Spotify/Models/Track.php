@@ -2,10 +2,13 @@
 
 namespace App\Components\Spotify\Models;
 
+use App\Components\Spotify\Models\Traits\HasArtists;
 use Illuminate\Support\Collection;
 
 class Track extends BaseModel
 {
+    use HasArtists;
+
     /** @var string */
     public $id;
     /** @var string */
@@ -70,14 +73,5 @@ class Track extends BaseModel
     private function setAlbumFromResponse($album): void
     {
         $this->album = new Album($album);
-    }
-
-    public function setArtistsFromResponse(array $artists): void
-    {
-        $artistCollection = collect();
-        foreach ($artists as $artist) {
-            $artistCollection->push(new Artist($artist));
-        }
-        $this->artists = $artistCollection;
     }
 }

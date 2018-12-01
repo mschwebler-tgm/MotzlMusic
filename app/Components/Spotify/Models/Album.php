@@ -2,11 +2,14 @@
 
 namespace App\Components\Spotify\Models;
 
+use App\Components\Spotify\Models\Traits\HasArtists;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 
 class Album extends BaseModel
 {
+    use HasArtists;
+
     /** @var string */
     public $albumType;
     /** @var array */
@@ -82,19 +85,6 @@ class Album extends BaseModel
             $tracks->push(new Track($apiResponseTrack));
         }
         $this->tracks = $tracks;
-    }
-
-    public function setArtistsFromResponse($artists): void
-    {
-        if (!$artists === null) {
-            return;
-        }
-
-        $artistCollection = collect();
-        foreach ($artists as $artist) {
-            $artistCollection->push(new Artist($artist));
-        }
-        $this->artists = $artistCollection;
     }
 
     private function setReleaseDateFromResponse($release_date)

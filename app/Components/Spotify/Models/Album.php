@@ -3,12 +3,13 @@
 namespace App\Components\Spotify\Models;
 
 use App\Components\Spotify\Models\Traits\HasArtists;
+use App\Components\Spotify\Models\Traits\HasTracks;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 
 class Album extends BaseModel
 {
-    use HasArtists;
+    use HasArtists, HasTracks;
 
     /** @var string */
     public $albumType;
@@ -72,19 +73,6 @@ class Album extends BaseModel
         $this->setTracksFromApiResponse($apiResponseAlbum->tracks->items ?? null);
         $this->setArtistsFromResponse($apiResponseAlbum->artists ?? null);
         $this->setReleaseDateFromResponse($apiResponseAlbum->release_date);
-    }
-
-    private function setTracksFromApiResponse($apiResponseTracks)
-    {
-        if ($apiResponseTracks === null) {
-            return;
-        }
-
-        $tracks = collect();
-        foreach ($apiResponseTracks as $apiResponseTrack) {
-            $tracks->push(new Track($apiResponseTrack));
-        }
-        $this->tracks = $tracks;
     }
 
     private function setReleaseDateFromResponse($release_date)

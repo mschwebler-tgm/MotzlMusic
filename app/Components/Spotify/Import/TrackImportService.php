@@ -60,7 +60,7 @@ class TrackImportService
 
     private function dispatchTrackRefinementJob()
     {
-        RefineTracksJob::dispatch($this->albumRefinementQueue)->onQueue('prio_low');
+        RefineTracksJob::dispatch($this->trackRefinementQueue)->onQueue('prio_low');
         $this->trackRefinementQueue = [];
     }
 
@@ -72,7 +72,7 @@ class TrackImportService
 
     private function dispatchArtistRefinementJob()
     {
-        RefineArtistsJob::dispatch($this->albumRefinementQueue)->onQueue('prio_low');
+        RefineArtistsJob::dispatch($this->artistRefinementQueue)->onQueue('prio_low');
         $this->artistRefinementQueue = [];
     }
 }

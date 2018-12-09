@@ -28,7 +28,6 @@ class SpotifyTrackImporter implements SpotifyImporter
 
         $tracks = $this->getAllSavedTracks();
         $this->trackImportService->saveTracksForCurrentUser($tracks);
-        // TODO dispatch refinement job to complete tracks data
     }
 
     private function getAllSavedTracks()

@@ -28,8 +28,6 @@ class TrackImporterDao
             'spotify_uri' => $spotifyTrack->uri,
         ])->save();
 
-        // TODO dispatch job to fetch track analysis
-
         return $track;
     }
 
@@ -52,8 +50,6 @@ class TrackImporterDao
             'spotify_image_large' => $spotifyAlbum->images[0]->url ?? $album->spotify_image_large,
         ])->save();
 
-        // TODO dispatch job to refine album
-
         return $album;
     }
 
@@ -75,8 +71,6 @@ class TrackImporterDao
                 'spotify_image_medium' => $spotifyArtist->images[1]->url ?? $artist->spotify_image_medium,
                 'spotify_image_large' => $spotifyArtist->images[0]->url ?? $artist->spotify_image_large,
             ])->save();
-
-            // TODO dispatch job to refine artist
 
             $artists->push($artist);
         }

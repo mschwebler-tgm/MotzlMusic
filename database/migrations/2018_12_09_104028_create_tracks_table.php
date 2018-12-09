@@ -17,6 +17,7 @@ class CreateTracksTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->unsignedInteger('popularity')->nullable();
+            $table->unsignedInteger('duration')->nullable();
             $table->unsignedInteger('album_id')->nullable();
             $table->unsignedInteger('user_id');
             $table->string('spotify_id')->nullable();

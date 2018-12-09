@@ -38,9 +38,9 @@ class TrackImportService
 
     private function addToRefinementQueue(Track $track, Album $album, Collection $artists)
     {
-        $this->trackRefinementQueue = array_merge($this->trackRefinementQueue, [$track->id]);
-        $this->albumRefinementQueue = array_merge($this->albumRefinementQueue, [$album->id]);
-        $this->artistRefinementQueue = array_merge($this->artistRefinementQueue, [$artists->pluck('id')]);
+        $this->trackRefinementQueue = array_unique(array_merge($this->trackRefinementQueue, [$track->id]));
+        $this->albumRefinementQueue = array_unique(array_merge($this->albumRefinementQueue, [$album->id]));
+        $this->artistRefinementQueue = array_unique(array_merge($this->artistRefinementQueue, $artists->pluck('id')->toArray()));
         $this->dispatchRefinementJobs();
     }
 

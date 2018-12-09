@@ -2,19 +2,19 @@
 
 namespace App\Components\Spotify\Import\Importers;
 
-use App\Components\Spotify\Import\TrackImporterDao;
+use App\Components\Spotify\Import\TrackImportService;
 use App\Components\Spotify\Models\Track;
 use App\Service\Spotify\SpotifyApiService;
 
 class SpotifyTrackImporter implements SpotifyImporter
 {
     private $apiService;
-    private $trackImporterDao;
+    private $trackImportService;
 
-    public function __construct(SpotifyApiService $apiService, TrackImporterDao $trackImporterDao)
+    public function __construct(SpotifyApiService $apiService, TrackImportService $trackImportService)
     {
         $this->apiService = $apiService;
-        $this->trackImporterDao = $trackImporterDao;
+        $this->trackImportService = $trackImportService;
     }
 
     /**
@@ -27,7 +27,7 @@ class SpotifyTrackImporter implements SpotifyImporter
         }
 
         $tracks = $this->getAllSavedTracks();
-        $this->trackImporterDao->saveTracksForCurrentUser($tracks);
+        $this->trackImportService->saveTracksForCurrentUser($tracks);
         // TODO dispatch refinement job to complete tracks data
     }
 

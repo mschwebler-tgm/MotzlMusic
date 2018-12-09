@@ -13,22 +13,7 @@ use Illuminate\Support\Collection;
 
 class TrackImporterDao
 {
-    public function saveTracksForCurrentUser(Collection $spotifyTracks)
-    {
-        $this->saveTracksForUser($spotifyTracks, apiUser());
-    }
-
-    private function saveTracksForUser(Collection $spotifyTracks, User $apiUser)
-    {
-        /** @var SpotifyTrack $spotifyTrack */
-        foreach ($spotifyTracks as $spotifyTrack) {
-            $track = $this->storeTrack($spotifyTrack, $apiUser);
-            $album = $this->storeAlbum($spotifyTrack->album);
-            $artists = $this->storeArtists($spotifyTrack->artists);
-        }
-    }
-
-    private function storeTrack(SpotifyTrack $spotifyTrack, User $user)
+    public function storeTrack(SpotifyTrack $spotifyTrack, User $user)
     {
         /** @var Track $track */
         $track = Track::firstOrCreate([
@@ -48,7 +33,7 @@ class TrackImporterDao
         return $track;
     }
 
-    private function storeAlbum(SpotifyAlbum $spotifyAlbum)
+    public function storeAlbum(SpotifyAlbum $spotifyAlbum)
     {
         /** @var Album $album */
         $album = Album::firstOrCreate([
@@ -72,7 +57,7 @@ class TrackImporterDao
         return $album;
     }
 
-    private function storeArtists(Collection $spotifyArtists)
+    public function storeArtists(Collection $spotifyArtists)
     {
         $artists = collect();
         /** @var SpotifyArtist $spotifyArtist */

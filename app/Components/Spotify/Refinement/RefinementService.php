@@ -9,19 +9,27 @@ use App\Service\Spotify\SpotifyApiService;
 class RefinementService
 {
     private $spotifyApiService;
+    private $spotifyDao;
 
-    public function __construct(SpotifyApiService $spotifyApiService)
+    public function __construct(SpotifyApiService $spotifyApiService, SpotifyDao $spotifyDao)
     {
         $this->spotifyApiService = $spotifyApiService;
+        $this->spotifyDao = $spotifyDao;
     }
 
     public function refineAlbums($albumSpotifyIds)
     {
-        $spotifyDao = app(SpotifyDao::class);
         $apiResponse = $this->spotifyApiService->getAlbums($albumSpotifyIds);
         $spotifyAlbums = SpotifyDTO::albumModelsFromResponse($apiResponse->albums);
         foreach ($spotifyAlbums as $spotifyAlbum) {
-            $spotifyDao->storeAlbum($spotifyAlbum);
+            $this->spotifyDao->storeAlbum($spotifyAlbum);
         }
+    }
+
+    public function refineArtists($artistSpotifyIds)
+    {
+        $apiResponse = $this->spotifyApiService->getArtists($artistSpotifyIds);
+        $spotifyArtists = SpotifyDTO::artistsModelsFromResponse($apiResponse->artists);
+        $this->spotifyDao->storeArtists($spotifyArtists);
     }
 }

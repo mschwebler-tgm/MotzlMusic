@@ -3,6 +3,7 @@
 namespace App\Components\Spotify;
 
 use App\Components\Spotify\Models\Album as SpotifyAlbum;
+use App\Components\Spotify\Models\Artist as SpotifyArtist;
 use App\Components\Spotify\Models\Track as SpotifyTrack;
 
 class SpotifyDTO
@@ -29,5 +30,19 @@ class SpotifyDTO
 
     public static function trackModelFromResponse($trackResponse) {
         return new SpotifyTrack($trackResponse->track);
+    }
+
+    public static function artistsModelsFromResponse($artistsResponse)
+    {
+        $artists = collect();
+        foreach ($artistsResponse as $singleArtistResponse) {
+            $artists->push(self::artistModelsFromResponse($singleArtistResponse));
+        }
+        return $artists;
+    }
+
+    public static function artistModelsFromResponse($artistResponse)
+    {
+        return new SpotifyArtist($artistResponse);
     }
 }

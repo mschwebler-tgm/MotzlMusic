@@ -2,6 +2,7 @@
 
 namespace App\Components\Spotify\Import\Importers;
 
+use App\Components\Spotify\Import\TrackImporterDao;
 use App\Components\Spotify\Models\Track;
 use App\Service\Spotify\SpotifyApiService;
 

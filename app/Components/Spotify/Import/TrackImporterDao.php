@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Components\Spotify\Import\Importers;
+namespace App\Components\Spotify\Import;
 
 use App\Album;
 use App\Artist;

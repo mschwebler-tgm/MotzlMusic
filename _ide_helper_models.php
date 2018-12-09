@@ -12,6 +12,137 @@
 
 namespace App{
 /**
+ * App\Album
+ *
+ * @property int $id
+ * @property string $name
+ * @property int|null $popularity
+ * @property string|null $label
+ * @property string|null $release_date
+ * @property int|null $total_tracks
+ * @property string|null $spotify_id
+ * @property string|null $spotify_href
+ * @property string|null $spotify_uri
+ * @property string|null $spotify_image_small
+ * @property string|null $spotify_image_medium
+ * @property string|null $spotify_image_large
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Artist[] $artists
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Album newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Album newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Album query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Album whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Album whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Album whereLabel($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Album whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Album wherePopularity($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Album whereReleaseDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Album whereSpotifyHref($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Album whereSpotifyId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Album whereSpotifyImageLarge($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Album whereSpotifyImageMedium($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Album whereSpotifyImageSmall($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Album whereSpotifyUri($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Album whereTotalTracks($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Album whereUpdatedAt($value)
+ */
+	class Album extends \Eloquent {}
+}
+
+namespace App{
+/**
+ * App\AlbumHasArtist
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\AlbumHasArtist newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\AlbumHasArtist newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\AlbumHasArtist query()
+ */
+	class AlbumHasArtist extends \Eloquent {}
+}
+
+namespace App{
+/**
+ * App\Artist
+ *
+ * @property int $id
+ * @property string $name
+ * @property int|null $popularity
+ * @property string|null $spotify_id
+ * @property string|null $spotify_href
+ * @property string|null $spotify_uri
+ * @property string|null $spotify_image_small
+ * @property string|null $spotify_image_medium
+ * @property string|null $spotify_image_large
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Album[] $albums
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Track[] $tracks
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Artist newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Artist newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Artist query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Artist whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Artist whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Artist whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Artist wherePopularity($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Artist whereSpotifyHref($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Artist whereSpotifyId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Artist whereSpotifyImageLarge($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Artist whereSpotifyImageMedium($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Artist whereSpotifyImageSmall($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Artist whereSpotifyUri($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Artist whereUpdatedAt($value)
+ */
+	class Artist extends \Eloquent {}
+}
+
+namespace App{
+/**
+ * App\Track
+ *
+ * @property int $id
+ * @property string $name
+ * @property int|null $popularity
+ * @property int|null $duration
+ * @property int|null $album_id
+ * @property int $user_id
+ * @property string|null $spotify_id
+ * @property string|null $spotify_href
+ * @property string|null $spotify_uri
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Artist[] $artists
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Track newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Track newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Track query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Track whereAlbumId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Track whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Track whereDuration($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Track whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Track whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Track wherePopularity($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Track whereSpotifyHref($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Track whereSpotifyId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Track whereSpotifyUri($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Track whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Track whereUserId($value)
+ */
+	class Track extends \Eloquent {}
+}
+
+namespace App{
+/**
+ * App\TrackHasArtist
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\TrackHasArtist newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\TrackHasArtist newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\TrackHasArtist query()
+ */
+	class TrackHasArtist extends \Eloquent {}
+}
+
+namespace App{
+/**
  * App\User
  *
  * @property int $id

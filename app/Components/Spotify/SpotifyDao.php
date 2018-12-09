@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Components\Spotify\Import;
+namespace App\Components\Spotify;
 
 use App\Album;
 use App\Artist;
@@ -11,7 +11,7 @@ use App\Track;
 use App\User;
 use Illuminate\Support\Collection;
 
-class TrackImporterDao
+class SpotifyDao
 {
     public function storeTrack(SpotifyTrack $spotifyTrack, User $user)
     {
@@ -58,23 +58,28 @@ class TrackImporterDao
         $artists = collect();
         /** @var SpotifyArtist $spotifyArtist */
         foreach ($spotifyArtists as $spotifyArtist) {
-            /** @var Artist $artist */
-            $artist = Artist::firstOrCreate([
-                'spotify_id' => $spotifyArtist->id,
-                'name' => $spotifyArtist->name
-            ]);
-            $artist->fill([
-                'popularity' => $spotifyArtist->popularity,
-                'spotify_href' => $spotifyArtist->href,
-                'spotify_uri' => $spotifyArtist->uri,
-                'spotify_image_small' => $spotifyArtist->images[2]->url ?? $artist->spotify_image_small,
-                'spotify_image_medium' => $spotifyArtist->images[1]->url ?? $artist->spotify_image_medium,
-                'spotify_image_large' => $spotifyArtist->images[0]->url ?? $artist->spotify_image_large,
-            ])->save();
-
-            $artists->push($artist);
+            $artists->push($this->storeArtist($spotifyArtist));
         }
 
         return $artists;
+    }
+
+    public function storeArtist(SpotifyArtist $spotifyArtist)
+    {
+        /** @var Artist $artist */
+        $artist = Artist::firstOrCreate([
+            'spotify_id' => $spotifyArtist->id,
+            'name' => $spotifyArtist->name
+        ]);
+        $artist->fill([
+            'popularity' => $spotifyArtist->popularity,
+            'spotify_href' => $spotifyArtist->href,
+            'spotify_uri' => $spotifyArtist->uri,
+            'spotify_image_small' => $spotifyArtist->images[2]->url ?? $artist->spotify_image_small,
+            'spotify_image_medium' => $spotifyArtist->images[1]->url ?? $artist->spotify_image_medium,
+            'spotify_image_large' => $spotifyArtist->images[0]->url ?? $artist->spotify_image_large,
+        ])->save();
+
+        return $artist;
     }
 }

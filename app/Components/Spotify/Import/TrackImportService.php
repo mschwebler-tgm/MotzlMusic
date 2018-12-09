@@ -7,30 +7,31 @@ use App\Components\Spotify\Models\Track as SpotifyTrack;
 use App\Components\Spotify\Refinement\Jobs\RefineAlbumsJob;
 use App\Components\Spotify\Refinement\Jobs\RefineArtistsJob;
 use App\Components\Spotify\Refinement\Jobs\RefineTracksJob;
+use App\Components\Spotify\SpotifyDao;
 use App\Track;
 use Illuminate\Support\Collection;
 
 class TrackImportService
 {
-    private $trackImporterDao;
+    private $spotifyDao;
     private $trackRefinementQueue = [];
     private $albumRefinementQueue = [];
     private $artistRefinementQueue = [];
 
     const MAX_QUEUE_LIMIT = 20;
 
-    public function __construct(TrackImporterDao $trackImporterDao)
+    public function __construct(SpotifyDao $spotifyDao)
     {
-        $this->trackImporterDao = $trackImporterDao;
+        $this->spotifyDao = $spotifyDao;
     }
 
     public function saveTracksForCurrentUser(Collection $spotifyTracks)
     {
         /** @var SpotifyTrack $spotifyTrack */
         foreach ($spotifyTracks as $spotifyTrack) {
-            $track = $this->trackImporterDao->storeTrack($spotifyTrack, apiUser());
-            $album = $this->trackImporterDao->storeAlbum($spotifyTrack->album);
-            $artists = $this->trackImporterDao->storeArtists($spotifyTrack->artists);
+            $track = $this->spotifyDao->storeTrack($spotifyTrack, apiUser());
+            $album = $this->spotifyDao->storeAlbum($spotifyTrack->album);
+            $artists = $this->spotifyDao->storeArtists($spotifyTrack->artists);
             $this->addToRefinementQueue($track, $album, $artists);
         }
         $this->dispatchRefinementJobs(true);

@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Jobs;
+namespace App\Components\Spotify\Import\Importers;
 
-use App\Components\Spotify\Import\Importers\SpotifyImporter;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;

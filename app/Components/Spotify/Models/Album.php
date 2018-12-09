@@ -72,11 +72,11 @@ class Album extends BaseModel
 
         $this->setTracksFromApiResponse($apiResponseAlbum->tracks->items ?? null);
         $this->setArtistsFromResponse($apiResponseAlbum->artists ?? null);
-        $this->setReleaseDateFromResponse($apiResponseAlbum->release_date);
+        $this->setReleaseDateFromResponse($apiResponseAlbum->release_date ?? null);
     }
 
     private function setReleaseDateFromResponse($release_date)
     {
-        $this->releaseDate = new Carbon($release_date);
+        $this->releaseDate = $release_date ? new Carbon($release_date) : null;
     }
 }

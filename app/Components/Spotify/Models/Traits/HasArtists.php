@@ -8,7 +8,7 @@ trait HasArtists
 {
     protected function setArtistsFromResponse($artists): void
     {
-        if (!$artists === null) {
+        if ($artists === null) {
             return;
         }
 

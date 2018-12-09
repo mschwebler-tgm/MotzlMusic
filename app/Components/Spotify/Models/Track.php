@@ -48,8 +48,8 @@ class Track extends BaseModel
     {
         $this->apiResponse = $apiResponseTrack;
 
-        $this->setAlbumFromResponse($apiResponseTrack->album);
-        $this->setArtistsFromResponse($apiResponseTrack->artists);
+        $this->setAlbumFromResponse($apiResponseTrack->album ?? null);
+        $this->setArtistsFromResponse($apiResponseTrack->artists ?? null);
 
         $this->setAttributesFromResponse([
             'id',

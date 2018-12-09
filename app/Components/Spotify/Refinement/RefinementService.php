@@ -29,7 +29,7 @@ class RefinementService
     public function refineArtists($artistSpotifyIds)
     {
         $apiResponse = $this->spotifyApiService->getArtists($artistSpotifyIds);
-        $spotifyArtists = SpotifyDTO::artistsModelsFromResponse($apiResponse->artists);
+        $spotifyArtists = SpotifyDTO::artistModelsFromResponse($apiResponse->artists);
         $this->spotifyDao->storeArtists($spotifyArtists);
     }
 }

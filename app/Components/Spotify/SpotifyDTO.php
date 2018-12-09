@@ -32,16 +32,16 @@ class SpotifyDTO
         return new SpotifyTrack($trackResponse->track);
     }
 
-    public static function artistsModelsFromResponse($artistsResponse)
+    public static function artistModelsFromResponse($artistsResponse)
     {
         $artists = collect();
         foreach ($artistsResponse as $singleArtistResponse) {
-            $artists->push(self::artistModelsFromResponse($singleArtistResponse));
+            $artists->push(self::artistModelFromResponse($singleArtistResponse));
         }
         return $artists;
     }
 
-    public static function artistModelsFromResponse($artistResponse)
+    public static function artistModelFromResponse($artistResponse)
     {
         return new SpotifyArtist($artistResponse);
     }

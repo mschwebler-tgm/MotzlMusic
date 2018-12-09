@@ -3,7 +3,7 @@
 namespace App\Components\Spotify\Import\Importers;
 
 use App\Components\Spotify\Import\TrackImportService;
-use App\Components\Spotify\Models\Track;
+use App\Components\Spotify\SpotifyDTO;
 use App\Service\Spotify\SpotifyApiService;
 
 class SpotifyTrackImporter implements SpotifyImporter
@@ -41,8 +41,6 @@ class SpotifyTrackImporter implements SpotifyImporter
             $offset += $itemsPerPage;
         } while (count($tracks) < $response->total);
 
-        return collect($tracks)->map(function($item) {
-            return (new Track($item->track));
-        });
+        return SpotifyDTO::trackModelsFromResponse($tracks);
     }
 }

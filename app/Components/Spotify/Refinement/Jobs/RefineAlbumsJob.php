@@ -2,6 +2,7 @@
 
 namespace App\Components\Spotify\Refinement\Jobs;
 
+use App\Components\Spotify\Refinement\RefinementService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -12,11 +13,11 @@ class RefineAlbumsJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    private $albumIds;
+    private $albumSpotifyIds;
 
-    public function __construct($albumIds)
+    public function __construct($albumSpotifyIds)
     {
-        $this->albumIds = $albumIds;
+        $this->albumSpotifyIds = $albumSpotifyIds;
     }
 
     /**
@@ -26,6 +27,8 @@ class RefineAlbumsJob implements ShouldQueue
      */
     public function handle()
     {
-        // TODO implement
+        /** @var RefinementService $refinementService */
+        $refinementService = app(RefinementService::class);
+        $refinementService->refineAlbums($this->albumSpotifyIds);
     }
 }

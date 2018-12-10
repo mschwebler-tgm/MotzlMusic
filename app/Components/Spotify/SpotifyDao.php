@@ -13,7 +13,7 @@ use Illuminate\Support\Collection;
 
 class SpotifyDao
 {
-    public function storeTrack(SpotifyTrack $spotifyTrack, User $user)
+    public function storeTrack(SpotifyTrack $spotifyTrack, User $user, $albumId = null)
     {
         /** @var Track $track */
         $track = Track::firstOrCreate([
@@ -26,6 +26,7 @@ class SpotifyDao
             'popularity' => $spotifyTrack->popularity,
             'spotify_href' => $spotifyTrack->href,
             'spotify_uri' => $spotifyTrack->uri,
+            'album_id' => $albumId
         ])->save();
 
         return $track;

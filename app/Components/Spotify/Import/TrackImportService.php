@@ -29,9 +29,11 @@ class TrackImportService
     {
         /** @var SpotifyTrack $spotifyTrack */
         foreach ($spotifyTracks as $spotifyTrack) {
-            $track = $this->spotifyDao->storeTrack($spotifyTrack, apiUser());
-            $album = $this->spotifyDao->storeAlbum($spotifyTrack->album);
             $artists = $this->spotifyDao->storeArtists($spotifyTrack->artists);
+            $album = $this->spotifyDao->storeAlbum($spotifyTrack->album);
+            $track = $this->spotifyDao->storeTrack($spotifyTrack, apiUser(), $album->id);
+            $track->artists()->sync($artists->pluck('id'));
+            $album->artists()->sync($artists->pluck('id'));
             $this->addToRefinementQueue($track, $album, $artists);
         }
         $this->dispatchRefinementJobs(true);

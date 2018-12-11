@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Spotify;
 use App\Components\Spotify\Import\AlbumService;
 use App\Components\Spotify\Import\Importers\ProcessSpotifyImportJob;
 use App\Components\Spotify\Import\Importers\SpotifyAlbumImporter;
+use App\Components\Spotify\Import\Importers\SpotifyPlaylistImporter;
 use App\Components\Spotify\Import\Importers\SpotifyTrackImporter;
 use App\Components\Spotify\Import\PlaylistTransformer;
 use App\Components\Spotify\Import\TrackService;
@@ -38,6 +39,10 @@ class ImportController
         ProcessSpotifyImportJob::dispatch(
             app(SpotifyAlbumImporter::class),
             $request->get('albums', [])
+        )->onQueue('prio_high');
+        ProcessSpotifyImportJob::dispatch(
+            app(SpotifyPlaylistImporter::class),
+            $request->get('playlists', [])
         )->onQueue('prio_high');
     }
 }

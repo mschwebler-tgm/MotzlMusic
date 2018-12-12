@@ -2,33 +2,22 @@
 
 namespace App\Components\Spotify\Import\Importers;
 
-use App\Components\Spotify\Import\TrackImportService;
 use App\Components\Spotify\SpotifyDTO;
-use App\Service\Spotify\SpotifyApiService;
 use Illuminate\Support\Collection;
 
-class SpotifyAlbumImporter implements SpotifyImporter
+class SpotifyAlbumImporter extends SpotifyImporter
 {
-    private $apiService;
-    private $trackImportService;
-
-    public function __construct(SpotifyApiService $apiService, TrackImportService $trackImportService)
-    {
-        $this->apiService = $apiService;
-        $this->trackImportService = $trackImportService;
-    }
-
     public function import($spotifyAlbumIds)
     {
         if (count($spotifyAlbumIds) === 0) {
             return;
         }
 
-        $spotifyAlbumsResponse = $this->apiService->getAlbums($spotifyAlbumIds);
+        $spotifyAlbumsResponse = $this->spotifyApiService->getAlbums($spotifyAlbumIds);
         $spotifyAlbums = SpotifyDTO::albumModelsFromResponse($spotifyAlbumsResponse->albums);
         $spotifyAlbums = $this->setAlbumForAlbumTracks($spotifyAlbums);
         $spotifyTracks = $spotifyAlbums->pluck('tracks')->flatten();
-        $this->trackImportService->saveTracksForCurrentUser($spotifyTracks);
+        $this->trackImportService->saveTracksForUser($spotifyTracks, $this->user);
     }
 
     /**

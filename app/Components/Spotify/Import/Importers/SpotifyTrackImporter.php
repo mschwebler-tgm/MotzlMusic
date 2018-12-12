@@ -2,21 +2,10 @@
 
 namespace App\Components\Spotify\Import\Importers;
 
-use App\Components\Spotify\Import\TrackImportService;
 use App\Components\Spotify\SpotifyDTO;
-use App\Service\Spotify\SpotifyApiService;
 
-class SpotifyTrackImporter implements SpotifyImporter
+class SpotifyTrackImporter extends SpotifyImporter
 {
-    private $apiService;
-    private $trackImportService;
-
-    public function __construct(SpotifyApiService $apiService, TrackImportService $trackImportService)
-    {
-        $this->apiService = $apiService;
-        $this->trackImportService = $trackImportService;
-    }
-
     /**
      * @param $importSavedTracks boolean
      */
@@ -27,7 +16,7 @@ class SpotifyTrackImporter implements SpotifyImporter
         }
 
         $tracks = $this->getAllSavedTracks();
-        $this->trackImportService->saveTracksForCurrentUser($tracks);
+        $this->trackImportService->saveTracksForUser($tracks, $this->user);
     }
 
     private function getAllSavedTracks()
@@ -36,7 +25,7 @@ class SpotifyTrackImporter implements SpotifyImporter
         $offset = 0;
         $tracks = [];
         do {
-            $response = $this->apiService->getMySavedTracks(['limit' => $itemsPerPage, 'offset' => $offset]);
+            $response = $this->spotifyApiService->getMySavedTracks(['limit' => $itemsPerPage, 'offset' => $offset]);
             $tracks = array_merge($response->items, $tracks);
             $offset += $itemsPerPage;
         } while (count($tracks) < $response->total);

@@ -2,6 +2,9 @@
 
 namespace App\Components\Spotify\Import\Importers;
 
+use App\Components\Spotify\Import\TrackImportService;
+use App\Service\Spotify\SpotifyApiService;
+use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -15,11 +18,13 @@ class ProcessSpotifyImportJob implements ShouldQueue
     /** @var SpotifyImporter $importer */
     private $importer;
     private $importOptions;
+    private $user;
 
-    public function __construct(SpotifyImporter $importer, $options)
+    public function __construct(SpotifyImporter $importer, $options, User $user)
     {
         $this->importer = $importer;
         $this->importOptions = $options;
+        $this->user = $user;
     }
 
     /**
@@ -29,6 +34,15 @@ class ProcessSpotifyImportJob implements ShouldQueue
      */
     public function handle()
     {
+        $spotifyApiService = app(SpotifyApiService::class);
+        $spotifyApiService->setApiUser($this->user);
+
+        $trackImportService = app(TrackImportService::class);
+        $trackImportService->setCurrentUser($this->user);
+
+        $this->importer->setUser($this->user);
+        $this->importer->setSpotifyApiService($spotifyApiService);
+        $this->importer->setTrackImportService($trackImportService);
         $this->importer->import($this->importOptions);
     }
 }

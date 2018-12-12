@@ -5,6 +5,7 @@ namespace App\Components\Spotify\Refinement;
 use App\Components\Spotify\SpotifyDao;
 use App\Components\Spotify\SpotifyDTO;
 use App\Service\Spotify\SpotifyApiService;
+use App\User;
 
 class RefinementService
 {
@@ -15,6 +16,11 @@ class RefinementService
     {
         $this->spotifyApiService = $spotifyApiService;
         $this->spotifyDao = $spotifyDao;
+    }
+
+    public function setSpotifyApiUser(User $user)
+    {
+        $this->spotifyApiService->setApiUser($user);
     }
 
     public function refineAlbums($albumSpotifyIds)

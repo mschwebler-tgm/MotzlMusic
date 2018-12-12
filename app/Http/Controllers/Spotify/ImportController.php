@@ -34,15 +34,18 @@ class ImportController
     {
         ProcessSpotifyImportJob::dispatch(
             app(SpotifyTrackImporter::class),
-            $request->get('importSavedTracks', false)
+            $request->get('importSavedTracks', false),
+            apiUser()
         )->onQueue('prio_high');
         ProcessSpotifyImportJob::dispatch(
             app(SpotifyAlbumImporter::class),
-            $request->get('albums', [])
+            $request->get('albums', []),
+            apiUser()
         )->onQueue('prio_high');
         ProcessSpotifyImportJob::dispatch(
             app(SpotifyPlaylistImporter::class),
-            $request->get('playlists', [])
+            $request->get('playlists', []),
+            apiUser()
         )->onQueue('prio_high');
     }
 }

@@ -3,21 +3,15 @@
 namespace App\Components\Spotify\Import\Importers;
 
 use App\Components\Spotify\Import\PlaylistImportService;
-use App\Components\Spotify\Import\TrackImportService;
 use App\Components\Spotify\Models\Playlist;
 use App\Components\Spotify\SpotifyDao;
-use App\Service\Spotify\SpotifyApiService;
 
-class SpotifyPlaylistImporter implements SpotifyImporter
+class SpotifyPlaylistImporter extends SpotifyImporter
 {
-    private $apiService;
-    private $trackImportService;
     private $spotifyDao;
 
-    public function __construct(SpotifyApiService $apiService, TrackImportService $trackImportService, SpotifyDao $spotifyDao)
+    public function __construct(SpotifyDao $spotifyDao)
     {
-        $this->apiService = $apiService;
-        $this->trackImportService = $trackImportService;
         $this->spotifyDao = $spotifyDao;
     }
 
@@ -27,12 +21,11 @@ class SpotifyPlaylistImporter implements SpotifyImporter
             return;
         }
 
-        $user = apiUser();
         $spotifyPlaylists = $this->getPlaylists($importPlaylistIds);
         /** @var Playlist $spotifyPlaylist */
         foreach ($spotifyPlaylists as $spotifyPlaylist) {
-            $playlist = $this->spotifyDao->storePlaylist($spotifyPlaylist, $user->id);
-            $playlistTracks = $this->trackImportService->saveTracksForCurrentUser($spotifyPlaylist->tracks);
+            $playlist = $this->spotifyDao->storePlaylist($spotifyPlaylist, $this->user->id);
+            $playlistTracks = $this->trackImportService->saveTracksForUser($spotifyPlaylist->tracks, $this->user);
             $playlist->tracks()->sync($playlistTracks->pluck('id'));
         }
     }
@@ -41,7 +34,7 @@ class SpotifyPlaylistImporter implements SpotifyImporter
     {
         $playlists = collect();
         foreach ($spotifyPlaylistIds as $id) {
-            $playlistResponse = $this->apiService->getPlaylist($id);
+            $playlistResponse = $this->spotifyApiService->getPlaylist($id);
             $playlists->push(new Playlist($playlistResponse));
         }
         return $playlists;

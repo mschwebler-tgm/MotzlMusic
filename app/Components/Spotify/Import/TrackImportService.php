@@ -9,10 +9,12 @@ use App\Components\Spotify\Refinement\Jobs\RefineArtistsJob;
 use App\Components\Spotify\Refinement\Jobs\RefineTracksJob;
 use App\Components\Spotify\SpotifyDao;
 use App\Track;
+use App\User;
 use Illuminate\Support\Collection;
 
 class TrackImportService
 {
+    private $currentUser;
     private $spotifyDao;
     private $trackRefinementQueue = [];
     private $albumRefinementQueue = [];
@@ -25,14 +27,19 @@ class TrackImportService
         $this->spotifyDao = $spotifyDao;
     }
 
-    public function saveTracksForCurrentUser(Collection $spotifyTracks)
+    public function setCurrentUser(User $user)
+    {
+        $this->currentUser = $user;
+    }
+
+    public function saveTracksForUser(Collection $spotifyTracks, User $user)
     {
         $tracks = collect();
         /** @var SpotifyTrack $spotifyTrack */
         foreach ($spotifyTracks as $spotifyTrack) {
             $artists = $this->spotifyDao->storeArtists($spotifyTrack->artists);
             $album = $this->spotifyDao->storeAlbum($spotifyTrack->album);
-            $track = $this->spotifyDao->storeTrack($spotifyTrack, apiUser(), $album->id);
+            $track = $this->spotifyDao->storeTrack($spotifyTrack, $user, $album->id);
             $track->artists()->sync($artists->pluck('id'));
             $album->artists()->sync($artists->pluck('id'));
             $this->addToRefinementQueue($track, $album, $artists);
@@ -67,7 +74,7 @@ class TrackImportService
     private function dispatchTrackRefinementJob()
     {
         if ($this->trackRefinementQueue) {
-            RefineTracksJob::dispatch($this->trackRefinementQueue)->onQueue('prio_low');
+            RefineTracksJob::dispatch($this->trackRefinementQueue, $this->currentUser)->onQueue('prio_low');
             $this->trackRefinementQueue = [];
         }
     }
@@ -75,7 +82,7 @@ class TrackImportService
     private function dispatchAlbumRefinementJob()
     {
         if ($this->albumRefinementQueue) {
-            RefineAlbumsJob::dispatch($this->albumRefinementQueue)->onQueue('prio_low');
+            RefineAlbumsJob::dispatch($this->albumRefinementQueue, $this->currentUser)->onQueue('prio_low');
             $this->albumRefinementQueue = [];
         }
     }
@@ -83,7 +90,7 @@ class TrackImportService
     private function dispatchArtistRefinementJob()
     {
         if ($this->artistRefinementQueue) {
-            RefineArtistsJob::dispatch($this->artistRefinementQueue)->onQueue('prio_low');
+            RefineArtistsJob::dispatch($this->artistRefinementQueue, $this->currentUser)->onQueue('prio_low');
             $this->artistRefinementQueue = [];
         }
     }

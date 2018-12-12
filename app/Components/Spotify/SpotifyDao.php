@@ -5,8 +5,11 @@ namespace App\Components\Spotify;
 use App\Album;
 use App\Artist;
 use App\Components\Spotify\Models\Album as SpotifyAlbum;
+use App\Components\Spotify\Models\AudioFeatures as SpotifyAudioFeatures;
 use App\Components\Spotify\Models\Artist as SpotifyArtist;
+use App\Components\Spotify\Models\AudioFeatures;
 use App\Components\Spotify\Models\Track as SpotifyTrack;
+use App\SpotifyAudioFeature;
 use App\Track;
 use App\User;
 use Illuminate\Support\Collection;
@@ -82,5 +85,35 @@ class SpotifyDao
         ])->save();
 
         return $artist;
+    }
+
+    public function storeAudioFeature(SpotifyAudioFeatures $spotifyAudioFeatures, $spotifyTrackId)
+    {
+        $track = Track::where('spotify_id', $spotifyTrackId)->first();
+        if (!$track) {
+            \Log::warning('Trying to save spotify audio feature to track which is not available in database. (' . __METHOD__ . ')');
+            return null;
+        }
+
+        /** @var SpotifyAudioFeature $audioFeatures */
+        $audioFeatures = SpotifyAudioFeature::firstOrNew([
+            'track_id' => $track->id
+        ]);
+        $audioFeatures->fill([
+            'energy' => $spotifyAudioFeatures->energy,
+            'valence' => $spotifyAudioFeatures->valence,
+            'danceability' => $spotifyAudioFeatures->danceability,
+            'speechiness' => $spotifyAudioFeatures->speechiness,
+            'acousticness' => $spotifyAudioFeatures->acousticness,
+            'instrumentalness' => $spotifyAudioFeatures->instrumentalness,
+            'liveness' => $spotifyAudioFeatures->liveness,
+            'loudness' => $spotifyAudioFeatures->loudness,
+            'key' => $spotifyAudioFeatures->key,
+            'mode' => $spotifyAudioFeatures->mode,
+            'tempo' => $spotifyAudioFeatures->tempo,
+            'spotify_id' => $spotifyAudioFeatures->id,
+        ])->save();
+
+        return $audioFeatures;
     }
 }

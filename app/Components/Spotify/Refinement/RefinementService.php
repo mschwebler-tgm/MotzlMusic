@@ -32,4 +32,14 @@ class RefinementService
         $spotifyArtists = SpotifyDTO::artistModelsFromResponse($apiResponse->artists);
         $this->spotifyDao->storeArtists($spotifyArtists);
     }
+
+    public function refineTracks($trackSpotifyIds)
+    {
+        $apiResponse = $this->spotifyApiService->getAudioFeatures($trackSpotifyIds);
+        $spotifyAudioFeatures = SpotifyDTO::audioFeatureModelsFromResponse($apiResponse->audio_features);
+        foreach ($spotifyAudioFeatures as $spotifyAudioFeature) {
+            $this->spotifyDao->storeAudioFeature($spotifyAudioFeature, current($trackSpotifyIds));
+            next($trackSpotifyIds);
+        }
+    }
 }

@@ -23,9 +23,9 @@ class CreateAlbumsTable extends Migration
             $table->string('spotify_id')->nullable();
             $table->string('spotify_href')->nullable();
             $table->string('spotify_uri')->nullable();
-            $table->string('spotify_image_small')->nullable();
-            $table->string('spotify_image_medium')->nullable();
-            $table->string('spotify_image_large')->nullable();
+            $table->string('spotify_image_small', 1024)->nullable();
+            $table->string('spotify_image_medium', 1024)->nullable();
+            $table->string('spotify_image_large', 1024)->nullable();
             $table->timestamps();
         });
     }

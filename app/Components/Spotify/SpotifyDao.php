@@ -27,7 +27,7 @@ class SpotifyDao
         ]);
         $track->fill([
             'duration' => $spotifyTrack->duration,
-            'popularity' => $spotifyTrack->popularity,
+            'popularity' => $spotifyTrack->popularity ?? $track->popularity,
             'spotify_href' => $spotifyTrack->href,
             'spotify_uri' => $spotifyTrack->uri,
             'album_id' => $albumId

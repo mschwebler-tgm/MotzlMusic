@@ -3,6 +3,7 @@
 namespace App\Components\Spotify\Models;
 
 use App\Components\Spotify\Models\Traits\HasTracks;
+use Illuminate\Support\Collection;
 
 class Playlist extends BaseModel
 {
@@ -36,6 +37,8 @@ class Playlist extends BaseModel
     public $type;
     /** @var string */
     public $uri;
+    /** @var Collection */
+    public $tracks;
 
     public function __construct($apiResponsePlaylist)
     {

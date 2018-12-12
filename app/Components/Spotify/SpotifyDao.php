@@ -8,6 +8,8 @@ use App\Components\Spotify\Models\Album as SpotifyAlbum;
 use App\Components\Spotify\Models\AudioFeatures as SpotifyAudioFeatures;
 use App\Components\Spotify\Models\Artist as SpotifyArtist;
 use App\Components\Spotify\Models\Track as SpotifyTrack;
+use App\Components\Spotify\Models\Playlist as SpotifyPlaylist;
+use App\Playlist;
 use App\SpotifyAudioFeature;
 use App\Track;
 use App\User;
@@ -114,5 +116,24 @@ class SpotifyDao
         ])->save();
 
         return $audioFeatures;
+    }
+
+    public function storePlaylist(SpotifyPlaylist $spotifyPlaylist, $userId)
+    {
+        /** @var Playlist $playlist */
+        $playlist = Playlist::firstOrNew([
+            'spotify_id' => $spotifyPlaylist->id
+        ]);
+        $playlist->fill([
+            'name' => $spotifyPlaylist->name,
+            'description' => $spotifyPlaylist->description,
+            'spotify_image_small' => $spotifyPlaylist->images[2]->url ?? $playlist->spotify_image_small,
+            'spotify_image_medium' => $spotifyPlaylist->images[1]->url ?? $playlist->spotify_image_medium,
+            'spotify_image_large' => $spotifyPlaylist->images[0]->url ?? $playlist->spotify_image_large,
+            'user_id' => $userId,
+            'is_public' => $spotifyPlaylist->isPublic,
+        ])->save();
+
+        return $playlist;
     }
 }

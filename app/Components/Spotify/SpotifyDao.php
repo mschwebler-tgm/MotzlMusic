@@ -7,7 +7,6 @@ use App\Artist;
 use App\Components\Spotify\Models\Album as SpotifyAlbum;
 use App\Components\Spotify\Models\AudioFeatures as SpotifyAudioFeatures;
 use App\Components\Spotify\Models\Artist as SpotifyArtist;
-use App\Components\Spotify\Models\AudioFeatures;
 use App\Components\Spotify\Models\Track as SpotifyTrack;
 use App\SpotifyAudioFeature;
 use App\Track;
@@ -43,8 +42,8 @@ class SpotifyDao
             'name' => $spotifyAlbum->name
         ]);
         $album->fill([
-            'popularity' => $spotifyAlbum->popularity,
-            'label' => $spotifyAlbum->label,
+            'popularity' => $spotifyAlbum->popularity ?? $album->popularity,
+            'label' => $spotifyAlbum->label ?? $album->label,
             'release_date' => $spotifyAlbum->releaseDate,
             'total_tracks' => $spotifyAlbum->totalTracks,
             'spotify_href' => $spotifyAlbum->href,
@@ -76,7 +75,7 @@ class SpotifyDao
             'name' => $spotifyArtist->name
         ]);
         $artist->fill([
-            'popularity' => $spotifyArtist->popularity,
+            'popularity' => $spotifyArtist->popularity ?? $artist->popularity,
             'spotify_href' => $spotifyArtist->href,
             'spotify_uri' => $spotifyArtist->uri,
             'spotify_image_small' => $spotifyArtist->images[2]->url ?? $artist->spotify_image_small,

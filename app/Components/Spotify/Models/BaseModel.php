@@ -7,6 +7,11 @@ abstract class BaseModel
 {
     protected $apiResponse;
 
+    public function __construct($apiResponse)
+    {
+        $this->apiResponse = $apiResponse;
+    }
+
     protected function setAttributesFromResponse(array $attributes)
     {
         foreach ($attributes as $key => $attribute) {

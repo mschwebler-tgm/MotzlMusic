@@ -39,7 +39,7 @@ class Playlist extends BaseModel
 
     public function __construct($apiResponsePlaylist)
     {
-        $this->apiResponse = $apiResponsePlaylist;
+        parent::__construct($apiResponsePlaylist);
 
         $playlistTracksResponse = $this->pluckTracksFromPlaylistResponse($apiResponsePlaylist);
         $this->setTracksFromApiResponse($playlistTracksResponse);

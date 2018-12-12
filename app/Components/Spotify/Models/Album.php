@@ -50,7 +50,7 @@ class Album extends BaseModel
 
     public function __construct($apiResponseAlbum)
     {
-        $this->apiResponse = $apiResponseAlbum;
+        parent::__construct($apiResponseAlbum);
 
         $this->setAttributesFromResponse([
             'albumType' => 'album_type',

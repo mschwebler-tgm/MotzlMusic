@@ -46,7 +46,7 @@ class Track extends BaseModel
 
     public function __construct($apiResponseTrack)
     {
-        $this->apiResponse = $apiResponseTrack;
+        parent::__construct($apiResponseTrack);
 
         $this->setAlbumFromResponse($apiResponseTrack->album ?? null);
         $this->setArtistsFromResponse($apiResponseTrack->artists ?? null);

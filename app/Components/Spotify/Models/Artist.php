@@ -25,7 +25,7 @@ class Artist extends BaseModel
 
     public function __construct($apiResponseArtist)
     {
-        $this->apiResponse = $apiResponseArtist;
+        parent::__construct($apiResponseArtist);
 
         $this->setAttributesFromResponse([
             'id',

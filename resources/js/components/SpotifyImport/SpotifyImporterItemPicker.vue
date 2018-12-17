@@ -1,33 +1,37 @@
 <template>
-    <div class="item-picker" v-show="show && itemsToImport.length !== 0">
-        <div v-for="item in pageItems" :key="item.id"
-             class="item-wrapper"
-             :class="{selected: isItemSelected(itemsToImport, item)}">
-            <div class="item"
-                 :style="{background: 'black url(' + item.image + ')'}"
-                 @click="handleItemClick(itemsToImport, item, $parent.$refs[checkboxReference])">
-                <div class="is-overlay select-check">
-                    <div class="check">
-                        <b-icon icon="check" size="is-large" type="is-white"
-                                v-if="isItemSelected(itemsToImport, item)"></b-icon>
-                        <span class="has-text-white">{{ item.tracks }} tracks</span>
+    <div class="wrapper"
+         :class="{active: show && itemsToImport.length !== 0}">
+        <div class="item-picker">
+            <!--v-show="show && itemsToImport.length !== 0">-->
+            <div v-for="item in pageItems" :key="item.id"
+                 class="item-wrapper"
+                 :class="{selected: isItemSelected(itemsToImport, item)}">
+                <div class="item"
+                     :style="{background: 'black url(' + item.image + ')'}"
+                     @click="handleItemClick(itemsToImport, item, $parent.$refs[checkboxReference])">
+                    <div class="is-overlay select-check">
+                        <div class="check">
+                            <b-icon icon="check" size="is-large" type="is-white"
+                                    v-if="isItemSelected(itemsToImport, item)"></b-icon>
+                            <span class="has-text-white">{{ item.tracks }} tracks</span>
+                        </div>
                     </div>
                 </div>
+                <div class="has-text-centered has-text-wrapped item-name"
+                     @click="handleItemClick(itemsToImport, item, $parent.$refs[checkboxReference])">
+                    {{ item.name }}
+                </div>
             </div>
-            <div class="has-text-centered has-text-wrapped item-name"
-                 @click="handleItemClick(itemsToImport, item, $parent.$refs[checkboxReference])">
-                {{ item.name }}
+            <div style="height: 100%;"></div>
+            <div class="level flex-1" style="flex-basis: 100%;"
+                 v-if="items && items.length > perPage">
+                <div class="level-left"></div>
+                <b-pagination
+                        :total="items.length"
+                        :per-page="perPage"
+                        :simple="true"
+                        :current.sync="currentPage"></b-pagination>
             </div>
-        </div>
-        <br>
-        <div class="level flex-1" style="flex-basis: 100%;"
-             v-if="items && items.length > perPage">
-            <div class="level-left"></div>
-            <b-pagination
-                    :total="items.length"
-                    :per-page="perPage"
-                    :simple="true"
-                    :current.sync="currentPage"></b-pagination>
         </div>
     </div>
 </template>
@@ -73,10 +77,29 @@
 <style scoped lang="scss">
     @import "../../../sass/_variables.scss";
 
+    .wrapper {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 1.0s ease-in-out, opacity .3s ease-out;
+        padding: 0 15px;
+        opacity: 0;
+        position: relative;
+    }
+
+    .wrapper.active {
+        max-height: 10000px;
+        padding: 3px 15px 15px;
+        opacity: 1;
+        overflow: hidden;
+    }
+
+    .wrapper:not(.active) > .item-picker {
+        position: absolute;
+    }
+
     .item-picker {
         display: flex;
         flex-wrap: wrap;
-        padding: 3px 15px 15px;
     }
 
     .item-picker > div {

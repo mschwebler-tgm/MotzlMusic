@@ -9,6 +9,7 @@ use App\Components\Spotify\Import\Importers\SpotifyPlaylistImporter;
 use App\Components\Spotify\Import\Importers\SpotifyTrackImporter;
 use App\Components\Spotify\Import\PlaylistTransformer;
 use App\Components\Spotify\Import\TrackService;
+use App\Daos\UserDao;
 use App\Service\Spotify\SpotifyApiService;
 use Illuminate\Http\Request;
 
@@ -30,7 +31,7 @@ class ImportController
         return $albumService->paginate();
     }
 
-    public function import(Request $request)
+    public function import(Request $request, UserDao $userDao)
     {
         ProcessSpotifyImportJob::dispatch(
             app(SpotifyTrackImporter::class),
@@ -47,5 +48,7 @@ class ImportController
             $request->get('playlists', []),
             apiUser()
         )->onQueue('prio_high');
+
+        $userDao->setSpotifyImportComplete();
     }
 }

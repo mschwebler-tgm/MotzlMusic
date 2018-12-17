@@ -18,7 +18,7 @@ const app = new Vue({
     router,
     data() {
         return {
-            showSpotifyImport: true
+            showSpotifyImport: false
         }
     }
   });

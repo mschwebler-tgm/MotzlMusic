@@ -1,6 +1,7 @@
 <template>
     <div id="master">
-        <b-modal :active.sync="$root.showSpotifyImport" has-modal-card>
+        <b-modal v-if="user && !user.spotify_import_complete || $root.showSpotifyImport"
+                :active.sync="$root.showSpotifyImport" has-modal-card>
             <spotify-importer></spotify-importer>
         </b-modal>
         <nav-bar></nav-bar>
@@ -72,6 +73,9 @@
         components: {BModal, Tracks, NavBar, SpotifyImporter},
         name: "master",
         props: ['user'],
+        created() {
+            this.$root.showSpotifyImport = this.user && !this.user.spotify_import_complete;
+        },
         mounted() {
             this.initMobileNav();
         },

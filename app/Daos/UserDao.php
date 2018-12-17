@@ -26,4 +26,11 @@ class UserDao
         $user->save();
         return $user;
     }
+
+    public function setSpotifyImportComplete()
+    {
+        $user = apiUser();
+        $user->spotify_import_complete = true;
+        $user->save();
+    }
 }

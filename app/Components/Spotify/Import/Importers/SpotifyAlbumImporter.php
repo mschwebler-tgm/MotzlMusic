@@ -2,7 +2,7 @@
 
 namespace App\Components\Spotify\Import\Importers;
 
-use App\Components\Spotify\SpotifyDTO;
+use App\DTOs\AlbumDTO;
 use Illuminate\Support\Collection;
 
 class SpotifyAlbumImporter extends SpotifyImporter
@@ -14,7 +14,7 @@ class SpotifyAlbumImporter extends SpotifyImporter
         }
 
         $spotifyAlbumsResponse = $this->spotifyApiService->getAlbums($spotifyAlbumIds);
-        $spotifyAlbums = SpotifyDTO::albumModelsFromResponse($spotifyAlbumsResponse->albums);
+        $spotifyAlbums = AlbumDTO::spotifyToModels($spotifyAlbumsResponse->albums);
         $spotifyAlbums = $this->setAlbumForAlbumTracks($spotifyAlbums);
         $spotifyTracks = $spotifyAlbums->pluck('tracks')->flatten();
         $this->trackImportService->saveTracksForUser($spotifyTracks, $this->user);

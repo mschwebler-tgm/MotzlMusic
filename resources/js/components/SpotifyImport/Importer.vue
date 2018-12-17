@@ -31,25 +31,11 @@
                     customize
                 </span>
             </div>
-            <div class="item-picker" v-show="customizeAlbums && albumsToImport.length !== 0">
-                <div v-for="album in albums.items" :key="album.id"
-                     :class="{selected: isItemSelected(albumsToImport, album)}">
-                    <div class="item" :style="{backgroundImage: 'url(' + album.image + ')'}"
-                         @click="handleItemClick(albumsToImport, album, $refs.albumCheckbox)">
-                        <div class="is-overlay select-check">
-                            <div class="check">
-                                <b-icon icon="check" size="is-large" type="is-white"
-                                        v-if="isItemSelected(albumsToImport, album)"></b-icon>
-                                <span class="has-text-white">{{ album.tracks }} tracks</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="has-text-centered has-text-wrapped item-name"
-                         @click="handleItemClick(albumsToImport, album, $refs.albumCheckbox)">
-                        {{ album.name }}
-                    </div>
-                </div>
-            </div>
+            <spotify-importer-item-picker
+                    :show="customizeAlbums"
+                    :items="albums.items"
+                    :items-to-import="albumsToImport"
+                    checkbox-reference="albumCheckbox"></spotify-importer-item-picker>
 
             <!-- PLAYLISTS -->
             <div class="field">
@@ -64,26 +50,11 @@
                       v-if="playlistsToImport.length > 0"
                       @click="customizePlaylists = !customizePlaylists">customize</span>
             </div>
-            <div class="item-picker" v-show="customizePlaylists && playlistsToImport.length !== 0">
-                <div v-for="playlist in playlists.items" :key="playlist.id"
-                     :class="{selected: isItemSelected(playlistsToImport, playlist)}">
-                    <div class="item"
-                         :style="{backgroundImage: 'url(' + playlist.image + ')'}"
-                         @click="handleItemClick(playlistsToImport, playlist, $refs.playlistCheckbox)">
-                        <div class="is-overlay select-check">
-                            <div class="check">
-                            <b-icon icon="check" size="is-large" type="is-white"
-                                    v-if="isItemSelected(playlistsToImport, playlist)"></b-icon>
-                            <span class="has-text-white">{{ playlist.tracks }} tracks</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="has-text-centered has-text-wrapped item-name"
-                         @click="handleItemClick(playlistsToImport, playlist, $refs.playlistCheckbox)">
-                        {{ playlist.name }}
-                    </div>
-                </div>
-            </div>
+            <spotify-importer-item-picker
+                    :show="customizePlaylists"
+                    :items="playlists.items"
+                    :items-to-import="playlistsToImport"
+                    checkbox-reference="playlistCheckbox"></spotify-importer-item-picker>
         </section>
         <footer class="modal-card-foot">
             <button class="button is-success" @click="importSelected">Import</button>
@@ -95,10 +66,11 @@
 
 <script>
     import BIcon from "buefy/src/components/icon/Icon";
+    import SpotifyImporterItemPicker from "./SpotifyImporterItemPicker";
 
     export default {
         name: "Importer",
-        components: {BIcon},
+        components: {SpotifyImporterItemPicker, BIcon},
         data() {
             return {
                 tracks: {},
@@ -161,7 +133,7 @@
             },
             importSelected() {
                 const payload = {
-                    tracks: this.importAllTracks ? this.tracks.items.map(item => item.id) : [],
+                    importSavedTracks: this.importAllTracks,
                     playlists: this.playlistsToImport.map(item => item.id),
                     albums: this.albumsToImport.map(item => item.id)
                 };

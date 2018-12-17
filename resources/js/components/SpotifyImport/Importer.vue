@@ -57,7 +57,9 @@
                     checkbox-reference="playlistCheckbox"></spotify-importer-item-picker>
         </section>
         <footer class="modal-card-foot">
-            <button class="button is-success" @click="importSelected">Import</button>
+            <button class="button is-success"
+                    :class="{'is-loading': loading}"
+                    @click="importSelected">Import</button>
             <button class="button" @click="cancel">Cancel</button>
             <span class="total-tracks has-text-spotify is-size-5">{{ animatedTotalTracksToImport }} tracks </span>
         </footer>
@@ -82,6 +84,7 @@
                 customizeAlbums: false,
                 customizePlaylists: false,
                 totalTracksToImport: 0,
+                loading: false
             }
         },
         created() {
@@ -132,14 +135,18 @@
                 this.$root.showSpotifyImport = false;
             },
             importSelected() {
+                this.loading = true;
                 const payload = {
                     importSavedTracks: this.importAllTracks,
                     playlists: this.playlistsToImport.map(item => item.id),
                     albums: this.albumsToImport.map(item => item.id)
                 };
-                axios.post('/api/spotify/import', payload).then(res => {
-
-                });
+                axios.post('/api/spotify/import', payload)
+                    .then(_ => {
+                        this.loading = false;
+                        this.$root.showSpotifyImport = false;
+                    })
+                    .catch(_ => this.loading = false);
             }
         },
         watch: {

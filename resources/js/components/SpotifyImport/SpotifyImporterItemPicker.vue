@@ -1,9 +1,10 @@
 <template>
     <div class="item-picker" v-show="show && itemsToImport.length !== 0">
-        <div v-for="item in items" :key="item.id"
+        <div v-for="item in pageItems" :key="item.id"
+             class="item-wrapper"
              :class="{selected: isItemSelected(itemsToImport, item)}">
             <div class="item"
-                 :style="{backgroundImage: 'url(' + item.image + ')'}"
+                 :style="{background: 'black url(' + item.image + ')'}"
                  @click="handleItemClick(itemsToImport, item, $parent.$refs[checkboxReference])">
                 <div class="is-overlay select-check">
                     <div class="check">
@@ -18,13 +19,32 @@
                 {{ item.name }}
             </div>
         </div>
+        <br>
+        <div class="level flex-1" style="flex-basis: 100%;"
+             v-if="items && items.length > perPage">
+            <div class="level-left"></div>
+            <b-pagination
+                    :total="items.length"
+                    :per-page="perPage"
+                    :simple="true"
+                    :current.sync="currentPage"></b-pagination>
+        </div>
     </div>
 </template>
 
 <script>
+    import BPagination from "buefy/src/components/pagination/Pagination";
+
     export default {
         name: "SpotifyImporterItemPicker",
+        components: {BPagination},
         props: ['show', 'items', 'itemsToImport', 'checkboxReference'],
+        data() {
+            return {
+                currentPage: 1,
+                perPage: 6
+            }
+        },
         methods: {
             isItemSelected(items, paramItem) {
                 return !!items.filter(item => item.id === paramItem.id).length;
@@ -37,6 +57,15 @@
                 }
                 checkbox.newValue = toImport.length !== 0;
             },
+        },
+        computed: {
+            pageItems() {
+                if (!this.items) {
+                    return [];
+                }
+                const offset = (this.currentPage - 1) * this.perPage;
+                return this.items.slice(offset, offset + this.perPage);
+            }
         }
     }
 </script>
@@ -55,6 +84,10 @@
         margin-right: 30px;
         margin-bottom: 10px;
         cursor: pointer;
+    }
+
+    .item-wrapper {
+        height: 200px;
     }
 
     .item {

@@ -27,6 +27,12 @@
                 <ul class="menu-list">
                     <li><a>Player+</a></li>
                 </ul>
+                <p class="menu-label">
+                    Experiments
+                </p>
+                <ul class="menu-list">
+                    <li><router-link to="/experiments/spotify-player">Spotify player</router-link></li>
+                </ul>
                 <button class="button is-danger is-large is-fullwidth is-outlined" id="upload-button">Upload</button>
             </aside>
             <div class="my-content">

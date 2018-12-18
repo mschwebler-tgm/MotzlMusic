@@ -1,6 +1,7 @@
 import VueRouter from 'vue-router';
 
 import GaussIndex from './components/Ideas/Gauss/Index.vue';
+import SpotifyPlayer from './components/Experiments/SpotifyPlayer';
 import IdeasInex from './components/Ideas/Index.vue';
 import GlobalLibrary from './components/GlobalLibrary/Index.vue';
 import MyLibrary from './components/MyLibrary/Index.vue';
@@ -21,6 +22,11 @@ export default new VueRouter({
             component: Master,
             props: true,
             children: [
+                {
+                    path: '/experiments/spotify-player',
+                    name: 'experiment_spotify-player',
+                    component: SpotifyPlayer,
+                },
                 {
                     path: 'global-library',
                     name: 'global_library',

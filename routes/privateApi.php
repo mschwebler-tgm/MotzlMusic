@@ -16,3 +16,4 @@ Route::prefix('spotify')->namespace('Spotify')->group(function () {
     Route::get('/access', 'AuthController@getAccessToken');
 });
 
+Route::get('/track/audio-analysis/{spotifyId}', 'TrackController@getAudioAnalysis');

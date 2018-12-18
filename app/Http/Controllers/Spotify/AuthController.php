@@ -27,4 +27,9 @@ class AuthController extends Controller
         Auth::login($user, true);
         return redirect('/');
     }
+
+    public function getAccessToken(UserDao $userDao)
+    {
+        return $userDao->getCurrentUsersAccessToken();
+    }
 }

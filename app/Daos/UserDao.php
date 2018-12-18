@@ -33,4 +33,9 @@ class UserDao
         $user->spotify_import_complete = true;
         $user->save();
     }
+
+    public function getCurrentUsersAccessToken()
+    {
+        return apiUser()->spotify_access_token;
+    }
 }

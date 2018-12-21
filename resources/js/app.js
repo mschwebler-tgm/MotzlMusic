@@ -5,6 +5,8 @@ import router from './router';
 import Buefy from 'buefy';
 // import 'buefy/src/scss/buefy.scss';
 
+import store from './store/store';
+
 window.Vue = require('vue');
 
 Vue.component('gauss', require('./components/Ideas/Gauss/Gauss.vue'));
@@ -16,6 +18,7 @@ Vue.use(Buefy);
 const app = new Vue({
     el: '#root',
     router,
+    store,
     data() {
         return {
             showSpotifyImport: false

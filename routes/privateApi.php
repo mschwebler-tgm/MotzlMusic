@@ -15,3 +15,7 @@ Route::prefix('spotify')->namespace('Spotify')->group(function () {
     Route::post('/import', 'ImportController@import');
     Route::get('/access', 'AuthController@getAccessToken');
 });
+
+Route::prefix('my')->namespace('Personal')->group(function () {
+    Route::get('playlists', 'MyLibraryController@myPlaylists');
+});

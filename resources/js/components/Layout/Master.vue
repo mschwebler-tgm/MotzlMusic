@@ -1,5 +1,6 @@
 <template>
     <div id="master">
+        <spotify-player></spotify-player>
         <b-modal v-if="user && !user.spotify_import_complete || $root.showSpotifyImport"
                 :active.sync="$root.showSpotifyImport" has-modal-card>
             <spotify-importer></spotify-importer>
@@ -68,9 +69,10 @@
     import NavBar from "./Navbar";
     import SpotifyImporter from "../SpotifyImport/Importer";
     import BModal from "buefy/src/components/modal/Modal";
+    import SpotifyPlayer from "../Player/Spotify/SpotifyPlayer";
 
     export default {
-        components: {BModal, Tracks, NavBar, SpotifyImporter},
+        components: {SpotifyPlayer, BModal, Tracks, NavBar, SpotifyImporter},
         name: "master",
         props: ['user'],
         created() {

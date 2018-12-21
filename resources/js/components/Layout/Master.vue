@@ -123,7 +123,7 @@
         height: calc(100vh - 52px);
         /*flex: 1;*/
         width: 1172px;
-        padding: 20px;
+        padding: 20px 20px 0;
     }
     .my-content::-webkit-scrollbar, .my-content::-webkit-scrollbar-track,
     .my-content::-webkit-scrollbar-thumb, .my-content::-webkit-scrollbar-thumb:hover {

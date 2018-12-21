@@ -14,7 +14,7 @@ class MyLibraryDao
 
     public function getAllTracks()
     {
-        return Track::where('user_id', apiUser()->id)->get();
+        return Track::with('artists', 'album')->where('user_id', apiUser()->id)->limit(100)->get();
     }
 
     public function getAllArtists()

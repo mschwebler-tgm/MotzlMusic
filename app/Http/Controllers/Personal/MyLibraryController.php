@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Personal;
 
 use App\Components\MyLibrary\MyLibraryDao;
+use App\DTOs\TrackDTO;
 use App\Http\Controllers\Controller;
 
 class MyLibraryController extends Controller
@@ -21,7 +22,7 @@ class MyLibraryController extends Controller
 
     public function myTracks()
     {
-        return $this->libraryDao->getAllTracks();
+        return TrackDTO::toApiResponse($this->libraryDao->getAllTracks());
     }
 
     public function myArtists()

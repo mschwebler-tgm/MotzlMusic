@@ -30,6 +30,7 @@ class SpotifyDao
             'popularity' => $spotifyTrack->popularity ?? $track->popularity,
             'spotify_href' => $spotifyTrack->href,
             'spotify_uri' => $spotifyTrack->uri,
+            'spotify_track_number' => $spotifyTrack->trackNumber ?? $track->spotify_track_number,
             'album_id' => $albumId
         ])->save();
 

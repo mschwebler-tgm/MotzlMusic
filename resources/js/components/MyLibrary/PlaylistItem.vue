@@ -2,7 +2,7 @@
     <div class="card">
         <div class="card-image">
             <figure class="image is-4by3">
-                <img :src="playlist.spotify_image_medium" :alt="playlist.name">
+                <img :src="playlist.spotify_image_medium || playlistFallback" :alt="playlist.name">
             </figure>
         </div>
         <div class="card-content">
@@ -19,7 +19,12 @@
 <script>
     export default {
         name: "playlistItem",
-        props: ['playlist']
+        props: ['playlist'],
+        data() {
+            return {
+                playlistFallback: window.playlistFallback,
+            }
+        }
     }
 </script>
 

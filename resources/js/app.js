@@ -1,5 +1,3 @@
-require('./bootstrap');
-
 import VueRouter from 'vue-router';
 import router from './router';
 import Buefy from 'buefy';

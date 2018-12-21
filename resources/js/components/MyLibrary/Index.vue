@@ -2,31 +2,7 @@
     <section class="tab-scroll">
         <b-tabs v-model="activeTab">
             <b-tab-item label="Playlists">
-                <h2 class="has-text-weight-light title is-9">Newest</h2>
-                <div class="flex flex-wrap">
-                    <playlist></playlist>
-                    <playlist></playlist>
-                    <playlist></playlist>
-                    <playlist></playlist>
-                    <playlist></playlist>
-                    <playlist></playlist>
-                    <playlist></playlist>
-                </div>
-                <h2 class="has-text-weight-light title is-9">Automatic Playlists</h2>
-                <div class="flex flex-wrap">
-                    <playlist></playlist>
-                    <playlist></playlist>
-                    <playlist></playlist>
-                    <playlist></playlist>
-                </div>
-                <h2 class="has-text-weight-light title is-9">Subscribed Playlists</h2>
-                <div class="flex flex-wrap">
-                    <playlist></playlist>
-                    <playlist></playlist>
-                </div>
-                <div class="has-text-centered" style="padding: 65px;">
-                    No more playlists found. <a href="#">Create new!</a>
-                </div>
+                <playlists></playlists>
             </b-tab-item>
             <b-tab-item label="Tracks">
                 <h2 class="has-text-weight-light title is-9">Tracks</h2>
@@ -54,19 +30,19 @@
 
 <script>
     import BSwitch from "buefy/src/components/switch/Switch";
-    import Playlist from "./Playlist";
     import Tracks from "./Tracks";
     import Artist from "./Artist";
     import Album from "./Album";
     import BIcon from "buefy/src/components/icon/Icon";
+    import Playlists from "./Playlists";
 
     export default {
         components: {
+            Playlists,
             BIcon,
             Album,
             Artist,
             Tracks,
-            Playlist,
             BSwitch},
         name: "index",
         data() {

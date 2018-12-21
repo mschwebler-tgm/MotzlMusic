@@ -2,13 +2,13 @@
     <div class="card">
         <div class="card-image">
             <figure class="image is-4by3">
-                <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
+                <img :src="playlist.spotify_image_medium" :alt="playlist.name">
             </figure>
         </div>
         <div class="card-content">
             <div class="media">
                 <div class="media-content">
-                    <p class="title is-5">No use for a name</p>
+                    <p class="title is-5">{{ playlist.name }}</p>
                     <p class="subtitle is-6">Playlist</p>
                 </div>
             </div>
@@ -18,7 +18,8 @@
 
 <script>
     export default {
-        name: "playlist"
+        name: "playlistItem",
+        props: ['playlist']
     }
 </script>
 

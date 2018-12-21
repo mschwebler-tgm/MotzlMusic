@@ -9,7 +9,7 @@ class MyLibraryDao
 {
     public function getAllPlaylists()
     {
-        return Playlist::where('user_id', apiUser()->id)->get();
+        return Playlist::where('user_id', apiUser()->id)->orderBy('updated_at', 'desc')->get();
     }
 
     public function getAllTracks()

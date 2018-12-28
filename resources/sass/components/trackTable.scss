@@ -31,3 +31,21 @@
 .track-list-duration {
   width: 45px;
 }
+
+.track-list-artist {
+  width: 220px;
+}
+
+.track-list-more-options {
+  width: 0;
+  -webkit-transition: width .1s ease-in-out;
+  -moz-transition: width .1s ease-in-out;
+  -ms-transition: width .1s ease-in-out;
+  -o-transition: width .1s ease-in-out;
+  transition: width .1s ease-in-out;
+}
+
+.track-list-options-trigger:hover ~ .track-list-more-options,
+.track-list-more-options:hover {
+  width: 24px;
+}

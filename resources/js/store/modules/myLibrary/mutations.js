@@ -4,6 +4,7 @@ export default {
     },
     setMyTracks(state, tracks) {
         state.tracks = tracks;
+        state.tracksInitialized = true;
     },
     setMyArtists(state, artists) {
         state.artists = artists;

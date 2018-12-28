@@ -4,7 +4,7 @@
             <b-tab-item label="Playlists">
                 <playlists></playlists>
             </b-tab-item>
-            <b-tab-item label="Tracks">
+            <b-tab-item label="Tracks" class="h-100">
                 <tracks></tracks>
             </b-tab-item>
             <b-tab-item label="Artists">
@@ -51,10 +51,14 @@
     }
 </script>
 
-<style scoped>
+<style>
     .tab-tools {
         position: absolute;
         top: 15px;
         right: 15px;
+    }
+
+    .tab-scroll .tab-content {
+        height: 100%;
     }
 </style>

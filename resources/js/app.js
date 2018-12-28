@@ -1,6 +1,9 @@
 import VueRouter from 'vue-router';
 import router from './router';
 import Buefy from 'buefy';
+
+import 'vue-virtual-scroller/dist/vue-virtual-scroller.css';
+import 'clusterize.js'
 // import 'buefy/src/scss/buefy.scss';
 
 import store from './store/store';

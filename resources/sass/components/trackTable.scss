@@ -6,6 +6,11 @@
 
 .track-table .track {
   display: flex;
+  cursor: default;
+}
+
+.track:hover {
+  background-color: transparentize($secondary, .9) !important;
 }
 
 .track-table .track > div {

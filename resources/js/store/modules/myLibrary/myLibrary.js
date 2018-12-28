@@ -4,6 +4,7 @@ import actions from './actions';
 
 const state = {
     playlists: [],
+    playlistsInitialized: false,
     tracks: [],
     tracksInitialized: false,
     artists: [],

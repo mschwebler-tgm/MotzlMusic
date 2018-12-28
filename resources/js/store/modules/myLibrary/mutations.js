@@ -1,6 +1,7 @@
 export default {
     setMyPlaylists(state, playlists) {
         state.playlists = playlists;
+        state.playlistsInitialized = true;
     },
     setMyTracks(state, tracks) {
         state.tracks = tracks;

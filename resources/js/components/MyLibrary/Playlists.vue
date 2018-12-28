@@ -1,5 +1,6 @@
 <template>
-    <div>
+    <div class="position-relative">
+        <b-loading :is-full-page="false" :active="playlistsLoading"></b-loading>
         <h2 class="has-text-weight-light title is-9">Newest</h2>
         <div class="flex flex-wrap">
             <playlist v-for="playlist in playlists" :playlist="playlist" :key="playlist.id"></playlist>
@@ -20,13 +21,17 @@
 
 <script>
     import Playlist from "./PlaylistItem";
+    import BLoading from "buefy/src/components/loading/Loading";
 
     export default {
         name: "Playlists",
-        components: {Playlist},
+        components: {BLoading, Playlist},
         computed: {
             playlists() {
                 return this.$store.getters['myLibrary/playlists'];
+            },
+            playlistsLoading() {
+                return !this.$store.getters['myLibrary/playlistsInitialized'];
             }
         }
     }

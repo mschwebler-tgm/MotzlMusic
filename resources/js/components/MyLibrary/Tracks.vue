@@ -3,7 +3,11 @@
         <h2 class="has-text-weight-light title is-9">Tracks</h2>
         <div class="flex-1 track-table">
             <div :id="identifier + '-scrollArea'" class="clusterize-scroll" :style="{'max-height': scrollContainerHeight}" ref="scrollArea">
-                <div :id="identifier + '-contentArea'" class="clusterize-content"></div>
+                <div :id="identifier + '-contentArea'" class="clusterize-content">
+                    <tr class="clusterize-no-data">
+                        <b-loading :active="true" :is-full-page="false"></b-loading>
+                    </tr>
+                </div>
             </div>
         </div>
     </div>
@@ -13,9 +17,11 @@
     import BSwitch from "buefy/src/components/switch/Switch";
     import BIcon from "buefy/src/components/icon/Icon";
     import Clusterize from "clusterize.js";
+    import BLoading from "buefy/src/components/loading/Loading";
 
     export default {
         components: {
+            BLoading,
             BIcon,
             BSwitch
         },
@@ -23,7 +29,7 @@
         data() {
             return {
                 clusterize: null,
-                scrollContainerHeight: '826px',
+                scrollContainerHeight: '746px',
                 identifier: Math.random().toString(36).substring(7)
             }
         },
@@ -78,4 +84,8 @@
 
 <style lang="scss">
     @import "../../../sass/components/trackTable";
+
+    .clusterize-no-data {
+        position: relative;
+    }
 </style>

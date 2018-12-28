@@ -1,0 +1,25 @@
+@import "../variables";
+
+.track-table {
+
+}
+
+.track-table .track {
+  display: flex;
+}
+
+.track-table .track:nth-child(odd) {
+  background-color: $white-ter;
+}
+
+.track-list-number {
+  width: 40px;
+}
+
+.track-list-title {
+  width: 300px;
+}
+
+.track-list-duration {
+  width: 45px;
+}

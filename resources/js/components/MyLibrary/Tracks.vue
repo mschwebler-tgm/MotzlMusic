@@ -1,22 +1,9 @@
 <template>
     <div class="h-100 clusterize flex-column">
         <h2 class="has-text-weight-light title is-9">Tracks</h2>
-        <div class="flex-1">
-            <div class="clusterize">
-                <table>
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Title</th>
-                    </tr>
-                    </thead>
-                </table>
-                <div :id="identifier + '-scrollArea'" class="clusterize-scroll" :style="{'max-height': scrollContainerHeight}" ref="scrollArea">
-                    <table>
-                        <tbody :id="identifier + '-contentArea'" class="clusterize-content">
-                        </tbody>
-                    </table>
-                </div>
+        <div class="flex-1 track-table">
+            <div :id="identifier + '-scrollArea'" class="clusterize-scroll" :style="{'max-height': scrollContainerHeight}" ref="scrollArea">
+                <div :id="identifier + '-contentArea'" class="clusterize-content"></div>
             </div>
         </div>
     </div>
@@ -83,14 +70,12 @@
                 return this.$store.getters['myLibrary/tracks'];
             },
             tracksDomElements() {
-                return this.$store.getters['myLibrary/tracks'].reduce((rows, item) => rows.concat([`<tr><td>${item.id}</td><td>${item.name}</td></tr>`]), []);
+                return this.$store.getters['myLibrary/tracksClusterized'];
             }
         }
     }
 </script>
 
-<style scoped>
-    #scroller {
-        max-height: 500px;
-    }
+<style lang="scss">
+    @import "../../../sass/components/trackTable";
 </style>

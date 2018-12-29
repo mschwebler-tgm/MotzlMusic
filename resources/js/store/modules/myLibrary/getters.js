@@ -1,4 +1,5 @@
-import clusterizeTracks from '../../../util/clusterizeTracks';
+import clusterizeTracks from './helpers/clusterizeTracks';
+import clusterizeArtists from './helpers/clusterizeArtists';
 
 export default {
     playlists: state => state.playlists,

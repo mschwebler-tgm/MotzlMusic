@@ -30,6 +30,11 @@ class MyLibraryController extends Controller
         return $this->libraryDao->getArtistsWithMostTracks();
     }
 
+    public function myRecentArtists()
+    {
+        return $this->libraryDao->getRecentArtists();
+    }
+
     public function myAlbums()
     {
         return $this->libraryDao->getAllAlbums();

@@ -8,4 +8,6 @@ export default {
     tracksClusterized: state => clusterizeTracks(state.tracks),
     topArtists: state => state.topArtists,
     topArtistsInitialized: state => state.topArtistsInitialized,
+    recentArtists: state => state.recentArtists,
+    recentArtistsInitialized: state => state.recentArtistsInitialized,
 }

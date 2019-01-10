@@ -9,6 +9,8 @@ const state = {
     tracksInitialized: false,
     topArtists: [],
     topArtistsInitialized: false,
+    recentArtists: [],
+    recentArtistsInitialized: false,
     albums: [],
 };
 

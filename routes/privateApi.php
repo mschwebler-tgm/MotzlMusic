@@ -20,5 +20,6 @@ Route::prefix('my')->namespace('Personal')->group(function () {
     Route::get('playlists', 'MyLibraryController@myPlaylists');
     Route::get('tracks', 'MyLibraryController@myTracks');
     Route::get('topArtists', 'MyLibraryController@myTopArtists');
+    Route::get('recentArtists', 'MyLibraryController@myRecentArtists');
     Route::get('albums', 'MyLibraryController@myAlbums');
 });

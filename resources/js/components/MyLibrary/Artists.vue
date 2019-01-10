@@ -1,9 +1,17 @@
 <template>
     <div class="h-100 clusterize flex-column">
-        <b-loading :active="!topArtistsInitialized" :is-full-page="false"></b-loading>
+        <b-loading :active="!topArtistsInitialized && recentArtistsInitialized" :is-full-page="false"></b-loading>
         <h2 class="has-text-weight-light title is-9">Top Artists</h2>
         <div v-if="topArtistsInitialized" class="artists-wrapper">
-            <artist-item :artist="artist" v-for="artist in topArtists"></artist-item>
+            <artist-item v-for="artist in topArtists"
+                         :artist="artist"
+                         :key="artist.id"></artist-item>
+        </div>
+        <h2 class="has-text-weight-light title is-9">Recent Artists</h2>
+        <div v-if="recentArtistsInitialized" class="artists-wrapper">
+            <artist-item v-for="artist in recentArtists"
+                         :artist="artist"
+                         :key="artist.id"></artist-item>
         </div>
     </div>
 </template>
@@ -21,7 +29,13 @@
             },
             topArtistsInitialized() {
                 return this.$store.getters['myLibrary/topArtistsInitialized'];
-            }
+            },
+            recentArtists() {
+                return this.$store.getters['myLibrary/recentArtists'];
+            },
+            recentArtistsInitialized() {
+                return this.$store.getters['myLibrary/recentArtistsInitialized'];
+            },
         }
     }
 </script>

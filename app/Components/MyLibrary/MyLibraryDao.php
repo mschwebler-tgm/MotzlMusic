@@ -2,6 +2,7 @@
 
 namespace App\Components\MyLibrary;
 
+use App\Album;
 use App\Playlist;
 use App\Track;
 
@@ -59,5 +60,11 @@ class MyLibraryDao
         $dbo->select('albums.*');
         $dbo->orderBy('albums.name', 'asc');
         return $dbo->get();
+    }
+
+    public function getRecentAlbums()
+    {
+        // TODO: return recent albums instead of random
+        return Album::with('artists')->inRandomOrder()->limit(10)->get();
     }
 }

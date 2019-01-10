@@ -2,14 +2,14 @@
     <div class="card">
         <div class="card-image">
             <figure class="image is-4by3">
-                <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
+                <img :src="album.spotify_image_medium" alt="Placeholder image">
             </figure>
         </div>
         <div class="card-content">
             <div class="media">
                 <div class="media-content">
-                    <p class="title is-5">{{ data.artist }}</p>
-                    <p class="subtitle is-6">{{ data.title }}</p>
+                    <p class="title is-5">{{ album.name }}</p>
+                    <p class="subtitle is-6">{{ artists }}</p>
                 </div>
             </div>
         </div>
@@ -18,8 +18,13 @@
 
 <script>
     export default {
-        name: "album",
-        props: ['data']
+        name: "Album",
+        props: ['album'],
+        computed: {
+            artists() {
+                return this.album.artists.map(artist => artist.name).join(', ');
+            }
+        }
     }
 </script>
 

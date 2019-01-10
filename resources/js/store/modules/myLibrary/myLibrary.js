@@ -12,6 +12,7 @@ const state = {
     recentArtists: [],
     recentArtistsInitialized: false,
     albums: [],
+    albumsInitialized: false,
 };
 
 export default {

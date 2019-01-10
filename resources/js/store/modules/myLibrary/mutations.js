@@ -17,5 +17,6 @@ export default {
     },
     setMyAlbums(state, albums) {
         state.albums = albums;
+        state.albumsInitialized = true;
     },
 }

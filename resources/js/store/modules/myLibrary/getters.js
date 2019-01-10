@@ -10,4 +10,6 @@ export default {
     topArtistsInitialized: state => state.topArtistsInitialized,
     recentArtists: state => state.recentArtists,
     recentArtistsInitialized: state => state.recentArtistsInitialized,
+    albums: state => state.albums,
+    albumsInitialized: state => state.albumsInitialized,
 }

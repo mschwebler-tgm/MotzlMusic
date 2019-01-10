@@ -11,10 +11,7 @@
                 <artists></artists>
             </b-tab-item>
             <b-tab-item label="Albums">
-                <h2 class="has-text-weight-light title is-9">Albums</h2>
-                <!--<div class="flex flex-wrap">-->
-                    <!--<album v-for="(data, index) in testData" :data="data" :key="index"></album>-->
-                <!--</div>-->
+                <albums></albums>
             </b-tab-item>
         </b-tabs>
     </section>
@@ -24,7 +21,7 @@
     import BSwitch from "buefy/src/components/switch/Switch";
     import Tracks from "./Tracks";
     import Artists from "./Artists";
-    import Album from "./Album";
+    import Albums from "./Albums";
     import BIcon from "buefy/src/components/icon/Icon";
     import Playlists from "./Playlists";
 
@@ -32,7 +29,7 @@
         components: {
             Playlists,
             BIcon,
-            Album,
+            Albums,
             Artists,
             Tracks,
             BSwitch},

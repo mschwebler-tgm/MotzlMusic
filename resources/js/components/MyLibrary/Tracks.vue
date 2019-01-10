@@ -48,13 +48,11 @@
         },
         methods: {
             initializeTracksTable() {
-                setTimeout(() => {
-                    this.clusterize = new Clusterize({
-                        scrollId: this.identifier + '-scrollArea',
-                        contentId: this.identifier + '-contentArea',
-                        rows: this.tracksDomElements
-                    });
-                }, 3000);
+                this.clusterize = new Clusterize({
+                    scrollId: this.identifier + '-scrollArea',
+                    contentId: this.identifier + '-contentArea',
+                    rows: this.tracksDomElements
+                });
             },
             initResizeWatcher() {
                 const resizeDone = originalHeight => {

@@ -32,7 +32,7 @@ class MyLibraryDao
             ->whereIn('track_id', $userTrackIds)
             ->groupBy('artist_id')
             ->orderByDesc('track_amount')
-            ->limit(15)
+            ->limit(10)
             ->get();
 
         return $artists;

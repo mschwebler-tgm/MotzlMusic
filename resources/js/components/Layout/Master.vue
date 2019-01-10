@@ -33,7 +33,7 @@
             <div class="my-content">
                 <router-view></router-view>
             </div>
-            <div class="my-sub-content is-hidden-mobile-only is-hidden-tablet-only pad" style="padding-top: 60px;">
+            <div class="my-sub-content is-hidden-touch pad" style="padding-top: 60px;">
                 <div class="box flex space-around">
                     <div class="image" style="width: 350px; height: 300px;">
                         <img src="https://camo.githubusercontent.com/c0224976d49b4712dfeb10d4d9e804bab5379b4e/687474703a2f2f7777342e73696e61696d672e636e2f6d773639302f3639333237363337677731663178633363306b65616a323063623061397133682e6a7067">

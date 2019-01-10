@@ -1,5 +1,4 @@
 import clusterizeTracks from './helpers/clusterizeTracks';
-import clusterizeArtists from './helpers/clusterizeArtists';
 
 export default {
     playlists: state => state.playlists,
@@ -7,4 +6,6 @@ export default {
     tracks: state => state.tracks,
     tracksInitialized: state => state.tracksInitialized,
     tracksClusterized: state => clusterizeTracks(state.tracks),
+    topArtists: state => state.topArtists,
+    topArtistsInitialized: state => state.topArtistsInitialized,
 }

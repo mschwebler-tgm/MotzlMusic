@@ -7,7 +7,8 @@ const state = {
     playlistsInitialized: false,
     tracks: [],
     tracksInitialized: false,
-    artists: [],
+    topArtists: [],
+    topArtistsInitialized: false,
     albums: [],
 };
 

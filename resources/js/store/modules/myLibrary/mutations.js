@@ -7,8 +7,9 @@ export default {
         state.tracks = tracks;
         state.tracksInitialized = true;
     },
-    setMyArtists(state, artists) {
-        state.artists = artists;
+    setMyTopArtists(state, artists) {
+        state.topArtists = artists;
+        state.topArtistsInitialized = true;
     },
     setMyAlbums(state, albums) {
         state.albums = albums;

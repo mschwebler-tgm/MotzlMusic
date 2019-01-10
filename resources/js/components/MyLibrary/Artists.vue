@@ -3,9 +3,22 @@
         <b-loading :active="!topArtistsInitialized" :is-full-page="false"></b-loading>
         <h2 class="has-text-weight-light title is-9">Top Artists</h2>
         <div v-if="topArtistsInitialized" class="artists-wrapper">
-            <div class="artist" v-for="artist in topArtists">
-                <div class="artist-content">
-                    <img :src="artist.spotify_image_medium" class="artist-image">
+            <div class="card" v-for="artist in topArtists">
+                <div class="card-image">
+                    <figure class="image is-4by3">
+                        <img :src="artist.spotify_image_medium" :alt="artist.name">
+                    </figure>
+                </div>
+                <div class="card-content">
+                    <div class="media">
+                        <div class="media-content">
+                            <p class="title is-5">{{ artist.name }}</p>
+                            <p class="subtitle is-6">
+                                <b-icon icon="music" size="is-small"></b-icon>
+                                {{ artist.track_amount }}
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -14,10 +27,11 @@
 
 <script>
     import BLoading from "buefy/src/components/loading/Loading";
+    import BIcon from "buefy/src/components/icon/Icon";
 
     export default {
         name: "artist",
-        components: {BLoading},
+        components: {BIcon, BLoading},
         computed: {
             topArtists() {
                 return this.$store.getters['myLibrary/topArtists'];
@@ -29,32 +43,21 @@
     }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+
     .artists-wrapper {
         display: flex;
         flex-wrap: wrap;
     }
-    .artist {
-        min-width: 200px;
-        max-width: 400px;
-        flex: 1;
-        position: relative;
+
+    .card {
+        width: 200px;
+        margin-right: 20px;
+        margin-bottom: 20px;
     }
-    .artist:after {
-        padding-top: 100%;
-        display: block;
-        content: '';
-    }
-    .artist-content {
-        position: absolute;
-        height: 100%;
-        width: 100%;
-        overflow: hidden;
-    }
-    .artist-image {
-        width:100%;
-        height:100%;
+
+    .image > img {
         object-fit: cover;
-        overflow: hidden;
     }
+
 </style>

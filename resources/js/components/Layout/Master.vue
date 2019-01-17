@@ -40,7 +40,7 @@
                     </div>
                 </div>
                 <div class="box">
-                    <box-player></box-player>
+                    <!--<box-player></box-player>-->
                 </div>
                 <div class="box">
                     Queued tracks
@@ -55,11 +55,10 @@
     import NavBar from "./Navbar";
     import SpotifyImporter from "../SpotifyImport/Importer";
     import BModal from "buefy/src/components/modal/Modal";
-    import BoxPlayer from "../Player/BoxPlayer";
     import Player from "../Player/Player";
 
     export default {
-        components: {Player, BoxPlayer, BModal, Tracks, NavBar, SpotifyImporter},
+        components: {Player, BModal, Tracks, NavBar, SpotifyImporter},
         name: "master",
         props: ['user'],
         created() {

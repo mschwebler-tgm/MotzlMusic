@@ -51,6 +51,7 @@
 
                         player.connect();
                         this.player = player;
+                        this.$store.commit('player/setSpotifyPlayer', this.player);
                     });
                 }
             }

@@ -1,6 +1,6 @@
 <template>
     <div id="master">
-        <spotify-player></spotify-player>
+        <player></player>
         <b-modal v-if="user && !user.spotify_import_complete || $root.showSpotifyImport"
                 :active.sync="$root.showSpotifyImport" has-modal-card>
             <spotify-importer></spotify-importer>
@@ -40,24 +40,10 @@
                     </div>
                 </div>
                 <div class="box">
-                    <div class="flex space-between">
-                        <span>365 - Amaranthe</span>
-                        <span>0:59</span>
-                    </div>
-                    <div class="flex space-around pad">
-                        <b-icon size="is-large" icon="skip-previous"></b-icon>
-                        <b-icon size="is-large" icon="pause-circle-outline"></b-icon>
-                        <b-icon size="is-large" icon="skip-next"></b-icon>
-                    </div>
+                    <box-player></box-player>
                 </div>
                 <div class="box">
-                    <tracks :data="[
-                    { title: 'Broken Lives', duration: '4:24', artist: 'Our Last Night', rating: Math.round(Math.random()*50)/10 },
-                    { title: 'Coming for You', duration: '2:33', artist: 'The Offspring', rating: Math.round(Math.random()*50)/10 },
-                    { title: 'Crazy Train', duration: '4:27', artist: 'Ozzy Osbourne', rating: Math.round(Math.random()*50)/10 },
-                    { title: 'Animal', duration: '2:45', artist: 'Smash into Pieces', rating: Math.round(Math.random()*50)/10 },
-                    { title: 'The Anthem', duration: '2:12', artist: 'Good Charlotte', rating: Math.round(Math.random()*50)/10 },
-                    ]"></tracks>
+                    Queued tracks
                 </div>
             </div>
         </div>
@@ -69,10 +55,11 @@
     import NavBar from "./Navbar";
     import SpotifyImporter from "../SpotifyImport/Importer";
     import BModal from "buefy/src/components/modal/Modal";
-    import SpotifyPlayer from "../Player/Spotify/SpotifyPlayer";
+    import BoxPlayer from "../Player/BoxPlayer";
+    import Player from "../Player/Player";
 
     export default {
-        components: {SpotifyPlayer, BModal, Tracks, NavBar, SpotifyImporter},
+        components: {Player, BoxPlayer, BModal, Tracks, NavBar, SpotifyImporter},
         name: "master",
         props: ['user'],
         created() {

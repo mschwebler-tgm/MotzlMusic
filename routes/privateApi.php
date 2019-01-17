@@ -23,3 +23,7 @@ Route::prefix('my')->namespace('Personal')->group(function () {
     Route::get('recentArtists', 'MyLibraryController@myRecentArtists');
     Route::get('recentAlbums', 'MyLibraryController@myRecentAlbums');
 });
+
+Route::prefix('player')->namespace('Player')->group(function () {
+    Route::put('/spotify/playTrack', 'SpotifyPlayerController@playTrack');
+});

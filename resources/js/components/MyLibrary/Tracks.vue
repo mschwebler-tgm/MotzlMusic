@@ -1,7 +1,7 @@
 <template>
     <div class="h-100 clusterize flex-column">
         <h2 class="has-text-weight-light title is-9">Tracks</h2>
-        <div class="flex-1 track-table">
+        <div class="flex-1 track-table" id="my-library-tracks-table">
             <div :id="identifier + '-scrollArea'" class="clusterize-scroll" :style="{'max-height': scrollContainerHeight}" ref="scrollArea">
                 <div :id="identifier + '-contentArea'" class="clusterize-content">
                     <tr class="clusterize-no-data">
@@ -37,22 +37,33 @@
             this.initResizeWatcher();
         },
         mounted() {
-            if (!this.$store.getters['myLibrary/tracksInitialized']) {
-                const unwatch = this.$store.watch((state, getters) => getters['myLibrary/tracksInitialized'], _ => {
-                    this.initializeTracksTable();
-                    unwatch();
-                });
-            } else {
-                this.initializeTracksTable();
-            }
+            const vue = this;
+            $('#my-library-tracks-table').on('dblclick', '.track', function () {
+                const trackId = parseInt(this.dataset.id);
+                const track = vue.tracks.find(track => track.id === trackId);
+                vue.$store.dispatch('player/play', track);
+            });
+
+            this.initializeTracksTable();
         },
         methods: {
             initializeTracksTable() {
-                this.clusterize = new Clusterize({
-                    scrollId: this.identifier + '-scrollArea',
-                    contentId: this.identifier + '-contentArea',
-                    rows: this.tracksDomElements
-                });
+                const clusterize = _ => {
+                    this.clusterize = new Clusterize({
+                        scrollId: this.identifier + '-scrollArea',
+                        contentId: this.identifier + '-contentArea',
+                        rows: this.tracksDomElements
+                    });
+                };
+
+                if (!this.$store.getters['myLibrary/tracksInitialized']) {
+                    const unwatch = this.$store.watch((state, getters) => getters['myLibrary/tracksInitialized'], _ => {
+                        clusterize();
+                        unwatch();
+                    });
+                } else {
+                    clusterize();
+                }
             },
             initResizeWatcher() {
                 const resizeDone = originalHeight => {

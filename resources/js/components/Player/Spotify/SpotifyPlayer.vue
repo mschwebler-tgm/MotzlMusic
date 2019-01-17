@@ -41,6 +41,7 @@
 
                         // Ready
                         player.addListener('ready', ({device_id}) => {
+                            this.$store.getters['player/controller'].spotifyPlayer.deviceId = device_id;
                             console.log('Ready with Device ID', device_id);
                         });
 

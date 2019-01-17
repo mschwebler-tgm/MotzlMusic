@@ -10,7 +10,7 @@
     export default {
         name: "Player",
         components: {SpotifyPlayer},
-        mounted() {
+        created() {
             const playerController = new PlayerController(this.$store);
             this.$store.commit('player/setPlayerController', playerController)
         }

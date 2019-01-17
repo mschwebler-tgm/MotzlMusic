@@ -9,7 +9,7 @@
             <div class="media">
                 <div class="media-content">
                     <p class="title is-5">{{ album.name }}</p>
-                    <p class="subtitle is-6">{{ artists }}</p>
+                    <p class="subtitle is-6">{{ getArtists }}</p>
                 </div>
             </div>
         </div>
@@ -20,9 +20,9 @@
     export default {
         name: "Album",
         props: ['album'],
-        computed: {
-            artists() {
-                return this.album.artists.map(artist => artist.name).join(', ');
+        methods: {
+            getArtists() {
+                return this.album.artists ? this.album.artists.map(artist => artist.name).join(', ') : [];
             }
         }
     }

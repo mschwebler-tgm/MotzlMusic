@@ -6,7 +6,7 @@
 
 <script>
     import SpotifyPlayer from "./Spotify/SpotifyPlayer";
-    import PlayerController from "../../store/modules/player/playerController";
+    import PlayerController from "../../store/modules/player/helpers";
     export default {
         name: "Player",
         components: {SpotifyPlayer},

@@ -10,7 +10,7 @@ const requireModule = require.context(
     // Exclude index.js file as well as any file that has
     // 'actions', 'mutations', or 'getters' in their name.
     // Also, include only files which ends with .js
-    /^(?!.*(actions|mutations|getters|index)).*\.js$/
+    /^(?!.*(actions|mutations|getters|index|helpers)).*\.js$/
 );
 
 const modules = {};

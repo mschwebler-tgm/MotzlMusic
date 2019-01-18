@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers\Player;
 
+use App\Components\Player\Spotify\Requests\SpotifyPlayTrackRequest;
+use App\Components\Player\Spotify\SpotifyPlayerService;
 use App\Http\Controllers\Controller;
 
 class SpotifyPlayerController extends Controller
 {
-    public function playTrack()
+    public function playTrack(SpotifyPlayTrackRequest $playRequest, SpotifyPlayerService $playerService)
     {
-        $trackId = request('track_id');
-        $deviceId = request('device_id');
-
-        dd($trackId, $deviceId);
+        $playerService->playTrack($playRequest->getTrackId(), $playRequest->getDeviceId());
     }
 }

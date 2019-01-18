@@ -40,7 +40,7 @@ class SpotifyPlayerService
         $options = [
             'context_uri' => $track->album->spotify_uri,
             'offset' => [
-                'position' => $track->spotify_track_number,
+                'position' => $track->spotify_track_number - 1,
             ],
         ];
         return $options;

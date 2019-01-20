@@ -4,5 +4,8 @@ export default {
     },
     setUploadInProgress(state, inProgress) {
         state.uploadInProgress = inProgress;
+    },
+    appendFailedFile(state, file) {
+        state.failedFiles.push(file);
     }
 }

@@ -1,5 +1,6 @@
 export default class Uploader {
-    constructor(commit) {
+    constructor(state, commit) {
+        this._state = state;
         this._commit = commit;
         this._batchSize = 5;
     }
@@ -12,18 +13,30 @@ export default class Uploader {
         const filesToUpload = this._takeNextBatch(files);
         const promises = [];
         filesToUpload.forEach(file => {
-            console.log('Uploading ' + file.name);
-            promises.push(Uploader._createSingleFileUpload(file));
+            promises.push(this._createSingleFileUpload(file));
         });
-        console.log('waiting for uploads to complete...');
         Promise.all(promises).then(_ => {
-            console.log('complete. remaining files: ' + files.length);
-            if (files.length > 0) {
-                this.uploadFiles(files);
-            } else {
-                this._setUploadingState(false);
-            }
-        }).catch(err => console.log('fail', err));
+            this._uploadNextBatch(files);
+        }).catch(err => {
+            this._uploadNextBatch(files);
+        });
+    }
+
+    _uploadNextBatch(files) {
+        const allFilesAreUploaded = files.length === 0;
+        const failedFiles = this._state.failedFiles;
+
+        if (allFilesAreUploaded && failedFiles.length > 0) {
+            this._retryFailedFiles(failedFiles);
+        } else if (files.length > 0) {
+            this.uploadFiles(files);
+        } else {
+            this._setUploadingState(false);
+        }
+    }
+
+    _retryFailedFiles(failedFiles) {
+        failedFiles.forEach(file => this._createSingleFileUpload(file, false));
     }
 
     _setUploadingState(uploading) {
@@ -35,11 +48,18 @@ export default class Uploader {
         return files.splice(0, this._batchSize);
     }
 
-    static _createSingleFileUpload(file) {
-        return axios.post('/api/uploadTrack', Uploader._createFormDataForFile(file), {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
+    _createSingleFileUpload(file, firstTry = true) {
+        return new Promise((resolve, reject) => {
+            axios.post('/api/uploadTrack', Uploader._createFormDataForFile(file), {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }).catch(_ => {
+                if (firstTry) {
+                    this._commit('appendFailedFile', file);
+                }
+                reject();
+            }).then(resolve);
         });
     }
 

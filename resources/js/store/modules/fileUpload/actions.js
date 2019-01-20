@@ -5,7 +5,7 @@ export default {
     },
     submit({state, commit}) {
         console.log('submit file upload');
-        const uploader = new Uploader(commit);
+        const uploader = new Uploader(state, commit);
         uploader.uploadFiles(state.files);
     }
 }

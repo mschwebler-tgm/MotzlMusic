@@ -27,3 +27,5 @@ Route::prefix('my')->namespace('Personal')->group(function () {
 Route::prefix('player')->namespace('Player')->group(function () {
     Route::put('/spotify/playTrack', 'SpotifyPlayerController@playTrack');
 });
+
+Route::post('/uploadTrack', 'UploadController@uploadTrack');

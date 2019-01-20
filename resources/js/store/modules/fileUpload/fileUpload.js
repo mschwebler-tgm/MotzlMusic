@@ -4,6 +4,7 @@ import actions from './actions';
 
 const state = {
     files: [],
+    uploadInProgress: false,
 };
 
 export default {

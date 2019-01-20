@@ -8,7 +8,7 @@ export default class Uploader {
      * @param files Array<File>
      */
     uploadFiles(files) {
-        Uploader._preventSiteLeave(true);
+        this._setUploadingState(true);
         const filesToUpload = this._takeNextBatch(files);
         const promises = [];
         filesToUpload.forEach(file => {
@@ -21,13 +21,14 @@ export default class Uploader {
             if (files.length > 0) {
                 this.uploadFiles(files);
             } else {
-                Uploader._preventSiteLeave(false);
+                this._setUploadingState(false);
             }
         }).catch(err => console.log('fail', err));
     }
 
-    static _preventSiteLeave(prevent) {
-        window.onbeforeunload = _ => prevent || null;
+    _setUploadingState(uploading) {
+        this._commit('setUploadInProgress', uploading);
+        window.onbeforeunload = _ => uploading || null;
     }
 
     _takeNextBatch(files) {

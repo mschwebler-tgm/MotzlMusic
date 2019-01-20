@@ -6,6 +6,7 @@ import GlobalLibrary from './components/GlobalLibrary/Index.vue';
 import MyLibrary from './components/MyLibrary/Index.vue';
 import CreateSmartPlaylist from './components/CreateSmartPlaylist/Index.vue';
 import NewUploads from './components/NewUploads/Index.vue';
+import Upload from './components/Upload/Index.vue';
 
 import Master from './components/Layout/Master.vue';
 import NotFoundPage from './components/Layout/NotFoundPage.vue';
@@ -40,6 +41,11 @@ export default new VueRouter({
                     path: 'new',
                     name: 'new_uploads',
                     component: NewUploads,
+                },
+                {
+                    path: 'upload',
+                    name: 'upload',
+                    component: Upload
                 }
             ],
         },

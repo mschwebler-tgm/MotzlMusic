@@ -2,7 +2,7 @@
     <div id="master">
         <player></player>
         <b-modal v-if="user && !user.spotify_import_complete || $root.showSpotifyImport"
-                :active.sync="$root.showSpotifyImport" has-modal-card>
+                 :active.sync="$root.showSpotifyImport" has-modal-card>
             <spotify-importer></spotify-importer>
         </b-modal>
         <nav-bar></nav-bar>
@@ -12,15 +12,21 @@
                     General
                 </p>
                 <ul class="menu-list">
-                    <li><router-link to="/my-library">My Library</router-link></li>
-                    <li><router-link to="/global-library">Global Library</router-link></li>
-                    <li><router-link to="/create-smart-playlist">Create smart playlist</router-link></li>
+                    <li>
+                        <router-link to="/my-library">My Library</router-link>
+                    </li>
+                    <li>
+                        <router-link to="/global-library">Global Library</router-link>
+                    </li>
+                    <li>
+                        <router-link to="/create-smart-playlist">Create smart playlist</router-link>
+                    </li>
                 </ul>
                 <!--<p class="menu-label">-->
-                    <!--Administration-->
+                <!--Administration-->
                 <!--</p>-->
                 <!--<ul class="menu-list">-->
-                    <!--<li><a>Team Settings</a></li>-->
+                <!--<li><a>Team Settings</a></li>-->
                 <!--</ul>-->
                 <p class="menu-label">
                     Player
@@ -28,7 +34,7 @@
                 <ul class="menu-list">
                     <li><a>Player+</a></li>
                 </ul>
-                <button class="button is-danger is-large is-fullwidth is-outlined" id="upload-button">Upload</button>
+                <router-link to="/upload" class="button is-danger is-large is-fullwidth is-outlined" id="upload-button">Upload</router-link>
             </aside>
             <div class="my-content">
                 <router-view></router-view>
@@ -100,9 +106,11 @@
         flex: 1;
         display: flex;
     }
+
     .content-wrapper > aside {
         width: $menu-width;
     }
+
     .content-wrapper > .my-content {
         overflow-y: scroll;
         display: flex;
@@ -111,6 +119,7 @@
         width: 1172px;
         padding: 20px 20px 0;
     }
+
     .my-content::-webkit-scrollbar, .my-content::-webkit-scrollbar-track,
     .my-content::-webkit-scrollbar-thumb, .my-content::-webkit-scrollbar-thumb:hover {
         display: none;
@@ -120,6 +129,7 @@
         padding: 15px;
         border-right: 1px solid $grey-lighter;
     }
+
     #upload-button {
         width: $menu-width - 30px;
         position: absolute;

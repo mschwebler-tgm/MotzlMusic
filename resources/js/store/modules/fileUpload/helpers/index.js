@@ -8,18 +8,43 @@ export default class Uploader {
      * @param files Array<File>
      */
     uploadFiles(files) {
-        const filesToUpload = files.splice(0, this._batchSize);
+        Uploader._preventSiteLeave(true);
+        const filesToUpload = this._takeNextBatch(files);
         const promises = [];
         filesToUpload.forEach(file => {
             console.log('Uploading ' + file.name);
-            promises.push(axios.post('/api/uploadTrack', file));
+            promises.push(Uploader._createSingleFileUpload(file));
         });
         console.log('waiting for uploads to complete...');
         Promise.all(promises).then(_ => {
             console.log('complete. remaining files: ' + files.length);
             if (files.length > 0) {
                 this.uploadFiles(files);
+            } else {
+                Uploader._preventSiteLeave(false);
             }
         }).catch(err => console.log('fail', err));
+    }
+
+    static _preventSiteLeave(prevent) {
+        window.onbeforeunload = _ => prevent || null;
+    }
+
+    _takeNextBatch(files) {
+        return files.splice(0, this._batchSize);
+    }
+
+    static _createSingleFileUpload(file) {
+        return axios.post('/api/uploadTrack', Uploader._createFormDataForFile(file), {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+    }
+
+    static _createFormDataForFile(file) {
+        let formData = new FormData();
+        formData.append(file.name, file);
+        return formData;
     }
 }

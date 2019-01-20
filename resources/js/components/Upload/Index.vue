@@ -1,5 +1,6 @@
 <template>
     <div>
+        <h2 class="has-text-weight-light title is-9">Upload mp3 files</h2>
         <form id="file-upload" @submit="submit">
             <label class="file-label">
                 <input class="file-input" type="file" id="file-input" ref="file-input" webkitdirectory directory multiple>
@@ -9,9 +10,17 @@
                         &nbsp;&nbsp;Choose mp3 files...
                     </span>
                 </span>
+                <span class="is-size-7 has-text-grey file-hint">&nbsp;&nbsp;{{ fileCountText }}</span>
             </label>
+            <br>
             <button type="submit" class="button is-primary">
-                Submit
+                <template v-if="uploadInProgress">
+                    <b-icon icon="loading" custom-class="fa-spin"></b-icon>
+                    <span>&nbsp;Uploading...</span>
+                </template>
+                <template v-else>
+                    Submit
+                </template>
             </button>
         </form>
     </div>
@@ -42,12 +51,29 @@
             submit(event) {
                 event.preventDefault();
                 this.$store.dispatch('fileUpload/submit');
-                console.log(this.$store.getters['fileUpload/files']);
+            }
+        },
+        computed: {
+            fileCountText() {
+                if (!this.fileCount || this.uploadInProgress) {
+                    return '';
+                }
+
+                return this.fileCount + ' files selected';
+            },
+            fileCount() {
+                return this.$store.getters['fileUpload/remainingFilesCount'];
+            },
+            uploadInProgress() {
+                return this.$store.getters['fileUpload/uploadInProgress'];
             }
         }
     }
 </script>
 
 <style scoped>
-
+    .file-hint {
+        display: flex;
+        align-items: center;
+    }
 </style>

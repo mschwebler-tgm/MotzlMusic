@@ -1,6 +1,9 @@
 <template>
-    <div class="box" v-if="show || true">
-        <h3 class="title is-6">New tracks incoming! 😎
+    <div class="box position-relative" v-if="show || true">
+        <h3 class="title is-6 position-relative">
+            <template v-if="uploadInProgress">New tracks incoming! 😎</template>
+            <template v-else>Upload complete!</template>
+            <b-icon icon="close" size="is-small" custom-class="close-button" v-if="!uploadInProgress"></b-icon>
             <!--<b-icon icon="emoticon-cool-outline" type="is-primary"></b-icon>-->
         </h3>
         <div class="loader-wrapper">
@@ -61,6 +64,13 @@
 
     .show {
         display: block;
+    }
+
+    .close-button {
+        position: absolute;
+        top: 2px;
+        right: 0;
+        cursor: pointer;
     }
 
 </style>

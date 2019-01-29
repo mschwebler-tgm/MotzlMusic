@@ -45,6 +45,7 @@
                         <img src="https://camo.githubusercontent.com/c0224976d49b4712dfeb10d4d9e804bab5379b4e/687474703a2f2f7777342e73696e61696d672e636e2f6d773639302f3639333237363337677731663178633363306b65616a323063623061397133682e6a7067">
                     </div>
                 </div>
+                <upload-info-box></upload-info-box>
                 <div class="box">
                     <!--<box-player></box-player>-->
                 </div>
@@ -60,11 +61,12 @@
     import Tracks from "../MyLibrary/Tracks";
     import NavBar from "./Navbar";
     import SpotifyImporter from "../SpotifyImport/Importer";
+    import UploadInfoBox from "../Upload/UploadInfoBox";
     import BModal from "buefy/src/components/modal/Modal";
     import Player from "../Player/Player";
 
     export default {
-        components: {Player, BModal, Tracks, NavBar, SpotifyImporter},
+        components: {Player, BModal, Tracks, NavBar, SpotifyImporter, UploadInfoBox},
         name: "master",
         props: ['user'],
         created() {

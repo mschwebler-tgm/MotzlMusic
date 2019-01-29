@@ -1,5 +1,6 @@
 export default {
     files: state => state.files,
-    remainingFilesCount: state => state.files.length,
+    totalFilesCount: state => state.totalFilesCount,
+    remainingFilesCount: state => state.remainingFilesCount,
     uploadInProgress: state => state.uploadInProgress,
 }

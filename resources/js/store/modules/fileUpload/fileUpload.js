@@ -4,6 +4,8 @@ import actions from './actions';
 
 const state = {
     files: [],
+    totalFilesCount: 0,
+    remainingFilesCount: 0,
     uploadInProgress: false,
     failedFiles: [],
 };

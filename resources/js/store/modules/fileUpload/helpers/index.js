@@ -59,7 +59,10 @@ export default class Uploader {
                     this._commit('appendFailedFile', file);
                 }
                 reject();
-            }).then(resolve);
+            }).then(_ => {
+                this._commit('decrementRemainingFilesCount');
+                resolve();
+            });
         });
     }
 

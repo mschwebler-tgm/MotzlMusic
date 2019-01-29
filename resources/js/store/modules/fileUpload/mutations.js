@@ -7,5 +7,14 @@ export default {
     },
     appendFailedFile(state, file) {
         state.failedFiles.push(file);
+    },
+    setTotalFilesCount(state, count) {
+        state.totalFilesCount = count;
+    },
+    setRemainingFilesCount(state, count) {
+        state.remainingFilesCount = count;
+    },
+    decrementRemainingFilesCount(state) {
+        state.remainingFilesCount--;
     }
 }

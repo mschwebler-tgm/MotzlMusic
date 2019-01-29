@@ -46,9 +46,9 @@
                     </div>
                 </div>
                 <upload-info-box></upload-info-box>
-                <div class="box">
+                <!--<div class="box">-->
                     <!--<box-player></box-player>-->
-                </div>
+                <!--</div>-->
                 <div class="box">
                     Queued tracks
                 </div>

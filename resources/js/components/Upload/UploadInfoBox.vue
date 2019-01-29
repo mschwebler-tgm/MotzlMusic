@@ -1,11 +1,13 @@
 <template>
-    <div class="box" v-if="show || true">
+    <div class="box" v-if="show">
         <h3 class="title is-6">New tracks incoming! 😎
             <!--<b-icon icon="emoticon-cool-outline" type="is-primary"></b-icon>-->
         </h3>
-        15/231 Files
+        {{ doneFilesCount }}/{{ totalFilesCount }} Files
         <div class="flex-center">
-            <progress class="flex-1 progress is-primary is-small custom-progress" value="15" max="100">15%</progress>
+            <progress class="flex-1 progress is-primary is-small custom-progress"
+                      :value="doneFilesCount"
+                      :max="totalFilesCount"></progress>
             <b-icon icon="loading" custom-class="fa-spin" type="is-primary"></b-icon>
         </div>
     </div>
@@ -20,8 +22,14 @@
         computed: {
             show() {
                 return this.$store.getters['fileUpload/uploadInProgress'] &&
-                    this.$store.getters['fileUpload/totalFilesCount'];
+                    this.totalFilesCount;
             },
+            doneFilesCount() {
+                return this.totalFilesCount - this.$store.getters['fileUpload/remainingFilesCount'];
+            },
+            totalFilesCount() {
+                return this.$store.getters['fileUpload/totalFilesCount'];
+            }
         }
     }
 </script>

@@ -14,8 +14,10 @@
                 </div>
             </template>
             <template v-else>
-                <div class="position-relative flex-center w-100">
+                <div class="upload-complete">
+                    <div class="line"></div>
                     <div class="checkmark draw" :class="{show: !uploadInProgress}"></div>
+                    <div class="line"></div>
                 </div>
             </template>
         </div>
@@ -46,7 +48,7 @@
     }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
     @import "../../../sass/components/uploadInfoBox.scss";
 
     .custom-progress {

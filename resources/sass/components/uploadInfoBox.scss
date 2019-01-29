@@ -9,7 +9,12 @@ $check-color: $primary;
 
 .checkmark {
   display: none;
-
+  width: $loader-size;
+  border: 2px solid $primary;
+  -webkit-border-radius: 100%;
+  -moz-border-radius: 100%;
+  border-radius: 100%;
+  
   &.draw:after {
     animation-duration: 800ms;
     animation-timing-function: ease;
@@ -29,6 +34,30 @@ $check-color: $primary;
     top: $check-height;
     position: absolute;
     text-align: center;
+  }
+}
+
+.upload-complete {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+
+  .line {
+    flex: 1;
+    position: relative;
+
+    &:after {
+      content: ' ';
+      border-bottom: 2px solid transparentize($primary, .8);
+      display: inline-block;
+      width: calc(100% - 20px);
+      margin-left: 10px;
+      margin-right: 10px;
+      top: 50%;
+      position: absolute;
+    }
   }
 }
 

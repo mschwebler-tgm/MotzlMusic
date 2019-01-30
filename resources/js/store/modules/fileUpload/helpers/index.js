@@ -75,7 +75,7 @@ export default class Uploader {
 
     static _createFormDataForFile(file) {
         let formData = new FormData();
-        formData.append(file.name, file);
+        formData.append('track', file);
         return formData;
     }
 }

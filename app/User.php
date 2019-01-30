@@ -31,4 +31,9 @@ class User extends Authenticatable
     protected $casts = [
         'spotify_import_complete' => 'boolean'
     ];
+
+    public function mp3StoragePath()
+    {
+        return snake_case("mp3s/{$this->name}");
+    }
 }

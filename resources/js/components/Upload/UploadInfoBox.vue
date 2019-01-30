@@ -1,16 +1,17 @@
 <template>
     <div class="box position-relative" v-if="show">
-        <h3 class="title is-6 position-relative">
+        <div class="title is-6 position-relative">
             <template v-if="uploadInProgress">New tracks incoming! 😎</template>
-            <template v-else>Upload complete<template v-if="!uploadSuccessful"> with failures</template>!</template>
-            <div class="close-button delete" @click="close()"></div>
-        </h3>
+            <template v-else>Upload complete<template v-if="!uploadSuccessful">d with failures</template>!</template>
+            <div class="close-button delete" @click="close()" v-if="!uploadInProgress"></div>
+            <b-icon icon="cloud-upload" custom-class="upload-icon-top-right" type="is-grey" v-else></b-icon>
+        </div>
         <div class="loader-wrapper">
             <!-- UPLOAD IN PROGRESS -->
             <template v-if="uploadInProgress">
                 {{ doneFilesCount }}/{{ totalFilesCount }} Files
                 <div class="flex-center">
-                    <progress class="flex-1 progress is-primary is-small custom-progress"
+                    <progress class="flex-1 progress is-primary is-small custom-upload-progress"
                               :value="doneFilesCount"
                               :max="totalFilesCount"></progress>
                     <b-icon icon="loading" custom-class="fa-spin" type="is-primary"></b-icon>
@@ -108,8 +109,8 @@
 <style lang="scss">
     @import "../../../sass/components/uploadInfoBox.scss";
 
-    .custom-progress {
-        margin: 0 10px 0 0;
+    .custom-upload-progress {
+        margin: 0 10px 0 0 !important;
     }
 
     .loader-wrapper {
@@ -125,6 +126,12 @@
         top: 2px;
         right: 0;
         cursor: pointer;
+    }
+
+    .upload-icon-top-right {
+        position: absolute;
+        top: 3px;
+        right: 0;
     }
 
 </style>

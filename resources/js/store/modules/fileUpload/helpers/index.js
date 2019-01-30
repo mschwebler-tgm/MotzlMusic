@@ -1,3 +1,10 @@
+/**
+ * This class uploads lots of files starting with a chunk of n files.
+ * After a single upload completes another file is uploaded immediately.
+ *
+ * Failed uploads are queued for another try and added to a list of failed files
+ * if still not successful.
+ */
 export default class Uploader {
     constructor(state, commit) {
         this._state = state;

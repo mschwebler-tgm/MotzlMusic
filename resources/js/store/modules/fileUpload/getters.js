@@ -3,4 +3,5 @@ export default {
     totalFilesCount: state => state.totalFilesCount,
     remainingFilesCount: state => state.remainingFilesCount,
     uploadInProgress: state => state.uploadInProgress,
+    showInfoBox: state => state.showInfoBox,
 }

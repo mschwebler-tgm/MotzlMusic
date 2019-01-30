@@ -8,6 +8,7 @@ const state = {
     remainingFilesCount: 0,
     uploadInProgress: false,
     failedFiles: [],
+    showInfoBox: false,
 };
 
 export default {

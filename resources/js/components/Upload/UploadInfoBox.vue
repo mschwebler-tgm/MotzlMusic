@@ -1,9 +1,11 @@
 <template>
-    <div class="box position-relative" v-if="show || true">
+    <div class="box position-relative" v-if="show">
         <h3 class="title is-6 position-relative">
             <template v-if="uploadInProgress">New tracks incoming! 😎</template>
             <template v-else>Upload complete!</template>
-            <b-icon icon="close" size="is-small" custom-class="close-button" v-if="!uploadInProgress"></b-icon>
+            <div class="close-button" @click="close()">
+                <b-icon icon="close" size="is-small" v-if="!uploadInProgress"></b-icon>
+            </div>
             <!--<b-icon icon="emoticon-cool-outline" type="is-primary"></b-icon>-->
         </h3>
         <div class="loader-wrapper">
@@ -33,10 +35,14 @@
     export default {
         name: "UploadInfoBox",
         components: {BIcon},
+        methods: {
+            close() {
+                this.$store.commit('fileUpload/toggleInfoBox');
+            },
+        },
         computed: {
             show() {
-                return this.$store.getters['fileUpload/uploadInProgress'] &&
-                    this.totalFilesCount;
+                return this.$store.getters['fileUpload/showInfoBox'];
             },
             doneFilesCount() {
                 return this.totalFilesCount - this.$store.getters['fileUpload/remainingFilesCount'];

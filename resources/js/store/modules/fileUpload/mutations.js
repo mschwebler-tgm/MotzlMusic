@@ -8,6 +8,9 @@ export default {
     appendFailedFile(state, file) {
         state.failedFiles.push(file);
     },
+    appendCorruptFile(state, file) {
+        state.filesUnableToUpload.push(file);
+    },
     setTotalFilesCount(state, count) {
         state.totalFilesCount = count;
     },

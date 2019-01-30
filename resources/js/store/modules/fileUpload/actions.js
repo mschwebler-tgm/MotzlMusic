@@ -4,7 +4,6 @@ export default {
     init() {
     },
     submit({state, commit}) {
-        console.log('submit file upload');
         commit('setTotalFilesCount', state.files.length);
         commit('setRemainingFilesCount', state.files.length);
         commit('toggleInfoBox');

@@ -3,67 +3,67 @@ export default class Uploader {
         this._state = state;
         this._commit = commit;
         this._batchSize = 5;
+        this._files = [];
+        this._retryingFailed = false;
     }
 
     /**
      * @param files Array<File>
      */
     uploadFiles(files) {
+        this._files = files;
         this._setUploadingState(true);
-        const filesToUpload = this._takeNextBatch(files);
-        const promises = [];
-        filesToUpload.forEach(file => {
-            promises.push(this._createSingleFileUpload(file));
-        });
-        Promise.all(promises).then(_ => {
-            this._uploadNextBatch(files);
-        }).catch(err => {
-            this._uploadNextBatch(files);
-        });
+        this.startUpload(this._batchSize);
     }
 
-    _uploadNextBatch(files) {
-        const allFilesAreUploaded = files.length === 0;
-        const failedFiles = this._state.failedFiles;
-
-        if (allFilesAreUploaded && failedFiles.length > 0) {
-            this._retryFailedFiles(failedFiles);
-        } else if (files.length > 0) {
-            this.uploadFiles(files);
-        } else {
-            this._setUploadingState(false);
+    startUpload(amount) {
+        const filesToUpload = this._files.splice(0, amount);
+        if (filesToUpload.length === 0 && !this._retryingFailed) {
+            this._retryingFailed = true;
+            this._retryFailedFiles(this._state.failedFiles);
+            return;
         }
+
+        filesToUpload.forEach(file => this._createSingleFileUpload(file));
     }
 
-    _retryFailedFiles(failedFiles) {
-        failedFiles.forEach(file => this._createSingleFileUpload(file, false));
+    _retryFailedFiles(files) {
+        const file = files.shift();
+        if (!file) {
+            this._setUploadingState(false);
+            return;
+        }
+
+        axios.post('/api/uploadTrack', Uploader._createFormDataForFile(file), {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        }).then(_ => {
+            this._commit('decrementRemainingFilesCount');
+            this._retryFailedFiles(files);
+        }).catch(_ => {
+            this._commit('appendCorruptFile', file);
+            this._retryFailedFiles(files);
+        });
+    }
+
+    _createSingleFileUpload(file) {
+        axios.post('/api/uploadTrack', Uploader._createFormDataForFile(file), {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        }).then(_ => {
+            this._commit('decrementRemainingFilesCount');
+            this.startUpload(1);
+        }).catch(_ => {
+            this._commit('appendFailedFile', file);
+            this.startUpload(1);
+        });
     }
 
     _setUploadingState(uploading) {
         this._commit('setUploadInProgress', uploading);
         window.onbeforeunload = _ => uploading || null;
-    }
-
-    _takeNextBatch(files) {
-        return files.splice(0, this._batchSize);
-    }
-
-    _createSingleFileUpload(file, firstTry = true) {
-        return new Promise((resolve, reject) => {
-            axios.post('/api/uploadTrack', Uploader._createFormDataForFile(file), {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            }).catch(_ => {
-                if (firstTry) {
-                    this._commit('appendFailedFile', file);
-                }
-                reject();
-            }).then(_ => {
-                this._commit('decrementRemainingFilesCount');
-                resolve();
-            });
-        });
     }
 
     static _createFormDataForFile(file) {

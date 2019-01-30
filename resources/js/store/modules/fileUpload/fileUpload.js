@@ -4,10 +4,11 @@ import actions from './actions';
 
 const state = {
     files: [],
+    failedFiles: [],
+    filesUnableToUpload: [],
     totalFilesCount: 0,
     remainingFilesCount: 0,
     uploadInProgress: false,
-    failedFiles: [],
     showInfoBox: false,
 };
 

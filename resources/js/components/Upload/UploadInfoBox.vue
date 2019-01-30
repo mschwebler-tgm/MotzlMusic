@@ -2,13 +2,14 @@
     <div class="box position-relative" v-if="show">
         <h3 class="title is-6 position-relative">
             <template v-if="uploadInProgress">New tracks incoming! 😎</template>
-            <template v-else>Upload complete!</template>
+            <template v-else>Upload complete<template v-if="!uploadSuccessful"> with failures</template>!</template>
             <div class="close-button" @click="close()">
                 <b-icon icon="close" size="is-small" v-if="!uploadInProgress"></b-icon>
             </div>
             <!--<b-icon icon="emoticon-cool-outline" type="is-primary"></b-icon>-->
         </h3>
         <div class="loader-wrapper">
+            <!-- UPLOAD IN PROGRESS -->
             <template v-if="uploadInProgress">
                 {{ doneFilesCount }}/{{ totalFilesCount }} Files
                 <div class="flex-center">
@@ -18,12 +19,23 @@
                     <b-icon icon="loading" custom-class="fa-spin" type="is-primary"></b-icon>
                 </div>
             </template>
-            <template v-else>
+            <!-- UPLOAD COMPLETED SUCCESSFULLY -->
+            <template v-else-if="uploadSuccessful">
                 <div class="upload-complete">
                     <div class="line"></div>
                     <div class="checkmark draw" :class="{show: !uploadInProgress}"></div>
                     <div class="line"></div>
                 </div>
+            </template>
+            <!-- UPLOAD COMPLETED WITH FAILURES -->
+            <template v-else>
+                {{ corruptFiles.length }} files failed to upload.
+                <br>
+                <br>
+                <a class="button is-danger">
+                    <b-icon icon="magnify"></b-icon>
+                    <span>View failed files</span>
+                </a>
             </template>
         </div>
     </div>
@@ -50,9 +62,15 @@
             totalFilesCount() {
                 return this.$store.getters['fileUpload/totalFilesCount'];
             },
+            corruptFiles() {
+                return this.$store.getters['fileUpload/filesUnableToUpload'];
+            },
             uploadInProgress() {
                 return this.$store.getters['fileUpload/uploadInProgress'];
-            }
+            },
+            uploadSuccessful() {
+                return !this.uploadInProgress && this.corruptFiles.length === 0;
+            },
         }
     }
 </script>

@@ -16,7 +16,7 @@ $check-color: $primary;
   border-radius: 100%;
   
   &.draw:after {
-    animation-duration: 800ms;
+    animation-duration: 1500ms;
     animation-timing-function: ease;
     animation-name: checkmark;
     transform: scaleX(-1) rotate(135deg);

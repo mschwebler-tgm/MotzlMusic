@@ -3,10 +3,7 @@
         <h3 class="title is-6 position-relative">
             <template v-if="uploadInProgress">New tracks incoming! 😎</template>
             <template v-else>Upload complete<template v-if="!uploadSuccessful"> with failures</template>!</template>
-            <div class="close-button" @click="close()">
-                <b-icon icon="close" size="is-small" v-if="!uploadInProgress"></b-icon>
-            </div>
-            <!--<b-icon icon="emoticon-cool-outline" type="is-primary"></b-icon>-->
+            <div class="close-button delete" @click="close()"></div>
         </h3>
         <div class="loader-wrapper">
             <!-- UPLOAD IN PROGRESS -->
@@ -32,10 +29,37 @@
                 {{ corruptFiles.length }} files failed to upload.
                 <br>
                 <br>
-                <a class="button is-danger">
+                <a class="button is-danger" @click="showFailedFiles = true">
                     <b-icon icon="magnify"></b-icon>
                     <span>View failed files</span>
                 </a>
+
+                <b-modal :active.sync="showFailedFiles">
+                    <article class="message is-danger">
+                        <div class="message-header">
+                            Failed files
+                            <button class="delete" @click="showFailedFiles = false"></button>
+                        </div>
+                        <div class="message-body">
+                            Following files were not able to be uploaded and parsed.
+                            <br>
+                            <br>
+                            <div class="panel">
+                                <a class="panel-block" v-for="file in corruptFiles">
+                                    {{ file.name }}
+                                </a>
+                            </div>
+                            <div class="level">
+                                <div class="level-left"></div>
+                                <div class="level-right">
+                                    <a class="button is-danger" @click="showFailedFiles = false">
+                                        Close
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </b-modal>
             </template>
         </div>
     </div>
@@ -43,13 +67,19 @@
 
 <script>
     import BIcon from "buefy/src/components/icon/Icon";
+    import BModal from "buefy/src/components/modal/Modal";
 
     export default {
         name: "UploadInfoBox",
-        components: {BIcon},
+        components: {BIcon, BModal},
+        data() {
+            return {
+                showFailedFiles: false,
+            }
+        },
         methods: {
             close() {
-                this.$store.commit('fileUpload/toggleInfoBox');
+                this.$store.commit('fileUpload/setShowInfoBox', false);
             },
         },
         computed: {

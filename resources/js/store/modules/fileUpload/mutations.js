@@ -20,7 +20,7 @@ export default {
     decrementRemainingFilesCount(state) {
         state.remainingFilesCount--;
     },
-    toggleInfoBox(state) {
-        state.showInfoBox = !state.showInfoBox;
+    setShowInfoBox(state, show) {
+        state.showInfoBox = show;
     },
 }

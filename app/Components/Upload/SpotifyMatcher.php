@@ -27,7 +27,8 @@ class SpotifyMatcher
 
         $spotifyTrack = new Track($results[0]);
         $trackMatches = $this->isSimilarEnoughForMatch($trackName, $spotifyTrack);
-        dd($trackMatches);
+
+        return $trackMatches ? $spotifyTrack : null;
     }
 
     private function isSimilarEnoughForMatch(string $inputTrackName, Track $spotifyTrack)

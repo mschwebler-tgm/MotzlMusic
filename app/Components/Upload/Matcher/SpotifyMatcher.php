@@ -1,7 +1,6 @@
 <?php
 
-namespace App\Components\Upload;
-
+namespace App\Components\Upload\Matcher;
 
 use App\Components\Spotify\Models\Artist;
 use App\Components\Spotify\Models\Track;
@@ -11,6 +10,10 @@ class SpotifyMatcher
 {
     private $apiService;
 
+    const IGNORED_STRINGS = [
+        'official',
+        'lyrics',
+    ];
     const LEVENSHTEIN_LIMIT = 10;
 
     public function __construct(SpotifyApiService $apiService)
@@ -20,6 +23,7 @@ class SpotifyMatcher
 
     public function getEstimatedSpotifyMatch(string $trackName)
     {
+        $trackName = $this->cutDisturbingStrings($trackName);
         $results = $this->apiService->search($trackName, 'track')->tracks->items;
         if (empty($results)) {
             return null;
@@ -29,6 +33,24 @@ class SpotifyMatcher
         $trackMatches = $this->isSimilarEnoughForMatch($trackName, $spotifyTrack);
 
         return $trackMatches ? $spotifyTrack : null;
+    }
+
+    private function cutDisturbingStrings(string $trackName)
+    {
+        $trackName = strtolower($trackName);
+
+        $parenthesises = [];
+        if (!preg_match('/[\(\[].*[\)\]]/', $trackName, $parenthesises)) {
+            return $trackName;
+        };
+
+        foreach ($parenthesises as $parenthesis) {
+            if (str_contains($parenthesis, self::IGNORED_STRINGS)) {
+                $trackName = str_replace($parenthesis, '', $trackName);
+            };
+        }
+
+        return $trackName;
     }
 
     private function isSimilarEnoughForMatch(string $inputTrackName, Track $spotifyTrack)
@@ -66,6 +88,6 @@ class SpotifyMatcher
      */
     private function unifyTrackName(string $name)
     {
-        return strtolower(preg_replace('/[^A-Za-z0-9]/', '', $name));
+        return preg_replace('/[^a-z0-9]/', '', $name);
     }
 }

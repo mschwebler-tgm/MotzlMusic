@@ -8,7 +8,7 @@ export default class PlayerController {
     }
 
     play(track) {
-        if (track.is_spotify) {
+        if (track.type === 'spotify') {
             this.spotifyPlayer.play(track);
         }
     }

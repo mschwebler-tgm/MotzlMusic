@@ -9,6 +9,7 @@ use App\Components\Spotify\Models\AudioFeatures as SpotifyAudioFeatures;
 use App\Components\Spotify\Models\Artist as SpotifyArtist;
 use App\Components\Spotify\Models\Track as SpotifyTrack;
 use App\Components\Spotify\Models\Playlist as SpotifyPlaylist;
+use App\DTOs\TrackDTO;
 use App\Playlist;
 use App\SpotifyAudioFeature;
 use App\Track;
@@ -23,16 +24,10 @@ class SpotifyDao
         $track = Track::firstOrCreate([
             'spotify_id' => $spotifyTrack->id,
             'name' => $spotifyTrack->name,
-            'user_id' => $user->id
+            'user_id' => $user->id,
+            'type' => 'spotify',
         ]);
-        $track->fill([
-            'duration' => $spotifyTrack->duration,
-            'popularity' => $spotifyTrack->popularity ?? $track->popularity,
-            'spotify_href' => $spotifyTrack->href,
-            'spotify_uri' => $spotifyTrack->uri,
-            'spotify_track_number' => $spotifyTrack->trackNumber ?? $track->spotify_track_number,
-            'album_id' => $albumId
-        ])->save();
+        $track->fill(TrackDTO::spotifyModelToDatabaseArray($spotifyTrack, $user, $albumId))->save();
 
         return $track;
     }

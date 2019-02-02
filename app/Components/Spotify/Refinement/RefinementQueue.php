@@ -19,6 +19,11 @@ class RefinementQueue
     private $artistRefinementQueue = [];
     private $user;
 
+    public function __construct()
+    {
+        $this->user = apiUser();
+    }
+
     public function addToBuffer(Track $track, Album $album, Collection $artists)
     {
         $this->trackRefinementQueue = array_unique(array_merge($this->trackRefinementQueue, [$track->spotify_id]));

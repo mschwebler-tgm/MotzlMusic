@@ -32,7 +32,7 @@ class User extends Authenticatable
         'spotify_import_complete' => 'boolean'
     ];
 
-    public function mp3StoragePath()
+    public function getMp3StoragePath()
     {
         return snake_case("mp3s/{$this->name}");
     }

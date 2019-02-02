@@ -3,15 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Components\Upload\SingleUploadRequest;
-use App\Components\Upload\SpotifyMatcher;
+use App\Components\Upload\UploadService;
 
 class UploadController extends Controller
 {
-    public function uploadTrack(SingleUploadRequest $request, SpotifyMatcher $spotifyMatcher)
+    public function uploadTrack(SingleUploadRequest $request, UploadService $uploadService)
     {
-        $trackName = $request->getFileName();
-        $spotifyTrack = $spotifyMatcher->getEstimatedSpotifyMatch($trackName);
-        dd($spotifyTrack);
+        $uploadService->storeFromRequest($request);
 //        $a = $mp3File->store(apiUser()->mp3StoragePath());
         return response(null, 200);
     }

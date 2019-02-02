@@ -35,6 +35,7 @@ class SpotifyMatcher
         return $trackMatches ? $spotifyTrack : null;
     }
 
+    // TODO cut disc numbers like "01 - 3 doors down - kryptonite"
     private function cutDisturbingStrings(string $trackName)
     {
         $trackName = strtolower($trackName);

@@ -1,13 +1,14 @@
 import VueRouter from 'vue-router';
 import router from './router';
-
-import 'clusterize.js'
-// import 'buefy/src/scss/buefy.scss';
-
 import store from './store/store';
 
-window.Vue = require('vue');
+import 'clusterize.js'
+import 'vuetify/dist/vuetify.min.css' // Ensure you are using css-loader
 
+import Vue from 'vue';
+import Vuetify from 'vuetify'
+
+Vue.use(Vuetify);
 Vue.use(VueRouter);
 
 const app = new Vue({

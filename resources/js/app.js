@@ -7,9 +7,15 @@ import 'vuetify/dist/vuetify.min.css' // Ensure you are using css-loader
 
 import Vue from 'vue';
 import Vuetify from 'vuetify'
+// Helpers
+import colors from 'vuetify/es5/util/colors';
 
-Vue.use(Vuetify);
 Vue.use(VueRouter);
+Vue.use(Vuetify, {
+    theme: {
+        info: colors.blue.lighten2,
+    }
+});
 
 const app = new Vue({
     el: '#root',
@@ -17,7 +23,8 @@ const app = new Vue({
     store,
     data() {
         return {
-            showSpotifyImport: false
+            showSpotifyImport: false,
+            isDarkTheme: false,
         }
     }
 });

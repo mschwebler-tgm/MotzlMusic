@@ -1,0 +1,38 @@
+<template>
+    <v-card tile>
+        <v-img width="40%"
+               :src="fullResolutionImage"
+               :lazy-src="intermediateImage"
+               :alt="playlist.name">
+            <v-layout
+                    slot="placeholder"
+                    fill-height
+                    align-center
+                    justify-center
+                    ma-0>
+                <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+            </v-layout>
+        </v-img>
+    </v-card>
+</template>
+
+<script>
+    export default {
+        name: "PlaylistItem",
+        props: {
+            playlist: Object,
+        },
+        computed: {
+            fullResolutionImage() {
+                return this.playlist.spotify_image_medium || this.playlist.spotify_image_large || '/images/playlistFallback.jpeg';
+            },
+            intermediateImage() {
+                return this.playlist.spotify_image_small || this.playlist.spotify_image_medium || this.playlist.spotify_image_large || '/images/playlistFallback.jpeg';
+            }
+        }
+    }
+</script>
+
+<style scoped>
+
+</style>

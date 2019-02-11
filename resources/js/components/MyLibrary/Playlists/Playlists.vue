@@ -1,5 +1,10 @@
 <template>
     <div>
+        <v-progress-circular
+                v-if="!$parent.playlistsInitialized"
+                color="primary"
+                indeterminate>
+        </v-progress-circular>
         <span class="headline">Playlists</span>
         <v-container grid-list-lg>
             <v-layout row wrap>

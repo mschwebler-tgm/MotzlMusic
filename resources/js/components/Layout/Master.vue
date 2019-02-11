@@ -127,7 +127,9 @@
             </v-toolbar>
             <v-content>
                 <v-container fluid>
-                    <router-view></router-view>
+                    <transition name="bounce" mode="out-in">
+                        <router-view></router-view>
+                    </transition>
                 </v-container>
             </v-content>
             <v-footer app></v-footer>
@@ -181,4 +183,24 @@
 </script>
 
 <style scoped lang="scss">
+    .bounce-enter-active {
+        animation: bounce-in .2s;
+    }
+    .bounce-leave-active {
+        animation: bounce-in .2s reverse;
+    }
+    @keyframes bounce-in {
+        0% {
+            transform: scale(0.9);
+            opacity: 0;
+        }
+        50% {
+            transform: scale(1.005);
+            opacity: .8;
+        }
+        100% {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
 </style>

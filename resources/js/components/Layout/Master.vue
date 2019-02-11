@@ -4,13 +4,54 @@
             <v-navigation-drawer v-model="showDrawer" app></v-navigation-drawer>
             <v-toolbar app color="info">
                 <v-toolbar-side-icon @click="showDrawer = !showDrawer"></v-toolbar-side-icon>
-                <v-toolbar-title>MotzlMusic</v-toolbar-title>
+                <v-toolbar-title>Vuetify</v-toolbar-title>
                 <v-spacer></v-spacer>
                 <v-toolbar-items class="hidden-sm-and-down">
                     <v-btn flat>Link One</v-btn>
                     <v-btn flat>Link Two</v-btn>
-                    <v-btn flat>{{ user.name }}</v-btn>
-                </v-toolbar-items></v-toolbar>
+                    <v-menu transition="slide-y-transition"
+                            :close-delay="500"
+                            bottom left open-on-hover offset-y>
+                        <v-btn slot="activator" color="primary">
+                            {{ user.name }}
+                        </v-btn>
+                        <v-list>
+                            <v-list-tile @click="$router.push('/profile')">
+                                <v-list-tile-avatar>
+                                    <v-icon class="grey--text">account_circle</v-icon>
+                                </v-list-tile-avatar>
+                                <v-list-tile-title>Profile</v-list-tile-title>
+                            </v-list-tile>
+                            <v-list-tile @click="$router.push('/settings')">
+                                <v-list-tile-avatar>
+                                    <v-icon class="grey--text">settings</v-icon>
+                                </v-list-tile-avatar>
+                                <v-list-tile-title>Settings</v-list-tile-title>
+                            </v-list-tile>
+                            <v-divider></v-divider>
+                            <v-list-tile @click="$root.showSpotifyImport = true">
+                                <v-list-tile-avatar>
+                                    <v-icon class="grey--text">cloud_download</v-icon>
+                                </v-list-tile-avatar>
+                                <v-list-tile-title>Import from Spotify</v-list-tile-title>
+                            </v-list-tile>
+                            <v-divider></v-divider>
+                            <v-list-tile @click="$root.isDarkTheme = !$root.isDarkTheme">
+                                <v-list-tile-action>
+                                    <v-switch v-model="$root.isDarkTheme"></v-switch>
+                                </v-list-tile-action>
+                                <v-list-tile-title>
+                                    Use dark theme
+                                </v-list-tile-title>
+                            </v-list-tile>
+                            <v-divider></v-divider>
+                            <v-list-tile @click="logout()">
+                                <v-list-tile-title>Logout</v-list-tile-title>
+                            </v-list-tile>
+                        </v-list>
+                    </v-menu>
+                </v-toolbar-items>
+            </v-toolbar>
             <v-content>
                 <v-container fluid>
                     <router-view></router-view>
@@ -33,6 +74,11 @@
         created() {
             this.$root.showSpotifyImport = this.user && !this.user.spotify_import_complete;
         },
+        methods: {
+            logout() {
+                document.getElementById('logout-form').submit();
+            }
+        }
     }
 </script>
 

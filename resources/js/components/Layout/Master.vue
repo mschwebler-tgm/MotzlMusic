@@ -168,9 +168,17 @@
             </v-toolbar>
             <v-content>
                 <v-container fluid>
-                    <transition name="bounce" mode="out-in">
-                        <router-view></router-view>
-                    </transition>
+                    <v-layout row wrap>
+                        <v-flex xs12 md12 lg12>
+                            <!-- Main Content -->
+                            <transition name="bounce" mode="out-in">
+                                <router-view></router-view>
+                            </transition>
+                        </v-flex>
+                        <v-flex lg4 class="hidden-lg-and-down">
+                            <!-- Side Content -->
+                        </v-flex>
+                    </v-layout>
                 </v-container>
             </v-content>
             <v-footer app></v-footer>

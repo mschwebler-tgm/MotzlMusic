@@ -167,7 +167,7 @@
                 </v-toolbar-items>
             </v-toolbar>
             <v-content>
-                <v-container fluid>
+                <v-container fluid grid-list-xl>
                     <v-layout row wrap>
                         <v-flex xs12 md12 lg12 xl9>
                             <!-- Main Content -->
@@ -176,6 +176,14 @@
                             </transition>
                         </v-flex>
                         <v-flex xl3 class="hidden-lg-and-down">
+                            <v-card style="height: 100%;">
+                                <v-card-title>
+                                    <span class="headline">
+
+                                    Sub Content
+                                    </span>
+                                </v-card-title>
+                            </v-card>
                             <!-- Side Content -->
                         </v-flex>
                     </v-layout>

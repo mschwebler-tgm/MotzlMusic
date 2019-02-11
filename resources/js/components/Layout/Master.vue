@@ -15,7 +15,9 @@
                         </v-list-tile>
                     </v-list>
                 </v-toolbar>
+
                 <v-list>
+                    <!-- HOME -->
                     <v-list-tile @click="$router.push('/')">
                         <v-list-tile-action>
                             <v-icon class="grey--text">home</v-icon>
@@ -23,8 +25,42 @@
                         <v-list-tile-title>Home</v-list-tile-title>
                     </v-list-tile>
                     <v-divider></v-divider>
-                    <v-list-group prepend-icon="account_circle"
+
+                    <!-- LIBRARY -->
+                    <v-list-group prepend-icon="library_music"
                                   value="true"
+                                  no-action>
+                        <v-list-tile slot="activator">
+                            <v-list-tile-title>My library</v-list-tile-title>
+                        </v-list-tile>
+                        <v-list-tile @click="$router.push('/my-library/playlists')">
+                            <v-list-tile-title>Playlists</v-list-tile-title>
+                            <v-list-tile-action>
+                                <v-icon>playlist_play</v-icon>
+                            </v-list-tile-action>
+                        </v-list-tile>
+                        <v-list-tile @click="$router.push('/my-library/tracks')">
+                            <v-list-tile-title>Tracks</v-list-tile-title>
+                            <v-list-tile-action>
+                                <v-icon>music_note</v-icon>
+                            </v-list-tile-action>
+                        </v-list-tile>
+                        <v-list-tile @click="$router.push('/my-library/albums')">
+                            <v-list-tile-title>Albums</v-list-tile-title>
+                            <v-list-tile-action>
+                                <v-icon>album</v-icon>
+                            </v-list-tile-action>
+                        </v-list-tile>
+                        <v-list-tile @click="$router.push('/my-library/artists')">
+                            <v-list-tile-title>Artists</v-list-tile-title>
+                            <v-list-tile-action>
+                                <v-icon>account_box</v-icon>
+                            </v-list-tile-action>
+                        </v-list-tile>
+                    </v-list-group>
+
+                    <!-- USER -->
+                    <v-list-group prepend-icon="account_circle"
                                   no-action>
                         <v-list-tile slot="activator">
                             <v-list-tile-title>User</v-list-tile-title>
@@ -42,6 +78,7 @@
                             </v-list-tile-action>
                         </v-list-tile>
 
+                        <!-- UPLOAD/IMPORT -->
                         <v-list-group no-action sub-group>
                             <v-list-tile slot="activator">
                                 <v-list-tile-title>Manage content</v-list-tile-title>
@@ -61,6 +98,8 @@
                         </v-list-group>
                     </v-list-group>
                     <v-divider></v-divider>
+
+                    <!-- DARK -->
                     <v-list-tile @click="$root.isDarkTheme = !$root.isDarkTheme">
                         <v-list-tile-action>
                             <v-switch v-model="$root.isDarkTheme"></v-switch>
@@ -70,6 +109,8 @@
                         </v-list-tile-title>
                     </v-list-tile>
                     <v-divider></v-divider>
+
+                    <!-- LOGOUT -->
                     <v-list-tile @click="logout()">
                         <v-list-tile-title>Logout</v-list-tile-title>
                     </v-list-tile>

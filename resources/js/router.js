@@ -6,6 +6,11 @@ import Profile from './components/Profile/Profile';
 import Settings from './components/Settings/Settings';
 import SpotifyImport from './components/SpotifyImport/SpotifyImport';
 import Upload from './components/Upload/Upload';
+import MyLibrary from './components/MyLibrary/MyLibrary';
+import Playlists from './components/MyLibrary/Playlists/Playlists';
+import Tracks from './components/MyLibrary/Tracks/Tracks';
+import Albums from './components/MyLibrary/Albums/Albums';
+import Artists from './components/MyLibrary/Artists/Artists';
 
 export default new VueRouter({
     mode: 'history',
@@ -24,26 +29,54 @@ export default new VueRouter({
                     component: Home,
                 },
                 {
-                    path: '/profile/:id',
+                    path: 'profile/:id',
                     name: 'profile',
                     component: Profile,
                     props: true,
                 },
                 {
-                    path: '/settings',
+                    path: 'settings',
                     name: 'settings',
                     component: Settings,
                 },
                 {
-                    path: '/import/spotify',
+                    path: 'import/spotify',
                     name: 'spotifyImport',
                     component: SpotifyImport,
                 },
                 {
-                    path: '/upload',
+                    path: 'upload',
                     name: 'upload',
                     component: Upload,
                 },
+                {
+                    path: 'my-library',
+                    name: 'myLibrary',
+                    component: MyLibrary,
+                    redirect: '/my-library/playlists',
+                    children: [
+                        {
+                            path: 'playlists',
+                            name: 'playlists',
+                            component: Playlists,
+                        },
+                        {
+                            path: 'tracks',
+                            name: 'tracks',
+                            component: Tracks,
+                        },
+                        {
+                            path: 'albums',
+                            name: 'albums',
+                            component: Albums,
+                        },
+                        {
+                            path: 'artists',
+                            name: 'artists',
+                            component: Artists,
+                        },
+                    ]
+                }
            ],
         },
     ],

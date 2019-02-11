@@ -46,7 +46,7 @@
                             <v-list-tile slot="activator">
                                 <v-list-tile-title>Manage content</v-list-tile-title>
                             </v-list-tile>
-                            <v-list-tile @click="$root.showSpotifyImport = true">
+                            <v-list-tile @click="$router.push('/import/spotify')">
                                 <v-list-tile-title>Import from Spotify</v-list-tile-title>
                                 <v-list-tile-action>
                                     <v-icon>cloud_download</v-icon>
@@ -102,7 +102,7 @@
                                 <v-list-tile-title>Settings</v-list-tile-title>
                             </v-list-tile>
                             <v-divider></v-divider>
-                            <v-list-tile @click="$root.showSpotifyImport = true">
+                            <v-list-tile @click="$router.push('/import/spotify')">
                                 <v-list-tile-avatar>
                                     <v-icon class="grey--text">cloud_download</v-icon>
                                 </v-list-tile-avatar>

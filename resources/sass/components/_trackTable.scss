@@ -1,0 +1,60 @@
+@import "../variables";
+
+.clusterize-scroll {
+  overflow: scroll;
+}
+
+.track-table {
+
+}
+
+.track-table .track {
+  display: flex;
+  cursor: default;
+}
+
+.track:hover {
+  //background-color: transparentize($secondary, .9) !important;
+}
+
+.track-table .track > div {
+  overflow: hidden;
+  -ms-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.track-table .track:nth-child(odd) {
+  //background-color: $white-ter;
+}
+
+.track-list-number {
+  width: 40px;
+}
+
+.track-list-title {
+  width: 300px;
+  padding-right: 10px;
+}
+
+.track-list-duration {
+  width: 45px;
+}
+
+.track-list-artist {
+  width: 220px;
+}
+
+.track-list-more-options {
+  width: 0;
+  -webkit-transition: width .1s ease-in-out;
+  -moz-transition: width .1s ease-in-out;
+  -ms-transition: width .1s ease-in-out;
+  -o-transition: width .1s ease-in-out;
+  transition: width .1s ease-in-out;
+}
+
+.track-list-options-trigger:hover ~ .track-list-more-options,
+.track-list-more-options:hover {
+  width: 24px;
+}

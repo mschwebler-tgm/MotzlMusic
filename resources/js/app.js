@@ -24,7 +24,12 @@ const app = new Vue({
     data() {
         return {
             showSpotifyImport: false,
-            isDarkTheme: false,
+            isDarkTheme: localStorage.getItem('useDarkTheme') === '1',
+        }
+    },
+    watch: {
+        isDarkTheme(isDark) {
+            localStorage.setItem('useDarkTheme', 0 + isDark);
         }
     }
 });

@@ -1,9 +1,9 @@
 <template>
     <div>
-        <span class="headline">Tracks</span>
+        <v-card-title class="headline">Tracks</v-card-title>
         <v-container>
-            <div class="h-100 clusterize flex-column">
-                <div class="flex-1 track-table" id="my-library-tracks-table">
+            <v-layout column class="clusterize">
+                <v-flex class="track-table" id="my-library-tracks-table">
                     <div :id="identifier + '-scrollArea'" class="clusterize-scroll" :style="{'max-height': scrollContainerHeight}" ref="scrollArea">
                         <div :id="identifier + '-contentArea'" class="clusterize-content">
                             <tr class="clusterize-no-data">
@@ -15,8 +15,8 @@
                             </tr>
                         </div>
                     </div>
-                </div>
-            </div>
+                </v-flex>
+            </v-layout>
         </v-container>
     </div>
 </template>
@@ -29,7 +29,7 @@
         data() {
             return {
                 clusterize: null,
-                scrollContainerHeight: '746px',
+                scrollContainerHeight: '691px',
                 identifier: Math.random().toString(36).substring(7)
             }
         },
@@ -48,7 +48,6 @@
         methods: {
             initializeTracksTable() {
                 const clusterize = _ => {
-                    console.log('clusterize it!');
                     this.clusterize = new Clusterize({
                         scrollId: this.identifier + '-scrollArea',
                         contentId: this.identifier + '-contentArea',

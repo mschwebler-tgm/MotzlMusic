@@ -1,7 +1,8 @@
 <template>
     <div id="master">
         <v-app :dark="$root.isDarkTheme">
-            <v-navigation-drawer v-model="showDrawer" app clipped floating>
+            <v-navigation-drawer v-model="showDrawer" app clipped floating
+                                 :mobile-break-point="927">
                 <v-toolbar flat class="transparent">
                     <v-list class="pa-0">
                         <v-list-tile avatar>

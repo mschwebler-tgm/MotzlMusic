@@ -7,7 +7,7 @@
                 indeterminate>
         </v-progress-circular>
 
-        <v-container grid-list-lg>
+        <v-container grid-list-lg justify-start class="ml-0">
             <v-layout row wrap>
                 <v-flex v-for="playlist in playlists"
                         :key="playlist.id"

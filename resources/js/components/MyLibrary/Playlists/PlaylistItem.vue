@@ -1,5 +1,5 @@
 <template>
-    <v-card tile>
+    <v-card tile class="playlist-tile">
         <v-img width="40%"
                :src="fullResolutionImage"
                :lazy-src="intermediateImage"
@@ -40,5 +40,8 @@
 </script>
 
 <style scoped>
-
+    .playlist-tile.theme--dark {
+        background-color: #343434;
+        border-color: #343434;
+    }
 </style>

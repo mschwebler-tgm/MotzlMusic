@@ -10,6 +10,11 @@
     display: flex;
     cursor: default;
 
+    // track was clicked
+    &:focus, &:hover:focus, &:nth-child(odd):focus, &:nth-child(odd):hover:focus {
+      background-color: $list-item-selected !important;
+    }
+
     & > div {
       overflow: hidden;
       -ms-text-overflow: ellipsis;

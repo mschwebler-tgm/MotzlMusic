@@ -167,8 +167,8 @@
                 </v-toolbar-items>
             </v-toolbar>
             <v-content>
-                <v-container fluid grid-list-xl>
-                    <v-layout row wrap>
+                <v-container fluid grid-list-xl class="h-100">
+                    <v-layout row wrap class="h-100">
                         <v-flex xs12 md12 lg12 xl9>
                             <!-- Main Content -->
                             <transition name="bounce" mode="out-in">

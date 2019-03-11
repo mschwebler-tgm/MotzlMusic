@@ -1,6 +1,18 @@
 <template>
     <div>
-        <span class="headline">{{ name }}</span>
+        <div v-if="errorResponse" class="playlist-error">
+            <div>
+                <div class="error">
+                    <h1 class="display-3 font-weight-light">
+                        <v-icon x-large>lock</v-icon>
+                        {{ errorResponse.status }} - {{ errorResponse.statusText }}
+                    </h1>
+                </div>
+                <br>
+                <h2 class="subheading">{{ errorResponse.data }}</h2>
+            </div>
+            <img src="/images/403.svg" alt="403" width="400">
+        </div>
     </div>
 </template>
 
@@ -11,9 +23,22 @@
             name: String,
             id: String,
         },
+        data() {
+            return {
+                errorResponse: null,
+            }
+        },
         created() {
             if (!this.cachedPlaylist) {
-                this.$store.dispatch('cache/fetchSelectedPlaylist', this.id);
+                axios.get(`/api/playlist/${this.id}`)
+                    .then(res => this.$store.commit('cache/setSelectedPlaylist', res.data))
+                    .catch(err => {
+                        this.errorResponse = (({status, statusText, data}) => ({
+                            status,
+                            statusText,
+                            data
+                        }))(err.response);
+                    });
             }
         },
         computed: {
@@ -30,5 +55,16 @@
 </script>
 
 <style scoped>
+    .playlist-error {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+    }
 
+    .playlist-error .error h1 {
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+    }
 </style>

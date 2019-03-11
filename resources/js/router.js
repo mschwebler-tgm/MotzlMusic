@@ -51,7 +51,7 @@ export default new VueRouter({
                     component: Upload,
                 },
                 {
-                    path: 'playlist/:id',
+                    path: 'playlist/:name/:id',
                     name: 'playlist',
                     component: PlaylistView,
                     props: true,

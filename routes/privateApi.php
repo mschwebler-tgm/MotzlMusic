@@ -28,4 +28,8 @@ Route::prefix('player')->namespace('Player')->group(function () {
     Route::put('/spotify/playTrack', 'SpotifyPlayerController@playTrack');
 });
 
+Route::namespace('Api')->group(function () {
+    Route::get('/playlist/{id}', 'PlaylistController@playlist');
+});
+
 Route::post('/uploadTrack', 'UploadController@uploadTrack');

@@ -31,7 +31,6 @@
                     <v-list-group prepend-icon="library_music"
                                   value="true"
                                   append-icon=""
-                                  group="my-library"
                                   no-action dense>
                         <v-list-tile slot="activator">
                             <v-list-tile-title>My library</v-list-tile-title>

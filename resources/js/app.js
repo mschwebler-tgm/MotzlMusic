@@ -13,9 +13,8 @@ import colors from 'vuetify/es5/util/colors';
 Vue.use(VueRouter);
 Vue.use(Vuetify, {
     theme: {
-        primary: colors.purple.base,
-        info: colors.purple.darken1,
-        accent: colors.purple.lighten1,
+        primary: colors.blue.lighten1,
+        accent: colors.blue.accent2,
     }
 });
 

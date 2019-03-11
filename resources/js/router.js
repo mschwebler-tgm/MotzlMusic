@@ -11,6 +11,7 @@ import Playlists from './components/MyLibrary/Playlists/Playlists';
 import Tracks from './components/MyLibrary/Tracks/Tracks';
 import Albums from './components/MyLibrary/Albums/Albums';
 import Artists from './components/MyLibrary/Artists/Artists';
+import PlaylistView from './components/Playlist/Playlist';
 
 export default new VueRouter({
     mode: 'history',
@@ -48,6 +49,12 @@ export default new VueRouter({
                     path: 'upload',
                     name: 'upload',
                     component: Upload,
+                },
+                {
+                    path: 'playlist/:id',
+                    name: 'playlist',
+                    component: PlaylistView,
+                    props: true,
                 },
                 {
                     path: 'my-library',

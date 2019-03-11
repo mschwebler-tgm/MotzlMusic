@@ -15,12 +15,16 @@ class UserResourceGuard
 
     /**
      * @param Model $resource
-     * @return Model|\Illuminate\Http\Response
+     * @return Model|null|\Illuminate\Http\Response
      */
-    public static function getResource(Model $resource)
+    public static function getResource($resource)
     {
+        if (!$resource) {
+            return response('We\'re sorry, we could not find the resource you requested.', 404);
+        }
+
         $guard = self::getResourceGuard($resource);
-        if (!$guard || !$resource) {
+        if (!$guard) {
             return $resource;
         }
 

@@ -13,10 +13,9 @@ class PlaylistGuard implements UserResourceGuardInterface
      */
     public function get(Model $resource)
     {
-        if ($resource->user->id === apiUser()->id) {
-            return $resource;
-        } else {
-            return response('We\'re sorry, you don\'t have access to the resource you requested.', '403');
+        if ($resource->user->id !== apiUser()->id) {
+            return response('We\'re sorry, you don\'t have access to the resource you requested.', 403);
         }
+        return $resource;
     }
 }

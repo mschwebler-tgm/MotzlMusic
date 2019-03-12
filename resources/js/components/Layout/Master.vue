@@ -35,28 +35,28 @@
                         <v-list-tile slot="activator">
                             <v-list-tile-title>My library</v-list-tile-title>
                         </v-list-tile>
-                        <v-list-tile to="/my-library/playlists" class="grey darken-4 white--text" exact-active-class="accent white--text primary--text">
+                        <v-list-tile to="/my-library/playlists" class="grey darken-4 white--text" active-class="accent white--text primary--text">
                             <v-list-tile-title class="white--text">Playlists</v-list-tile-title>
                             <v-list-tile-action>
                                 <v-icon>playlist_play</v-icon>
                             </v-list-tile-action>
                         </v-list-tile>
                         <v-divider inset></v-divider>
-                        <v-list-tile to="/my-library/tracks" class="grey darken-4 white--text" exact-active-class="accent white--text primary--text">
+                        <v-list-tile to="/my-library/tracks" class="grey darken-4 white--text" active-class="accent white--text primary--text">
                             <v-list-tile-title class="white--text">Tracks</v-list-tile-title>
                             <v-list-tile-action>
                                 <v-icon>music_note</v-icon>
                             </v-list-tile-action>
                         </v-list-tile>
                         <v-divider inset></v-divider>
-                        <v-list-tile to="/my-library/albums" class="grey darken-4 white--text" exact-active-class="accent white--text primary--text">
+                        <v-list-tile to="/my-library/albums" class="grey darken-4 white--text" active-class="accent white--text primary--text">
                             <v-list-tile-title class="white--text">Albums</v-list-tile-title>
                             <v-list-tile-action>
                                 <v-icon>album</v-icon>
                             </v-list-tile-action>
                         </v-list-tile>
                         <v-divider inset></v-divider>
-                        <v-list-tile to="/my-library/artists" class="grey darken-4 white--text" exact-active-class="accent white--text primary--text">
+                        <v-list-tile to="/my-library/artists" class="grey darken-4 white--text" active-class="accent white--text primary--text">
                             <v-list-tile-title class="white--text">Artists</v-list-tile-title>
                             <v-list-tile-action>
                                 <v-icon>account_box</v-icon>
@@ -71,14 +71,14 @@
                         <v-list-tile slot="activator">
                             <v-list-tile-title>User</v-list-tile-title>
                         </v-list-tile>
-                        <v-list-tile to="/profile/me" class="grey darken-4 white--text" exact-active-class="accent white--text primary--text">
+                        <v-list-tile to="/profile/me" class="grey darken-4 white--text" active-class="accent white--text primary--text">
                             <v-list-tile-title class="white--text">Profile</v-list-tile-title>
                             <v-list-tile-action>
                                 <v-icon>account_circle</v-icon>
                             </v-list-tile-action>
                         </v-list-tile>
                         <v-divider inset></v-divider>
-                        <v-list-tile to="/settings" class="grey darken-4 white--text" exact-active-class="accent white--text primary--text">
+                        <v-list-tile to="/settings" class="grey darken-4 white--text" active-class="accent white--text primary--text">
                             <v-list-tile-title class="white--text">Settings</v-list-tile-title>
                             <v-list-tile-action>
                                 <v-icon>settings</v-icon>
@@ -92,14 +92,14 @@
                         <v-list-tile slot="activator">
                             <v-list-tile-title>Manage content</v-list-tile-title>
                         </v-list-tile>
-                        <v-list-tile to="/import/spotify" class="grey darken-4 white--text" exact-active-class="accent white--text primary--text">
+                        <v-list-tile to="/import/spotify" class="grey darken-4 white--text" active-class="accent white--text primary--text">
                             <v-list-tile-title class="white--text">Import from Spotify</v-list-tile-title>
                             <v-list-tile-action>
                                 <v-icon>cloud_download</v-icon>
                             </v-list-tile-action>
                         </v-list-tile>
                         <v-divider inset></v-divider>
-                        <v-list-tile to="/upload" class="grey darken-4 white--text" exact-active-class="accent white--text primary--text">
+                        <v-list-tile to="/upload" class="grey darken-4 white--text" active-class="accent white--text primary--text">
                             <v-list-tile-title class="white--text">Upload MP3s</v-list-tile-title>
                             <v-list-tile-action>
                                 <v-icon>cloud_upload</v-icon>

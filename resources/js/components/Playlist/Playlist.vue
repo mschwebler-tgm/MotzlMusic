@@ -1,5 +1,9 @@
 <template>
     <div>
+        <v-btn flat @click="$router.go(-1)" class="ma-3">
+            <v-icon dark left>arrow_back</v-icon>Back
+        </v-btn>
+
         <!-- ERROR -->
         <div v-if="errorResponse" class="playlist-error">
             <div>
@@ -17,7 +21,7 @@
 
         <!-- PLAYLIST -->
         <template v-if="playlist">
-            <div class="d-flex">
+            <div class="d-flex pa-3">
                 <v-img
                         :src="playlist.spotify_image_medium"
                         :lazy-src="playlist.spotify_image_small"

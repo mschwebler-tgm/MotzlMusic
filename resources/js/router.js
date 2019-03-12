@@ -51,17 +51,17 @@ export default new VueRouter({
                     component: Upload,
                 },
                 {
-                    path: 'playlist/:name/:id',
-                    name: 'playlist',
-                    component: PlaylistView,
-                    props: true,
-                },
-                {
                     path: 'my-library',
                     name: 'myLibrary',
                     component: MyLibrary,
                     redirect: '/my-library/playlists',
                     children: [
+                        {
+                            path: 'playlists/:name/:id',
+                            name: 'playlists',
+                            component: PlaylistView,
+                            props: true,
+                        },
                         {
                             path: 'playlists',
                             name: 'playlists',

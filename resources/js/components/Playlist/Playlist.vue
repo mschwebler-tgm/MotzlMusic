@@ -75,19 +75,20 @@
                 if (!this.playlist) {
                     axios.get(`/api/playlist/${this.id}`)
                         .then(res => this.$store.commit('cache/setSelectedPlaylist', res.data))
-                        .catch(err => {
-                            this.errorResponse = (({status, statusText, data}) => ({
-                                status,
-                                statusText,
-                                data
-                            }))(err.response);
-                        });
+                        .catch(err => this.handleError(err));
                 }
             },
             loadTracks() {
                 axios.get(`/api/playlist/${this.id}/tracks`)
                     .then(res => this.tracks = res.data)
-                    .catch(err => this.errorResponse = err.response);
+                    .catch(err => this.handleError(err));
+            },
+            handleError(error) {
+                this.errorResponse = (({status, statusText, data}) => ({
+                    status,
+                    statusText,
+                    data: data.message,
+                }))(error.response);
             }
         },
         computed: {

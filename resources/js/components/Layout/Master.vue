@@ -17,7 +17,7 @@
                     </v-list>
                 </v-toolbar>
 
-                <v-list>
+                <v-list dense>
                     <!-- HOME -->
                     <v-list-tile @click="$router.push('/')">
                         <v-list-tile-action>
@@ -31,7 +31,7 @@
                     <v-list-group prepend-icon="library_music"
                                   value="true"
                                   append-icon=""
-                                  no-action dense>
+                                  no-action>
                         <v-list-tile slot="activator">
                             <v-list-tile-title>My library</v-list-tile-title>
                         </v-list-tile>
@@ -66,8 +66,7 @@
                     <v-divider></v-divider>
 
                     <!-- USER -->
-                    <v-list-group prepend-icon="account_circle"
-                                  no-action>
+                    <v-list-group prepend-icon="account_circle" no-action>
                         <v-list-tile slot="activator">
                             <v-list-tile-title>User</v-list-tile-title>
                         </v-list-tile>
@@ -138,7 +137,7 @@
                         <v-btn slot="activator" color="primary" depressed :ripple="false">
                             {{ user.name }}
                         </v-btn>
-                        <v-list>
+                        <v-list dense>
                             <v-list-tile @click="$router.push('/profile')">
                                 <v-list-tile-avatar>
                                     <v-icon class="grey--text">account_circle</v-icon>

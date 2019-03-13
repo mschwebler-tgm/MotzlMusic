@@ -20,4 +20,11 @@ class UserResourceDao
 
         return UserResourceGuard::getResource($playlist);
     }
+
+    public function getPlaylistTracks($playlistId)
+    {
+        $playlist = Playlist::with('user', 'tracks.artists', 'tracks.album')->find($playlistId);
+
+        return UserResourceGuard::getResource($playlist)->tracks;
+    }
 }

@@ -30,6 +30,7 @@ Route::prefix('player')->namespace('Player')->group(function () {
 
 Route::namespace('Api')->group(function () {
     Route::get('/playlist/{id}', 'PlaylistController@playlist');
+    Route::get('/playlist/{id}/tracks', 'PlaylistController@tracks');
 });
 
 Route::post('/uploadTrack', 'UploadController@uploadTrack');

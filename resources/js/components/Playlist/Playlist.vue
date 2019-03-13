@@ -59,16 +59,25 @@
             }
         },
         created() {
-            if (!this.playlist) {
-                axios.get(`/api/playlist/${this.id}`)
-                    .then(res => this.$store.commit('cache/setSelectedPlaylist', res.data))
-                    .catch(err => {
-                        this.errorResponse = (({status, statusText, data}) => ({
-                            status,
-                            statusText,
-                            data
-                        }))(err.response);
-                    });
+            this.loadPlaylistIfNeeded();
+            this.loadTracks();
+        },
+        methods: {
+            loadPlaylistIfNeeded() {
+                if (!this.playlist) {
+                    axios.get(`/api/playlist/${this.id}`)
+                        .then(res => this.$store.commit('cache/setSelectedPlaylist', res.data))
+                        .catch(err => {
+                            this.errorResponse = (({status, statusText, data}) => ({
+                                status,
+                                statusText,
+                                data
+                            }))(err.response);
+                        });
+                }
+            },
+            loadTracks() {
+                axios.get(`/api/playlist/${this.id}/tracks`);
             }
         },
         computed: {

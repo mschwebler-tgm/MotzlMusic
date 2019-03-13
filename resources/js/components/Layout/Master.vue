@@ -125,7 +125,7 @@
                     </v-list-tile>
                 </v-list>
             </v-navigation-drawer>
-            <v-toolbar app color="primary" clipped-left>
+            <v-toolbar app clipped-left dense color="primary">
                 <v-toolbar-side-icon @click="showDrawer = !showDrawer"></v-toolbar-side-icon>
                 <v-toolbar-title>Vuetify</v-toolbar-title>
                 <v-spacer></v-spacer>

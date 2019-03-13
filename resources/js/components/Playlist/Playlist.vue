@@ -1,7 +1,8 @@
 <template>
     <div>
         <v-btn flat @click="$router.go(-1)" class="ma-3">
-            <v-icon dark left>arrow_back</v-icon>Back
+            <v-icon dark left>arrow_back</v-icon>
+            Back
         </v-btn>
 
         <!-- ERROR -->
@@ -42,13 +43,18 @@
                     <h2 class="subheading">{{ playlistType }}</h2>
                 </div>
             </div>
+            <track-table :tracks="tracks" :render-function="clusterizeFunction"></track-table>
         </template>
     </div>
 </template>
 
 <script>
+    import TrackTable from "../TrackTable";
+    import clusterizeTracks from '../../store/modules/myLibrary/helpers/clusterizeTracks';
+
     export default {
         name: "Playlist",
+        components: {TrackTable},
         props: {
             name: String,
             id: String,
@@ -56,6 +62,8 @@
         data() {
             return {
                 errorResponse: null,
+                tracks: [],
+                clusterizeFunction: clusterizeTracks,
             }
         },
         created() {
@@ -77,7 +85,9 @@
                 }
             },
             loadTracks() {
-                axios.get(`/api/playlist/${this.id}/tracks`);
+                axios.get(`/api/playlist/${this.id}/tracks`)
+                    .then(res => this.tracks = res.data)
+                    .catch(err => this.errorResponse = err.response);
             }
         },
         computed: {
@@ -124,6 +134,6 @@
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
-        border-bottom: 1px solid rgba(0,0,0,.12);
+        border-bottom: 1px solid rgba(0, 0, 0, .12);
     }
 </style>

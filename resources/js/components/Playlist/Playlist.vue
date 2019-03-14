@@ -43,7 +43,7 @@
                     <h2 class="subheading">{{ playlistType }}</h2>
                 </div>
             </div>
-            <track-table :tracks="tracks" :render-function="clusterizeFunction"></track-table>
+            <track-table :tracks="tracks" :render-function="clusterizeFunction" class="pa-3"></track-table>
         </template>
     </div>
 </template>

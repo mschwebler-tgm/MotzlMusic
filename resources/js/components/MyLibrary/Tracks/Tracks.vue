@@ -3,87 +3,29 @@
         <v-card-title class="headline">Tracks</v-card-title>
         <v-container>
             <v-layout column class="clusterize">
-                <v-flex class="track-table" id="my-library-tracks-table">
-                    <div :id="identifier + '-scrollArea'" class="clusterize-scroll" :style="{'max-height': scrollContainerHeight}" ref="scrollArea">
-                        <div :id="identifier + '-contentArea'" class="clusterize-content">
-                            <tr class="clusterize-no-data">
-                                <v-progress-circular
-                                        v-if="!$parent.tracksInitialized"
-                                        color="primary"
-                                        indeterminate>
-                                </v-progress-circular>
-                            </tr>
-                        </div>
-                    </div>
-                </v-flex>
+                <track-table :tracks="tracks" :render-function="renderFunction" height="691px"></track-table>
             </v-layout>
         </v-container>
     </div>
 </template>
 
 <script>
-    import Clusterize from "clusterize.js";
+    import TrackTable from "../../TrackTable";
+    import renderFunction from '../../../store/modules/myLibrary/helpers/clusterizeTracks';
 
     export default {
         name: "Tracks",
+        components: {TrackTable},
         data() {
             return {
-                clusterize: null,
                 scrollContainerHeight: '691px',
-                identifier: Math.random().toString(36).substring(7)
-            }
-        },
-        created() {
-            this.initResizeWatcher();
-        },
-        mounted() {
-            const vue = this;
-            $('#my-library-tracks-table').on('dblclick', '.track', function () {
-                const trackId = parseInt(this.dataset.id);
-                const track = vue.tracks.find(track => track.id === trackId);
-                vue.$store.dispatch('player/play', track);
-            });
-            this.initializeTracksTable();
-        },
-        methods: {
-            initializeTracksTable() {
-                const clusterize = _ => {
-                    this.clusterize = new Clusterize({
-                        scrollId: this.identifier + '-scrollArea',
-                        contentId: this.identifier + '-contentArea',
-                        rows: this.tracksDomElements
-                    });
-                };
-                if (!this.$store.getters['myLibrary/tracksInitialized']) {
-                    const unwatch = this.$store.watch((state, getters) => getters['myLibrary/tracksInitialized'], _ => {
-                        clusterize();
-                        unwatch();
-                    });
-                } else {
-                    clusterize();
-                }
-            },
-            initResizeWatcher() {
-                const resizeDone = originalHeight => {
-                    if (originalHeight > window.innerHeight) {
-                        // TODO refresh clusterize.js
-                    }
-                };
-                let resizeTimeout;
-                const originalHeight = window.innerHeight;
-                window.onresize = function(){
-                    clearTimeout(resizeTimeout);
-                    resizeTimeout = setTimeout(_ => resizeDone(originalHeight), 100);
-                };
+                renderFunction,
             }
         },
         computed: {
             tracks() {
                 return this.$store.getters['myLibrary/tracks'];
             },
-            tracksDomElements() {
-                return this.$store.getters['myLibrary/tracksClusterized'];
-            }
         }
     }
 </script>

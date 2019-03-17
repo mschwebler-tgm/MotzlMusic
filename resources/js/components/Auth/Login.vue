@@ -34,12 +34,15 @@
     export default {
         name: "AuthLogin",
         components: {LoginForgotPassword, AuthLoginForm},
-        props: ['csrf', 'errors'],
+        props: ['csrf', 'errors', 'oldEmail'],
         data() {
             return {
                 showForgotPassword: false,
                 showBackButton: false,
             }
+        },
+        mounted() {
+            this.$refs.loginForm.email = this.oldEmail || '';
         },
         methods: {
             resetEmailWasSent(email) {

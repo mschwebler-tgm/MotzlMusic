@@ -8,27 +8,30 @@
                           id="email"
                           name="email"
                           label="E-mail"
-                          autocomplete="off">
+                          :error-messages="errors.email"
+                          browser-autocomplete="off">
             </v-text-field>
             <v-text-field box required
                           id="password"
                           type="password"
                           name="password"
                           label="Password"
-                          autocomplete="off">
+                          :error-messages="errors.password"
+                          browser-autocomplete="off">
             </v-text-field>
             <v-checkbox
                     name="remember"
                     id="remember"
-                    label="'member me"
-            ></v-checkbox>
+                    label="'member me">
+            </v-checkbox>
             <v-layout justify-space-between align-center row>
                 <div>
                     <v-btn class="primary" type="submit">Login</v-btn>
                     <v-btn tag="a"
                            class="primary"
                            href="/register"
-                           outline>Register</v-btn>
+                           outline>Register
+                    </v-btn>
                 </div>
                 <v-btn flat right
                        :ripple="false"
@@ -45,7 +48,7 @@
 <script>
     export default {
         name: "Login",
-        props: ['csrf'],
+        props: ['csrf', 'errors'],
         data() {
             return {
                 emailRules: [

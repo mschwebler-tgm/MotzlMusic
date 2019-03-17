@@ -6,7 +6,7 @@
             <v-content class="grey darken-4">
                 <v-layout align-center justify-center row fill-height>
                     <v-flex lg4 md4 sm6 xs12>
-                        <auth-login csrf="{{ csrf_token() }}">
+                        <auth-login csrf="{{ csrf_token() }}" :errors="{{ $errors }}">
                         </auth-login>
                     </v-flex>
                 </v-layout>

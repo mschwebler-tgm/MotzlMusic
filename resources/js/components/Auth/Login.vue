@@ -1,13 +1,16 @@
 <template>
     <v-flex lg4 md8 sm8 xs12>
         <div class="item elevation-24 pa-4 login-card grey darken-4 login-panel">
+            <v-btn flat icon absolute v-if="showBackButton" @click="showForgotPassword = false">
+                <v-icon>arrow_back</v-icon>
+            </v-btn>
             <h1 class="display-2 font-weight-light text-xs-center">Login</h1>
             <v-divider class="mb-3 mt-3"></v-divider>
             <auth-login-form v-show="!showForgotPassword"
                              :csrf="csrf"
                              :errors="errors"
                              :showForgotPassword.sync="showForgotPassword"></auth-login-form>
-            <login-forgot-password v-show="showForgotPassword"></login-forgot-password>
+            <login-forgot-password v-show="showForgotPassword" :showBackButton.sync="showBackButton"></login-forgot-password>
         </div>
         <v-layout justify-center row class="mt-4">
             <v-btn depressed
@@ -24,6 +27,7 @@
 <script>
     import AuthLoginForm from "./LoginForm";
     import LoginForgotPassword from "./LoginForgotPassword";
+
     export default {
         name: "AuthLogin",
         components: {LoginForgotPassword, AuthLoginForm},
@@ -31,6 +35,7 @@
         data() {
             return {
                 showForgotPassword: true,
+                showBackButton: false,
             }
         }
     }

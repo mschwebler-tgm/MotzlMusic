@@ -22,20 +22,20 @@
 </head>
 <body>
 
-<section class="hero is-medium is-primary is-bold" style="margin-bottom: 15px;">
-    <div class="hero-body">
-        <div class="container">
-            <div>
-                <h1 class="title">
-                    MotzlMusic
-                </h1>
-                <h2 class="subtitle">
-                    Sign in to get started.
-                </h2>
-            </div>
-        </div>
-    </div>
-</section>
+{{--<section class="hero is-medium is-primary is-bold" style="margin-bottom: 15px;">--}}
+    {{--<div class="hero-body">--}}
+        {{--<div class="container">--}}
+            {{--<div>--}}
+                {{--<h1 class="title">--}}
+                    {{--MotzlMusic--}}
+                {{--</h1>--}}
+                {{--<h2 class="subtitle">--}}
+                    {{--Sign in to get started.--}}
+                {{--</h2>--}}
+            {{--</div>--}}
+        {{--</div>--}}
+    {{--</div>--}}
+{{--</section>--}}
 
 <main class="pad">
     @yield('content')

@@ -10,6 +10,8 @@ import Vuetify from 'vuetify'
 // Helpers
 import colors from 'vuetify/es5/util/colors';
 
+Vue.component('auth-login', require('./components/Auth/Login').default);
+
 Vue.use(VueRouter);
 Vue.use(Vuetify, {
     theme: {

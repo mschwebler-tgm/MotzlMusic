@@ -63,6 +63,6 @@
     }
 </script>
 
-<style scoped>
-
+<style lang="scss">
+    @import "../../sass/components/_trackTable";
 </style>

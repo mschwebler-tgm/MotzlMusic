@@ -31,5 +31,5 @@
 </script>
 
 <style lang="scss">
-    @import "../../../../sass/components/trackTable";
+
 </style>

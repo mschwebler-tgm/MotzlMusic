@@ -52,7 +52,7 @@
                     .then(() => {
                         this.loading = false;
                         this.emailWasSent = true;
-                        this.$emit('update:showBackButton', true);
+                        this.$emit('emailSent', this.email);
                     })
                     .catch(() => {
                         this.loading = false;

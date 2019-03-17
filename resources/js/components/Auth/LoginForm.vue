@@ -2,6 +2,7 @@
     <v-form lazy-validation method="POST" action="/login" id="login-form">
         <input type="hidden" name="_token" :value="csrf">
         <v-text-field solo required single-line light
+                      v-model="email"
                       id="email"
                       name="email"
                       label="E-mail"
@@ -54,6 +55,7 @@
         props: ['csrf', 'errors', 'showForgotPassword'],
         data() {
             return {
+                email: '',
                 emailRules: [
                     email => !!email || 'E-mail is required',
                     email => /.+@.+/.test(email) || 'E-mail must be valid'

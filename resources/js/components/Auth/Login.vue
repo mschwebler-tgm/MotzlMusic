@@ -7,10 +7,13 @@
             <h1 class="display-2 font-weight-light text-xs-center">Login</h1>
             <v-divider class="mb-3 mt-3"></v-divider>
             <auth-login-form v-show="!showForgotPassword"
+                             ref="loginForm"
                              :csrf="csrf"
                              :errors="errors"
                              :showForgotPassword.sync="showForgotPassword"></auth-login-form>
-            <login-forgot-password v-show="showForgotPassword" :showBackButton.sync="showBackButton"></login-forgot-password>
+            <login-forgot-password v-show="showForgotPassword"
+                                   :showBackButton.sync="showBackButton"
+                                   @emailSent="resetEmailWasSent"></login-forgot-password>
         </div>
         <v-layout justify-center row class="mt-4">
             <v-btn depressed
@@ -36,6 +39,12 @@
             return {
                 showForgotPassword: true,
                 showBackButton: false,
+            }
+        },
+        methods: {
+            resetEmailWasSent(email) {
+                this.showBackButton = true;
+                this.$refs.loginForm.email = email;
             }
         }
     }

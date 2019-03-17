@@ -1,7 +1,7 @@
 <template>
     <v-flex lg4 md8 sm8 xs12>
         <div class="item elevation-24 pa-4 login-card grey darken-4 login-panel">
-            <v-btn flat icon absolute v-if="showBackButton" @click="showForgotPassword = false">
+            <v-btn flat icon absolute v-if="showBackButton" @click="showLoginForm()">
                 <v-icon>arrow_back</v-icon>
             </v-btn>
             <h1 class="display-2 font-weight-light text-xs-center">Login</h1>
@@ -45,6 +45,10 @@
             resetEmailWasSent(email) {
                 this.showBackButton = true;
                 this.$refs.loginForm.email = email;
+            },
+            showLoginForm() {
+                this.showBackButton = false;
+                this.showForgotPassword = false
             }
         }
     }

@@ -1,10 +1,22 @@
 @import "../variables";
 
-.clusterize-scroll {
-  overflow: scroll;
-}
-
 .track-table {
+
+  .clusterize-scroll {
+    overflow-y: scroll;
+    overflow-x: hidden;
+
+    &::-webkit-scrollbar {
+      background: transparent;
+      width: 8px;
+    }
+    &::-webkit-scrollbar-button {
+      display: none;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: rgba(127, 127, 127, 0.5);
+    }
+  }
 
   .track {
     display: flex;

@@ -37,7 +37,7 @@
         props: ['csrf', 'errors'],
         data() {
             return {
-                showForgotPassword: true,
+                showForgotPassword: false,
                 showBackButton: false,
             }
         },

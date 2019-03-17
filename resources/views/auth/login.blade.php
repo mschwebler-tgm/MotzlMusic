@@ -11,7 +11,22 @@
                     </auth-login>
                 </v-layout>
             </v-content>
-            <v-footer app></v-footer>
+            <v-footer app color="primary darken-4">
+                <v-layout justify-center row align-center>
+                    <div class="text-xs-center">
+                        &copy;2019 - <strong>motzlmusic</strong>
+                    </div>
+                </v-layout>
+                <v-btn flat
+                       tag="a"
+                       href="https://github.com/mschwebler-tgm/MotzlMusic"
+                       target="_blank"
+                       right
+                       absolute>
+                    {{--<v-icon left>mdi-github-circle</v-icon>--}}
+                    Github
+                </v-btn>
+            </v-footer>
         </v-app>
     </div>
 @endsection

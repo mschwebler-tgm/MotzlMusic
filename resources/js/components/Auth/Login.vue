@@ -7,6 +7,7 @@
                              :csrf="csrf"
                              :errors="errors"
                              :showForgotPassword.sync="showForgotPassword"></auth-login-form>
+            <login-forgot-password v-show="showForgotPassword"></login-forgot-password>
         </div>
         <v-layout justify-center row class="mt-4">
             <v-btn depressed
@@ -22,13 +23,14 @@
 
 <script>
     import AuthLoginForm from "./LoginForm";
+    import LoginForgotPassword from "./LoginForgotPassword";
     export default {
         name: "AuthLogin",
-        components: {AuthLoginForm},
+        components: {LoginForgotPassword, AuthLoginForm},
         props: ['csrf', 'errors'],
         data() {
             return {
-                showForgotPassword: false,
+                showForgotPassword: true,
             }
         }
     }

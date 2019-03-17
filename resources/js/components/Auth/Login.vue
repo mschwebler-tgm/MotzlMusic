@@ -29,15 +29,20 @@
                         label="'member me">
                 </v-checkbox>
                 <v-layout justify-space-between align-center row>
-                    <div>
-                        <v-btn class="primary" type="submit">Login</v-btn>
+
+                    <v-progress-linear :indeterminate="true" v-show="loading"></v-progress-linear>
+                    <div v-show="!loading">
+                        <v-btn class="primary"
+                               type="submit"
+                               @click="loading = true">Login</v-btn>
                         <v-btn tag="a"
                                class="primary"
                                href="/register"
                                outline>Register
                         </v-btn>
                     </div>
-                    <v-btn flat right
+                    <v-btn v-show="!loading"
+                           flat right
                            :ripple="false"
                            tag="a"
                            href="/password/reset"
@@ -70,6 +75,7 @@
                     email => /.+@.+/.test(email) || 'E-mail must be valid'
                 ],
                 showPassword: false,
+                loading: false,
             }
         }
     }

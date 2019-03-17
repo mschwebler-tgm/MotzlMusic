@@ -1,7 +1,7 @@
 <template>
     <v-form lazy-validation method="POST" action="/login" id="login-form">
         <input type="hidden" name="_token" :value="csrf">
-        <v-text-field solo required single-line
+        <v-text-field solo required single-line light
                       id="email"
                       name="email"
                       label="E-mail"
@@ -9,7 +9,7 @@
                       :error-messages="errors.email"
                       browser-autocomplete="off">
         </v-text-field>
-        <v-text-field solo required single-line
+        <v-text-field solo required single-line light
                       id="password"
                       name="password"
                       label="Password"

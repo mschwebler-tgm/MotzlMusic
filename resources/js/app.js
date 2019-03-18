@@ -11,6 +11,7 @@ import Vuetify from 'vuetify'
 import colors from 'vuetify/es5/util/colors';
 
 Vue.component('auth-login', require('./components/Auth/Login').default);
+Vue.component('auth-register', require('./components/Auth/Register').default);
 
 Vue.use(VueRouter);
 Vue.use(Vuetify, {

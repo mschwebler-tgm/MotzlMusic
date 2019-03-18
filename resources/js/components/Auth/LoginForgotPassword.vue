@@ -24,12 +24,9 @@
 <script>
     export default {
         name: "LoginForgotPassword",
-        props: {
-            showBackButton: Boolean,
-        },
         data() {
             return {
-                email: 'asdaasdas@asdad.asd',
+                email: '',
                 emailRules: [
                     email => !!email || 'E-mail is required',
                     email => /.+@.+\..+/.test(email) || 'E-mail must be valid'

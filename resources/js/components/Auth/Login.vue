@@ -1,7 +1,7 @@
 <template>
     <v-flex lg4 md8 sm8 xs12>
         <div class="item elevation-24 pa-4 login-card grey darken-4 login-panel">
-            <v-btn flat icon absolute v-if="showBackButton" @click="showLoginForm()">
+            <v-btn flat icon absolute v-if="showForgotPassword" @click="showForgotPassword = false">
                 <v-icon>arrow_back</v-icon>
             </v-btn>
             <h1 class="display-2 font-weight-light text-xs-center">Login</h1>
@@ -12,7 +12,6 @@
                              :errors="errors"
                              :showForgotPassword.sync="showForgotPassword"></auth-login-form>
             <login-forgot-password v-show="showForgotPassword"
-                                   :showBackButton.sync="showBackButton"
                                    @emailSent="resetEmailWasSent"></login-forgot-password>
         </div>
         <v-layout justify-center row class="mt-4">
@@ -38,7 +37,6 @@
         data() {
             return {
                 showForgotPassword: false,
-                showBackButton: false,
             }
         },
         mounted() {
@@ -46,13 +44,8 @@
         },
         methods: {
             resetEmailWasSent(email) {
-                this.showBackButton = true;
                 this.$refs.loginForm.email = email;
             },
-            showLoginForm() {
-                this.showBackButton = false;
-                this.showForgotPassword = false
-            }
         }
     }
 </script>

@@ -3,7 +3,7 @@
         <v-card-title class="headline">Tracks</v-card-title>
         <v-container>
             <v-layout column class="clusterize">
-                <track-table :tracks="tracks" :render-function="renderFunction" height="691px"></track-table>
+                <track-table :tracks="tracks" :render-function="renderFunction" height="612px"></track-table>
             </v-layout>
         </v-container>
     </div>
@@ -18,7 +18,6 @@
         components: {TrackTable},
         data() {
             return {
-                scrollContainerHeight: '691px',
                 renderFunction,
             }
         },

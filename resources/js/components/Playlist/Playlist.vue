@@ -1,9 +1,5 @@
 <template>
     <div>
-        <v-btn flat @click="$router.go(-1)" class="ma-3">
-            <v-icon dark left>arrow_back</v-icon>
-            Back
-        </v-btn>
 
         <!-- ERROR -->
         <div v-if="errorResponse" class="playlist-error">
@@ -43,7 +39,7 @@
                     <h2 class="subheading">{{ playlistType }}</h2>
                 </div>
             </div>
-            <track-table :tracks="tracks" :render-function="clusterizeFunction" class="pa-3"></track-table>
+            <track-table :tracks="tracks" :render-function="clusterizeFunction" class="pa-3" height="470px"></track-table>
         </template>
     </div>
 </template>

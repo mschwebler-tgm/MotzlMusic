@@ -178,20 +178,39 @@
                 <v-container fluid grid-list-xl class="h-100">
                     <v-layout row wrap class="h-100">
                         <v-flex xs12 md12 lg12 xl9>
+                            <v-btn flat @click="$router.go(-1)" class="ml-0">
+                                <v-icon dark left>arrow_back</v-icon>
+                                Back
+                            </v-btn>
                             <!-- Main Content -->
                             <transition name="bounce" mode="out-in">
                                 <router-view></router-view>
                             </transition>
                         </v-flex>
                         <v-flex xl3 class="hidden-lg-and-down">
-                            <v-card style="height: 100%;">
-                                <v-card-title>
-                                    <span class="headline">
-
-                                    Sub Content
-                                    </span>
-                                </v-card-title>
-                            </v-card>
+                            <v-layout column fill-height>
+                                <v-flex shrink>
+                                    <v-layout justify-end>
+                                        <v-flex shrink class="pb-0">
+                                            <v-tooltip left>
+                                                <template v-slot:activator="{ on }">
+                                                    <v-btn flat icon v-on="on">
+                                                        <v-icon>settings</v-icon>
+                                                    </v-btn>
+                                                </template>
+                                                <span>Manage side content</span>
+                                            </v-tooltip>
+                                        </v-flex>
+                                    </v-layout>
+                                </v-flex>
+                                <v-flex grow class="pt-0">
+                                    <v-card class="h-100">
+                                        <v-card-title>
+                                            <span class="headline">Sub Content</span>
+                                        </v-card-title>
+                                    </v-card>
+                                </v-flex>
+                            </v-layout>
                             <!-- Side Content -->
                         </v-flex>
                     </v-layout>

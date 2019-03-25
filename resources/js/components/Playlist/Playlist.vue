@@ -34,12 +34,16 @@
                         </v-layout>
                     </template>
                 </v-img>
-                <div class="playlist-name pa-3">
+                <div class="playlist-name pa-3 relative">
                     <h1 class="display-1 font-weight-light">{{ playlist.name }}</h1>
                     <h2 class="subheading">{{ playlistType }}</h2>
+                    <playlist-actions :playlist-id="id"></playlist-actions>
                 </div>
             </div>
-            <track-table :tracks="tracks" :render-function="clusterizeFunction" class="pa-3" height="470px"></track-table>
+            <track-table :tracks="tracks"
+                         :render-function="clusterizeFunction"
+                         class="pa-3"
+                         height="470px"></track-table>
         </template>
     </div>
 </template>
@@ -47,10 +51,11 @@
 <script>
     import TrackTable from "../TrackTable";
     import clusterizeTracks from '../../store/modules/myLibrary/helpers/clusterizeTracks';
+    import PlaylistActions from "./PlaylistActions";
 
     export default {
         name: "Playlist",
-        components: {TrackTable},
+        components: {PlaylistActions, TrackTable},
         props: {
             name: String,
             id: String,
@@ -85,7 +90,7 @@
                     statusText,
                     data: data.message,
                 }))(error.response);
-            }
+            },
         },
         computed: {
             playlist() {
@@ -132,5 +137,12 @@
         flex-direction: column;
         justify-content: flex-end;
         border-bottom: 1px solid rgba(0, 0, 0, .12);
+    }
+
+    .playlist-actions {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        display: flex;
     }
 </style>

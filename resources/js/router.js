@@ -20,7 +20,6 @@ export default new VueRouter({
     routes: [
         {
             path: '/',
-            name: 'master',
             component: Master,
             props: true,
             children: [
@@ -64,7 +63,7 @@ export default new VueRouter({
                         },
                         {
                             path: 'playlists',
-                            name: 'playlists',
+                            name: 'playlist',
                             component: Playlists,
                         },
                         {

@@ -18,6 +18,9 @@ Vue.use(Vuetify, {
     theme: {
         primary: colors.blue.lighten1,
         accent: colors.blue.accent2,
+    },
+    options: {
+        customProperties: true,  // generate css variables
     }
 });
 

@@ -1,4 +1,4 @@
-<template>
+<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
     <div id="master">
         <v-app :dark="$root.isDarkTheme">
             <v-navigation-drawer v-model="showDrawer" app clipped floating dark
@@ -216,14 +216,18 @@
                     </v-layout>
                 </v-container>
             </v-content>
-            <v-footer app></v-footer>
+            <v-footer app>
+                <player></player>
+            </v-footer>
         </v-app>
     </div>
 </template>
 
 <script>
+    import Player from "../Player/Player";
     export default {
         name: "master",
+        components: {Player},
         props: ['user'],
         data() {
             return {

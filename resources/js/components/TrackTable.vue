@@ -39,6 +39,7 @@
             if (!this.isInitialized) {
                 this.initializeTracksTable();
             }
+            this.initDoubleClickListener();
         },
         watch: {
             tracks() {
@@ -54,10 +55,22 @@
                     rows: this.renderFunction(this.tracks),
                 });
             },
+            initDoubleClickListener() {
+                const findTrackElement = element => element.classList.contains('track') ? element : findTrackElement(element.parentElement);
+                document.getElementById(this.identifier + '-contentArea').addEventListener('dblclick', event => {
+                    const trackElement = findTrackElement(event.target);
+                    const trackId = trackElement.getAttribute('data-id');
+                    const track = this.tracks.filter(track => track.id === parseInt(trackId))[0];
+                    this.playerController.play(track);
+                });
+            },
         },
         computed: {
             showLoading() {
                 return this.tracks.length === 0 || !this.isInitialized;
+            },
+            playerController() {
+                return this.$store.getters['player/controller'];
             }
         }
     }

@@ -5,4 +5,7 @@ export default {
     setSpotifyPlayer(state, player) {
         state.spotifyPlayer = player;
     },
+    setPlayingTrack(state, track) {
+        state.playingTrack = track;
+    }
 }

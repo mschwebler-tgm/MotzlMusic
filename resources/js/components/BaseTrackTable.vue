@@ -53,8 +53,9 @@
                 this.clusterize = new Clusterize({
                     scrollId: this.identifier + '-scrollArea',
                     contentId: this.identifier + '-contentArea',
-                    rows: this.renderFunction(this.tracks),
+                    rows: this.renderFunction(this.tracks, this.playingTrackId),
                 });
+                this.setAlreadyActiveTrackElement();
             },
             initDoubleClickListener() {
                 const findTrackElement = element => element.classList.contains('track') ? element : findTrackElement(element.parentElement);
@@ -72,6 +73,12 @@
                 }
                 element.classList.add('active');
                 this.activeTrackElement = element;
+            },
+            setAlreadyActiveTrackElement() {
+                const alreadyActiveTrackElement = document.getElementsByClassName('track active');
+                if (alreadyActiveTrackElement.length) {
+                    this.activeTrackElement = alreadyActiveTrackElement[0];
+                }
             }
         },
         computed: {
@@ -80,6 +87,10 @@
             },
             playerController() {
                 return this.$store.getters['player/controller'];
+            },
+            playingTrackId() {
+                const playingTrack = this.$store.getters['player/playingTrack'];
+                return playingTrack ? playingTrack.id : null;
             }
         }
     }

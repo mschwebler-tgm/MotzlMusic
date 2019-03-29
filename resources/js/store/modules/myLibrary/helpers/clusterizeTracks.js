@@ -1,6 +1,6 @@
-const clusterizeTracks = function (tracks) {
+const clusterizeTracks = function (tracks, playingTrackId) {
     return tracks.reduce((rows, track, index) => rows.concat([
-        `<div class="track is-unselectable" data-id="${track.id}" tabindex="1">` +
+        `<div class="track is-unselectable${playingTrackId === track.id ? ' active' : ''}" data-id="${track.id}" tabindex="1">` +
         `<div class="track-list-number">&nbsp;<span>${index + 1}.</span></div>` +
         `<div class="track-list-title">&nbsp;<span title="${track.name}" class="text-truncate">${track.name}</span></div>` +
         `<div class="track-list-duration">&nbsp;<span>${track.duration_formatted}</span></div>` +

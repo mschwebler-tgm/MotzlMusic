@@ -1,4 +1,4 @@
 $spotifyPrimary: #1db954;
 $spotifySecondary: #191414;
 
-$list-item-selected: rgba(255, 235, 47, 0.39);
+$list-item-selected: var(--v-primary-darken1, rgba(255, 235, 47, 0.39));

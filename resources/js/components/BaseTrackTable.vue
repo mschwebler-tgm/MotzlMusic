@@ -33,6 +33,7 @@
                 identifier: Math.random().toString(36).substring(7),
                 scrollContainerHeight: this.height || '500px',
                 isInitialized: false,
+                activeTrackElement: null,
             }
         },
         mounted() {
@@ -61,9 +62,17 @@
                     const trackElement = findTrackElement(event.target);
                     const trackId = trackElement.getAttribute('data-id');
                     const track = this.tracks.filter(track => track.id === parseInt(trackId))[0];
+                    this.toggleActiveClass(trackElement);
                     this.$emit('track-selected', track);
                 });
             },
+            toggleActiveClass(element) {
+                if (this.activeTrackElement) {
+                    this.activeTrackElement.classList.remove('active');
+                }
+                element.classList.add('active');
+                this.activeTrackElement = element;
+            }
         },
         computed: {
             showLoading() {

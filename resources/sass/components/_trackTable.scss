@@ -1,5 +1,27 @@
 @import "../variables";
 
+
+// Stripes
+.theme--dark .track-table {
+  .track:nth-child(odd) {
+    background-color: rgba(255, 255, 255, 0.04);
+  }
+
+  .track:hover {
+    background-color: rgba(255, 255, 255, 0.11);
+  }
+}
+
+.theme--light .track-table {
+  .track:nth-child(odd) {
+    background-color: rgba(0, 0, 0, 0.04);
+  }
+
+  .track:hover {
+    background-color: rgba(0, 0, 0, 0.11);
+  }
+}
+
 .track-table {
 
   .clusterize-scroll {
@@ -29,6 +51,19 @@
       background-color: $list-item-selected !important;
     }
 
+    &.active, &.active:hover {
+      background-color: $list-item-selected !important;
+
+      .track-list-number {
+        background-image: url('/images/icons/volume_up.png');
+        background-position: center left;
+
+        span {
+          display: none;
+        }
+      }
+    }
+
     & > div {
       overflow: hidden;
       -ms-text-overflow: ellipsis;
@@ -44,6 +79,7 @@
 
     .track-list-number {
       width: 40px;
+      margin-left: 5px;
     }
 
     .track-list-title {
@@ -73,26 +109,6 @@
     .track-list-more-options:hover {
       width: 24px;
     }
-  }
-}
-
-.theme--dark {
-  .track:nth-child(odd) {
-    background-color: rgba(255, 255, 255, 0.04) !important;
-  }
-
-  .track:hover {
-    background-color: rgba(255, 255, 255, 0.11) !important;
-  }
-}
-
-.theme--light {
-  .track:nth-child(odd) {
-    background-color: rgba(0, 0, 0, 0.04) !important;
-  }
-
-  .track:hover {
-    background-color: rgba(0, 0, 0, 0.11) !important;
   }
 }
 

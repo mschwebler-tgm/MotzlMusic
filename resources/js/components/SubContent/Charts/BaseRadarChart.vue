@@ -35,31 +35,34 @@
     };
 
     export default {
-        props: ['chartData'],
+        props: {
+            data: Array,
+            default: () => [],
+        },
         name: "BaseRadarChart",
         extends: Radar,
         mounted() {
-            this.renderChart(
-                {
-                    labels: ['Happy', 'Dance', 'Speech', 'Acoustic', 'Instruments', 'Energy'],
-                    datasets: [
-                        {
-                            label: 'Current track',
-                            backgroundColor: hexToRgba(theme.primary, .5),
-                            borderColor: theme.primary,
-                            borderWidth: 2,
-                            pointRadius: 2,
-                            pointHitRadius: 20,
-                            data: [this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt(), this.getRandomInt()]
-                        },
-                    ]
-                },
-                chartOptions
-            );
+            this.draw();
         },
         methods: {
-            getRandomInt() {
-                return Math.random();
+            draw() {
+                this.renderChart(
+                    {
+                        labels: ['Happy', 'Dance', 'Speech', 'Acoustic', 'Instruments', 'Energy'],
+                        datasets: [
+                            {
+                                label: 'Current track',
+                                backgroundColor: hexToRgba(theme.primary, .5),
+                                borderColor: theme.primary,
+                                borderWidth: 2,
+                                pointRadius: 2,
+                                pointHitRadius: 20,
+                                data: this.data,
+                            },
+                        ]
+                    },
+                    chartOptions
+                );
             }
         }
     }

@@ -31,6 +31,7 @@ Route::prefix('player')->namespace('Player')->group(function () {
 Route::namespace('Api')->group(function () {
     Route::get('/playlist/{id}', 'PlaylistController@playlist');
     Route::get('/playlist/{id}/tracks', 'PlaylistController@tracks');
+    Route::get('/track/{id}/audio-features', 'TrackController@audioFeatures');
 });
 
 Route::post('/uploadTrack', 'UploadController@uploadTrack');

@@ -7,18 +7,14 @@ import 'vuetify/dist/vuetify.min.css'; // Ensure you are using css-loader
 
 import Vue from 'vue';
 import Vuetify from 'vuetify'
-// Helpers
-import colors from 'vuetify/es5/util/colors';
+import theme from './theme';
 
 Vue.component('auth-login', require('./components/Auth/Login').default);
 Vue.component('auth-register', require('./components/Auth/Register').default);
 
 Vue.use(VueRouter);
 Vue.use(Vuetify, {
-    theme: {
-        primary: colors.blue.lighten1,
-        accent: colors.blue.accent2,
-    },
+    theme,
     options: {
         customProperties: true,  // generate css variables
     }

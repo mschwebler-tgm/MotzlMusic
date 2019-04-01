@@ -1,7 +1,7 @@
 <template>
     <v-flex>
         <v-layout column>
-            <v-flex>{{ title }}</v-flex>
+            <v-flex>Progress</v-flex>
             <v-flex grow>
                 <v-layout justify-center>
                     <v-flex shrink>
@@ -17,7 +17,7 @@
                     </v-flex>
                 </v-layout>
             </v-flex>
-            <v-flex class="primary">Footer</v-flex>
+            <v-flex class="primary text-truncate">{{ title }}</v-flex>
         </v-layout>
     </v-flex>
 </template>

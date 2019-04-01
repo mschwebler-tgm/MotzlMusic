@@ -9,9 +9,9 @@ export default {
         state.playerController.playingTrack = track;
     },
     setLoading(state, isLoading) {
-        state.loading = isLoading;
+        state.playerController.loading = isLoading;
     },
     setPlayingState(state, isPlaying) {
-        state.playing = isPlaying;
+        state.playerController.playing = isPlaying;
     }
 }

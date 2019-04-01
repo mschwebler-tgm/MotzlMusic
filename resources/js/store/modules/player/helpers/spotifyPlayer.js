@@ -6,6 +6,6 @@ export default class SpotifyPlayer {
     }
 
     play(track) {
-        this.$store.dispatch('player/spotifyPlayTrack', {trackId: track.spotify_id, deviceId: this.deviceId});
+        return this.$store.dispatch('player/spotifyPlayTrack', {trackId: track.spotify_id, deviceId: this.deviceId});
     }
 }

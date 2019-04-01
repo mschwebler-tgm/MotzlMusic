@@ -20,13 +20,8 @@
         },
         methods: {
             playTrack(track) {
-                this.playerController.play(track);
+                this.$store.dispatch('player/play', track);
             }
         },
-        computed: {
-            playerController() {
-                return this.$store.getters['player/controller'];
-            }
-        }
     }
 </script>

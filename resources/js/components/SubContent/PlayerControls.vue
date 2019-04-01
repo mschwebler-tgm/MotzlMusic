@@ -8,7 +8,7 @@
                         <v-btn flat icon>
                             <v-icon>skip_previous</v-icon>
                         </v-btn>
-                        <v-btn flat icon>
+                        <v-btn flat icon :loading="loading">
                             <v-icon large class="primary--text">pause_circle_filled</v-icon>
                         </v-btn>
                         <v-btn flat icon>
@@ -31,6 +31,9 @@
             },
             currentTrack() {
                 return this.$store.getters['player/playingTrack'];
+            },
+            loading() {
+                return this.$store.getters['player/loading']
             }
         }
     }

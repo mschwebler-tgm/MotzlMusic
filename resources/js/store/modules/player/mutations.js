@@ -7,5 +7,8 @@ export default {
     },
     setPlayingTrack(state, track) {
         state.playingTrack = track;
+    },
+    setLoading(state, isLoading) {
+        state.loading = isLoading;
     }
 }

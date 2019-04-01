@@ -9,7 +9,7 @@ export default class PlayerController {
 
     play(track) {
         if (track.type === 'spotify') {
-            this.spotifyPlayer.play(track);
+            return this.spotifyPlayer.play(track);
         }
         this.$store.commit('player/setPlayingTrack', track);
     }

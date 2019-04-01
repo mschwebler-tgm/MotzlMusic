@@ -1,10 +1,12 @@
 export default {
     init() {
     },
-    play({ state }, track) {
-        state.playerController.play(track);
+    play({ state, commit }, track) {
+        commit('setLoading', true);
+        state.playerController.play(track)
+            .finally(() => commit('setLoading', false))
     },
     spotifyPlayTrack({ commit }, {trackId, deviceId}) {
-        axios.put('/api/player/spotify/playTrack', {device_id: deviceId, track_id: trackId});
+        return axios.put('/api/player/spotify/playTrack', {device_id: deviceId, track_id: trackId});
     }
 }

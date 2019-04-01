@@ -3,7 +3,7 @@ export default {
         state.playerController = playerController;
     },
     setSpotifyPlayer(state, player) {
-        state.spotifyPlayer = player;
+        state.playerController.spotifyPlayer.player = player;
     },
     setPlayingTrack(state, track) {
         state.playingTrack = track;

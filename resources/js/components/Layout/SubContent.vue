@@ -18,9 +18,7 @@
                 </v-flex>
                 <v-flex>
                     <v-card>
-                        <v-card-title>
-                            <span class="headline">Analysis</span>
-                        </v-card-title>
+                        <player-controls></player-controls>
                     </v-card>
                 </v-flex>
                 <v-flex>
@@ -38,9 +36,10 @@
 <script>
     import BaseRadarChart from "../SubContent/Charts/BaseRadarChart";
     import AudioFeatures from "../SubContent/AudioFeatures";
+    import PlayerControls from "../SubContent/PlayerControls";
     export default {
         name: "SubContent",
-        components: {AudioFeatures, BaseRadarChart}
+        components: {PlayerControls, AudioFeatures, BaseRadarChart}
     }
 </script>
 

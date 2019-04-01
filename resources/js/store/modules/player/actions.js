@@ -6,4 +6,8 @@ export default {
         state.playerController.play(track)
             .finally(() => commit('setLoading', false))
     },
+    pause({state, commit}) {
+        commit('setPlayingState', false);
+        state.playerController.pause();
+    }
 }

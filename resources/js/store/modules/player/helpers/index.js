@@ -14,6 +14,12 @@ export default class PlayerController {
         }
     }
 
+    pause() {
+        if (this.playingTrack.type === 'spotify') {
+            return this.spotifyPlayer.pause();
+        }
+    }
+
     _setPlayingTrack(track) {
         this.$store.commit('player/setPlayingTrack', track);
     }

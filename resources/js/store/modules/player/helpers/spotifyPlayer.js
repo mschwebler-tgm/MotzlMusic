@@ -10,9 +10,8 @@ export default class SpotifyPlayer {
         return axios.put('/api/player/spotify/playTrack', {device_id: this.deviceId, track_id: track.spotify_id});
     }
 
-    set player(player) {
-        this._player = player;
-        this._initListeners();
+    pause() {
+        return axios.get('/api/player/spotify/pause');
     }
 
     _initListeners() {
@@ -23,5 +22,10 @@ export default class SpotifyPlayer {
         if (this.$store.getters['player/playing'] !== isPlaying) {
             this.$store.commit('player/setPlayingState', isPlaying);
         }
+    }
+
+    set player(player) {
+        this._player = player;
+        this._initListeners();
     }
 }

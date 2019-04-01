@@ -1,7 +1,6 @@
 <template>
     <v-flex>
         <v-layout column>
-            <v-flex>Progress</v-flex>
             <v-flex grow>
                 <v-layout justify-center>
                     <v-flex shrink>
@@ -18,7 +17,16 @@
                     </v-flex>
                 </v-layout>
             </v-flex>
-            <v-flex class="primary text-truncate">{{ title }}</v-flex>
+            <v-flex class="primary d-flex">
+                <v-flex grow class="pa-0 pr-3 text-truncate">
+                    <span>{{ title }}</span>
+                    <br>
+                    <span>{{ artist }}</span>
+                </v-flex>
+                <v-flex shrink class="pa-0 d-flex align-center" style="flex: 0 !important;">
+                    <v-progress-circular :value="progress" ></v-progress-circular>
+                </v-flex>
+            </v-flex>
         </v-layout>
     </v-flex>
 </template>
@@ -39,6 +47,9 @@
             title() {
                 return this.currentTrack ? this.currentTrack.name : 'No track';
             },
+            artist() {
+                return this.currentTrack ? this.currentTrack.artist.name : '-';
+            },
             playing() {
                 return this.$store.getters['player/playing'];
             },
@@ -47,11 +58,18 @@
             },
             loading() {
                 return this.$store.getters['player/loading']
+            },
+            progress() {
+                return this.$store.getters['player/progressPercent'];
             }
         }
     }
 </script>
 
 <style scoped>
-
+    .track-progress {
+        position: absolute;
+        right: 12px;
+        bottom: 12px
+    }
 </style>

@@ -5,15 +5,16 @@ export default class PlayerController {
     constructor($store) {
         this.$store = $store;
         this.spotifyPlayer = new SpotifyPlayer($store);
+        this.playingTrack = null;
     }
 
     play(track) {
         if (track.type === 'spotify') {
-            return this.spotifyPlayer.play(track).then(() => this.setPlayingTrack(track))
+            return this.spotifyPlayer.play(track).then(() => this._setPlayingTrack(track))
         }
     }
 
-    setPlayingTrack(track) {
+    _setPlayingTrack(track) {
         this.$store.commit('player/setPlayingTrack', track);
     }
 };

@@ -6,7 +6,7 @@ export default {
         state.playerController.spotifyPlayer.player = player;
     },
     setPlayingTrack(state, track) {
-        state.playingTrack = track;
+        state.playerController.playingTrack = track;
     },
     setLoading(state, isLoading) {
         state.loading = isLoading;

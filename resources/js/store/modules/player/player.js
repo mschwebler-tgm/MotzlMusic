@@ -5,7 +5,6 @@ import actions from './actions';
 const state = {
     playerController: null,
     spotifyPlayer: null,
-    playingTrack: null,
     loading: false,
     playing: false,
 };

@@ -4,10 +4,11 @@ export default class PlayerController {
 
     constructor($store) {
         this.$store = $store;
-        this.spotifyPlayer = new SpotifyPlayer($store);
+        this.spotifyPlayer = new SpotifyPlayer($store, this);
         this.playingTrack = null;
         this.loading = false;
         this.playing = false;
+        this.progressPercent = 0;
     }
 
     play(track) {

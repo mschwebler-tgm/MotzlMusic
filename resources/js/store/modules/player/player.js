@@ -7,6 +7,7 @@ const state = {
     spotifyPlayer: null,
     playingTrack: null,
     loading: false,
+    playing: false,
 };
 
 export default {

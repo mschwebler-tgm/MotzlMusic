@@ -12,5 +12,16 @@ export default class SpotifyPlayer {
 
     set player(player) {
         this._player = player;
+        this._initListeners();
+    }
+
+    _initListeners() {
+        this._player.addListener('player_state_changed', state => this._setLocalPlayingState(!state.paused));
+    }
+
+    _setLocalPlayingState(isPlaying) {
+        if (this.$store.getters['player/playing'] !== isPlaying) {
+            this.$store.commit('player/setPlayingState', isPlaying);
+        }
     }
 }

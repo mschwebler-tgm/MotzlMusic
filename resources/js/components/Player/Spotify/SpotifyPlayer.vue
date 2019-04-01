@@ -36,9 +36,6 @@
                             console.error(message);
                         });
 
-                        // Playback status updates
-                        player.addListener('player_state_changed', state => console.log(state));
-
                         // Ready
                         player.addListener('ready', ({device_id}) => {
                             this.$store.getters['player/controller'].spotifyPlayer.deviceId = device_id;

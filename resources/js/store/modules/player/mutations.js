@@ -10,5 +10,8 @@ export default {
     },
     setLoading(state, isLoading) {
         state.loading = isLoading;
+    },
+    setPlayingState(state, isPlaying) {
+        state.playing = isPlaying;
     }
 }

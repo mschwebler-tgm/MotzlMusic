@@ -6,6 +6,6 @@ export default class SpotifyPlayer {
     }
 
     play(track) {
-        return this.$store.dispatch('player/spotifyPlayTrack', {trackId: track.spotify_id, deviceId: this.deviceId});
+        return axios.put('/api/player/spotify/playTrack', {device_id: this.deviceId, track_id: track.spotify_id});
     }
 }

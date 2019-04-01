@@ -10,8 +10,12 @@ export default class SpotifyPlayer {
         return axios.put('/api/player/spotify/playTrack', {device_id: this.deviceId, track_id: track.spotify_id});
     }
 
+    playCurrentTrack() {
+        return axios.put('/api/player/spotify/play', {device_id: this.deviceId});
+    }
+
     pause() {
-        return axios.get('/api/player/spotify/pause');
+        return axios.put('/api/player/spotify/pause', {device_id: this.deviceId});
     }
 
     _initListeners() {

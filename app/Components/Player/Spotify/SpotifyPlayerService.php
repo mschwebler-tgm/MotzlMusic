@@ -28,16 +28,6 @@ class SpotifyPlayerService
         $this->apiService->play($deviceId, $options);
     }
 
-    public function play($deviceId)
-    {
-        $this->apiService->play($deviceId);
-    }
-
-    public function pause($deviceId)
-    {
-        $this->apiService->pause($deviceId);
-    }
-
     /**
      * As the spotify api only allows playing albums or artists, this method generates options to play the album at
      * a specific offset that matches the track.

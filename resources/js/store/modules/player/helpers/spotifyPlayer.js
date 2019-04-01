@@ -11,11 +11,11 @@ export default class SpotifyPlayer {
     }
 
     playCurrentTrack() {
-        return axios.put('/api/player/spotify/play', {device_id: this.deviceId});
+        this._player.resume();
     }
 
     pause() {
-        return axios.put('/api/player/spotify/pause', {device_id: this.deviceId});
+        this._player.pause();
     }
 
     _initListeners() {

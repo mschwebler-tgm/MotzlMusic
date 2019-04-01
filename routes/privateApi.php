@@ -26,8 +26,6 @@ Route::prefix('my')->namespace('Personal')->group(function () {
 
 Route::prefix('player')->namespace('Player')->group(function () {
     Route::put('/spotify/playTrack', 'SpotifyPlayerController@playTrack');
-    Route::put('/spotify/play', 'SpotifyPlayerController@play');
-    Route::put('/spotify/pause', 'SpotifyPlayerController@pause');
 });
 
 Route::namespace('Api')->group(function () {

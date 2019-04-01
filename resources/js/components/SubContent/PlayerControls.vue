@@ -19,9 +19,9 @@
             </v-flex>
             <v-flex class="primary d-flex">
                 <v-flex grow class="pa-0 pr-3 text-truncate">
-                    <span>{{ title }}</span>
+                    <span class="body-2">{{ title }}</span>
                     <br>
-                    <span>{{ artist }}</span>
+                    <span class="caption">{{ artist }}</span>
                 </v-flex>
                 <v-flex shrink class="pa-0 d-flex align-center" style="flex: 0 !important;">
                     <v-progress-circular :value="progress" ></v-progress-circular>

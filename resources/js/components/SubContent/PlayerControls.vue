@@ -1,7 +1,7 @@
 <template>
     <v-flex>
         <v-layout column>
-            <v-flex>Title</v-flex>
+            <v-flex>{{ title }}</v-flex>
             <v-flex grow>
                 <v-layout justify-center>
                     <v-flex shrink>
@@ -27,8 +27,11 @@
         name: "PlayerControls",
         computed: {
             title() {
-                return 'No track';
+                return this.currentTrack ? this.currentTrack.name : 'No track';
             },
+            currentTrack() {
+                return this.$store.getters['player/playingTrack'];
+            }
         }
     }
 </script>

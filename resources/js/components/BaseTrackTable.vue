@@ -45,6 +45,9 @@
         watch: {
             tracks() {
                 this.initializeTracksTable();
+            },
+            playingTrackId(trackId, oldTrackId) {
+                this.setActiveClassFor(trackId, oldTrackId);
             }
         },
         methods: {
@@ -78,6 +81,12 @@
                 const alreadyActiveTrackElement = document.getElementsByClassName('track active');
                 if (alreadyActiveTrackElement.length) {
                     this.activeTrackElement = alreadyActiveTrackElement[0];
+                }
+            },
+            setActiveClassFor(trackId) {
+                const elements = this.$refs.scrollArea.querySelectorAll(`[data-id='${trackId}']`);
+                if (elements.length > 0) {
+                    this.toggleActiveClass(elements[0]);
                 }
             }
         },

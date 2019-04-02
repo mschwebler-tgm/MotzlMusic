@@ -1,9 +1,5 @@
 <template>
     <div>
-        <v-card-title>
-            <span class="headline">Audio Features</span>
-        </v-card-title>
-
         <div class="chart-wrapper" style="display: flex; justify-content: center">
             <base-radar-chart :height="320" :width="320" :data="chartData" ref="chart"></base-radar-chart>
         </div>

@@ -21,6 +21,8 @@
         methods: {
             playTrack(track) {
                 this.$store.dispatch('player/play', track);
+                this.$store.commit('player/setQueue', this.tracks);
+                this.$store.commit('player/setQueueTrack', track);
             }
         },
     }

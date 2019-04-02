@@ -13,5 +13,11 @@ export default {
     },
     setPlayingState(state, isPlaying) {
         state.playerController.playing = isPlaying;
-    }
+    },
+    setQueue(state, tracks) {
+        state.queueController.queue = tracks;
+    },
+    setQueueTrack(state, track) {
+        state.queueController.setActiveTrack(track);
+    },
 }

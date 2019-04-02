@@ -46,8 +46,8 @@
             tracks() {
                 this.initializeTracksTable();
             },
-            playingTrackId(trackId, oldTrackId) {
-                this.setActiveClassFor(trackId, oldTrackId);
+            playingTrackId(trackId) {
+                this.setActiveClassFor(trackId);
             }
         },
         methods: {
@@ -58,7 +58,7 @@
                     contentId: this.identifier + '-contentArea',
                     rows: this.renderFunction(this.tracks, this.playingTrackId),
                 });
-                this.setAlreadyActiveTrackElement();
+                this.setActiveClassFor(this.playingTrackId);
             },
             initDoubleClickListener() {
                 const findTrackElement = element => element.classList.contains('track') ? element : findTrackElement(element.parentElement);
@@ -76,12 +76,6 @@
                 }
                 element.classList.add('active');
                 this.activeTrackElement = element;
-            },
-            setAlreadyActiveTrackElement() {
-                const alreadyActiveTrackElement = document.getElementsByClassName('track active');
-                if (alreadyActiveTrackElement.length) {
-                    this.activeTrackElement = alreadyActiveTrackElement[0];
-                }
             },
             setActiveClassFor(trackId) {
                 const elements = this.$refs.scrollArea.querySelectorAll(`[data-id='${trackId}']`);

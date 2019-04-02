@@ -5,14 +5,14 @@
                 <v-layout justify-center>
                     <v-flex shrink>
                         <v-btn flat icon>
-                            <v-icon>skip_previous</v-icon>
+                            <v-icon @click="playPrevious">skip_previous</v-icon>
                         </v-btn>
                         <v-btn flat icon :loading="loading" @click="togglePlay">
                             <v-icon large class="secondary--text" v-if="playing">pause_circle_filled</v-icon>
                             <v-icon large class="secondary--text" v-else>play_circle_filled</v-icon>
                         </v-btn>
                         <v-btn flat icon>
-                            <v-icon>skip_next</v-icon>
+                            <v-icon @click="playNext">skip_next</v-icon>
                         </v-btn>
                     </v-flex>
                 </v-layout>
@@ -41,7 +41,15 @@
                 } else {
                     this.$store.dispatch('player/play');
                 }
-            }
+            },
+            playNext() {
+                const track = this.queueController.playNext();
+                this.$store.dispatch('player/play', track);
+            },
+            playPrevious() {
+                const track = this.queueController.playPrevious();
+                this.$store.dispatch('player/play', track);
+            },
         },
         computed: {
             title() {
@@ -61,7 +69,10 @@
             },
             progress() {
                 return this.$store.getters['player/progressPercent'];
-            }
+            },
+            queueController() {
+                return this.$store.getters['player/queueController'];
+            },
         }
     }
 </script>

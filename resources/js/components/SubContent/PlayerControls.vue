@@ -17,14 +17,14 @@
                     </v-flex>
                 </v-layout>
             </v-flex>
-            <v-flex class="secondary d-flex">
+            <v-flex class="secondary d-flex gradient">
                 <v-flex grow class="pa-0 pr-3 text-truncate">
                     <span class="body-2">{{ title }}</span>
                     <br>
                     <span class="caption">{{ artist }}</span>
                 </v-flex>
                 <v-flex shrink class="pa-0 d-flex align-center" style="flex: 0 !important;">
-                    <v-progress-circular :value="progress" ></v-progress-circular>
+                    <v-progress-circular :value="progress"></v-progress-circular>
                 </v-flex>
             </v-flex>
         </v-layout>
@@ -72,4 +72,12 @@
         right: 12px;
         bottom: 12px
     }
+
+    .gradient {
+        background: -moz-linear-gradient(-90deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.25) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.25) 100%);
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.25) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#54000000', GradientType=1);
+    }
+
 </style>

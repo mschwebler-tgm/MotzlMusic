@@ -12,11 +12,11 @@
                         <div>({{ albumDate }})</div>
                     </div>
                     <div class="pt-2">
-                        <v-icon style="font-size: 20px">star</v-icon>
-                        <v-icon style="font-size: 20px">star</v-icon>
-                        <v-icon style="font-size: 20px">star</v-icon>
-                        <v-icon style="font-size: 20px">star_half</v-icon>
-                        <v-icon style="font-size: 20px">star_border</v-icon>
+                        <v-rating v-model="rating"
+                                  color="secondary"
+                                  background-color="secondary darken2"
+                                  :size="24"
+                                  dense half-increments hover></v-rating>
                     </div>
                 </v-flex>
             </div>
@@ -27,6 +27,11 @@
 <script>
     export default {
         name: "TrackInfo",
+        data() {
+            return {
+                rating: 3.5
+            }
+        },
         computed: {
             currentTrack() {
                 return this.$store.getters['player/playingTrack'];

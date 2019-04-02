@@ -8,8 +8,8 @@
                             <v-icon>skip_previous</v-icon>
                         </v-btn>
                         <v-btn flat icon :loading="loading" @click="togglePlay">
-                            <v-icon large class="primary--text" v-if="playing">pause_circle_filled</v-icon>
-                            <v-icon large class="primary--text" v-else>play_circle_filled</v-icon>
+                            <v-icon large class="secondary--text" v-if="playing">pause_circle_filled</v-icon>
+                            <v-icon large class="secondary--text" v-else>play_circle_filled</v-icon>
                         </v-btn>
                         <v-btn flat icon>
                             <v-icon>skip_next</v-icon>
@@ -17,7 +17,7 @@
                     </v-flex>
                 </v-layout>
             </v-flex>
-            <v-flex class="primary d-flex">
+            <v-flex class="secondary d-flex">
                 <v-flex grow class="pa-0 pr-3 text-truncate">
                     <span class="body-2">{{ title }}</span>
                     <br>

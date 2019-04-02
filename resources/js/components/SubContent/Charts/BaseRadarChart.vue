@@ -30,7 +30,19 @@
                 display: false,
                 min: 0,
                 max: 1,
+                stepSize: 0.2,
             },
+            angleLines: {
+                color: 'rgba(128, 128, 128, 0.5)',
+            },
+            gridLines: {
+                color: hexToRgba(theme.secondary, .2),
+                borderDash: [15, 3, 3, 3],
+            },
+            pointLabels: {
+                fontColor: '#808080',
+                fontSize: 12
+            }
         },
     };
 

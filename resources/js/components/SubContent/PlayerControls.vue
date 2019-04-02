@@ -43,12 +43,12 @@
                 }
             },
             playNext() {
-                const track = this.queueController.playNext();
-                this.$store.dispatch('player/play', track);
+                this.queueController.setNext();
+                this.$store.dispatch('player/play', this.queueController.currentTrack);
             },
             playPrevious() {
-                const track = this.queueController.playPrevious();
-                this.$store.dispatch('player/play', track);
+                this.queueController.setPrevious();
+                this.$store.dispatch('player/play', this.queueController.currentTrack);
             },
         },
         computed: {

@@ -8,9 +8,28 @@ use App\Track;
 
 class MyLibraryDao
 {
-    public function getAllPlaylists()
+    public function getAllPlaylistsExcept(array $except = [])
     {
-        return Playlist::where('user_id', apiUser()->id)->orderBy('updated_at', 'desc')->get();
+        return Playlist::where('user_id', apiUser()->id)
+            ->orderBy('updated_at', 'desc')
+            ->whereNotIn('id', $except)
+            ->get();
+    }
+
+    public function getRecentPlaylists($amount)
+    {
+        return Playlist::where('user_id', apiUser()->id)
+            ->orderBy('created_at', 'desc')
+            ->limit($amount)
+            ->get();
+    }
+
+    public function getSpotifyPlaylists()
+    {
+        return Playlist::where('user_id', apiUser()->id)
+            ->orderBy('created_at', 'desc')
+            ->whereNotNull('spotify_id')
+            ->get();
     }
 
     public function getAllTracks()

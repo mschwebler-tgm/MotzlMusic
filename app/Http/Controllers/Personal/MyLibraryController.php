@@ -17,7 +17,14 @@ class MyLibraryController extends Controller
 
     public function myPlaylists()
     {
-        return $this->libraryDao->getAllPlaylists();
+        $recent = $this->libraryDao->getRecentPlaylists(3);
+        $spotify = $this->libraryDao->getSpotifyPlaylists();
+        $remaining = $this->libraryDao->getAllPlaylistsExcept($recent->pluck('id')->merge($spotify->pluck('id'))->toArray());
+        return [
+            'recent' => $recent,
+            'spotify' => $spotify,
+            'ungrouped' => $remaining,
+        ];
     }
 
     public function myTracks()

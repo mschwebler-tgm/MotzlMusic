@@ -3,7 +3,11 @@ import getters from './getters';
 import actions from './actions';
 
 const state = {
-    playlists: [],
+    playlists: {
+        recent: [],
+        spotify: [],
+        other: [],
+    },
     playlistsInitialized: false,
     tracks: [],
     tracksInitialized: false,

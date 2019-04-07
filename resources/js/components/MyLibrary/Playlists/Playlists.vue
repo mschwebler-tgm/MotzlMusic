@@ -7,25 +7,30 @@
                 indeterminate>
         </v-progress-circular>
 
-        <v-container grid-list-lg justify-start class="ml-0">
-            <v-layout row wrap>
-                <v-flex v-for="playlist in playlists"
-                        :key="playlist.id"
-                        xs12 sm6 md4 lg4 xl3 d-block justify-center>
-                    <playlist-item :playlist="playlist"></playlist-item>
-                </v-flex>
-            </v-layout>
+        <v-container grid-list-lg justify-start class="ml-0" v-if="playlists.recent && playlists.recent.length">
+            <h3 class="headline">Recent</h3>
+            <playlist-item-list :playlists="playlists.recent"></playlist-item-list>
+            <v-divider></v-divider>
+        </v-container>
+        <v-container grid-list-lg justify-start class="ml-0" v-if="playlists.spotify && playlists.spotify.length">
+            <h3 class="headline">Spotify</h3>
+            <playlist-item-list :playlists="playlists.spotify"></playlist-item-list>
+            <v-divider></v-divider>
+        </v-container>
+        <v-container grid-list-lg justify-start class="ml-0" v-if="playlists.ungrouped && playlists.ungrouped.length">
+            <h3 class="headline">Other</h3>
+            <playlist-item-list :playlists="playlists.ungrouped"></playlist-item-list>
         </v-container>
     </div>
 </template>
 
 <script>
-    import PlaylistItem from "./PlaylistItem";
     import {mapGetters} from 'vuex';
+    import PlaylistItemList from "./PlaylistItemList";
 
     export default {
         name: "Playlists",
-        components: {PlaylistItem},
+        components: {PlaylistItemList},
         computed: {
             ...mapGetters('myLibrary', [
                 'playlists',

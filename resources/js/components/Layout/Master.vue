@@ -1,4 +1,4 @@
-<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
+<template>
     <div id="master">
         <v-app :dark="$root.isDarkTheme">
             <v-navigation-drawer v-model="showDrawer" app clipped floating dark
@@ -177,7 +177,7 @@
             <v-content>
                 <v-container fluid grid-list-xl class="h-100">
                     <v-layout row wrap class="h-100">
-                        <v-flex xs12 md12 lg12 xl9>
+                        <v-flex xs12 md12 lg12 xl9 class="xs-p0">
                             <v-btn flat @click="$router.go(-1)" class="ml-0">
                                 <v-icon dark left>arrow_back</v-icon>
                                 Back

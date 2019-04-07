@@ -7,17 +7,19 @@
                 indeterminate>
         </v-progress-circular>
 
-        <v-container grid-list-lg justify-start class="ml-0" v-if="playlists.recent && playlists.recent.length">
+        <v-container grid-list-lg justify-start v-if="playlists.recent && playlists.recent.length">
             <h3 class="headline">Recent</h3>
             <playlist-item-list :playlists="playlists.recent"></playlist-item-list>
             <v-divider></v-divider>
         </v-container>
-        <v-container grid-list-lg justify-start class="ml-0" v-if="playlists.spotify && playlists.spotify.length">
+
+        <v-container grid-list-lg justify-start v-if="playlists.spotify && playlists.spotify.length">
             <h3 class="headline">Spotify</h3>
             <playlist-item-list :playlists="playlists.spotify"></playlist-item-list>
             <v-divider></v-divider>
         </v-container>
-        <v-container grid-list-lg justify-start class="ml-0" v-if="playlists.ungrouped && playlists.ungrouped.length">
+
+        <v-container grid-list-lg justify-start v-if="playlists.ungrouped && playlists.ungrouped.length">
             <h3 class="headline">Other</h3>
             <playlist-item-list :playlists="playlists.ungrouped"></playlist-item-list>
         </v-container>

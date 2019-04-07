@@ -1,24 +1,17 @@
 <template>
-    <v-card tile @click="openPlaylistDetails" class="pointer playlist-tile">
-        <v-img width="40%"
-               :src="fullResolutionImage"
-               :lazy-src="intermediateImage"
-               :alt="playlist.name"
-               style="display: inline-block;">
-            <v-layout
-                    slot="placeholder"
-                    fill-height
-                    align-center
-                    justify-center
-                    ma-0>
-                <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
-            </v-layout>
-        </v-img>
-        <div style="display: inline-block; top: -10px; position: absolute;">
-            <v-card-title primary-title>
-                <h3 class="title mb-0">{{ playlist.name }}</h3>
-            </v-card-title>
-        </div>
+    <v-card tile
+            hover
+            @click="openPlaylistDetails">
+        <v-img
+                :src="fullResolutionImage"
+                :lazy-src="intermediateImage"
+                :alt="playlist.name"
+                aspect-ratio="1"></v-img>
+        <v-card-title primary-title>
+            <div class="no-overflow">
+                <h4 class="subheading mb-0 playlist-title">{{ playlist.name }}</h4>
+            </div>
+        </v-card-title>
     </v-card>
 </template>
 
@@ -27,6 +20,11 @@
         name: "PlaylistItem",
         props: {
             playlist: Object,
+        },
+        data() {
+            return {
+                width: 170
+            }
         },
         methods: {
             openPlaylistDetails() {
@@ -46,6 +44,16 @@
 </script>
 
 <style scoped>
+    .no-overflow {
+        overflow: hidden;
+    }
+
+    .playlist-title {
+        text-overflow: fade;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
     .playlist-tile.theme--dark {
         background-color: #343434;
         border-color: #343434;

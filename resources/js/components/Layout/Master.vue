@@ -1,5 +1,14 @@
 <template>
-    <div id="master">
+    <div id="master" @dragenter="dragging = true">
+        <div v-show="dragging"
+             @dragover="dragOver"
+             @drop="drop"
+             @dragend="dragEnd"
+             @dragexit="dragEnd"
+             @dragleave="dragEnd"
+             id="drop-zone">
+            <img src="/images/cloud_upload.svg" @dragover="dragOver">
+        </div>
         <v-app :dark="$root.isDarkTheme">
             <v-navigation-drawer v-model="showDrawer" app clipped floating dark
                                  :mobile-break-point="927">
@@ -35,28 +44,32 @@
                         <v-list-tile slot="activator">
                             <v-list-tile-title>My library</v-list-tile-title>
                         </v-list-tile>
-                        <v-list-tile to="/my-library/playlists" class="grey darken-4 white--text" active-class="accent white--text primary--text">
+                        <v-list-tile to="/my-library/playlists" class="grey darken-4 white--text"
+                                     active-class="accent white--text primary--text">
                             <v-list-tile-title class="white--text">Playlists</v-list-tile-title>
                             <v-list-tile-action>
                                 <v-icon>playlist_play</v-icon>
                             </v-list-tile-action>
                         </v-list-tile>
                         <v-divider inset></v-divider>
-                        <v-list-tile to="/my-library/tracks" class="grey darken-4 white--text" active-class="accent white--text primary--text">
+                        <v-list-tile to="/my-library/tracks" class="grey darken-4 white--text"
+                                     active-class="accent white--text primary--text">
                             <v-list-tile-title class="white--text">Tracks</v-list-tile-title>
                             <v-list-tile-action>
                                 <v-icon>music_note</v-icon>
                             </v-list-tile-action>
                         </v-list-tile>
                         <v-divider inset></v-divider>
-                        <v-list-tile to="/my-library/albums" class="grey darken-4 white--text" active-class="accent white--text primary--text">
+                        <v-list-tile to="/my-library/albums" class="grey darken-4 white--text"
+                                     active-class="accent white--text primary--text">
                             <v-list-tile-title class="white--text">Albums</v-list-tile-title>
                             <v-list-tile-action>
                                 <v-icon>album</v-icon>
                             </v-list-tile-action>
                         </v-list-tile>
                         <v-divider inset></v-divider>
-                        <v-list-tile to="/my-library/artists" class="grey darken-4 white--text" active-class="accent white--text primary--text">
+                        <v-list-tile to="/my-library/artists" class="grey darken-4 white--text"
+                                     active-class="accent white--text primary--text">
                             <v-list-tile-title class="white--text">Artists</v-list-tile-title>
                             <v-list-tile-action>
                                 <v-icon>account_box</v-icon>
@@ -70,14 +83,16 @@
                         <v-list-tile slot="activator">
                             <v-list-tile-title>User</v-list-tile-title>
                         </v-list-tile>
-                        <v-list-tile to="/profile/me" class="grey darken-4 white--text" active-class="accent white--text primary--text">
+                        <v-list-tile to="/profile/me" class="grey darken-4 white--text"
+                                     active-class="accent white--text primary--text">
                             <v-list-tile-title class="white--text">Profile</v-list-tile-title>
                             <v-list-tile-action>
                                 <v-icon>account_circle</v-icon>
                             </v-list-tile-action>
                         </v-list-tile>
                         <v-divider inset></v-divider>
-                        <v-list-tile to="/settings" class="grey darken-4 white--text" active-class="accent white--text primary--text">
+                        <v-list-tile to="/settings" class="grey darken-4 white--text"
+                                     active-class="accent white--text primary--text">
                             <v-list-tile-title class="white--text">Settings</v-list-tile-title>
                             <v-list-tile-action>
                                 <v-icon>settings</v-icon>
@@ -91,14 +106,16 @@
                         <v-list-tile slot="activator">
                             <v-list-tile-title>Manage content</v-list-tile-title>
                         </v-list-tile>
-                        <v-list-tile to="/import/spotify" class="grey darken-4 white--text" active-class="accent white--text primary--text">
+                        <v-list-tile to="/import/spotify" class="grey darken-4 white--text"
+                                     active-class="accent white--text primary--text">
                             <v-list-tile-title class="white--text">Import from Spotify</v-list-tile-title>
                             <v-list-tile-action>
                                 <v-icon>cloud_download</v-icon>
                             </v-list-tile-action>
                         </v-list-tile>
                         <v-divider inset></v-divider>
-                        <v-list-tile to="/upload" class="grey darken-4 white--text" active-class="accent white--text primary--text">
+                        <v-list-tile to="/upload" class="grey darken-4 white--text"
+                                     active-class="accent white--text primary--text">
                             <v-list-tile-title class="white--text">Upload MP3s</v-list-tile-title>
                             <v-list-tile-action>
                                 <v-icon>cloud_upload</v-icon>
@@ -204,6 +221,7 @@
 <script>
     import Player from "../Player/Player";
     import SubContent from "./SubContent";
+
     export default {
         name: "master",
         components: {SubContent, Player},
@@ -211,6 +229,7 @@
         data() {
             return {
                 showDrawer: true,
+                dragging: false,
             }
         },
         created() {
@@ -219,18 +238,57 @@
         methods: {
             logout() {
                 document.getElementById('logout-form').submit();
+            },
+            dragOver($event) {
+                this.dragging = true;
+                $event.preventDefault();
+            },
+            dragEnd() {
+                this.dragging = false;
+            },
+            drop($event) {
+                const files = $event.dataTransfer.files;
+                if (!files.length) {
+                    return;
+                }
+                $event.preventDefault();
+                this.$store.commit('fileUpload/setFiles', [...files].filter(file => file.type === 'audio/mp3'));
+                this.$store.dispatch('fileUpload/submit');
+                this.dragging = false;
             }
         }
     }
 </script>
 
 <style scoped lang="scss">
+
+    #drop-zone {
+        content: '';
+        position: absolute;
+        width: 100vw;
+        height: 100vh;
+        z-index: 10000;
+        background-color: rgba(0, 0, 0, 0.45);
+        top: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        img {
+            width: 178px;
+            height: 178px;
+            filter: invert(100%);
+        }
+    }
+
     .bounce-enter-active {
         animation: bounce-in .2s;
     }
+
     .bounce-leave-active {
         animation: bounce-in .2s reverse;
     }
+
     @keyframes bounce-in {
         0% {
             transform: scale(0.9);

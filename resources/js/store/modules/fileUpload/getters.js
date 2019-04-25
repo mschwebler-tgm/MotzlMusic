@@ -5,4 +5,5 @@ export default {
     filesUnableToUpload: state => state.filesUnableToUpload,
     uploadInProgress: state => state.uploadInProgress,
     showInfoBox: state => state.showInfoBox,
+    progressInPercent: state => state.totalFilesCount > 0 ? ((state.totalFilesCount - state.remainingFilesCount) / state.totalFilesCount) * 100 : 0,
 }

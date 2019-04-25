@@ -7,12 +7,20 @@ const clusterizeTracks = function (tracks, playingTrackId) {
         `<div class="track-list-artist">&nbsp;<span title="${track.artist.name}" class="text-truncate">${track.artist.name}</span></div>` +
         `<div class="track-list-rating">&nbsp;Star rating</div>` +
         `<div class="flex-1 track-list-options-trigger"></div>` +
-        `<div class="track-list-options-trigger"><span class="icon has-text-grey-light" title="Spotify"><i class="mdi mdi-spotify mdi-24px"></i></span></div>` +
-        `<div class="track-list-options-trigger"><span class="icon has-text-grey-light" title="Subscribed from Timi Hendrix"><i class="mdi mdi-account-multiple mdi-24px"></i></span></div>` +
+        getIconsForTrack(track) +
         `<div class="flex-1 track-list-options-trigger"></div>` +
         `<div class="track-list-more-options"><span class="icon has-text-grey-light pointer" title="More options"><i class="mdi mdi-dots-vertical mdi-24px"></i></span></div>` +
         `</div>`
     ]), []);
 };
+
+function getIconsForTrack(track) {
+    let icons = '';
+    if (track.type === 'spotify') {
+        icons += '<div class="track-list-options-trigger"><span class="icon has-text-grey-light" title="From Spotify"><i class="mdi mdi-spotify mdi-24px"></i></span></div>';
+    }
+    // `<div class="track-list-options-trigger"><span class="icon has-text-grey-light" title="Subscribed from Timi Hendrix"><i class="mdi mdi-account-multiple mdi-24px"></i></span></div>`
+    return icons;
+}
 
 export default clusterizeTracks;

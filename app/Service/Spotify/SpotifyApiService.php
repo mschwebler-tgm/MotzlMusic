@@ -31,6 +31,11 @@ class SpotifyApiService extends SpotifyWebAPI
 //        $this->setAccessToken($accessToken);
     }
 
+    /**
+     * @param User|null $user
+     * @return $this
+     * @throws FailedSpotifyTokenRefreshException
+     */
     public function setApiUser(User $user = null)
     {
         if (!$user) {
@@ -39,6 +44,7 @@ class SpotifyApiService extends SpotifyWebAPI
 
         $this->user = $user;
         $this->setAccessToken($user->spotify_access_token);
+        $this->refreshUserTokenIfNeeded();
         return $this;
     }
 
@@ -91,7 +97,7 @@ class SpotifyApiService extends SpotifyWebAPI
     /** @throws FailedSpotifyTokenRefreshException */
     public function refreshUserTokenIfNeeded()
     {
-        if (!$this->user || $this->user->spotify_token_expire > Carbon::now()) {
+        if (!$this->user || !$this->user->spotify_id || $this->user->spotify_token_expire > Carbon::now()) {
             return;
         }
 

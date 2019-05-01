@@ -31,7 +31,10 @@
         <v-container v-if="noPlaylistsAvailable">
             <div class="d-flex align-center flex-column">
                 <p class="subheading text-xs-center">You have no playlists in your library.</p>
-                <v-btn outline color="primary">create one!</v-btn>
+                <div>
+                    <v-btn color="primary">create one!</v-btn>
+                    <v-btn flat color="primary" to="/import/spotify">Import from spotify</v-btn>
+                </div>
             </div>
         </v-container>
     </div>

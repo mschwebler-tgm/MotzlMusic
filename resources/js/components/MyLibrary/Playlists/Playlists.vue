@@ -1,11 +1,15 @@
 <template>
     <div>
         <v-card-title class="headline">Playlists</v-card-title>
-        <v-progress-circular
-                v-if="!playlistsInitialized"
-                color="primary"
-                indeterminate>
-        </v-progress-circular>
+        <v-container v-if="!playlistsInitialized">
+            <div class="d-flex justify-center">
+                <v-progress-circular
+                        v-if="!playlistsInitialized"
+                        color="primary"
+                        indeterminate>
+                </v-progress-circular>
+            </div>
+        </v-container>
 
         <v-container grid-list-lg justify-start v-if="playlists.recent && playlists.recent.length">
             <h3 class="headline">Recent</h3>
@@ -23,6 +27,13 @@
             <h3 class="headline">Other</h3>
             <playlist-item-list :playlists="playlists.ungrouped"></playlist-item-list>
         </v-container>
+
+        <v-container v-if="noPlaylistsAvailable">
+            <div class="d-flex align-center flex-column">
+                <p class="subheading text-xs-center">You have no playlists in your library.</p>
+                <v-btn outline color="primary">create one!</v-btn>
+            </div>
+        </v-container>
     </div>
 </template>
 
@@ -38,6 +49,9 @@
                 'playlists',
                 'playlistsInitialized',
             ]),
+            noPlaylistsAvailable() {
+                return this.playlistsInitialized && !Object.values(this.playlists).some(playlist => playlist.length > 0);
+            }
         }
     }
 </script>

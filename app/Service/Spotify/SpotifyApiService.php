@@ -7,8 +7,8 @@ use App\Exceptions\NoUserTokenProvidedException;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
-use SpotifyWebAPI\SpotifyWebAPI;
 use SpotifyWebAPI\Session;
+use SpotifyWebAPI\SpotifyWebAPI;
 use SpotifyWebAPI\SpotifyWebAPIException;
 
 class SpotifyApiService extends SpotifyWebAPI
@@ -26,6 +26,7 @@ class SpotifyApiService extends SpotifyWebAPI
             config('spotify.auth_redirect')
         );
         $this->session->requestCredentialsToken();
+        $this->setAccessToken($this->session->getAccessToken());
         // only needed for application requests
 //        $accessToken = $this->session->getAccessToken();
 //        $this->setAccessToken($accessToken);
@@ -43,8 +44,11 @@ class SpotifyApiService extends SpotifyWebAPI
         }
 
         $this->user = $user;
-        $this->setAccessToken($user->spotify_access_token);
-        $this->refreshUserTokenIfNeeded();
+        if ($user->spotify_id) {
+            $this->setAccessToken($user->spotify_access_token);
+            $this->refreshUserTokenIfNeeded();
+        }
+
         return $this;
     }
 

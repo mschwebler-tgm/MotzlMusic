@@ -14,6 +14,7 @@
 
                 <v-stepper-items>
                     <v-stepper-content step="1">
+                        <import-tracks></import-tracks>
                         <v-btn outline color="spotify" @click="step++">Continue</v-btn>
                         <v-btn flat @click="step=3">Back</v-btn>
                     </v-stepper-content>
@@ -34,13 +35,15 @@
 </template>
 
 <script>
+    import ImportTracks from "./Steps/ImportTracks";
+
     export default {
         name: "SpotifyImport",
+        components: {ImportTracks},
         data() {
             return {
-                playlists: null,
-                tracks: null,
-                albums: null,
+                playlists: {items: []},
+                albums: {items: []},
                 loading: true,
                 step: 1
             }
@@ -51,9 +54,8 @@
         methods: {
             loadData() {
                 const playlists = axios.get('/api/spotify/playlists/my').then(res => this.playlists = res.data);
-                const tracks = axios.get('/api/spotify/tracks/my').then(res => this.tracks = res.data);
                 const albums = axios.get('/api/spotify/albums/my').then(res => this.albums = res.data);
-                Promise.all([playlists, tracks, albums]).then(() => this.loading = false);
+                Promise.all([playlists, albums]).then(() => this.loading = false);
             },
             submit() {
                 console.log('submit');

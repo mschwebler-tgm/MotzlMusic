@@ -1,6 +1,7 @@
 @import "variables";
 
 .spotify {
+  background-color: $spotifyPrimary;
   &--text {
     color: $spotifyPrimary !important;
   }

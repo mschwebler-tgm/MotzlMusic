@@ -3,7 +3,32 @@
         <v-card-title class="headline">Import from spotify!</v-card-title>
         <img src="/images/spotify_black.png" alt="spotify-logo" class="spotify-logo">
         <v-container>
+            <v-stepper v-model="step" non-linear>
+                <v-stepper-header>
+                    <v-stepper-step color="spotify" :complete="step > 1" step="1">Playlists</v-stepper-step>
+                    <v-divider></v-divider>
+                    <v-stepper-step color="spotify" :complete="step > 2" step="2">Tracks</v-stepper-step>
+                    <v-divider></v-divider>
+                    <v-stepper-step color="spotify" step="3">Albums</v-stepper-step>
+                </v-stepper-header>
 
+                <v-stepper-items>
+                    <v-stepper-content step="1">
+                        <v-btn outline color="spotify" @click="step++">Continue</v-btn>
+                        <v-btn flat @click="step=3">Back</v-btn>
+                    </v-stepper-content>
+
+                    <v-stepper-content step="2">
+                        <v-btn outline color="spotify" @click="step++">Continue</v-btn>
+                        <v-btn flat @click="step--">Back</v-btn>
+                    </v-stepper-content>
+
+                    <v-stepper-content step="3">
+                        <v-btn outline color="spotify" @click="submit">Import</v-btn>
+                        <v-btn flat @click="step--">Back</v-btn>
+                    </v-stepper-content>
+                </v-stepper-items>
+            </v-stepper>
         </v-container>
     </v-card>
 </template>
@@ -12,12 +37,13 @@
     export default {
         name: "SpotifyImport",
         data() {
-          return {
-              playlists: null,
-              tracks: null,
-              albums: null,
-              loading: true,
-          }
+            return {
+                playlists: null,
+                tracks: null,
+                albums: null,
+                loading: true,
+                step: 1
+            }
         },
         created() {
             this.loadData();
@@ -28,6 +54,9 @@
                 const tracks = axios.get('/api/spotify/tracks/my').then(res => this.tracks = res.data);
                 const albums = axios.get('/api/spotify/albums/my').then(res => this.albums = res.data);
                 Promise.all([playlists, tracks, albums]).then(() => this.loading = false);
+            },
+            submit() {
+                console.log('submit');
             }
         }
     }

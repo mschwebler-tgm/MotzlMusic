@@ -1,8 +1,13 @@
 <template>
     <div>
         <div class="d-flex flex-column align-center">
-            <div class="flex-wrap justify-space-between w-100" style="display: flex; height: 308px;">
-                <import-playlists-item :playlist="playlist" v-for="playlist in currentPagePlaylists" :key="playlist.key"></import-playlists-item>
+            <div class="flex-wrap justify-space-around w-100" style="display: flex; height: 308px;">
+                <v-progress-circular v-if="!currentPagePlaylists.length"
+                                     indeterminate
+                                     class="mt-5"
+                                     color="spotify"></v-progress-circular>
+                <import-playlists-item :playlist="playlist" v-for="playlist in currentPagePlaylists"
+                                       :key="playlist.key"></import-playlists-item>
             </div>
             <v-pagination
                     class="mt-3"

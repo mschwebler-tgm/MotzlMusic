@@ -6,8 +6,10 @@
                                      indeterminate
                                      class="mt-5"
                                      color="spotify"></v-progress-circular>
-                <import-playlists-item :playlist="playlist" v-for="playlist in currentPagePlaylists"
-                                       :key="playlist.key"></import-playlists-item>
+                <import-playlists-item v-for="playlist in currentPagePlaylists"
+                                       :key="playlist.key"
+                                       :playlist="playlist"
+                                       @playlistClicked="calculateSelectedTracksCount"></import-playlists-item>
             </div>
             <v-pagination
                     class="mt-3"
@@ -17,10 +19,6 @@
                     color="spotify"
                     :total-visible="10"></v-pagination>
         </div>
-
-        <v-checkbox v-model="importAll"
-                    color="spotify"
-                    label="Import all playlists from Spotify"></v-checkbox>
     </div>
 </template>
 
@@ -48,7 +46,7 @@
                 if (!this.playlists[page]) {
                     this.loadPlaylists(page);
                 }
-            }
+            },
         },
         methods: {
             loadPlaylists(page) {
@@ -64,6 +62,13 @@
                     }
                     Vue.set(this.playlists, page, res.data.items);
                 });
+            },
+            calculateSelectedTracksCount() {
+                const playlistPages = Object.values(this.playlists);
+                const flatPlaylists = playlistPages.reduce((flat, playlistPage) => flat.concat(playlistPage), []);
+                const selectedPlaylists = flatPlaylists.filter(playlist => playlist.selected);
+                const trackCount = selectedPlaylists.reduce((count, playlist) => count + playlist.tracks, 0);
+                this.$emit('updateSelectCount', trackCount);
             }
         },
         computed: {

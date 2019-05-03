@@ -45,6 +45,7 @@
                 } else {
                     this.playlist.selected = false;
                 }
+                this.$emit('playlistClicked');
             }
         }
     }

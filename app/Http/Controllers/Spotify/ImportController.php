@@ -2,31 +2,29 @@
 
 namespace App\Http\Controllers\Spotify;
 
-use App\Components\Spotify\Import\AlbumService;
 use App\Components\Spotify\Import\Importers\ProcessSpotifyImportJob;
 use App\Components\Spotify\Import\Importers\SpotifyAlbumImporter;
 use App\Components\Spotify\Import\Importers\SpotifyPlaylistImporter;
 use App\Components\Spotify\Import\Importers\SpotifyTrackImporter;
-use App\Components\Spotify\Import\PlaylistService;
-use App\Components\Spotify\Import\PlaylistTransformer;
-use App\Components\Spotify\Import\TrackService;
+use App\Components\Spotify\Import\SpotifyAlbumService;
+use App\Components\Spotify\Import\SpotifyPlaylistService;
+use App\Components\Spotify\Import\SpotifyTrackService;
 use App\Daos\UserDao;
-use App\Service\Spotify\SpotifyApiService;
 use Illuminate\Http\Request;
 
 class ImportController
 {
-    public function playlists(PlaylistService $playlistService)
+    public function playlists(SpotifyPlaylistService $playlistService)
     {
         return $playlistService->paginate();
     }
 
-    public function tracks(TrackService $trackService)
+    public function tracks(SpotifyTrackService $trackService)
     {
         return $trackService->paginate();
     }
 
-    public function albums(AlbumService $albumService)
+    public function albums(SpotifyAlbumService $albumService)
     {
         return $albumService->paginate();
     }

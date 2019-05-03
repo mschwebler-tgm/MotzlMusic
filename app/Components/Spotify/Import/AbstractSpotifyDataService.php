@@ -3,24 +3,23 @@
 namespace App\Components\Spotify\Import;
 
 use App\Service\Spotify\SpotifyApiService;
+use App\Transformer\Transformable;
 use Illuminate\Support\Facades\Cache;
 
-class PlaylistService
+abstract class AbstractSpotifyDataService
 {
-    private $apiService;
-    private $playlistTransformer;
+    /** @var SpotifyApiService */
+    protected $apiService;
+    /** @var Transformable */
+    protected $transformer;
 
-    public function __construct(SpotifyApiService $apiService, PlaylistTransformer $playlistTransformer)
-    {
-        $this->apiService = $apiService;
-        $this->playlistTransformer = $playlistTransformer;
-    }
+    const API_SERVICE_METHOD = null;
 
     public function paginate()
     {
         $limit = request('limit', 20);
         $offset = (request('page', 1) - 1) * $limit;
-        $response = $this->getPlaylists($limit, $offset);
+        $response = $this->getData($limit, $offset);
 
         return [
             'page' => request('page', 1),
@@ -28,19 +27,22 @@ class PlaylistService
             'to' => $offset + $limit,
             'limit' => $limit,
             'total' => $response->total,
-            'items' => $this->playlistTransformer->transform($response->items)
+            'items' => $this->transformer->transform($response->items)
         ];
     }
 
-    private function getPlaylists($limit, $offset)
+    private function getData($limit, $offset)
     {
         $cacheKey = __METHOD__ . "limit$limit-offset$offset";
         $response = Cache::get($cacheKey);
         if (!$response) {
-            $response = $this->apiService->getMyPlaylists(['limit' => $limit, 'offset' => $offset]);
+            $apiServiceMethod = $this->getApiServiceMethod();
+            $response = $this->apiService->$apiServiceMethod(['limit' => $limit, 'offset' => $offset]);
             Cache::put($cacheKey, $response, 3);
         }
 
         return $response;
     }
+
+    abstract protected function getApiServiceMethod();
 }

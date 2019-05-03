@@ -80,24 +80,6 @@ class SpotifyApiService extends SpotifyWebAPI
         }
     }
 
-    public function getAllMyPlaylists()
-    {
-        return $this->getAllUserPlaylists($this->user->spotify_id);
-    }
-
-    public function getAllUserPlaylists($spotifyUserId)
-    {
-        $itemsPerPage = 20;
-        $offset = 0;
-        $playlists = [];
-        do {
-            $response = $this->getUserPlaylists($spotifyUserId, ['limit' => $itemsPerPage, 'offset' => $offset]);
-            $playlists = array_merge($response->items, $playlists);
-            $offset += $itemsPerPage;
-        } while (count($playlists) < $response->total);
-        return $playlists;
-    }
-
     /** @throws FailedSpotifyTokenRefreshException */
     public function refreshUserTokenIfNeeded()
     {

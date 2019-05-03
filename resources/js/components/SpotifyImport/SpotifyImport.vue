@@ -10,7 +10,26 @@
 
 <script>
     export default {
-        name: "SpotifyImport"
+        name: "SpotifyImport",
+        data() {
+          return {
+              playlists: null,
+              tracks: null,
+              albums: null,
+              loading: true,
+          }
+        },
+        created() {
+            this.loadData();
+        },
+        methods: {
+            loadData() {
+                const playlists = axios.get('/api/spotify/playlists/my').then(res => this.playlists = res.data);
+                const tracks = axios.get('/api/spotify/tracks/my').then(res => this.tracks = res.data);
+                const albums = axios.get('/api/spotify/albums/my').then(res => this.albums = res.data);
+                Promise.all([playlists, tracks, albums]).then(() => this.loading = false);
+            }
+        }
     }
 </script>
 

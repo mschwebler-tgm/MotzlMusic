@@ -7,6 +7,7 @@ use App\Components\Spotify\Import\Importers\ProcessSpotifyImportJob;
 use App\Components\Spotify\Import\Importers\SpotifyAlbumImporter;
 use App\Components\Spotify\Import\Importers\SpotifyPlaylistImporter;
 use App\Components\Spotify\Import\Importers\SpotifyTrackImporter;
+use App\Components\Spotify\Import\PlaylistService;
 use App\Components\Spotify\Import\PlaylistTransformer;
 use App\Components\Spotify\Import\TrackService;
 use App\Daos\UserDao;
@@ -15,10 +16,9 @@ use Illuminate\Http\Request;
 
 class ImportController
 {
-    public function playlists(SpotifyApiService $apiService, PlaylistTransformer $playlistTransformer)
+    public function playlists(PlaylistService $playlistService)
     {
-        $playlists = $apiService->getAllMyPlaylists();
-        return $playlistTransformer->transform($playlists);
+        return $playlistService->paginate();
     }
 
     public function tracks(TrackService $trackService)

@@ -1,20 +1,26 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
-    <v-data-table
-            id="spotify-track-import-smaller-rows"
-            color="spotify"
-            v-model="selected"
-            :headers="headers"
-            :loading="loading"
-            :items="tracks.items"
-            :total-items="tracks.total"
-            :pagination.sync="pagination"
-            :rows-per-page-items="[5]">
-        <template v-slot:items="props">
-            <td>{{ props.item.name }}</td>
-            <td>{{ getFormattedDuration(props.item) }}</td>
-            <td>{{ props.item.artist }}</td>
-        </template>
-    </v-data-table>
+    <div>
+        <v-data-table
+                class="hidden-xs-only"
+                id="spotify-track-import-smaller-rows"
+                color="spotify"
+                v-model="selected"
+                :headers="headers"
+                :loading="loading"
+                :items="tracks.items"
+                :total-items="tracks.total"
+                :pagination.sync="pagination"
+                :rows-per-page-items="[5]">
+            <template v-slot:items="props">
+                <td>{{ props.item.name }}</td>
+                <td>{{ getFormattedDuration(props.item) }}</td>
+                <td>{{ props.item.artist }}</td>
+            </template>
+        </v-data-table>
+        <v-checkbox v-model="importAll"
+                    color="spotify"
+                    label="Import all saved tracks from Spotify"></v-checkbox>
+    </div>
 </template>
 
 <script>
@@ -50,15 +56,22 @@
                 selected: [],
                 loading: false,
                 cancelToken: null,
+                importAll: false
             }
         },
         watch: {
-            'pagination': {
+            pagination: {
                 handler() {
                     this.cancelOldRequests();
                     this.loadPage();
                 },
                 deep: true
+            },
+            importAll(shouldImportAll) {
+                if (shouldImportAll) {
+                    return this.$emit('updateSelectCount', this.tracks.total);
+                }
+                return this.$emit('updateSelectCount', 0);
             }
         },
         created() {

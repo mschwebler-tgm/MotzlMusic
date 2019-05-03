@@ -6,7 +6,7 @@
                    height="200"
                    :src="getImage()">
                 <v-expand-transition>
-                    <div v-if="hover || playlist.selected"
+                    <div v-if="$root.isTouch && playlist.selected || !$root.isTouch && (hover || playlist.selected)"
                          class="d-flex align-center justify-center transition-fast-in-fast-out spotify darken-2 v-card--reveal display-1 white--text"
                          style="height: 100%;">
                         {{ playlist.tracks }} Track{{ playlist.tracks > 1 ? 's' : '' }}
@@ -15,7 +15,8 @@
             </v-img>
             <v-card-text class="pt-4 overflow-hidden">
                 <h3 class="headline font-weight-light spotify--text mb-2 truncate">{{ playlist.name }}</h3>
-                <div class="font-weight-light grey--text title mb-1 align-center" style="display: flex;" v-if="isForeign()">
+                <div class="font-weight-light grey--text title mb-1 align-center" style="display: flex;"
+                     v-if="isForeign()">
                     <v-icon>perm_identity</v-icon>
                     <span class="caption ml-1">{{ playlist.owner.display_name }}</span>
                 </div>
@@ -40,18 +41,20 @@
                 return !this.playlist.owner || this.playlist.owner.id !== this.$root.user.spotify_id;
             },
             toggleSelected() {
+                console.log('toggle')
                 if (!this.playlist.selected) {
                     Vue.set(this.playlist, 'selected', true);
                 } else {
                     this.playlist.selected = false;
                 }
+                console.log(this.playlist.selected)
                 this.$emit('playlistClicked');
             }
         }
     }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
     .truncate {
         width: 100%;
         white-space: nowrap;
@@ -62,5 +65,17 @@
     .playlist-card {
         width: 200px;
         overflow: hidden;
+    }
+
+    @media screen and (min-width: 0) and (max-width: 599px) {
+        .playlist-card {
+            width: 150px !important;
+            margin-bottom: 15px;
+
+            .v-image {
+                height: 150px !important;
+                width: 150px !important;
+            }
+        }
     }
 </style>

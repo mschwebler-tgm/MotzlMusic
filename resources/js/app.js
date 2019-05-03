@@ -30,6 +30,20 @@ const app = new Vue({
             isDarkTheme: localStorage.getItem('useDarkTheme') === '1',
             statusInfoComponent: null,
             user: null,
+            isTouch: false,
+        }
+    },
+    created() {
+        this.detectTouch();
+    },
+    methods: {
+        detectTouch() {
+            try {
+                document.createEvent("TouchEvent");
+                this.isTouch = true;
+            } catch (error) {
+                this.isTouch = false;
+            }
         }
     },
     watch: {

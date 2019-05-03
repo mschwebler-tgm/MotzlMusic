@@ -28,6 +28,7 @@
                     </v-stepper-content>
 
                     <v-stepper-content step="3">
+                        <import-albums></import-albums>
                         <v-btn outline color="spotify" @click="submit">Import</v-btn>
                         <v-btn flat @click="step--">Back</v-btn>
                         <p class="headline spotify--text right ma-2">{{ accumulatedSelectedTracksCount }}</p>
@@ -41,10 +42,11 @@
 <script>
     import ImportTracks from "./Steps/ImportTracks";
     import ImportPlaylists from "./Steps/ImportPlaylists";
+    import ImportAlbums from "./Steps/ImportAlbums";
 
     export default {
         name: "SpotifyImport",
-        components: {ImportPlaylists, ImportTracks},
+        components: {ImportAlbums, ImportPlaylists, ImportTracks},
         data() {
             return {
                 playlists: {items: []},

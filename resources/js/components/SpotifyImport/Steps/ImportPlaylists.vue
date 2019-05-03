@@ -45,7 +45,9 @@
         },
         watch: {
             page(page) {
-                this.loadPlaylists(page);
+                if (!this.playlists[page]) {
+                    this.loadPlaylists(page);
+                }
             }
         },
         methods: {

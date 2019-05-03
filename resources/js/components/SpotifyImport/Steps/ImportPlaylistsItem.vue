@@ -1,12 +1,12 @@
 <template>
     <v-hover>
-        <v-card slot-scope="{ hover }" class="pointer playlist-card">
+        <v-card slot-scope="{ hover }" class="pointer playlist-card" @click="toggleSelected">
             <v-img :aspect-ratio="1"
                    width="200"
                    height="200"
                    :src="getImage()">
                 <v-expand-transition>
-                    <div v-if="hover"
+                    <div v-if="hover || playlist.selected"
                          class="d-flex align-center justify-center transition-fast-in-fast-out spotify darken-2 v-card--reveal display-1 white--text"
                          style="height: 100%;">
                         {{ playlist.tracks }} Track{{ playlist.tracks > 1 ? 's' : '' }}
@@ -25,6 +25,8 @@
 </template>
 
 <script>
+    import Vue from "vue";
+
     export default {
         name: "ImportPlaylistsItem",
         props: {
@@ -36,6 +38,13 @@
             },
             isForeign() {
                 return !this.playlist.owner || this.playlist.owner.id !== this.$root.user.spotify_id;
+            },
+            toggleSelected() {
+                if (!this.playlist.selected) {
+                    Vue.set(this.playlist, 'selected', true);
+                } else {
+                    this.playlist.selected = false;
+                }
             }
         }
     }

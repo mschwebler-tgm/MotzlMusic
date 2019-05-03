@@ -43,6 +43,11 @@
         created() {
             this.loadPlaylists(1);
         },
+        watch: {
+            page(page) {
+                this.loadPlaylists(page);
+            }
+        },
         methods: {
             loadPlaylists(page) {
                 axios.get('/api/spotify/playlists/my', {

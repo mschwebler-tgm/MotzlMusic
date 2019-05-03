@@ -3,6 +3,7 @@
 namespace App\Components\Spotify\Import;
 
 use App\Service\Spotify\SpotifyApiService;
+use Illuminate\Support\Facades\Cache;
 
 class AlbumService
 {
@@ -19,7 +20,7 @@ class AlbumService
     {
         $limit = request('limit', 20);
         $offset = (request('page', 1) - 1) * $limit;
-        $response = $this->apiService->getMySavedAlbums(['limit' => $limit, 'offset' => $offset]);
+        $response = $this->getSavedAlbums($limit, $offset);
 
         return [
             'page' => request('page', 1),
@@ -29,5 +30,17 @@ class AlbumService
             'total' => $response->total,
             'items' => $this->albumTransformer->transform($response->items)
         ];
+    }
+
+    private function getSavedAlbums($limit, $offset)
+    {
+        $cacheKey = __METHOD__ . "limit$limit-offset$offset";
+        $response = Cache::get($cacheKey);
+        if (!$response) {
+            $response = $this->apiService->getMySavedAlbums(['limit' => $limit, 'offset' => $offset]);
+            Cache::put($cacheKey, $response, 3);
+        }
+
+        return $response;
     }
 }

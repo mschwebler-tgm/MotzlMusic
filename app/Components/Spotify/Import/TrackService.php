@@ -3,6 +3,7 @@
 namespace App\Components\Spotify\Import;
 
 use App\Service\Spotify\SpotifyApiService;
+use Illuminate\Support\Facades\Cache;
 
 class TrackService
 {
@@ -19,7 +20,7 @@ class TrackService
     {
         $limit = request('limit', 20);
         $offset = (request('page', 1) - 1) * $limit;
-        $response = $this->apiService->getMySavedTracks(['limit' => $limit, 'offset' => $offset]);
+        $response = $this->getSavedTracks($limit, $offset);
 
         return [
             'page' => request('page', 1),
@@ -29,5 +30,17 @@ class TrackService
             'total' => $response->total,
             'items' => $this->trackTransformer->transform($response->items)
         ];
+    }
+
+    private function getSavedTracks($limit, $offset)
+    {
+        $cacheKey = __METHOD__ . "limit$limit-offset$offset";
+        $response = Cache::get($cacheKey);
+        if (!$response) {
+            $response = $this->apiService->getMySavedTracks(['limit' => $limit, 'offset' => $offset]);
+            Cache::put($cacheKey, $response, 3);
+        }
+
+        return $response;
     }
 }

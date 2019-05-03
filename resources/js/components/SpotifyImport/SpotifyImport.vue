@@ -14,22 +14,23 @@
 
                 <v-stepper-items>
                     <v-stepper-content step="1">
+                        <import-playlists @updateSelectCount="updateSelectedPlaylistTracksCount"></import-playlists>
                         <v-btn outline color="spotify" @click="step++">Continue</v-btn>
                         <v-btn flat @click="step=3">Back</v-btn>
-                        <p class="headline spotify--text right ma-2">{{ selectedSavedTracksCount }}</p>
+                        <p class="headline spotify--text right ma-2">{{ accumulatedSelectedTracksCount }}</p>
                     </v-stepper-content>
 
                     <v-stepper-content step="2">
                         <import-tracks @updateSelectCount="updateSelectedSavedTracksCount"></import-tracks>
                         <v-btn outline color="spotify" @click="step++">Continue</v-btn>
                         <v-btn flat @click="step--">Back</v-btn>
-                        <p class="headline spotify--text right ma-2">{{ selectedSavedTracksCount }}</p>
+                        <p class="headline spotify--text right ma-2">{{ accumulatedSelectedTracksCount }}</p>
                     </v-stepper-content>
 
                     <v-stepper-content step="3">
                         <v-btn outline color="spotify" @click="submit">Import</v-btn>
                         <v-btn flat @click="step--">Back</v-btn>
-                        <p class="headline spotify--text right ma-2">{{ selectedSavedTracksCount }}</p>
+                        <p class="headline spotify--text right ma-2">{{ accumulatedSelectedTracksCount }}</p>
                     </v-stepper-content>
                 </v-stepper-items>
             </v-stepper>
@@ -39,10 +40,11 @@
 
 <script>
     import ImportTracks from "./Steps/ImportTracks";
+    import ImportPlaylists from "./Steps/ImportPlaylists";
 
     export default {
         name: "SpotifyImport",
-        components: {ImportTracks},
+        components: {ImportPlaylists, ImportTracks},
         data() {
             return {
                 playlists: {items: []},
@@ -50,6 +52,7 @@
                 loading: true,
                 step: 1,
                 selectedSavedTracksCount: 0,
+                selectedPlaylistTracksCount: 0,
             }
         },
         created() {
@@ -57,15 +60,23 @@
         },
         methods: {
             loadData() {
-                const playlists = axios.get('/api/spotify/playlists/my').then(res => this.playlists = res.data);
                 const albums = axios.get('/api/spotify/albums/my').then(res => this.albums = res.data);
-                Promise.all([playlists, albums]).then(() => this.loading = false);
+                Promise.all([albums]).then(() => this.loading = false);
             },
             updateSelectedSavedTracksCount(count) {
                 this.selectedSavedTracksCount = count;
             },
+            updateSelectedPlaylistTracksCount(count) {
+                this.selectedPlaylistTracksCount = count;
+            },
             submit() {
                 console.log('submit');
+            }
+        },
+        computed: {
+            accumulatedSelectedTracksCount() {
+                return this.selectedSavedTracksCount +
+                    this.selectedPlaylistTracksCount;
             }
         }
     }

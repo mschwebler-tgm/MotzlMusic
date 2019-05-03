@@ -240,6 +240,7 @@
         },
         created() {
             this.$root.showSpotifyImport = this.user && !this.user.spotify_import_complete;
+            this.$root.user = this.user;
         },
         methods: {
             logout() {

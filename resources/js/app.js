@@ -29,6 +29,7 @@ const app = new Vue({
             showSpotifyImport: false,
             isDarkTheme: localStorage.getItem('useDarkTheme') === '1',
             statusInfoComponent: null,
+            user: null,
         }
     },
     watch: {

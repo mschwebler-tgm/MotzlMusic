@@ -119,7 +119,7 @@
 <style>
     #spotify-track-import-smaller-rows tr,
     #spotify-track-import-smaller-rows td {
-        height: 30px !important;
+        height: 42px !important;
     }
 
     #spotify-track-import-smaller-rows .v-datatable__progress {

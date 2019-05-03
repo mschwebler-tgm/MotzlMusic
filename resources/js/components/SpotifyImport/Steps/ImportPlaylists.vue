@@ -86,8 +86,7 @@
                 const playlistPages = Object.values(this.playlists);
                 const flatPlaylists = playlistPages.reduce((flat, playlistPage) => flat.concat(playlistPage), []);
                 const selectedPlaylists = flatPlaylists.filter(playlist => playlist.selected);
-                const trackCount = selectedPlaylists.reduce((count, playlist) => count + playlist.tracks, 0);
-                this.$emit('updateSelectCount', trackCount);
+                this.$emit('selectPlaylists', selectedPlaylists);
             }
         },
         computed: {

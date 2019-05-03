@@ -43,7 +43,7 @@ class ImportController
         )->onQueue('prio_high');
         ProcessSpotifyImportJob::dispatch(
             app(SpotifyPlaylistImporter::class),
-            $request->get('playlists', []),
+            $request->get('playlistIds', []),
             apiUser()
         )->onQueue('prio_high');
 

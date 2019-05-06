@@ -51,10 +51,6 @@ export default class SpotifyPlayer {
     _setProgressPercent(state) {
         const total = state.duration;
         const current = state.position;
-        if (current > total) {
-            this.$store.dispatch('player/playNext');
-        }
-        console.log(state);
         if (!total || !current) {
             return 0;
         }

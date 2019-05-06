@@ -13,7 +13,19 @@
         components: {SpotifyPlayer},
         created() {
             const playerController = new PlayerController(this.$store);
-            this.$store.commit('player/setPlayerController', playerController)
+            this.$store.commit('player/setPlayerController', playerController);
+            this.initListeners();
+        },
+        methods: {
+            initListeners() {
+                this.$store.watch(
+                    $store => $store.player.playerController.progressPercent,
+                    progressPercent => {
+                        if (progressPercent >= 100) {
+                            this.$store.dispatch('player/playNext');
+                        }
+                    });
+            }
         }
     }
 </script>

@@ -13,7 +13,7 @@ export default class SpotifyPlayer {
         return axios.put('/api/player/spotify/playTrack', {device_id: this.deviceId, track_id: track.spotify_id});
     }
 
-    playCurrentTrack() {
+    resume() {
         this._subscribeToProgress();
         this._player.resume();
     }
@@ -51,6 +51,10 @@ export default class SpotifyPlayer {
     _setProgressPercent(state) {
         const total = state.duration;
         const current = state.position;
+        if (current > total) {
+            this.$store.dispatch('player/playNext');
+        }
+        console.log(state);
         if (!total || !current) {
             return 0;
         }

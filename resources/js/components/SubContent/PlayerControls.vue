@@ -43,12 +43,10 @@
                 }
             },
             playNext() {
-                this.queueController.setNext();
-                this.$store.dispatch('player/play', this.queueController.currentTrack);
+                this.$store.dispatch('player/playNext');
             },
             playPrevious() {
-                this.queueController.setPrevious();
-                this.$store.dispatch('player/play', this.queueController.currentTrack);
+                this.$store.dispatch('player/playPrevious');
             },
         },
         computed: {

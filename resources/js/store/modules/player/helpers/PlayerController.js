@@ -13,7 +13,7 @@ export default class PlayerController {
 
     play(track) {
         if (!track) {
-            return this._playCurrentTrack();
+            return this._resume();
         }
 
         if (track.type === 'spotify') {
@@ -30,10 +30,10 @@ export default class PlayerController {
         }
     }
 
-    _playCurrentTrack() {
+    _resume() {
         if (this.playingTrack.type === 'spotify') {
             this.playing = true;
-            return this.spotifyPlayer.playCurrentTrack();
+            return this.spotifyPlayer.resume();
         }
     }
 

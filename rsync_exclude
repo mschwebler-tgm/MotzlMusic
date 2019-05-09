@@ -1,0 +1,4 @@
+.env
+storage/app/mp3s/*
+storage/app/public/*
+storage/logs/*

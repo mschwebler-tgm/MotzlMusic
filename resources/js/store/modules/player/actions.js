@@ -15,4 +15,19 @@ export default {
         state.queueController.setPrevious();
         dispatch('play', state.queueController.currentTrack);
     },
+    playPlaylist({state, dispatch}, playlist) {
+        state.playerController.loading = true;
+        if (!playlist.tracks) {
+            axios.get(`/api/playlist/${playlist.id}/tracks`)
+                .then(res => playlist.tracks = res.data)
+                .then(() => playPlaylist());
+        } else {
+            playPlaylist();
+        }
+
+        function playPlaylist() {
+            state.queueController.queue = playlist.tracks;
+            dispatch('play', playlist.tracks[0]);
+        }
+    }
 }

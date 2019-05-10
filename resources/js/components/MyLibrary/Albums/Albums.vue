@@ -1,11 +1,6 @@
 <template>
     <div>
-        <v-progress-circular
-                v-if="!$parent.albumsInitialized"
-                color="primary"
-                indeterminate>
-        </v-progress-circular>
-        <span class="headline">Albums</span>
+        <v-container><h2 class="headline">Albums</h2></v-container>
     </div>
 </template>
 

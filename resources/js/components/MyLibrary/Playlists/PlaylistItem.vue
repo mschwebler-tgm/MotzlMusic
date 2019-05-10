@@ -34,10 +34,10 @@
         },
         computed: {
             fullResolutionImage() {
-                return this.playlist.spotify_image_medium || this.playlist.spotify_image_large || '/images/playlistFallback.jpeg';
+                return this.$root.getSpotifyImage(this.playlist, 'medium');
             },
             intermediateImage() {
-                return this.playlist.spotify_image_small || this.playlist.spotify_image_medium || this.playlist.spotify_image_large || '/images/playlistFallback.jpeg';
+                return this.$root.getSpotifyImage(this.playlist, 'small');
             }
         }
     }

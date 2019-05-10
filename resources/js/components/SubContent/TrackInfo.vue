@@ -3,7 +3,7 @@
         <v-card v-if="this.currentTrack">
             <div class="d-flex">
                 <v-flex shrink class="pa-0" style="flex: 0 !important;">
-                    <img :src="imageSrc" width="150" height="150">
+                    <img :src="imageSrc" width="150" height="150" :alt="albumDate">
                 </v-flex>
                 <v-flex grow class="d-flex pl-4 justify-center flex-column">
                     <div style="max-width: 180px;">
@@ -37,7 +37,7 @@
                 return this.$store.getters['player/playingTrack'];
             },
             imageSrc() {
-                return this.currentTrack ? this.currentTrack.album.spotify_image_medium : null;
+                return this.currentTrack ? this.$root.getSpotifyImage(this.currentTrack.album, 'small') : null;
             },
             album() {
                 return this.currentTrack ? this.currentTrack.album : null;

@@ -44,6 +44,22 @@ const app = new Vue({
             } catch (error) {
                 this.isTouch = false;
             }
+        },
+        getSpotifyImage(playlist, minResolution = 'large') {
+            let imageToReturn = null;
+            const indexByResolution = {'small': 0, 'medium': 1, 'large': 2};
+            const images = [
+                playlist.spotify_image_small,
+                playlist.spotify_image_medium,
+                playlist.spotify_image_large,
+            ];
+            images.forEach((image, index) => {
+                if (index >= indexByResolution[minResolution]) {
+                    imageToReturn = image;
+                }
+            });
+
+            return imageToReturn || window.playlistFallback;
         }
     },
     watch: {

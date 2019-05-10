@@ -1,6 +1,5 @@
 <template>
     <div>
-
         <!-- ERROR -->
         <div v-if="errorResponse" class="playlist-error">
             <div>
@@ -20,8 +19,8 @@
         <template v-if="playlist">
             <div class="d-flex pa-3">
                 <v-img
-                        :src="playlist.spotify_image_medium"
-                        :lazy-src="playlist.spotify_image_small"
+                        :src="$root.getSpotifyImage(playlist, 'medium')"
+                        :lazy-src="$root.getSpotifyImage(playlist, 'small')"
                         aspect-ratio="1"
                         class="grey lighten-2 playlist-image">
                     <template v-slot="placeholder">

@@ -9,8 +9,11 @@
                     :alt="playlist.name"
                     aspect-ratio="1">
             </v-img>
-            <v-btn icon class="overlay-play-icon" @click="playPlaylist">
+            <v-btn icon class="overlay-play-icon" @click="playPlaylist" v-if="!isPlaying">
                 <v-icon medium>play_arrow</v-icon>
+            </v-btn>
+            <v-btn icon disabled class="overlay-playing-icon" v-else>
+                <v-icon color="white">equalizer</v-icon> <!-- TODO animated SVG? -->
             </v-btn>
         </div>
         <v-card-title primary-title>
@@ -48,6 +51,9 @@
             },
             intermediateImage() {
                 return this.$root.getSpotifyImage(this.playlist, 'small');
+            },
+            isPlaying() {
+                return this.$store.getters['player/activePlaylistId'] === this.playlist.id;
             }
         }
     }
@@ -69,13 +75,17 @@
         border-color: #343434;
     }
 
-    .overlay-play-icon {
+    .overlay-play-icon, .overlay-playing-icon {
         position: absolute !important;
         bottom: 0;
         right: 0;
         background-color: rgba(0, 0, 0, 0.42);
+    }
+
+    .overlay-play-icon {
         display: none;
     }
+
     .overlay-play-icon-toggle:hover .overlay-play-icon {
         display: block;
     }

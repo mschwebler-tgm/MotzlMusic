@@ -7,6 +7,7 @@ const state = {
     playerController: null,
     spotifyPlayer: null,
     queueController: new QueueController(),
+    activePlaylistId: null,
 };
 
 export default {

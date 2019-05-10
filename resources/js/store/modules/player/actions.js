@@ -17,6 +17,7 @@ export default {
     },
     playPlaylist({state, dispatch}, playlist) {
         state.playerController.loading = true;
+        state.activePlaylistId = playlist.id;
         if (!playlist.tracks) {
             axios.get(`/api/playlist/${playlist.id}/tracks`)
                 .then(res => playlist.tracks = res.data)

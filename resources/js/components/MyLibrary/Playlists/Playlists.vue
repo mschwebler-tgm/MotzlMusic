@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-card-title class="headline">Playlists</v-card-title>
+        <v-container><h2 class="headline">Playlists</h2></v-container>
         <v-container v-if="!playlistsInitialized">
             <div class="d-flex justify-center">
                 <v-progress-circular
@@ -12,19 +12,19 @@
         </v-container>
 
         <v-container grid-list-lg justify-start v-if="playlists.recent && playlists.recent.length">
-            <h3 class="headline">Recent</h3>
+            <h3 class="subheading grey--text">Recent</h3>
             <playlist-item-list :playlists="playlists.recent"></playlist-item-list>
-            <v-divider></v-divider>
+            <v-divider class="mt-2"></v-divider>
         </v-container>
 
         <v-container grid-list-lg justify-start v-if="playlists.spotify && playlists.spotify.length">
-            <h3 class="headline">Spotify</h3>
+            <h3 class="subheading grey--text">Spotify</h3>
             <playlist-item-list :playlists="playlists.spotify"></playlist-item-list>
-            <v-divider></v-divider>
+<!--            <v-divider></v-divider>-->
         </v-container>
 
         <v-container grid-list-lg justify-start v-if="playlists.ungrouped && playlists.ungrouped.length">
-            <h3 class="headline">Other</h3>
+            <h3 class="subheading grey--text">Other</h3>
             <playlist-item-list :playlists="playlists.ungrouped"></playlist-item-list>
         </v-container>
 

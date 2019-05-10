@@ -1,18 +1,20 @@
 <template>
     <v-card tile
             hover
-            @click="openPlaylistDetails">
-        <div class="relative overlay-play-icon-toggle">
+            @click="openPlaylistDetails"
+            class="overlay-play-icon-toggle">
+        <div class="relative">
             <v-img
                     :src="fullResolutionImage"
                     :lazy-src="intermediateImage"
                     :alt="playlist.name"
                     aspect-ratio="1">
             </v-img>
-            <v-btn icon
+            <v-btn icon fab absolute bottom right small
                    v-if="!isPlaying"
                    @click="playPlaylist"
                    :class="{'force-show': $root.isTouch}"
+                   color="secondary"
                    class="overlay-play-icon">
                 <v-icon medium>play_arrow</v-icon>
             </v-btn>
@@ -79,7 +81,7 @@
         border-color: #343434;
     }
 
-    .overlay-play-icon, .overlay-playing-icon {
+    .overlay-playing-icon {
         position: absolute !important;
         bottom: 0;
         right: 0;

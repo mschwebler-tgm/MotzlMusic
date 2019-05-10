@@ -33,6 +33,10 @@ html {
   flex: 1;
 }
 
+.force-show {
+  display: block !important;;
+}
+
 .pointer {
   cursor: pointer;
 }

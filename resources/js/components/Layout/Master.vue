@@ -10,6 +10,7 @@
             <img src="/images/cloud_upload.svg" @dragover="dragOver">
         </div>
         <v-app :dark="$root.isDarkTheme">
+            <!-- SIDE MENU -->
             <v-navigation-drawer v-model="showDrawer" app clipped floating dark
                                  :mobile-break-point="927">
                 <v-toolbar flat class="transparent">
@@ -141,7 +142,9 @@
                     </v-list-tile>
                 </v-list>
             </v-navigation-drawer>
-            <v-toolbar app clipped-left dense color="primary">
+
+            <!-- NAV BAR -->
+            <v-toolbar app clipped-left dense color="primary" height="48">
                 <v-toolbar-side-icon @click="showDrawer = !showDrawer"></v-toolbar-side-icon>
                 <v-toolbar-title>MotzlMusic</v-toolbar-title>
                 <v-spacer></v-spacer>
@@ -191,10 +194,12 @@
                     </v-menu>
                 </v-toolbar-items>
             </v-toolbar>
-            <v-content>
+
+            <!-- CONTENT -->
+            <v-content class="content-container">
                 <v-container fluid grid-list-xl class="h-100">
                     <v-layout row wrap class="h-100">
-                        <v-flex xs12 md12 lg12 xl9 class="xs-p0">
+                        <v-flex xs12 md12 lg12 xl9 class="xs-p0" style="max-height: 100%">
                             <div class="justify-space-between pa-0" style="display: flex;">
                                 <v-btn flat @click="$router.go(-1)" class="ml-0" style="flex: 0 !important;">
                                     <v-icon dark left>arrow_back</v-icon>
@@ -205,9 +210,11 @@
                                 </div>
                             </div>
                             <!-- Main Content -->
-                            <transition name="bounce" mode="out-in">
-                                <router-view></router-view>
-                            </transition>
+                            <div class="main-content pb-4">
+                                <transition name="bounce" mode="out-in">
+                                    <router-view></router-view>
+                                </transition>
+                            </div>
                         </v-flex>
                         <v-flex xl3 class="hidden-lg-and-down">
                             <sub-content></sub-content>
@@ -216,7 +223,9 @@
                     </v-layout>
                 </v-container>
             </v-content>
-            <v-footer app>
+
+            <!-- FOOTER -->
+            <v-footer app height="36">
                 <player></player>
             </v-footer>
         </v-app>
@@ -294,6 +303,20 @@
 
     .bounce-leave-active {
         animation: bounce-in .2s reverse;
+    }
+
+    .content-container {
+        max-height: 100vh;
+        overflow: hidden;
+    }
+
+    .main-content {
+        max-height: 100%;
+        overflow-y: scroll;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
     }
 
     @keyframes bounce-in {

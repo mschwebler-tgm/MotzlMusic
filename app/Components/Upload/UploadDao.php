@@ -7,6 +7,7 @@ use App\Components\Spotify\Models\Track as SpotifyTrack;
 use App\DTOs\TrackDTO;
 use App\Track;
 use App\User;
+use App\UserHasTrack;
 
 class UploadDao extends SpotifyDao
 {
@@ -16,10 +17,14 @@ class UploadDao extends SpotifyDao
         $track = Track::firstOrCreate([
             'spotify_id' => $spotifyTrack->id,
             'name' => $spotifyTrack->name,
-            'user_id' => $user->id,
             'type' => 'local',
         ]);
-        $track->fill(TrackDTO::spotifyModelToDatabaseArray($spotifyTrack, $user, $albumId))->save();
+        UserHasTrack::firstOrCreate([
+            'track_id' => $track->id,
+            'user_id' => $user->id,
+            'type' => 'owner',
+        ]);
+        $track->fill(TrackDTO::spotifyModelToDatabaseArray($spotifyTrack, $albumId))->save();
 
         return $track;
     }

@@ -44,18 +44,17 @@ class MyLibraryDao
 
     public function getAllTracks()
     {
-        return Track::with('artists', 'album')
-            ->where('user_id', $this->user->id)
+        return Track::ofCurrentUser()
+            ->with('artists', 'album')
             ->orderBy('name', 'asc')->get();
     }
 
     public function getArtistsWithMostTracks()
     {
-        $userTrackIds = \DB::query()
+        $userTrackIds = Track::ofCurrentUser()
             ->select('id')
-            ->from('tracks')
-            ->where('user_id', $this->user->id)
-            ->get()->pluck('id');
+            ->get()
+            ->pluck('id');
 
         $artists = \DB::query()
             ->selectRaw('count(*) as track_amount, artist_id, artists.*')
@@ -82,30 +81,16 @@ class MyLibraryDao
             ->get()->random(10);
     }
 
-    public function getAllAlbums()
-    {
-        $dbo = \DB::table('tracks');
-        $dbo->join('albums', 'albums.id', '=', 'tracks.album_id');
-        $dbo->groupBy('albums.id');
-        $dbo->where('tracks.user_id', $this->user->id);
-        $dbo->select('albums.*');
-        $dbo->orderBy('albums.name', 'asc');
-        return $dbo->get();
-    }
-
-    public function getRecentAlbums()
-    {
-        // TODO: return recent albums instead of random
-        return Album::with('artists')->inRandomOrder()->limit(10)->get();
-    }
-
     public function getAlbums($filterLetter)
     {
         $filterLetter = strtolower($filterLetter);
         $albums = Album::with('artists')
             ->whereHas('tracks', function ($query) {
                 /** @var $query Builder */
-                $query->where('user_id', $this->user->id);
+                $query->whereHas('owningUsers', function ($query) {
+                    /** @var $query Builder */
+                    $query->where('id', $this->user->id);
+                });
             })
             ->whereRaw("LOWER(name) LIKE '$filterLetter%'")
             ->distinct()

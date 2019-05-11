@@ -52,15 +52,13 @@ class TrackDTO implements SpotifyDTO
 
     /**
      * @param SpotifyTrack $spotifyTrack
-     * @param User $user
      * @param null $albumId
      * @return array
      */
-    public static function spotifyModelToDatabaseArray(SpotifyTrack $spotifyTrack, User $user, $albumId = null) {
+    public static function spotifyModelToDatabaseArray(SpotifyTrack $spotifyTrack, $albumId = null) {
         return [
             'name' => $spotifyTrack->name,
             'spotify_id' => $spotifyTrack->id,
-            'user_id' => $user->id,
             'duration' => $spotifyTrack->duration,
             'popularity' => $spotifyTrack->popularity,
             'spotify_href' => $spotifyTrack->href,

@@ -14,6 +14,7 @@ use App\Playlist;
 use App\SpotifyAudioFeature;
 use App\Track;
 use App\User;
+use App\UserHasTrack;
 use Illuminate\Support\Collection;
 
 class SpotifyDao
@@ -24,10 +25,14 @@ class SpotifyDao
         $track = Track::firstOrCreate([
             'spotify_id' => $spotifyTrack->id,
             'name' => $spotifyTrack->name,
-            'user_id' => $user->id,
             'type' => 'spotify',
         ]);
-        $track->fill(TrackDTO::spotifyModelToDatabaseArray($spotifyTrack, $user, $albumId))->save();
+        UserHasTrack::firstOrCreate([
+            'track_id' => $track->id,
+            'user_id' => $user->id,
+            'type' => 'owner',
+        ]);
+        $track->fill(TrackDTO::spotifyModelToDatabaseArray($spotifyTrack, $albumId))->save();
 
         return $track;
     }

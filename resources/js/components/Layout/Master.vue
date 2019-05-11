@@ -110,7 +110,7 @@
                                      active-class="accent white--text primary--text">
                             <v-list-tile-title class="white--text">Import from Spotify</v-list-tile-title>
                             <v-list-tile-action>
-                                <v-icon>cloud_download</v-icon>
+                                <img src="/images/spotify_black.png" alt="spotify-logo" class="spotify-logo invert--color" width="22" height="22">
                             </v-list-tile-action>
                         </v-list-tile>
                         <v-divider inset></v-divider>
@@ -170,7 +170,7 @@
                             <v-divider></v-divider>
                             <v-list-tile @click="$router.push('/import/spotify')">
                                 <v-list-tile-avatar>
-                                    <v-icon class="grey--text">cloud_download</v-icon>
+                                    <img src="/images/spotify_black.png" alt="spotify-logo" class="spotify-logo invert--color" width="22" height="22">
                                 </v-list-tile-avatar>
                                 <v-list-tile-title>Import from Spotify</v-list-tile-title>
                             </v-list-tile>

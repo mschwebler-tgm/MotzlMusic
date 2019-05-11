@@ -4,8 +4,8 @@
         <img src="/images/spotify_black.png" alt="spotify-logo" class="spotify-logo">
         <v-container>
             <transition name="spotify-import-stepper" mode="out-in">
-                <v-stepper v-model="step" non-linear v-if="!importSubmitted">
-                    <v-stepper-header>
+                <v-stepper v-model="step" non-linear v-if="!importSubmitted" class="elevation-0">
+                    <v-stepper-header class="elevation-0">
                         <v-stepper-step color="spotify" :complete="step > 1" step="1">Playlists</v-stepper-step>
                         <v-divider></v-divider>
                         <v-stepper-step color="spotify" :complete="step > 2" step="2">Tracks</v-stepper-step>

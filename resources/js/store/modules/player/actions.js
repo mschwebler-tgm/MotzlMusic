@@ -1,10 +1,18 @@
 export default {
     init() {
     },
-    play({state, commit}, track) {
+    play({state}, track) {
         state.playerController.play(track);
     },
-    pause({state, commit}) {
+    pause({state}) {
         state.playerController.pause();
-    }
+    },
+    playNext({state, dispatch}) {
+        state.queueController.setNext();
+        dispatch('play', state.queueController.currentTrack);
+    },
+    playPrevious({state, dispatch}) {
+        state.queueController.setPrevious();
+        dispatch('play', state.queueController.currentTrack);
+    },
 }

@@ -33,7 +33,8 @@ abstract class AbstractSpotifyDataService
 
     private function getData($limit, $offset)
     {
-        $cacheKey = __METHOD__ . $this->getApiServiceMethod() . "limit$limit-offset$offset";
+        $userId = apiUser()->id;
+        $cacheKey = __METHOD__ . $this->getApiServiceMethod() . "user$userId-limit$limit-offset$offset";
         $response = Cache::get($cacheKey);
         if (!$response) {
             $apiServiceMethod = $this->getApiServiceMethod();

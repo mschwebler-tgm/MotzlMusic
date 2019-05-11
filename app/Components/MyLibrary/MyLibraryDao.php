@@ -81,22 +81,69 @@ class MyLibraryDao
             ->get()->random(10);
     }
 
-    public function getAlbums($filterLetter)
+    public function getAlbums()
     {
-        $filterLetter = strtolower($filterLetter);
-        $albums = Album::with('artists')
-            ->whereHas('tracks', function ($query) {
-                /** @var $query Builder */
-                $query->whereHas('owningUsers', function ($query) {
-                    /** @var $query Builder */
-                    $query->where('id', $this->user->id);
-                });
-            })
-            ->whereRaw("LOWER(name) LIKE '$filterLetter%'")
-            ->distinct()
+        $albums = Album::ofCurrentUser()
+            ->with('artists')
             ->orderBy('name', 'asc')
             ->get();
 
         return $albums;
+    }
+
+    public function getAlbumsByFirstLetter()
+    {
+        $alphaLetterOccurrences = $this->getAlphaLetterOccurrences();
+        $nonAlphaLetterOccurrences = $this->getNonAlphaLetterOccurrences();
+        $this->loadAlbumsForOccurrences($alphaLetterOccurrences);
+        $this->loadAlbumsForOccurrences($nonAlphaLetterOccurrences);
+        $alphaLetterOccurrences = $alphaLetterOccurrences->reduce(function ($acc, $occurrence) {
+            /** @var $occurrence AlbumByLetterOccurrence */
+            array_push($acc, [
+                'letter' => $occurrence->getLetter(),
+                'count' => $occurrence->getCount(),
+                'albums' => $occurrence->getAlbums(),
+            ]);
+            return $acc;
+        }, []);
+        $nonAlphaLetterOccurrences = $nonAlphaLetterOccurrences->reduce(function ($acc, $occurrence) {
+            /** @var $occurrence AlbumByLetterOccurrence */
+            return [
+                'letter' => '#',
+                'count' => $acc['count'] ?? 0 + $occurrence->getCount(),
+                'albums' => ($acc['albums'] ?? collect())->concat($occurrence->getAlbums()),
+            ];
+        }, []);
+
+        return array_merge([$nonAlphaLetterOccurrences], $alphaLetterOccurrences);
+    }
+
+    private function getAlphaLetterOccurrences()
+    {
+        $alphaLetterOccurrences = Album::ofCurrentUser()
+            ->selectRaw('substr(UPPER(name), 1, 1) as firstLetter, count(id) as count')
+            ->groupBy('firstLetter')
+            ->havingRaw('firstLetter REGEXP "^[A-Z]"')
+            ->get()->mapInto(AlbumByLetterOccurrence::class);
+
+        return $alphaLetterOccurrences;
+    }
+
+    private function getNonAlphaLetterOccurrences()
+    {
+        $nonAlphaLetterOccurrences = Album::ofCurrentUser()
+            ->selectRaw('substr(UPPER(name), 1, 1) as firstLetter, count(id) as count')
+            ->groupBy('firstLetter')
+            ->havingRaw('firstLetter NOT REGEXP "^[A-Z]"')
+            ->get()->mapInto(AlbumByLetterOccurrence::class);
+        return $nonAlphaLetterOccurrences;
+    }
+
+    private function loadAlbumsForOccurrences($occurrences)
+    {
+        /** @var AlbumByLetterOccurrence $occurrence */
+        foreach ($occurrences as $occurrence) {
+            $occurrence->loadAlbums();
+        }
     }
 }

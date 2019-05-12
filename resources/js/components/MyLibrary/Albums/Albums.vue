@@ -10,7 +10,7 @@
         </div>
 
         <div v-else>
-            <div class="mt-2 mb-4 text-xs-center caption">
+            <div class="mt-2 mb-3 text-xs-center caption">
                 <span v-for="albumsByLetter in albumsByLetters"
                       :key="albumsByLetter.letter"
                       @click="clickedAlbums = albumsByLetter"
@@ -19,7 +19,10 @@
                     {{ albumsByLetter.letter }}
                 </span>
             </div>
-            <v-checkbox v-model="hideSingles" label="Only albums with more than 1 track"></v-checkbox>
+            <div class="tools">
+                <v-checkbox v-model="hideSingles" label="Only albums with more than 1 track"></v-checkbox>
+                <span class="subheading">{{ albumCount }} Album{{ albumCount > 1 ? 's' : ''}}</span>
+            </div>
             <v-divider></v-divider>
             <v-layout row wrap class="mt-2">
                 <v-flex v-for="album in selectedAlbums.albums"
@@ -49,7 +52,7 @@
                 return this.$store.getters['myLibrary/albumsInitialized'];
             },
             albumsByLetters() {
-                return this.$store.getters['myLibrary/albums'];
+                return this.$store.getters['myLibrary/albums'] || [];
             },
             selectedAlbums() {
                 let albumsByLetter = [];
@@ -68,6 +71,15 @@
 
                 return albumsByLetter;
             },
+            albumCount() {
+                return this.albumsByLetters.reduce((count, albumsByLetter) => {
+                    let albums = albumsByLetter.albums;
+                    if (this.hideSingles) {
+                        albums = albums.filter(album => album.tracks.length > 1);
+                    }
+                    return count + albums.length;
+                }, 0);
+            }
         }
     }
 </script>
@@ -83,5 +95,11 @@
 
     .album-letter.active {
         border-bottom: 2px solid var(--v-primary-base);
+    }
+
+    .tools {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
     }
 </style>

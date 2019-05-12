@@ -19,6 +19,7 @@ class AlbumByLetterOccurrence
     public function loadAlbums()
     {
         $this->albums = Album::ofCurrentUser()
+            ->with('tracks')
             ->whereRaw("substr(UPPER(name), 1, 1) = '$this->letter'")
             ->orderBy('name', 'asc')
             ->get();

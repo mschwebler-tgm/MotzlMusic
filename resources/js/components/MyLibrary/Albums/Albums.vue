@@ -1,10 +1,10 @@
 <template>
     <div>
         <v-container><h2 class="headline">Albums</h2></v-container>
-        <div class="pa-1 text-xs-center caption">
+        <div class="mt-2 text-xs-center caption">
             <span v-for="albumsByLetter in albumsByLetters"
                   :key="albumsByLetter.letter"
-                  @click="selectedAlbums = albumsByLetter"
+                  @click="clickedAlbums = albumsByLetter"
                   :class="{active: selectedAlbums.letter === albumsByLetter.letter}"
                   class="pa-2 subheading album-letter">
                 {{ albumsByLetter.letter }}
@@ -12,7 +12,7 @@
         </div>
         <v-container>
             <v-layout row wrap>
-                <v-flex v-for="album in filteredAlbums"
+                <v-flex v-for="album in selectedAlbums.albums"
                         :key="album.id"
                         xs6 sm4 md4 lg3 xl2 d-block justify-center>
                     <album-item :album="album"></album-item>
@@ -30,19 +30,19 @@
         components: {AlbumItem},
         data() {
             return {
-                selectedAlbums: {},
+                clickedAlbums: {},
             }
         },
         computed: {
             albumsByLetters() {
                 return this.$store.getters['myLibrary/albums'];
             },
-            filteredAlbums() {
-                if (this.selectedAlbums.letter) {
-                    return this.selectedAlbums.albums;
+            selectedAlbums() {
+                if (this.clickedAlbums.letter) {
+                    return this.clickedAlbums;
                 }
                 if (this.albumsByLetters.length > 0) {
-                    return this.albumsByLetters[0].albums;
+                    return this.albumsByLetters[0];
                 }
                 return [];
             }

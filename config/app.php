@@ -165,8 +165,13 @@ return [
          */
         \SocialiteProviders\Manager\ServiceProvider::class,
 
-        App\Providers\SpotifyApiProvider::class,
+        /*
+         * Utils
+         */
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+        Arcanedev\LogViewer\LogViewerServiceProvider::class,
+
+        App\Providers\SpotifyApiProvider::class,
     ],
 
     /*

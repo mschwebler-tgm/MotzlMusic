@@ -123,6 +123,7 @@ class MyLibraryDao
         $alphaLetterOccurrences = Album::ofCurrentUser()
             ->selectRaw('substr(UPPER(name), 1, 1) as firstLetter, count(id) as count')
             ->groupBy('firstLetter')
+            ->orderBy('firstLetter', 'asc')
             ->havingRaw('firstLetter REGEXP "^[A-Z]"')
             ->get()->mapInto(AlbumByLetterOccurrence::class);
 
@@ -134,6 +135,7 @@ class MyLibraryDao
         $nonAlphaLetterOccurrences = Album::ofCurrentUser()
             ->selectRaw('substr(UPPER(name), 1, 1) as firstLetter, count(id) as count')
             ->groupBy('firstLetter')
+            ->orderBy('firstLetter', 'asc')
             ->havingRaw('firstLetter NOT REGEXP "^[A-Z]"')
             ->get()->mapInto(AlbumByLetterOccurrence::class);
         return $nonAlphaLetterOccurrences;

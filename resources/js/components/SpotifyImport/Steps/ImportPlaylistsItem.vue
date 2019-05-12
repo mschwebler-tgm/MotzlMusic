@@ -41,13 +41,11 @@
                 return !this.playlist.owner || this.playlist.owner.id !== this.$root.user.spotify_id;
             },
             toggleSelected() {
-                console.log('toggle')
                 if (!this.playlist.selected) {
                     Vue.set(this.playlist, 'selected', true);
                 } else {
                     this.playlist.selected = false;
                 }
-                console.log(this.playlist.selected)
                 this.$emit('playlistClicked');
             }
         }

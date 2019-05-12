@@ -110,7 +110,7 @@ class MyLibraryDao
             /** @var $occurrence AlbumByLetterOccurrence */
             return [
                 'letter' => '#',
-                'count' => $acc['count'] ?? 0 + $occurrence->getCount(),
+                'count' => ($acc['count'] ?? 0) + $occurrence->getCount(),
                 'albums' => ($acc['albums'] ?? collect())->concat($occurrence->getAlbums()),
             ];
         }, []);

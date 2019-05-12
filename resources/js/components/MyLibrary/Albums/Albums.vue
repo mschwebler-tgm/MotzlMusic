@@ -1,7 +1,18 @@
 <template>
     <div>
         <v-container><h2 class="headline">Albums</h2></v-container>
-        <div class="mt-2 text-xs-center caption">
+        <v-container v-if="!albumsInitialized">
+            <div class="d-flex justify-center">
+                <v-progress-circular
+                        v-if="!albumsInitialized"
+                        color="primary"
+                        indeterminate>
+                </v-progress-circular>
+            </div>
+        </v-container>
+
+        <div v-else>
+            <div class="mt-2 text-xs-center caption">
             <span v-for="albumsByLetter in albumsByLetters"
                   :key="albumsByLetter.letter"
                   @click="clickedAlbums = albumsByLetter"
@@ -9,16 +20,17 @@
                   class="pa-2 subheading album-letter">
                 {{ albumsByLetter.letter }}
             </span>
+            </div>
+            <v-container>
+                <v-layout row wrap>
+                    <v-flex v-for="album in selectedAlbums.albums"
+                            :key="album.id"
+                            xs6 sm4 md4 lg3 xl2 d-block justify-center>
+                        <album-item :album="album"></album-item>
+                    </v-flex>
+                </v-layout>
+            </v-container>
         </div>
-        <v-container>
-            <v-layout row wrap>
-                <v-flex v-for="album in selectedAlbums.albums"
-                        :key="album.id"
-                        xs6 sm4 md4 lg3 xl2 d-block justify-center>
-                    <album-item :album="album"></album-item>
-                </v-flex>
-            </v-layout>
-        </v-container>
     </div>
 </template>
 
@@ -34,6 +46,9 @@
             }
         },
         computed: {
+            albumsInitialized() {
+                return this.$store.getters['myLibrary/albumsInitialized'];
+            },
             albumsByLetters() {
                 return this.$store.getters['myLibrary/albums'];
             },
@@ -45,7 +60,7 @@
                     return this.albumsByLetters[0];
                 }
                 return [];
-            }
+            },
         }
     }
 </script>

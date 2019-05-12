@@ -36,11 +36,6 @@
         props: {
             album: Object,
         },
-        data() {
-            return {
-                width: 170
-            }
-        },
         methods: {
             openAlbumDetails() {
                 this.$store.commit('cache/setSelectedAlbum', this.album);

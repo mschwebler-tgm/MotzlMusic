@@ -36,11 +36,6 @@
         props: {
             playlist: Object,
         },
-        data() {
-            return {
-                width: 170
-            }
-        },
         methods: {
             openPlaylistDetails() {
                 this.$store.commit('cache/setSelectedPlaylist', this.playlist);

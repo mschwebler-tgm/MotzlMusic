@@ -25,6 +25,7 @@
         <v-card-title primary-title>
             <div class="no-overflow">
                 <h4 class="subheading mb-0 album-title">{{ album.name }}</h4>
+                <span class="caption grey--text">{{ album.tracks.length }} track{{ album.tracks.length > 1 ? 's' : '' }}</span>
             </div>
         </v-card-title>
     </v-card>

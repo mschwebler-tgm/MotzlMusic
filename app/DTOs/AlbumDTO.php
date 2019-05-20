@@ -35,7 +35,7 @@ class AlbumDTO implements SpotifyDTO
         }, []);
     }
 
-    private static function singleAlbumToApiResponse(Album $album)
+    public static function singleAlbumToApiResponse(Album $album)
     {
         $albumJson = [
             'id' => $album->id,

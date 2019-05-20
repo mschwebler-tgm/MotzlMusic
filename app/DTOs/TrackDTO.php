@@ -43,7 +43,7 @@ class TrackDTO implements SpotifyDTO
             'duration' => $track->duration,
             'duration_formatted' => formatDuration($track->duration),
             'album' => AlbumDTO::singleAlbumToApiResponse($track->album),
-            'artist' => ArtistDTO::singleArtistToApiResponse($track->artists->first()),
+            'artists' => ArtistDTO::toApiResponse($track->artists),
             'spotify_id' => $track->spotify_id,
             'type' => $track->type,
             'spotify_track_number' => $track->spotify_track_number,

@@ -21,7 +21,7 @@
                 <v-flex grow class="pa-0 pr-3 text-truncate">
                     <span class="body-2">{{ title }}</span>
                     <br>
-                    <span class="caption">{{ artist }}</span>
+                    <span class="caption">{{ artists }}</span>
                 </v-flex>
                 <v-flex shrink class="pa-0 d-flex align-center" style="flex: 0 !important;">
                     <v-progress-circular :value="progress"></v-progress-circular>
@@ -53,8 +53,8 @@
             title() {
                 return this.currentTrack ? this.currentTrack.name : 'No track';
             },
-            artist() {
-                return this.currentTrack ? this.currentTrack.artist.name : '-';
+            artists() {
+                return this.currentTrack ? this.currentTrack.artists.map(artist => artist.name).join(', ') : '-';
             },
             playing() {
                 return this.$store.getters['player/playing'];

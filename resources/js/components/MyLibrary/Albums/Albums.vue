@@ -59,6 +59,7 @@
                 if (this.clickedAlbums.letter) {
                     albumsByLetter = this.clickedAlbums;
                 } else if (this.albumsByLetters.length > 0) {
+                    // noinspection JSPotentiallyInvalidTargetOfIndexedPropertyAccess
                     albumsByLetter = this.albumsByLetters[0];
                 }
 

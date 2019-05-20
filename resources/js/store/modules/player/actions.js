@@ -17,7 +17,7 @@ export default {
     },
     playPlaylist({state, dispatch}, playlist) {
         state.playerController.loading = true;
-        state.activePlaylistId = playlist.id;
+        state.activeItem = {type: 'playlist', id: playlist.id};
         if (!playlist.tracks) {
             axios.get(`/api/playlist/${playlist.id}/tracks`)
                 .then(res => playlist.tracks = res.data)
@@ -34,7 +34,6 @@ export default {
     playAlbum({state, dispatch}, album) {
         state.playerController.loading = true;
         state.activeItem = {type: 'album', id: album.id};
-        console.log(album);
         if (!album.tracks) {
             axios.get(`/api/album/${album.id}/tracks`)
                 .then(res => album.tracks = res.data)

@@ -55,7 +55,8 @@
                 return this.$root.getSpotifyImage(this.album, 'small');
             },
             isPlaying() {
-                return this.$store.getters['player/activeAlbumId'] === this.album.id;
+                const activeItem = this.$store.getters['player/activeItem'];
+                return activeItem.type === 'album' && activeItem.id === this.album.id;
             }
         }
     }

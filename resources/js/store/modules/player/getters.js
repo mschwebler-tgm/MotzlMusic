@@ -5,5 +5,5 @@ export default {
     loading: state => state.playerController ? state.playerController.loading : false,
     playing: state => state.playerController ? state.playerController.playing : false,
     progressPercent: state => state.playerController ? state.playerController.progressPercent : 0,
-    activePlaylistId: state => state.activePlaylistId,
+    activeItem: state => state.activeItem,
 }

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Personal;
 
+use App\Components\MyLibrary\AlbumByLetterOccurrence;
 use App\Components\MyLibrary\MyLibraryDao;
+use App\DTOs\AlbumDTO;
 use App\DTOs\TrackDTO;
 use App\Http\Controllers\Controller;
 
@@ -49,6 +51,11 @@ class MyLibraryController extends Controller
 
     public function getAlbumsByFirstLetter()
     {
-        return $this->libraryDao->getAlbumsByFirstLetter();
+        $albumsByLetter = $this->libraryDao->getAlbumsByFirstLetter();
+        $albumsByLetter->map(function (AlbumByLetterOccurrence $albumByLetter) {
+            $albumByLetter->setAlbums(AlbumDTO::toApiResponse($albumByLetter->getAlbums()));
+        });
+
+        return $albumsByLetter;
     }
 }

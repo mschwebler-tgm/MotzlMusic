@@ -1,4 +1,5 @@
 <?php
+/** @noinspection PhpOptionalBeforeRequiredParametersInspection */
 
 namespace App\Components\MyLibrary;
 
@@ -6,7 +7,7 @@ use App\Album;
 use App\Playlist;
 use App\Track;
 use App\User;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Collection;
 
 class MyLibraryDao
 {
@@ -91,31 +92,34 @@ class MyLibraryDao
         return $albums;
     }
 
+    /**
+     * @return Collection
+     */
     public function getAlbumsByFirstLetter()
     {
         $alphaLetterOccurrences = $this->getAlphaLetterOccurrences();
         $nonAlphaLetterOccurrences = $this->getNonAlphaLetterOccurrences();
         $this->loadAlbumsForOccurrences($alphaLetterOccurrences);
         $this->loadAlbumsForOccurrences($nonAlphaLetterOccurrences);
-        $alphaLetterOccurrences = $alphaLetterOccurrences->reduce(function ($acc, $occurrence) {
-            /** @var $occurrence AlbumByLetterOccurrence */
-            array_push($acc, [
-                'letter' => $occurrence->getLetter(),
-                'count' => $occurrence->getCount(),
-                'albums' => $occurrence->getAlbums(),
-            ]);
-            return $acc;
-        }, []);
-        $nonAlphaLetterOccurrences = $nonAlphaLetterOccurrences->reduce(function ($acc, $occurrence) {
-            /** @var $occurrence AlbumByLetterOccurrence */
-            return [
-                'letter' => '#',
-                'count' => ($acc['count'] ?? 0) + $occurrence->getCount(),
-                'albums' => ($acc['albums'] ?? collect())->concat($occurrence->getAlbums()),
-            ];
-        }, []);
+//        $alphaLetterOccurrences = $alphaLetterOccurrences->reduce(function ($acc, $occurrence) {
+//            /** @var $occurrence AlbumByLetterOccurrence */
+//            array_push($acc, [
+//                'letter' => $occurrence->getLetter(),
+//                'count' => $occurrence->getCount(),
+//                'albums' => $occurrence->getAlbums(),
+//            ]);
+//            return $acc;
+//        }, []);
+//        $nonAlphaLetterOccurrences = $nonAlphaLetterOccurrences->reduce(function ($acc, $occurrence) {
+//            /** @var $occurrence AlbumByLetterOccurrence */
+//            return [
+//                'letter' => '#',
+//                'count' => ($acc['count'] ?? 0) + $occurrence->getCount(),
+//                'albums' => ($acc['albums'] ?? collect())->concat($occurrence->getAlbums()),
+//            ];
+//        }, []);
 
-        return array_merge([$nonAlphaLetterOccurrences], $alphaLetterOccurrences);
+        return $alphaLetterOccurrences->prepend($nonAlphaLetterOccurrences);
     }
 
     private function getAlphaLetterOccurrences()
@@ -138,6 +142,20 @@ class MyLibraryDao
             ->orderBy('firstLetter', 'asc')
             ->havingRaw('firstLetter NOT REGEXP "^[A-Z]"')
             ->get()->mapInto(AlbumByLetterOccurrence::class);
+
+        $nonAlphaLetterOccurrences = $nonAlphaLetterOccurrences->reduce(function (
+            AlbumByLetterOccurrence $concatOccurrence = null,
+            AlbumByLetterOccurrence $occurrence
+        ) {
+            $occurrence->loadAlbums();
+            $occurrence->setLetter('#');
+            if ($concatOccurrence) {
+                $occurrence->setCount($concatOccurrence->getCount() + $occurrence->getCount());
+                $occurrence->setAlbums($concatOccurrence->getAlbums()->concat($occurrence->getAlbums()));
+            }
+            return $occurrence;
+        }, null);
+
         return $nonAlphaLetterOccurrences;
     }
 

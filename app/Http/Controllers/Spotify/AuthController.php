@@ -16,7 +16,7 @@ class AuthController extends Controller
         /** @var RedirectResponse $redirectResponse */
         $redirectResponse = Socialite::driver('spotify')->scopes(config('spotify.scopes'))->redirect();
         parse_str(parse_url($redirectResponse->getTargetUrl(), PHP_URL_QUERY), $getParams);
-        \Log::info($getParams['state']);
+//        \Log::info($getParams['state']);
 //        dd(Auth::user(), $getParams);
         return $redirectResponse;
     }
@@ -29,7 +29,7 @@ class AuthController extends Controller
         } catch (InvalidStateException $e) {
             return redirect('/spotify/authorize');
         }
-        dd($oauth2User, Auth::user());
+//        dd($oauth2User, Auth::user());
         $user = $userDao->createFromSpotifyAuthorization($oauth2User);
         Auth::login($user, true);
         return redirect('/');

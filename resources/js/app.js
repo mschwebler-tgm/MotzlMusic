@@ -8,6 +8,7 @@ import 'vuetify/dist/vuetify.min.css'; // Ensure you are using css-loader
 import Vue from 'vue';
 import Vuetify from 'vuetify'
 import theme from './theme';
+import {setSystemBarColor} from './theme';
 import MainContentHeaders from './components/Layout/MainContentHeader/MainContentHeaders';
 
 Vue.component('auth-login', require('./components/Auth/Login').default);
@@ -37,6 +38,7 @@ const app = new Vue({
     },
     created() {
         this.detectTouch();
+        setSystemBarColor();
     },
     methods: {
         detectTouch() {

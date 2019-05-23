@@ -9,14 +9,15 @@
         </div>
 
         <div v-else>
-            <div class="mt-2 mb-3 text-xs-center album-letters">
-                <span v-for="albumsByLetter in albumsByLetters"
+            <div class="text-xs-center album-letters">
+                <div v-for="albumsByLetter in albumsByLetters"
                       :key="albumsByLetter.letter"
+                      v-ripple
                       @click="clickedAlbums = albumsByLetter"
                       :class="{active: selectedAlbums.letter === albumsByLetter.letter}"
                       class="pa-2 subheading album-letter">
                     {{ albumsByLetter.letter }}
-                </span>
+                </div>
             </div>
             <div class="tools">
                 <v-checkbox v-model="hideSingles" label="Hide singles"></v-checkbox>
@@ -30,6 +31,9 @@
                     <album-item :album="album"></album-item>
                 </v-flex>
             </v-layout>
+            <div class="d-flex pa-3 mt-2" v-if="!selectedAlbums.albums.length">
+                <span class="subheading text-xs-center">No albums here. Check filters and try again.</span>
+            </div>
             <v-divider class="mt-3 mb-3"></v-divider>
             <v-layout>
                 <v-flex xs6 sm4 md4 lg3 xl2 d-block justify-center>
@@ -116,9 +120,19 @@
 
 <style scoped lang="scss">
 
+    .album-letters {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
     .album-letter {
         cursor: pointer;
-        line-height: 2.6em;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
         &:hover, &.active {
             color: var(--v-primary-base);
@@ -134,7 +148,9 @@
 
     @media screen and (max-width: 600px) {
         .album-letters {
-            white-space: nowrap;
+            flex-wrap: nowrap;
+            justify-content: flex-start;
+            /*white-space: nowrap;*/
             overflow-x: scroll;
             overflow-y: hidden;
 

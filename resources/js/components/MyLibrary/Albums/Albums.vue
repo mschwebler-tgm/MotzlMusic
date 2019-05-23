@@ -42,8 +42,16 @@
         components: {AlbumItem},
         data() {
             return {
-                clickedAlbums: {},
-                hideSingles: false,
+                clickedAlbums: JSON.parse(sessionStorage.getItem('myLibraryClickedAlbums')) || {},
+                hideSingles: localStorage.getItem('myLibraryHideSingles'),
+            }
+        },
+        watch: {
+            hideSingles() {
+                localStorage.setItem('myLibraryHideSingles', this.hideSingles);
+            },
+            clickedAlbums() {
+                sessionStorage.setItem('myLibraryClickedAlbums', JSON.stringify(this.clickedAlbums));
             }
         },
         computed: {

@@ -38,7 +38,7 @@ const app = new Vue({
     },
     created() {
         this.detectTouch();
-        setSystemBarColor();
+        setSystemBarColor('accent');
     },
     methods: {
         detectTouch() {

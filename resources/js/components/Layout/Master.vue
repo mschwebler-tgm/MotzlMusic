@@ -225,7 +225,7 @@
             </v-content>
 
             <!-- FOOTER -->
-            <v-footer app height="36">
+            <v-footer app height="36" style="z-index: 5;">
                 <player></player>
             </v-footer>
         </v-app>

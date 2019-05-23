@@ -1,6 +1,5 @@
 <template>
     <div>
-        <v-container><h2 class="headline">Artists</h2></v-container>
     </div>
 </template>
 

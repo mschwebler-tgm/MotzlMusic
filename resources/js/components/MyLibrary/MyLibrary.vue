@@ -1,5 +1,6 @@
 <template>
     <v-card>
+        <v-container v-if="!$root.isTouch"><h2 class="headline">{{ $route.name }}</h2></v-container>
         <transition name="my-library" mode="out-in">
             <router-view></router-view>
         </transition>
@@ -7,8 +8,23 @@
 </template>
 
 <script>
+    import MainContentHeaders from '../Layout/MainContentHeader/MainContentHeaders';
+
     export default {
         name: "MyLibrary",
+        data() {
+            return {
+                previousHeader: MainContentHeaders.DEFAULT,
+            }
+        },
+        created() {
+            if (this.$root.isTouch) {
+                this.$root.mainContentHeaderComponent = MainContentHeaders.MY_LIBRARY;
+            }
+        },
+        destroyed() {
+            this.$root.mainContentHeaderComponent = this.previousHeader;
+        }
     }
 </script>
 

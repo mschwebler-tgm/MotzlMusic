@@ -200,15 +200,7 @@
                 <v-container fluid grid-list-xl class="h-100">
                     <v-layout row wrap class="h-100">
                         <v-flex xs12 md12 lg12 xl9 class="xs-p0" style="max-height: 100%">
-                            <div class="justify-space-between pa-0" style="display: flex;">
-                                <v-btn flat @click="$router.go(-1)" class="ml-0" style="flex: 0 !important;">
-                                    <v-icon dark left>arrow_back</v-icon>
-                                    Back
-                                </v-btn>
-                                <div class="d-flex align-center justify-content-end ma-1">
-                                    <status-info></status-info>
-                                </div>
-                            </div>
+                            <component :is="$root.mainContentHeaderComponent"></component>
                             <!-- Main Content -->
                             <div class="main-content pb-4">
                                 <transition name="bounce" mode="out-in">
@@ -236,10 +228,18 @@
     import Player from "../Player/Player";
     import SubContent from "./SubContent";
     import StatusInfo from "./StatusInfo/StatusInfo";
+    import MainContentHeaderDefault from "./MainContentHeader/MainContentHeaderDefault";
+    import MainContentHeaderMyLibraryNav from "./MainContentHeader/MainContentHeaderMyLibraryNav";
 
     export default {
         name: "master",
-        components: {StatusInfo, SubContent, Player},
+        components: {
+            MainContentHeaderDefault,
+            MainContentHeaderMyLibraryNav,
+            StatusInfo,
+            SubContent,
+            Player
+        },
         props: ['user'],
         data() {
             return {

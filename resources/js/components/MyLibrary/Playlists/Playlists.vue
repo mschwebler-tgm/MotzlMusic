@@ -1,6 +1,5 @@
 <template>
     <div>
-        <v-container><h2 class="headline">Playlists</h2></v-container>
         <v-container v-if="!playlistsInitialized">
             <div class="d-flex justify-center">
                 <v-progress-circular

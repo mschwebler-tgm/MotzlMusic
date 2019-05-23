@@ -1,6 +1,5 @@
 <template>
     <div>
-        <v-container><h2 class="headline">Tracks</h2></v-container>
         <v-container>
             <div v-if="noPlaylistsAvailable">
                 <div class="d-flex align-center flex-column">

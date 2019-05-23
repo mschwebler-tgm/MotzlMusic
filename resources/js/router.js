@@ -57,28 +57,27 @@ export default new VueRouter({
                     children: [
                         {
                             path: 'playlists/:name/:id',
-                            name: 'playlists',
                             component: PlaylistView,
                             props: true,
                         },
                         {
                             path: 'playlists',
-                            name: 'playlist',
+                            name: 'Playlists',
                             component: Playlists,
                         },
                         {
                             path: 'tracks',
-                            name: 'tracks',
+                            name: 'Tracks',
                             component: Tracks,
                         },
                         {
                             path: 'albums',
-                            name: 'albums',
+                            name: 'Albums',
                             component: Albums,
                         },
                         {
                             path: 'artists',
-                            name: 'artists',
+                            name: 'Artists',
                             component: Artists,
                         },
                     ]

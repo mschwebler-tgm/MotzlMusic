@@ -8,6 +8,7 @@ import 'vuetify/dist/vuetify.min.css'; // Ensure you are using css-loader
 import Vue from 'vue';
 import Vuetify from 'vuetify'
 import theme from './theme';
+import MainContentHeaders from './components/Layout/MainContentHeader/MainContentHeaders';
 
 Vue.component('auth-login', require('./components/Auth/Login').default);
 Vue.component('auth-register', require('./components/Auth/Register').default);
@@ -29,6 +30,7 @@ const app = new Vue({
             showSpotifyImport: false,
             isDarkTheme: localStorage.getItem('useDarkTheme') === '1',
             statusInfoComponent: null,
+            mainContentHeaderComponent: MainContentHeaders.DEFAULT,
             user: null,
             isTouch: false,
         }

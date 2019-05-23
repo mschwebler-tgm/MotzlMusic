@@ -30,6 +30,12 @@
                     <album-item :album="album"></album-item>
                 </v-flex>
             </v-layout>
+            <v-divider class="mt-3 mb-3"></v-divider>
+            <v-layout>
+                <v-flex xs6 sm4 md4 lg3 xl2 d-block justify-center>
+                    <album-item :album="allSinglesInAlbum"></album-item>
+                </v-flex>
+            </v-layout>
         </div>
     </v-container>
 </template>
@@ -87,6 +93,21 @@
                     }
                     return count + albums.length;
                 }, 0);
+            },
+            allSinglesInAlbum() {
+                const singleTracks = this.albumsByLetters
+                    .map(albumsByLetter => albumsByLetter.albums)
+                    .flat()
+                    .filter(album => album.tracks.length === 1)
+                    .map(album => album.tracks)
+                    .flat();
+
+                return {
+                    name: 'All Singles',
+                    id: 'myLibrarySingles',
+                    total_tracks: singleTracks.length,
+                    tracks: singleTracks,
+                };
             }
         }
     }

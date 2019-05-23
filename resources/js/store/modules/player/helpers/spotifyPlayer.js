@@ -44,18 +44,30 @@ export default class SpotifyPlayer {
     _subscribeToProgress() {
         clearInterval(this._pollInterval);
         this._pollInterval = setInterval(() => {
-            this._player.getCurrentState().then(state => state && this._setProgressPercent(state));
+            this._player.getCurrentState().then(state => state && this._handleProgress(state));
         }, 1000);
     }
 
-    _setProgressPercent(state) {
+    _handleProgress(state) {
         const total = state.duration;
         const current = state.position;
+
         if (!total || !current) {
             return 0;
         }
 
+        this._setProgressPercent(total, current);
+        this._playNextIfNeeded(total, current);
+    }
+
+    _setProgressPercent(total, current) {
         this._controller.progressPercent = Math.round((100 * current / total) * 1000) / 1000;
+    }
+
+    _playNextIfNeeded(total, current) {
+        if (total - current <= 1000) {
+            this.$store.dispatch('player/playNext');
+        }
     }
 
     set player(player) {

@@ -10,7 +10,7 @@
         </div>
 
         <div v-else>
-            <div class="mt-2 mb-3 text-xs-center caption">
+            <div class="mt-2 mb-3 text-xs-center album-letters">
                 <span v-for="albumsByLetter in albumsByLetters"
                       :key="albumsByLetter.letter"
                       @click="clickedAlbums = albumsByLetter"
@@ -20,7 +20,7 @@
                 </span>
             </div>
             <div class="tools">
-                <v-checkbox v-model="hideSingles" label="Only albums with more than 1 track"></v-checkbox>
+                <v-checkbox v-model="hideSingles" label="Hide singles"></v-checkbox>
                 <span class="subheading">{{ albumCount }} Album{{ albumCount > 1 ? 's' : ''}}</span>
             </div>
             <v-divider></v-divider>
@@ -85,22 +85,39 @@
     }
 </script>
 
-<style scoped>
+
+<style scoped lang="scss">
+
     .album-letter {
         cursor: pointer;
-    }
+        line-height: 2.6em;
 
-    .album-letter:hover {
-        border-bottom: 2px solid var(--v-primary-base);
-    }
+        &:hover, &.active {
+            color: var(--v-primary-base);
 
-    .album-letter.active {
-        border-bottom: 2px solid var(--v-primary-base);
+        }
     }
 
     .tools {
         display: flex;
         justify-content: space-between;
         align-items: center;
+    }
+
+    @media screen and (max-width: 600px) {
+        .album-letters {
+            white-space: nowrap;
+            overflow-x: scroll;
+            overflow-y: hidden;
+
+            &::-webkit-scrollbar {
+                display: none;
+            }
+
+            .album-letter {
+                line-height: 1em;
+                font-size: 1em !important;
+            }
+        }
     }
 </style>

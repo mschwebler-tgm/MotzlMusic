@@ -12,6 +12,7 @@ export default class PlayerController {
     }
 
     play(track) {
+        this._updateBrowserTitle(track);
         if (!track) {
             return this._resume();
         }
@@ -39,5 +40,9 @@ export default class PlayerController {
 
     _setPlayingTrack(track) {
         this.$store.commit('player/setPlayingTrack', track);
+    }
+
+    _updateBrowserTitle(track) {
+        document.getElementsByTagName('title')[0].text = track.name;
     }
 };

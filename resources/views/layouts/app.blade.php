@@ -7,10 +7,10 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'MotzlMusic') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ mix('js/app.js') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
@@ -18,24 +18,24 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
 
-<section class="hero is-medium is-primary is-bold" style="margin-bottom: 15px;">
-    <div class="hero-body">
-        <div class="container">
-            <div>
-                <h1 class="title">
-                    MotzlMusic
-                </h1>
-                <h2 class="subtitle">
-                    Sign in to get started.
-                </h2>
-            </div>
-        </div>
-    </div>
-</section>
+{{--<section class="hero is-medium is-primary is-bold" style="margin-bottom: 15px;">--}}
+    {{--<div class="hero-body">--}}
+        {{--<div class="container">--}}
+            {{--<div>--}}
+                {{--<h1 class="title">--}}
+                    {{--MotzlMusic--}}
+                {{--</h1>--}}
+                {{--<h2 class="subtitle">--}}
+                    {{--Sign in to get started.--}}
+                {{--</h2>--}}
+            {{--</div>--}}
+        {{--</div>--}}
+    {{--</div>--}}
+{{--</section>--}}
 
 <main class="pad">
     @yield('content')

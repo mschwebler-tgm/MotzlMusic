@@ -2,31 +2,29 @@
 
 namespace App\Http\Controllers\Spotify;
 
-use App\Components\Spotify\Import\AlbumService;
 use App\Components\Spotify\Import\Importers\ProcessSpotifyImportJob;
 use App\Components\Spotify\Import\Importers\SpotifyAlbumImporter;
 use App\Components\Spotify\Import\Importers\SpotifyPlaylistImporter;
 use App\Components\Spotify\Import\Importers\SpotifyTrackImporter;
-use App\Components\Spotify\Import\PlaylistTransformer;
-use App\Components\Spotify\Import\TrackService;
+use App\Components\Spotify\Import\SpotifyAlbumService;
+use App\Components\Spotify\Import\SpotifyPlaylistService;
+use App\Components\Spotify\Import\SpotifyTrackService;
 use App\Daos\UserDao;
-use App\Service\Spotify\SpotifyApiService;
 use Illuminate\Http\Request;
 
 class ImportController
 {
-    public function playlists(SpotifyApiService $apiService, PlaylistTransformer $playlistTransformer)
+    public function playlists(SpotifyPlaylistService $playlistService)
     {
-        $playlists = $apiService->getAllMyPlaylists();
-        return $playlistTransformer->transform($playlists);
+        return $playlistService->paginate();
     }
 
-    public function tracks(TrackService $trackService)
+    public function tracks(SpotifyTrackService $trackService)
     {
         return $trackService->paginate();
     }
 
-    public function albums(AlbumService $albumService)
+    public function albums(SpotifyAlbumService $albumService)
     {
         return $albumService->paginate();
     }
@@ -45,7 +43,7 @@ class ImportController
         )->onQueue('prio_high');
         ProcessSpotifyImportJob::dispatch(
             app(SpotifyPlaylistImporter::class),
-            $request->get('playlists', []),
+            $request->get('playlistIds', []),
             apiUser()
         )->onQueue('prio_high');
 

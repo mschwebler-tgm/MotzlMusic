@@ -1,4 +1,6 @@
 import Uploader from './helpers';
+import VueRoot from '../../../app';
+import StatusInfos from '../../../components/Layout/StatusInfo/StatusInfos'
 
 export default {
     init() {
@@ -9,5 +11,6 @@ export default {
         commit('setShowInfoBox', true);
         const uploader = new Uploader(state, commit);
         uploader.uploadFiles(state.files);
+        VueRoot.statusInfoComponent = StatusInfos.UPLOAD_INFO;
     }
 }

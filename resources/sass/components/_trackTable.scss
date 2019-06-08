@@ -1,0 +1,137 @@
+@import "../variables";
+
+
+// Stripes
+.theme--dark .track-table {
+  .track:nth-child(odd) {
+    background-color: rgba(255, 255, 255, 0.04);
+  }
+
+  .track:hover {
+    background-color: rgba(255, 255, 255, 0.11);
+  }
+}
+
+.theme--light .track-table {
+  .track:nth-child(odd) {
+    background-color: rgba(0, 0, 0, 0.04);
+  }
+
+  .track:hover {
+    background-color: rgba(0, 0, 0, 0.11);
+  }
+}
+
+.track-table {
+
+  .clusterize-scroll {
+    overflow-y: scroll;
+    overflow-x: hidden;
+
+    &::-webkit-scrollbar {
+      background: transparent;
+      width: 8px;
+    }
+
+    &::-webkit-scrollbar-button {
+      display: none;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: rgba(127, 127, 127, 0.5);
+    }
+  }
+
+  .track {
+    display: flex;
+    cursor: default;
+
+    // track was clicked
+    &:focus, &:hover:focus, &:nth-child(odd):focus, &:nth-child(odd):hover:focus {
+      background-color: $list-item-selected !important;
+    }
+
+    &.active, &.active:hover {
+      background-color: $list-item-selected !important;
+
+      .track-list-number {
+        background-image: url('/images/icons/volume_up.png');
+        background-position: center left;
+
+        span {
+          display: none;
+        }
+      }
+    }
+
+    & > div {
+      overflow: hidden;
+      -ms-text-overflow: ellipsis;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    .track-list-number {
+      width: 40px;
+      margin-left: 5px;
+    }
+
+    .track-list-title {
+      width: 300px;
+      padding-right: 10px;
+    }
+
+    .track-list-duration {
+      width: 45px;
+    }
+
+    .track-list-artist {
+      width: 220px;
+    }
+
+    .track-list-more-options {
+      width: 0;
+      cursor: pointer;
+      -webkit-transition: width .1s ease-in-out;
+      -moz-transition: width .1s ease-in-out;
+      -ms-transition: width .1s ease-in-out;
+      -o-transition: width .1s ease-in-out;
+      transition: width .1s ease-in-out;
+    }
+
+    .track-list-options-trigger:hover ~ .track-list-more-options,
+    .track-list-more-options:hover {
+      width: 24px;
+    }
+  }
+}
+
+// MOBILE Landscape
+
+@media only screen and (max-width: 960px) {
+  .track-table {
+    .track-list-title {
+      width: 230px !important;
+    }
+
+    .track-list-rating {
+      display: none !important;
+    }
+  }
+}
+
+// MOBILE Portrait
+
+@media only screen and (max-width: 600px) {
+  .track-table {
+    .track-list-artist, .track-list-more-options, .track-list-options-trigger {
+      display: none !important;
+    }
+  }
+}

@@ -4,7 +4,7 @@ const validateArray = function (toCheck) {
 
 export default {
     setMyPlaylists(state, playlists) {
-        state.playlists = validateArray(playlists);
+        state.playlists = playlists;
         state.playlistsInitialized = true;
     },
     setMyTracks(state, tracks) {

@@ -7,8 +7,8 @@ use App\Exceptions\NoUserTokenProvidedException;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
-use SpotifyWebAPI\SpotifyWebAPI;
 use SpotifyWebAPI\Session;
+use SpotifyWebAPI\SpotifyWebAPI;
 use SpotifyWebAPI\SpotifyWebAPIException;
 
 class SpotifyApiService extends SpotifyWebAPI
@@ -26,11 +26,17 @@ class SpotifyApiService extends SpotifyWebAPI
             config('spotify.auth_redirect')
         );
         $this->session->requestCredentialsToken();
+        $this->setAccessToken($this->session->getAccessToken());
         // only needed for application requests
 //        $accessToken = $this->session->getAccessToken();
 //        $this->setAccessToken($accessToken);
     }
 
+    /**
+     * @param User|null $user
+     * @return $this
+     * @throws FailedSpotifyTokenRefreshException
+     */
     public function setApiUser(User $user = null)
     {
         if (!$user) {
@@ -38,7 +44,11 @@ class SpotifyApiService extends SpotifyWebAPI
         }
 
         $this->user = $user;
-        $this->setAccessToken($user->spotify_access_token);
+        if ($user->spotify_id) {
+            $this->setAccessToken($user->spotify_access_token);
+            $this->refreshUserTokenIfNeeded();
+        }
+
         return $this;
     }
 
@@ -70,28 +80,10 @@ class SpotifyApiService extends SpotifyWebAPI
         }
     }
 
-    public function getAllMyPlaylists()
-    {
-        return $this->getAllUserPlaylists($this->user->spotify_id);
-    }
-
-    public function getAllUserPlaylists($spotifyUserId)
-    {
-        $itemsPerPage = 20;
-        $offset = 0;
-        $playlists = [];
-        do {
-            $response = $this->getUserPlaylists($spotifyUserId, ['limit' => $itemsPerPage, 'offset' => $offset]);
-            $playlists = array_merge($response->items, $playlists);
-            $offset += $itemsPerPage;
-        } while (count($playlists) < $response->total);
-        return $playlists;
-    }
-
     /** @throws FailedSpotifyTokenRefreshException */
     public function refreshUserTokenIfNeeded()
     {
-        if (!$this->user || $this->user->spotify_token_expire > Carbon::now()) {
+        if (!$this->user || !$this->user->spotify_id || $this->user->spotify_token_expire > Carbon::now()) {
             return;
         }
 

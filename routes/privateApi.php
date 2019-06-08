@@ -21,11 +21,18 @@ Route::prefix('my')->namespace('Personal')->group(function () {
     Route::get('tracks', 'MyLibraryController@myTracks');
     Route::get('topArtists', 'MyLibraryController@myTopArtists');
     Route::get('recentArtists', 'MyLibraryController@myRecentArtists');
-    Route::get('recentAlbums', 'MyLibraryController@myRecentAlbums');
+    Route::get('albums/byFirstLetter', 'MyLibraryController@getAlbumsByFirstLetter');
+    Route::get('albums', 'MyLibraryController@getAlbums');
 });
 
 Route::prefix('player')->namespace('Player')->group(function () {
     Route::put('/spotify/playTrack', 'SpotifyPlayerController@playTrack');
+});
+
+Route::namespace('Api')->group(function () {
+    Route::get('/playlist/{id}', 'PlaylistController@playlist');
+    Route::get('/playlist/{id}/tracks', 'PlaylistController@tracks');
+    Route::get('/track/{id}/audio-features', 'TrackController@audioFeatures');
 });
 
 Route::post('/uploadTrack', 'UploadController@uploadTrack');

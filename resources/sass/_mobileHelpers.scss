@@ -1,0 +1,34 @@
+$displays: xs sm md lg xl;
+$breakPointsByDisplay: (
+        xs: (
+                from: 0px,
+                to: 599px,
+        ),
+        sm: (
+                from: 600px,
+                to: 959px,
+        ),
+        md: (
+                from: 960px,
+                to: 1263px,
+        ),
+        lg: (
+                from: 1264px,
+                to: 1903px,
+        ),
+        xl: (
+                from: 1904px,
+                to: 99999px,
+        ),
+);
+
+@each $display in $displays {
+        $breakPoints: map-get($breakPointsByDisplay, $display);
+        $min: map-get($breakPoints, from);
+        $max: map-get($breakPoints, to);
+        @media screen and (min-width: $min) and (max-width: $max) {
+                .#{$display}-p0 {
+                        padding: 0 !important;
+                }
+        }
+}

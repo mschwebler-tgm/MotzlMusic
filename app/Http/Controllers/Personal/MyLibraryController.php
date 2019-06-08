@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Personal;
 
+use App\Components\MyLibrary\AlbumByLetterOccurrence;
+use App\Components\MyLibrary\AlbumDao;
 use App\Components\MyLibrary\MyLibraryDao;
+use App\DTOs\AlbumDTO;
 use App\DTOs\TrackDTO;
 use App\Http\Controllers\Controller;
 
@@ -17,7 +20,14 @@ class MyLibraryController extends Controller
 
     public function myPlaylists()
     {
-        return $this->libraryDao->getAllPlaylists();
+        $recent = $this->libraryDao->getRecentPlaylists(3);
+        $spotify = $this->libraryDao->getSpotifyPlaylists();
+        $remaining = $this->libraryDao->getAllPlaylistsExcept($recent->pluck('id')->merge($spotify->pluck('id'))->toArray());
+        return [
+            'recent' => $recent,
+            'spotify' => $spotify,
+            'ungrouped' => $remaining,
+        ];
     }
 
     public function myTracks()
@@ -35,8 +45,18 @@ class MyLibraryController extends Controller
         return $this->libraryDao->getRecentArtists();
     }
 
-    public function myRecentAlbums()
+    public function getAlbums(AlbumDao $albumDao)
     {
-        return $this->libraryDao->getRecentAlbums();
+        return $albumDao->getAlbums();
+    }
+
+    public function getAlbumsByFirstLetter(AlbumDao $albumDao)
+    {
+        $albumsByLetter = $albumDao->getAlbumsByFirstLetter();
+        $albumsByLetter->map(function (AlbumByLetterOccurrence $albumByLetter) {
+            $albumByLetter->setAlbums(AlbumDTO::toApiResponse($albumByLetter->getAlbums()));
+        });
+
+        return $albumsByLetter;
     }
 }

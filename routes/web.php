@@ -6,5 +6,9 @@ Route::get('/', 'HomeController@index')->name('home');
 Auth::routes();
 
 Route::get('/{any}', function () {
-    return view('master')->with(['user' => Auth::user()]);
+    $user = Auth::user();
+    if (!$user) {
+        return redirect('/login');
+    }
+    return view('master')->with(['user' => $user]);
 })->where('any', '^(?!api\/|storage\/).+')->name('app');

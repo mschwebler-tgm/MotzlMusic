@@ -4,8 +4,9 @@ namespace App\Components\Spotify\Import;
 
 
 use App\Service\GenericTransformer;
+use App\Transformer\Transformable;
 
-class AlbumTransformer
+class AlbumTransformer implements Transformable
 {
     public function transform($albums)
     {

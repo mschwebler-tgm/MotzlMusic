@@ -3,6 +3,7 @@
 namespace App\Components\Spotify\Import\Importers;
 
 use App\Components\Spotify\Import\TrackImportService;
+use App\Exceptions\FailedSpotifyTokenRefreshException;
 use App\Service\Spotify\SpotifyApiService;
 use App\User;
 use Illuminate\Bus\Queueable;
@@ -31,6 +32,7 @@ class ProcessSpotifyImportJob implements ShouldQueue
      * Execute the job.
      *
      * @return void
+     * @throws FailedSpotifyTokenRefreshException
      */
     public function handle()
     {

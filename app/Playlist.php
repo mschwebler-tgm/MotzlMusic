@@ -12,4 +12,9 @@ class Playlist extends Model
     {
         return $this->belongsToMany(Track::class, 'playlist_has_track');
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

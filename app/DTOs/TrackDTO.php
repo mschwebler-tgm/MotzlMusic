@@ -4,6 +4,7 @@ namespace App\DTOs;
 
 use App\Components\Spotify\Models\Track as SpotifyTrack;
 use App\Track;
+use App\User;
 use Illuminate\Support\Collection;
 
 class TrackDTO implements SpotifyDTO
@@ -41,11 +42,29 @@ class TrackDTO implements SpotifyDTO
             'popularity' => $track->popularity,
             'duration' => $track->duration,
             'duration_formatted' => formatDuration($track->duration),
-            'album' => $track->album,
-            'artist' => $track->artists->first(),
+            'album' => AlbumDTO::singleAlbumToApiResponse($track->album),
+            'artists' => ArtistDTO::toApiResponse($track->artists),
             'spotify_id' => $track->spotify_id,
-            'is_spotify' => (bool) $track->spotify_id,
+            'type' => $track->type,
             'spotify_track_number' => $track->spotify_track_number,
+        ];
+    }
+
+    /**
+     * @param SpotifyTrack $spotifyTrack
+     * @param null $albumId
+     * @return array
+     */
+    public static function spotifyModelToDatabaseArray(SpotifyTrack $spotifyTrack, $albumId = null) {
+        return [
+            'name' => $spotifyTrack->name,
+            'spotify_id' => $spotifyTrack->id,
+            'duration' => $spotifyTrack->duration,
+            'popularity' => $spotifyTrack->popularity,
+            'spotify_href' => $spotifyTrack->href,
+            'spotify_uri' => $spotifyTrack->uri,
+            'spotify_track_number' => $spotifyTrack->trackNumber,
+            'album_id' => $albumId,
         ];
     }
 }

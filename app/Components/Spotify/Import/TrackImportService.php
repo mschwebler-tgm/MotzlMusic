@@ -5,6 +5,7 @@ namespace App\Components\Spotify\Import;
 use App\Components\Spotify\Models\Track as SpotifyTrack;
 use App\Components\Spotify\Refinement\RefinementQueue;
 use App\Components\Spotify\SpotifyDao;
+use App\Track;
 use App\User;
 use Illuminate\Support\Collection;
 
@@ -41,5 +42,15 @@ class TrackImportService
         $this->refinementQueue->dispatchJobsIfNeeded(true);
 
         return $tracks;
+    }
+
+    /**
+     * @param SpotifyTrack $track
+     * @param User $user
+     * @return Track
+     */
+    public function storeTrackForUser(SpotifyTrack $track, User $user)
+    {
+        return $this->saveTracksForUser(collect([$track]), $user)->first();
     }
 }

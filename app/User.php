@@ -25,14 +25,14 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token', 'spotify_id', 'spotify_access_token', 'spotify_refresh_token'
+        'password', 'remember_token', 'spotify_access_token', 'spotify_refresh_token'
     ];
 
     protected $casts = [
         'spotify_import_complete' => 'boolean'
     ];
 
-    public function mp3StoragePath()
+    public function getMp3StoragePath()
     {
         return snake_case("mp3s/{$this->name}");
     }

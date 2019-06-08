@@ -1,15 +1,17 @@
 import VueRouter from 'vue-router';
 
-import GaussIndex from './components/Ideas/Gauss/Index.vue';
-import IdeasInex from './components/Ideas/Index.vue';
-import GlobalLibrary from './components/GlobalLibrary/Index.vue';
-import MyLibrary from './components/MyLibrary/Index.vue';
-import CreateSmartPlaylist from './components/CreateSmartPlaylist/Index.vue';
-import NewUploads from './components/NewUploads/Index.vue';
-import Upload from './components/Upload/Index.vue';
-
-import Master from './components/Layout/Master.vue';
-import NotFoundPage from './components/Layout/NotFoundPage.vue';
+import Master from './components/Layout/Master';
+import Home from './components/Home/Home';
+import Profile from './components/Profile/Profile';
+import Settings from './components/Settings/Settings';
+import SpotifyImport from './components/SpotifyImport/SpotifyImport';
+import Upload from './components/Upload/Upload';
+import MyLibrary from './components/MyLibrary/MyLibrary';
+import Playlists from './components/MyLibrary/Playlists/Playlists';
+import Tracks from './components/MyLibrary/Tracks/Tracks';
+import Albums from './components/MyLibrary/Albums/Albums';
+import Artists from './components/MyLibrary/Artists/Artists';
+import PlaylistView from './components/Playlist/Playlist';
 
 export default new VueRouter({
     mode: 'history',
@@ -18,54 +20,69 @@ export default new VueRouter({
     routes: [
         {
             path: '/',
-            name: 'master',
             component: Master,
             props: true,
             children: [
                 {
-                    path: 'global-library',
-                    name: 'global_library',
-                    component: GlobalLibrary,
+                    path: '/',
+                    name: 'home',
+                    component: Home,
                 },
                 {
-                    path: 'my-library',
-                    name: 'my_library',
-                    component: MyLibrary,
+                    path: 'profile/:id',
+                    name: 'profile',
+                    component: Profile,
+                    props: true,
                 },
                 {
-                    path: 'create-smart-playlist',
-                    name: 'create_smart_playlist',
-                    component: CreateSmartPlaylist,
+                    path: 'settings',
+                    name: 'settings',
+                    component: Settings,
                 },
                 {
-                    path: 'new',
-                    name: 'new_uploads',
-                    component: NewUploads,
+                    path: 'import/spotify',
+                    name: 'spotifyImport',
+                    component: SpotifyImport,
                 },
                 {
                     path: 'upload',
                     name: 'upload',
-                    component: Upload
-                }
-            ],
-        },
-        {
-            path: '/ideas',
-            name: 'index',
-            component: IdeasInex,
-            children: [
-                {
-                    path: '/ideas/gauss',
-                    name: 'idea_gauss',
-                    component: GaussIndex,
-                    props: true,
+                    component: Upload,
                 },
-            ],
+                {
+                    path: 'my-library',
+                    name: 'myLibrary',
+                    component: MyLibrary,
+                    redirect: '/my-library/playlists',
+                    children: [
+                        {
+                            path: 'playlists/:name/:id',
+                            component: PlaylistView,
+                            props: true,
+                        },
+                        {
+                            path: 'playlists',
+                            name: 'Playlists',
+                            component: Playlists,
+                        },
+                        {
+                            path: 'tracks',
+                            name: 'Tracks',
+                            component: Tracks,
+                        },
+                        {
+                            path: 'albums',
+                            name: 'Albums',
+                            component: Albums,
+                        },
+                        {
+                            path: 'artists',
+                            name: 'Artists',
+                            component: Artists,
+                        },
+                    ]
+                }
+           ],
         },
-        {
-            path: '*',
-            name: '404',
-            component: NotFoundPage
-        }
     ],
 });

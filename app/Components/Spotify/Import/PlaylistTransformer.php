@@ -3,8 +3,9 @@
 namespace App\Components\Spotify\Import;
 
 use App\Service\GenericTransformer;
+use App\Transformer\Transformable;
 
-class PlaylistTransformer
+class PlaylistTransformer implements Transformable
 {
     public function transform($items)
     {

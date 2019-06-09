@@ -47,17 +47,15 @@
 </template>
 
 <script>
-    // import AlbumItem from "./AlbumItem";
-
     import ArtistItem from "./ArtistItem";
+
     export default {
         name: "Artists",
         components: {ArtistItem},
-        // components: {AlbumItem},
         data() {
             return {
                 clickedArtists: JSON.parse(sessionStorage.getItem('myLibraryClickedArtist')) || {},
-                hideSingleTrackArtists: localStorage.getItem('myLibraryHideArtistsWithOneTrack'),
+                hideSingleTrackArtists: JSON.parse(localStorage.getItem('myLibraryHideArtistsWithOneTrack')),
             }
         },
         watch: {

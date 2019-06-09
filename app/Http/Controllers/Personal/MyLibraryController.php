@@ -35,11 +35,6 @@ class MyLibraryController extends Controller
         return TrackDTO::toApiResponse($this->libraryDao->getAllTracks());
     }
 
-    public function myTopArtists()
-    {
-        return $this->libraryDao->getArtistsWithMostTracks();
-    }
-
     public function myRecentArtists()
     {
         return $this->libraryDao->getRecentArtists();

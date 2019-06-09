@@ -11,8 +11,6 @@ const state = {
     playlistsInitialized: false,
     tracks: [],
     tracksInitialized: false,
-    topArtists: [],
-    topArtistsInitialized: false,
     recentArtists: [],
     recentArtistsInitialized: false,
     albums: [],

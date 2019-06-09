@@ -48,16 +48,4 @@ class MyLibraryDao
             ->with('artists', 'album')
             ->orderBy('name', 'asc')->get();
     }
-
-    public function getRecentArtists()
-    {
-        // TODO: return recent artists instead of random
-        return \DB::query()
-            ->selectRaw('count(*) as track_amount, artist_id, artists.*')
-            ->from('track_has_artist')
-            ->join('artists', 'artist_id', '=', 'artists.id')
-            ->groupBy('artist_id')
-            ->limit(100)
-            ->get()->random(10);
-    }
 }

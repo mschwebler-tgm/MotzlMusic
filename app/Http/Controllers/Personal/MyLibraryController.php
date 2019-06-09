@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Personal;
 
 use App\Components\MyLibrary\AlbumByLetterOccurrence;
 use App\Components\MyLibrary\AlbumDao;
+use App\Components\MyLibrary\ArtistDao;
 use App\Components\MyLibrary\MyLibraryDao;
 use App\DTOs\AlbumDTO;
 use App\DTOs\TrackDTO;
@@ -35,9 +36,9 @@ class MyLibraryController extends Controller
         return TrackDTO::toApiResponse($this->libraryDao->getAllTracks());
     }
 
-    public function getArtistsByFirstLetter()
+    public function getArtistsByFirstLetter(ArtistDao $artistDao)
     {
-        return $this->libraryDao->getRecentArtists();
+        return $artistDao->getArtistsByFirstLetter();
     }
 
     public function getAlbums(AlbumDao $albumDao)

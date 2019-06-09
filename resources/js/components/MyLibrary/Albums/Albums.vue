@@ -25,13 +25,13 @@
             </div>
             <v-divider></v-divider>
             <v-layout row wrap class="mt-2">
-                <v-flex v-for="album in selectedAlbums.albums"
+                <v-flex v-for="album in selectedAlbums.items"
                         :key="album.id"
                         xs6 sm4 md4 lg3 xl2 d-block justify-center>
                     <album-item :album="album"></album-item>
                 </v-flex>
             </v-layout>
-            <div class="d-flex pa-3 mt-2" v-if="!selectedAlbums.albums.length">
+            <div class="d-flex pa-3 mt-2" v-if="!selectedAlbums.items.length">
                 <span class="subheading text-xs-center">No albums here. Check filters and try again.</span>
             </div>
             <v-divider class="mt-3 mb-3"></v-divider>
@@ -83,7 +83,7 @@
                 if (this.hideSingles) {
                     albumsByLetter = {
                         ...albumsByLetter,
-                        albums: albumsByLetter.albums.filter(album => album.tracks.length > 1),
+                        items: albumsByLetter.items.filter(album => album.tracks.length > 1),
                     };
                 }
 
@@ -91,7 +91,7 @@
             },
             albumCount() {
                 return this.albumsByLetters.reduce((count, albumsByLetter) => {
-                    let albums = albumsByLetter.albums;
+                    let albums = albumsByLetter.items;
                     if (this.hideSingles) {
                         albums = albums.filter(album => album.tracks.length > 1);
                     }
@@ -100,7 +100,7 @@
             },
             allSinglesInAlbum() {
                 const singleTracks = this.albumsByLetters
-                    .map(albumsByLetter => albumsByLetter.albums)
+                    .map(albumsByLetter => albumsByLetter.items)
                     .flat()
                     .filter(album => album.tracks.length === 1)
                     .map(album => album.tracks)

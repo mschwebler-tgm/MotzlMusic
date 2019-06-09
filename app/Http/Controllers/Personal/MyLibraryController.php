@@ -38,7 +38,7 @@ class MyLibraryController extends Controller
 
     public function getArtistsByFirstLetter(ArtistDao $artistDao)
     {
-        return $artistDao->getArtistsByFirstLetter();
+        return $artistDao->getItemsByFirstLetter();
     }
 
     public function getAlbums(AlbumDao $albumDao)
@@ -48,7 +48,7 @@ class MyLibraryController extends Controller
 
     public function getAlbumsByFirstLetter(AlbumDao $albumDao)
     {
-        $albumsByLetter = $albumDao->getAlbumsByFirstLetter();
+        $albumsByLetter = $albumDao->getItemsByFirstLetter();
         $albumsByLetter->map(function (AlbumByLetterOccurrence $albumByLetter) {
             $albumByLetter->setItems(AlbumDTO::toApiResponse($albumByLetter->getItems()));
         });

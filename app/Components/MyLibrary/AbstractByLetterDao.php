@@ -1,0 +1,77 @@
+<?php
+/** @noinspection PhpOptionalBeforeRequiredParametersInspection */
+
+namespace App\Components\MyLibrary;
+
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Collection;
+
+abstract class AbstractByLetterDao
+{
+    /** @return string AbstractItemByLetter::class */
+    abstract protected function getByLetterOccurrenceClass();
+
+    /** @return Builder */
+    abstract protected function baseQuery();
+
+    /**
+     * @return Collection
+     */
+    public function getItemsByFirstLetter()
+    {
+        $alphaLetterOccurrences = $this->getAlphaLetterOccurrences();
+        $nonAlphaLetterOccurrences = $this->getNonAlphaLetterOccurrences();
+        $this->loadItemsForOccurrences($alphaLetterOccurrences);
+        $this->loadItemsForOccurrences($nonAlphaLetterOccurrences);
+
+        return $alphaLetterOccurrences->prepend($nonAlphaLetterOccurrences);
+    }
+
+    /**
+     * @return Collection
+     */
+    private function getAlphaLetterOccurrences()
+    {
+        $alphaLetterOccurrences = $this->baseQuery()
+            ->selectRaw('substr(UPPER(name), 1, 1) as firstLetter, count(id) as count')
+            ->groupBy('firstLetter')
+            ->orderBy('firstLetter', 'asc')
+            ->havingRaw('firstLetter REGEXP "^[A-Z]"')
+            ->get()->mapInto($this->getByLetterOccurrenceClass());
+
+        return $alphaLetterOccurrences;
+    }
+
+    private function getNonAlphaLetterOccurrences()
+    {
+        $nonAlphaLetterOccurrences = $this->baseQuery()
+            ->selectRaw('substr(UPPER(name), 1, 1) as firstLetter, count(id) as count')
+            ->groupBy('firstLetter')
+            ->orderBy('firstLetter', 'asc')
+            ->havingRaw('firstLetter NOT REGEXP "^[A-Z]"')
+            ->get()->mapInto($this->getByLetterOccurrenceClass());
+
+        $nonAlphaLetterOccurrences = $nonAlphaLetterOccurrences->reduce(function (
+            AbstractItemByLetter $concatOccurrence = null,
+            AbstractItemByLetter $occurrence
+        ) {
+            $occurrence->loadItems();
+            $occurrence->setLetter('#');
+            if ($concatOccurrence) {
+                $occurrence->setCount($concatOccurrence->getCount() + $occurrence->getCount());
+                $occurrence->setItems($concatOccurrence->getItems()->concat($occurrence->getItems()));
+            }
+            return $occurrence;
+        }, null);
+
+        return $nonAlphaLetterOccurrences;
+    }
+
+    private function loadItemsForOccurrences($occurrences)
+    {
+        /** @var ArtistByLetterOccurrence $occurrence */
+        foreach ($occurrences as $occurrence) {
+            $occurrence->loadItems();
+        }
+    }
+}

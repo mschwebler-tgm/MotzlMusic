@@ -59,11 +59,11 @@ class AlbumDao
             AlbumByLetterOccurrence $concatOccurrence = null,
             AlbumByLetterOccurrence $occurrence
         ) {
-            $occurrence->loadAlbums();
+            $occurrence->loadItems();
             $occurrence->setLetter('#');
             if ($concatOccurrence) {
                 $occurrence->setCount($concatOccurrence->getCount() + $occurrence->getCount());
-                $occurrence->setAlbums($concatOccurrence->getAlbums()->concat($occurrence->getAlbums()));
+                $occurrence->setItems($concatOccurrence->getItems()->concat($occurrence->getItems()));
             }
             return $occurrence;
         }, null);
@@ -75,7 +75,7 @@ class AlbumDao
     {
         /** @var AlbumByLetterOccurrence $occurrence */
         foreach ($occurrences as $occurrence) {
-            $occurrence->loadAlbums();
+            $occurrence->loadItems();
         }
     }
 }

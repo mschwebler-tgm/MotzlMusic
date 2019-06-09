@@ -29,13 +29,6 @@ class ArtistDao
     {
         $alphaLetterOccurrences = Artist::ofCurrentUser()
             ->selectRaw('substr(UPPER(name), 1, 1) as firstLetter, count(id) as count')
-            ->whereHas('tracks', function ($query) {
-                /** @var $query Builder */
-                $query->whereHas('owningUsers', function ($query) {
-                    /** @var $query Builder */
-                    $query->where('id', '=', apiUser()->id);
-                });
-            })
             ->groupBy('firstLetter')
             ->orderBy('firstLetter', 'asc')
             ->havingRaw('firstLetter REGEXP "^[A-Z]"')
@@ -57,11 +50,11 @@ class ArtistDao
             ArtistByLetterOccurrence $concatOccurrence = null,
             ArtistByLetterOccurrence $occurrence
         ) {
-            $occurrence->loadArtists();
+            $occurrence->loadItems();
             $occurrence->setLetter('#');
             if ($concatOccurrence) {
                 $occurrence->setCount($concatOccurrence->getCount() + $occurrence->getCount());
-                $occurrence->setArtists($concatOccurrence->getArtists()->concat($occurrence->getArtists()));
+                $occurrence->setItems($concatOccurrence->getItems()->concat($occurrence->getItems()));
             }
             return $occurrence;
         }, null);
@@ -73,7 +66,7 @@ class ArtistDao
     {
         /** @var ArtistByLetterOccurrence $occurrence */
         foreach ($occurrences as $occurrence) {
-            $occurrence->loadArtists();
+            $occurrence->loadItems();
         }
     }
 }

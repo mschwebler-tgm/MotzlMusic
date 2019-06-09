@@ -50,7 +50,7 @@ class MyLibraryController extends Controller
     {
         $albumsByLetter = $albumDao->getAlbumsByFirstLetter();
         $albumsByLetter->map(function (AlbumByLetterOccurrence $albumByLetter) {
-            $albumByLetter->setAlbums(AlbumDTO::toApiResponse($albumByLetter->getAlbums()));
+            $albumByLetter->setItems(AlbumDTO::toApiResponse($albumByLetter->getItems()));
         });
 
         return $albumsByLetter;

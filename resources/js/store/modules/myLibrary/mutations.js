@@ -11,7 +11,7 @@ export default {
         state.tracks = validateArray(tracks);
         state.tracksInitialized = true;
     },
-    setMyRecentArtists(state, artists) {
+    setMyArtists(state, artists) {
         state.recentArtists = validateArray(artists);
         state.recentArtistsInitialized = true;
     },

@@ -26,40 +26,18 @@ export default {
         state.queueController.setPrevious();
         dispatch('play', state.queueController.currentTrack);
     },
-    playPlaylist({state, dispatch}, playlist) {
-        dispatch('playQueue');
+    playList({state, dispatch}, {type, list}) {
+        console.log(type, list)
         state.playerController.loading = true;
-        state.activeItem = {type: 'playlist', id: playlist.id};
-        if (!playlist.tracks) {
-            axios.get(`/api/playlist/${playlist.id}/tracks`)
-                .then(res => playlist.tracks = res.data)
-                .then(() => dispatch('playQueue', playlist.tracks));
+        state.activeItem = {type, id: list.id};
+        if (!list.tracks) {
+            axios.get(`/api/${type}/${list.id}/tracks`)
+                .then(res => list.tracks = res.data)
+                .then(() => dispatch('playQueue', list.tracks));
         } else {
-            dispatch('playQueue', playlist.tracks);
+            dispatch('playQueue', list.tracks);
         }
     },
-    playAlbum({state, dispatch}, album) {
-        state.playerController.loading = true;
-        state.activeItem = {type: 'album', id: album.id};
-        if (!album.tracks) {
-            axios.get(`/api/album/${album.id}/tracks`)
-                .then(res => album.tracks = res.data)
-                .then(() => dispatch('playQueue', album.tracks));
-        } else {
-            dispatch('playQueue', album.tracks);
-        }
-    },
-    playArtist({state, dispatch}, artist) {
-        state.playerController.loading = true;
-        state.activeItem = {type: 'artist', id: artist.id};
-        if (!artist.tracks) {
-            axios.get(`/api/artist/${artist.id}`)
-                .then(res => artist.tracks = res.data)
-                .then(() => dispatch('playQueue', artist.tracks));
-        } else {
-            dispatch('playQueue', artist.tracks);
-        }
-    }
 }
 
 function validateTrack(track) {

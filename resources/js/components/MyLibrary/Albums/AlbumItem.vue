@@ -44,7 +44,7 @@
             },
             playAlbum($event) {
                 $event.stopPropagation();
-                this.$store.dispatch('player/playAlbum', this.album);
+                this.$store.dispatch('player/playList', {type: 'album', list: this.album});
             },
         },
         computed: {

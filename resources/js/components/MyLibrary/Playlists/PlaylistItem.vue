@@ -43,7 +43,7 @@
             },
             playPlaylist($event) {
                 $event.stopPropagation();
-                this.$store.dispatch('player/playPlaylist', this.playlist);
+                this.$store.dispatch('player/playList', {type: 'playlist', list: this.playlist});
             },
         },
         computed: {

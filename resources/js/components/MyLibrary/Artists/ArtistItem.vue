@@ -44,7 +44,7 @@
             },
             playArtist($event) {
                 $event.stopPropagation();
-                this.$store.dispatch('player/playArtist', this.artist);
+                this.$store.dispatch('player/playList', {type: 'artist', list: this.artist});
             },
         },
         computed: {

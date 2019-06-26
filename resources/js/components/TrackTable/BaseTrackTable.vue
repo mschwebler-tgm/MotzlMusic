@@ -132,8 +132,11 @@
                 let timer;
                 let touchDuration = 500;
                 const table = document.getElementById(this.tableId);
-                table.addEventListener('touchstart', $event => timer = setTimeout(() => onLongTouch($event), touchDuration));
+                table.addEventListener('touchstart', $event => {
+                    timer = setTimeout(() => onLongTouch($event), touchDuration)
+                });
                 table.addEventListener('touchend', () => timer && clearTimeout(timer));
+                table.addEventListener('scroll', () => timer && clearTimeout(timer));
             },
             vibrateDevice(durationMs) {
                 if (navigator.vibrate) {

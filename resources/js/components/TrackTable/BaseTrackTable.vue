@@ -127,7 +127,7 @@
             initTouchMenuListener() {
                 const onLongTouch = ($event) => {
                     this.handleTrackOptionsClick($event);
-                    this.vibrateDevice(100);
+                    this.vibrateDevice(50);
                 };
                 let timer;
                 let touchDuration = 500;

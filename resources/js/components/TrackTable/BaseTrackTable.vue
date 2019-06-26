@@ -127,12 +127,18 @@
             initTouchMenuListener() {
                 const onLongTouch = ($event) => {
                     this.handleTrackOptionsClick($event);
+                    this.vibrateDevice(100);
                 };
                 let timer;
                 let touchDuration = 500;
                 const table = document.getElementById(this.tableId);
                 table.addEventListener('touchstart', $event => timer = setTimeout(() => onLongTouch($event), touchDuration));
                 table.addEventListener('touchend', () => timer && clearTimeout(timer));
+            },
+            vibrateDevice(durationMs) {
+                if (navigator.vibrate) {
+                    navigator.vibrate(durationMs);
+                }
             }
         },
         computed: {

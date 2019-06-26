@@ -16,7 +16,7 @@
             </v-progress-circular>
         </div>
         <track-table-context-menu v-if="!$root.isTouch"
-                                  v-model="showOptionMenu"
+                                  :show.sync="showOptionMenu"
                                   :position-x="optionMenuPositionX"
                                   :position-y="optionMenuPositionY"></track-table-context-menu>
     </v-flex>

@@ -1,5 +1,6 @@
 <template>
     <v-menu v-bind="$attrs"
+            v-model="showMenu"
             offset-x
             absolute>
         <v-list light dense>
@@ -42,6 +43,17 @@
 
 <script>
     export default {
-        name: "TrackTableContextMenu"
+        name: "TrackTableContextMenu",
+        props: ['show'],
+        computed: {
+            showMenu: {
+                get() {
+                    return this.show;
+                },
+                set(show) {
+                    this.$emit('update:show', show);
+                }
+            }
+        }
     }
 </script>

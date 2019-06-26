@@ -5,8 +5,8 @@
              class="clusterize-scroll"
              ref="scrollArea">
             <div :id="identifier + '-contentArea'" class="clusterize-content">
-                <tr class="clusterize-no-data">
-                </tr>
+                <div class="clusterize-no-data">
+                </div>
             </div>
         </div>
         <div class="d-flex justify-center" v-if="showLoading">
@@ -18,7 +18,8 @@
         <track-table-context-menu v-if="!$root.isTouch"
                                   :show.sync="showOptionMenu"
                                   :position-x="optionMenuPositionX"
-                                  :position-y="optionMenuPositionY"></track-table-context-menu>
+                                  :position-y="optionMenuPositionY"
+                                  :track="rightClickedTrack"></track-table-context-menu>
     </v-flex>
 </template>
 
@@ -43,6 +44,7 @@
                 showOptionMenu: false,
                 optionMenuPositionX: 0,
                 optionMenuPositionY: 0,
+                rightClickedTrack: null,
             }
         },
         mounted() {
@@ -110,7 +112,7 @@
             handleTrackOptionsClick($event) {
                 $event.preventDefault();
                 const trackElement = this.findTrackElement($event.target);
-                // const track = this.getTrackFromDomElement(trackElement);
+                this.rightClickedTrack = this.getTrackFromDomElement(trackElement);
                 this.optionMenuPositionX = $event.clientX;
                 this.optionMenuPositionY = $event.clientY;
                 this.showOptionMenu = true;

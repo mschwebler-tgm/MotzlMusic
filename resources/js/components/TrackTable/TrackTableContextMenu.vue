@@ -44,7 +44,7 @@
 <script>
     export default {
         name: "TrackTableContextMenu",
-        props: ['show'],
+        props: ['show', 'track'],
         computed: {
             showMenu: {
                 get() {

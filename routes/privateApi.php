@@ -19,8 +19,7 @@ Route::prefix('spotify')->namespace('Spotify')->group(function () {
 Route::prefix('my')->namespace('Personal')->group(function () {
     Route::get('playlists', 'MyLibraryController@myPlaylists');
     Route::get('tracks', 'MyLibraryController@myTracks');
-    Route::get('topArtists', 'MyLibraryController@myTopArtists');
-    Route::get('recentArtists', 'MyLibraryController@myRecentArtists');
+    Route::get('artists/byFirstLetter', 'MyLibraryController@getArtistsByFirstLetter');
     Route::get('albums/byFirstLetter', 'MyLibraryController@getAlbumsByFirstLetter');
     Route::get('albums', 'MyLibraryController@getAlbums');
 });
@@ -33,6 +32,7 @@ Route::namespace('Api')->group(function () {
     Route::get('/playlist/{id}', 'PlaylistController@playlist');
     Route::get('/playlist/{id}/tracks', 'PlaylistController@tracks');
     Route::get('/track/{id}/audio-features', 'TrackController@audioFeatures');
+    Route::get('/track/{id}', 'TrackController@getDetails');
 });
 
 Route::post('/uploadTrack', 'UploadController@uploadTrack');

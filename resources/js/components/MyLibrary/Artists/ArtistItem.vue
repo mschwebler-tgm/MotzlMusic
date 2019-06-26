@@ -1,18 +1,18 @@
 <template>
     <v-card tile
             hover
-            @click="openPlaylistDetails"
+            @click="openArtistDetails"
             class="overlay-play-icon-toggle">
         <div class="relative">
             <v-img
                     :src="fullResolutionImage"
                     :lazy-src="intermediateImage"
-                    :alt="playlist.name"
+                    :alt="artist.name"
                     aspect-ratio="1">
             </v-img>
             <v-btn icon fab absolute bottom right small
                    v-if="!isPlaying"
-                   @click="playPlaylist"
+                   @click="playArtist"
                    :class="{'force-show': $root.isTouch}"
                    color="secondary"
                    class="overlay-play-icon">
@@ -24,7 +24,8 @@
         </div>
         <v-card-title primary-title>
             <div class="no-overflow">
-                <h4 class="subheading mb-0 playlist-title">{{ playlist.name }}</h4>
+                <h4 class="subheading mb-0 artist-title">{{ artist.name }}</h4>
+                <span class="caption grey--text">{{ artist.tracks.length }} track{{ artist.tracks.length > 1 ? 's' : '' }}</span>
             </div>
         </v-card-title>
     </v-card>
@@ -32,30 +33,30 @@
 
 <script>
     export default {
-        name: "PlaylistItem",
+        name: "ArtistItem",
         props: {
-            playlist: Object,
+            artist: Object,
         },
         methods: {
-            openPlaylistDetails() {
-                this.$store.commit('cache/setSelectedPlaylist', this.playlist);
-                this.$router.push(`/my-library/playlists/${this.playlist.name}/${this.playlist.id}`);
+            openArtistDetails() {
+                this.$store.commit('cache/setSelectedAlbum', this.artist);
+                this.$router.push(`/my-library/artists/${this.artist.name}/${this.artist.id}`);
             },
-            playPlaylist($event) {
+            playArtist($event) {
                 $event.stopPropagation();
-                this.$store.dispatch('player/playList', {type: 'playlist', list: this.playlist});
+                this.$store.dispatch('player/playList', {type: 'artist', list: this.artist});
             },
         },
         computed: {
             fullResolutionImage() {
-                return this.$root.getSpotifyImage(this.playlist, 'medium');
+                return this.$root.getSpotifyImage(this.artist, 'medium');
             },
             intermediateImage() {
-                return this.$root.getSpotifyImage(this.playlist, 'small');
+                return this.$root.getSpotifyImage(this.artist, 'small');
             },
             isPlaying() {
                 const activeItem = this.$store.getters['player/activeItem'];
-                return activeItem.type === 'playlist' && activeItem.id === this.playlist.id;
+                return activeItem.type === 'artist' && activeItem.id === this.artist.id;
             }
         }
     }
@@ -66,13 +67,13 @@
         overflow: hidden;
     }
 
-    .playlist-title {
+    .artist-title {
         text-overflow: fade;
         white-space: nowrap;
         overflow: hidden;
     }
 
-    .playlist-tile.theme--dark {
+    .artist-tile.theme--dark {
         background-color: #343434;
         border-color: #343434;
     }

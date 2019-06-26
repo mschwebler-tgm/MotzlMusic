@@ -18,7 +18,7 @@
 </template>
 
 <script>
-    import TrackTable from "../../TrackTable";
+    import TrackTable from "../../TrackTable/TrackTable";
     import renderFunction from '../../../store/modules/myLibrary/helpers/clusterizeTracks';
     import {mapGetters} from "vuex";
 

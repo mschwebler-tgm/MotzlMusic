@@ -48,7 +48,7 @@
 </template>
 
 <script>
-    import TrackTable from "../TrackTable";
+    import TrackTable from "../TrackTable/TrackTable";
     import clusterizeTracks from '../../store/modules/myLibrary/helpers/clusterizeTracks';
     import PlaylistActions from "./PlaylistActions";
 

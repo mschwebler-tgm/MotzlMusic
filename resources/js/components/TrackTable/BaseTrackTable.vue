@@ -15,31 +15,20 @@
                     indeterminate>
             </v-progress-circular>
         </div>
-        <v-menu offset-x
-                absolute
-                v-model="showOptionMenu"
-                :position-x="optionMenuPositionX"
-                :position-y="optionMenuPositionY">
-            <v-list light>
-                <v-list-tile @click="">
-                    <v-list-tile-title>Test</v-list-tile-title>
-                </v-list-tile>
-                <v-list-tile @click="">
-                    <v-list-tile-title>Test</v-list-tile-title>
-                </v-list-tile>
-                <v-list-tile @click="">
-                    <v-list-tile-title>Test</v-list-tile-title>
-                </v-list-tile>
-            </v-list>
-        </v-menu>
+        <track-table-context-menu v-if="!$root.isTouch"
+                                  v-model="showOptionMenu"
+                                  :position-x="optionMenuPositionX"
+                                  :position-y="optionMenuPositionY"></track-table-context-menu>
     </v-flex>
 </template>
 
 <script>
     import Clusterize from "clusterize.js";
+    import TrackTableContextMenu from "./TrackTableContextMenu";
 
     export default {
         name: "BaseTrackTable",
+        components: {TrackTableContextMenu},
         props: {
             tracks: Array,
             renderFunction: Function,
@@ -146,5 +135,5 @@
 </script>
 
 <style lang="scss">
-    @import "../../sass/components/_trackTable";
+    @import "../../../sass/components/_trackTable";
 </style>

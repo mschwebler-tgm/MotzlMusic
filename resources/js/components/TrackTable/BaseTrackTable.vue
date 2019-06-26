@@ -16,9 +16,15 @@
             </v-progress-circular>
         </div>
         <track-table-context-menu v-if="!$root.isTouch"
+                                          component="v-menu"
+                                          :dense="true"
+                                          :show.sync="showOptionMenu"
+                                          :position-x="optionMenuPositionX"
+                                          :position-y="optionMenuPositionY"
+                                          :track="rightClickedTrack"></track-table-context-menu>
+        <track-table-context-menu v-else
+                                  component="v-bottom-sheet"
                                   :show.sync="showOptionMenu"
-                                  :position-x="optionMenuPositionX"
-                                  :position-y="optionMenuPositionY"
                                   :track="rightClickedTrack"></track-table-context-menu>
     </v-flex>
 </template>
@@ -53,6 +59,7 @@
             }
             this.initDoubleClickListener();
             this.initMenuListener();
+            this.initTouchMenuListener();
         },
         watch: {
             tracks() {
@@ -101,7 +108,7 @@
                 }
             },
             initMenuListener() {
-                let table = document.getElementById(this.tableId);
+                const table = document.getElementById(this.tableId);
                 table.addEventListener('contextmenu', $event => this.handleTrackOptionsClick($event));
                 table.addEventListener('click', $event => {
                     if ($event.target.classList.contains('track-options')) {
@@ -116,6 +123,16 @@
                 this.optionMenuPositionX = $event.clientX;
                 this.optionMenuPositionY = $event.clientY;
                 this.showOptionMenu = true;
+            },
+            initTouchMenuListener() {
+                const onLongTouch = ($event) => {
+                    this.handleTrackOptionsClick($event);
+                };
+                let timer;
+                let touchDuration = 500;
+                const table = document.getElementById(this.tableId);
+                table.addEventListener('touchstart', $event => timer = setTimeout(() => onLongTouch($event), touchDuration));
+                table.addEventListener('touchend', () => timer && clearTimeout(timer));
             }
         },
         computed: {

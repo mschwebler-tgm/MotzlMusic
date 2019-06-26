@@ -1,9 +1,9 @@
 <template>
-    <v-menu v-bind="$attrs"
+    <component :is="component" v-bind="$attrs"
             v-model="showMenu"
             offset-x
             absolute>
-        <v-list light dense>
+        <v-list light :dense="dense">
             <v-list-tile @click="">
                 <v-list-tile-avatar>
                     <v-icon small>add_to_queue</v-icon>
@@ -38,13 +38,13 @@
                 </v-list-tile-title>
             </v-list-tile>
         </v-list>
-    </v-menu>
+    </component>
 </template>
 
 <script>
     export default {
         name: "TrackTableContextMenu",
-        props: ['show', 'track'],
+        props: ['show', 'track', 'component', 'dense'],
         computed: {
             showMenu: {
                 get() {

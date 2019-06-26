@@ -68,7 +68,7 @@ class Clusterizer {
     }
 
     _rowOptions(track) {
-        return `<div class="track-list-more-options"><span class="icon has-text-grey-light pointer" title="More options"><i class="mdi mdi-dots-vertical mdi-24px"></i></span></div>`;
+        return `<div class="track-list-more-options track-options"><span class="icon has-text-grey-light pointer track-options" title="More options"><i class="mdi mdi-dots-vertical mdi-24px track-options"></i></span></div>`;
     }
 }
 

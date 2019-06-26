@@ -1,6 +1,6 @@
 <template>
     <v-flex class="track-table" id="my-library-tracks-table">
-        <div :id="identifier + '-scrollArea'"
+        <div :id="tableId"
              :style="{'max-height': scrollContainerHeight}"
              class="clusterize-scroll"
              ref="scrollArea">
@@ -15,6 +15,23 @@
                     indeterminate>
             </v-progress-circular>
         </div>
+        <v-menu offset-x
+                absolute
+                v-model="showOptionMenu"
+                :position-x="optionMenuPositionX"
+                :position-y="optionMenuPositionY">
+            <v-list light>
+                <v-list-tile @click="">
+                    <v-list-tile-title>Test</v-list-tile-title>
+                </v-list-tile>
+                <v-list-tile @click="">
+                    <v-list-tile-title>Test</v-list-tile-title>
+                </v-list-tile>
+                <v-list-tile @click="">
+                    <v-list-tile-title>Test</v-list-tile-title>
+                </v-list-tile>
+            </v-list>
+        </v-menu>
     </v-flex>
 </template>
 
@@ -34,6 +51,9 @@
                 scrollContainerHeight: this.height || '500px',
                 isInitialized: false,
                 activeTrackElement: null,
+                showOptionMenu: false,
+                optionMenuPositionX: 0,
+                optionMenuPositionY: 0,
             }
         },
         mounted() {
@@ -41,6 +61,7 @@
                 this.initializeTracksTable();
             }
             this.initDoubleClickListener();
+            this.initMenuListener();
         },
         watch: {
             tracks() {
@@ -54,21 +75,26 @@
             initializeTracksTable() {
                 this.isInitialized = true;
                 this.clusterize = new Clusterize({
-                    scrollId: this.identifier + '-scrollArea',
+                    scrollId: this.tableId,
                     contentId: this.identifier + '-contentArea',
                     rows: this.renderFunction(this.tracks, this.playingTrackId),
                 });
                 this.setActiveClassFor(this.playingTrackId);
             },
             initDoubleClickListener() {
-                const findTrackElement = element => element.classList.contains('track') ? element : findTrackElement(element.parentElement);
                 document.getElementById(this.identifier + '-contentArea').addEventListener('dblclick', event => {
-                    const trackElement = findTrackElement(event.target);
-                    const trackId = trackElement.getAttribute('data-id');
-                    const track = this.tracks.filter(track => track.id === parseInt(trackId))[0];
+                    const trackElement = this.findTrackElement(event.target);
+                    const track = this.getTrackFromDomElement(trackElement);
                     this.toggleActiveClass(trackElement);
                     this.$emit('track-selected', track);
                 });
+            },
+            findTrackElement(element) {
+                return element.classList.contains('track') ? element : this.findTrackElement(element.parentElement);
+            },
+            getTrackFromDomElement(trackElement) {
+                const trackId = trackElement.getAttribute('data-id');
+                return this.tracks.filter(track => track.id === parseInt(trackId))[0];
             },
             toggleActiveClass(element) {
                 if (this.activeTrackElement) {
@@ -82,6 +108,23 @@
                 if (elements.length > 0) {
                     this.toggleActiveClass(elements[0]);
                 }
+            },
+            initMenuListener() {
+                let table = document.getElementById(this.tableId);
+                table.addEventListener('contextmenu', $event => this.handleTrackOptionsClick($event));
+                table.addEventListener('click', $event => {
+                    if ($event.target.classList.contains('track-options')) {
+                        this.handleTrackOptionsClick($event);
+                    }
+                })
+            },
+            handleTrackOptionsClick($event) {
+                $event.preventDefault();
+                const trackElement = this.findTrackElement($event.target);
+                // const track = this.getTrackFromDomElement(trackElement);
+                this.optionMenuPositionX = $event.clientX;
+                this.optionMenuPositionY = $event.clientY;
+                this.showOptionMenu = true;
             }
         },
         computed: {
@@ -94,6 +137,9 @@
             playingTrackId() {
                 const playingTrack = this.$store.getters['player/playingTrack'];
                 return playingTrack ? playingTrack.id : null;
+            },
+            tableId() {
+                return this.identifier + '-scrollArea';
             }
         }
     }

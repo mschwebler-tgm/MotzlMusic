@@ -20,4 +20,7 @@ export default {
     setQueueTrack(state, track) {
         state.queueController.setActiveTrack(track);
     },
+    addTrackToQueue(state, track) {
+        state.queueController.addTrackToQueue(track);
+    },
 }

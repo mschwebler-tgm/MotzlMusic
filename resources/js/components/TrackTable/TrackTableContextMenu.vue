@@ -4,7 +4,7 @@
             offset-x
             absolute>
         <v-list light :dense="dense">
-            <v-list-tile @click="showMenu = false">
+            <v-list-tile @click="addToQueue">
                 <v-list-tile-avatar>
                     <v-icon small>add_to_queue</v-icon>
                 </v-list-tile-avatar>
@@ -53,6 +53,12 @@
                 set(show) {
                     this.$emit('update:show', show);
                 }
+            }
+        },
+        methods: {
+            addToQueue() {
+                this.$emit('update:show', false);
+                this.$store.commit('player/addTrackToQueue', this.track);
             }
         }
     }

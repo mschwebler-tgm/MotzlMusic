@@ -9,6 +9,24 @@ export default class QueueController {
         this._currentIndex = this._queue.findIndex(queueTrack => queueTrack.id === track.id);
     }
 
+    addTrackToQueue(track) {
+        track.isQueued = true;
+        let index = this._findNextSlotForTrackToQueue();
+        this._insertTrack(index, track);
+    }
+
+    _findNextSlotForTrackToQueue() {
+        let index = this._currentIndex + 1;
+        while (this._queue[index].isQueued) {
+            index++;
+        }
+        return index;
+    }
+
+    _insertTrack(index, track) {
+        this._queue.splice(index, 0, track);
+    }
+
     setNext() {
         if (this._currentIndex + 1 >= this._queue.length) {
             return;
@@ -26,7 +44,7 @@ export default class QueueController {
     }
 
     set queue(queue) {
-        this._queue = queue;
+        this._queue = [...queue];
     }
 
     get currentTrack() {

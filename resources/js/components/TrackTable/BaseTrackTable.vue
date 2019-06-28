@@ -16,16 +16,7 @@
             </v-progress-circular>
         </div>
         <track-table-context-menu v-if="!$root.isTouch"
-                                          component="v-menu"
-                                          :dense="true"
-                                          :show.sync="showOptionMenu"
-                                          :position-x="optionMenuPositionX"
-                                          :position-y="optionMenuPositionY"
-                                          :track="rightClickedTrack"></track-table-context-menu>
-        <track-table-context-menu v-else
-                                  component="v-bottom-sheet"
-                                  :show.sync="showOptionMenu"
-                                  :track="rightClickedTrack"></track-table-context-menu>
+                                  :table-id="tableId"></track-table-context-menu>
     </v-flex>
 </template>
 
@@ -47,10 +38,6 @@
                 scrollContainerHeight: this.height || '500px',
                 isInitialized: false,
                 activeTrackElement: null,
-                showOptionMenu: false,
-                optionMenuPositionX: 0,
-                optionMenuPositionY: 0,
-                rightClickedTrack: null,
             }
         },
         mounted() {
@@ -58,8 +45,6 @@
                 this.initializeTracksTable();
             }
             this.initDoubleClickListener();
-            this.initMenuListener();
-            this.initTouchMenuListener();
         },
         watch: {
             tracks() {
@@ -107,42 +92,6 @@
                     this.toggleActiveClass(elements[0]);
                 }
             },
-            initMenuListener() {
-                const table = document.getElementById(this.tableId);
-                table.addEventListener('contextmenu', $event => this.handleTrackOptionsClick($event));
-                table.addEventListener('click', $event => {
-                    if ($event.target.classList.contains('track-options')) {
-                        this.handleTrackOptionsClick($event);
-                    }
-                })
-            },
-            handleTrackOptionsClick($event) {
-                $event.preventDefault();
-                const trackElement = this.findTrackElement($event.target);
-                this.rightClickedTrack = this.getTrackFromDomElement(trackElement);
-                this.optionMenuPositionX = $event.clientX;
-                this.optionMenuPositionY = $event.clientY;
-                this.showOptionMenu = true;
-            },
-            initTouchMenuListener() {
-                const onLongTouch = ($event) => {
-                    this.handleTrackOptionsClick($event);
-                    this.vibrateDevice(50);
-                };
-                let timer;
-                let touchDuration = 500;
-                const table = document.getElementById(this.tableId);
-                table.addEventListener('touchstart', $event => {
-                    timer = setTimeout(() => onLongTouch($event), touchDuration)
-                });
-                table.addEventListener('touchend', () => timer && clearTimeout(timer));
-                table.addEventListener('scroll', () => timer && clearTimeout(timer));
-            },
-            vibrateDevice(durationMs) {
-                if (navigator.vibrate) {
-                    navigator.vibrate(durationMs);
-                }
-            }
         },
         computed: {
             showLoading() {

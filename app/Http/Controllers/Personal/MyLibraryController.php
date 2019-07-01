@@ -55,4 +55,14 @@ class MyLibraryController extends Controller
 
         return $albumsByLetter;
     }
+
+    public function addTrack($id)
+    {
+        return $this->libraryDao->addTrack($id);
+    }
+
+    public function removeTrack($id)
+    {
+        $this->libraryDao->removeTrack($id);
+    }
 }

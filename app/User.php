@@ -36,4 +36,9 @@ class User extends Authenticatable
     {
         return snake_case("mp3s/{$this->name}");
     }
+
+    public function tracks()
+    {
+        return $this->belongsToMany(Track::class, 'user_has_track');
+    }
 }

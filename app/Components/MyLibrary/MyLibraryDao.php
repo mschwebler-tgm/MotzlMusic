@@ -48,4 +48,14 @@ class MyLibraryDao
             ->with('artists', 'album')
             ->orderBy('name', 'asc')->get();
     }
+
+    public function addTrack($id)
+    {
+        apiUser()->tracks()->attach($id);
+    }
+
+    public function removeTrack($id)
+    {
+        apiUser()->tracks()->detach([$id]);
+    }
 }

@@ -19,6 +19,8 @@ Route::prefix('spotify')->namespace('Spotify')->group(function () {
 Route::prefix('my')->namespace('Personal')->group(function () {
     Route::get('playlists', 'MyLibraryController@myPlaylists');
     Route::get('tracks', 'MyLibraryController@myTracks');
+    Route::delete('tracks/{id}', 'MyLibraryController@removeTrack');
+    Route::put('tracks/{id}', 'MyLibraryController@addTrack');
     Route::get('artists/byFirstLetter', 'MyLibraryController@getArtistsByFirstLetter');
     Route::get('albums/byFirstLetter', 'MyLibraryController@getAlbumsByFirstLetter');
     Route::get('albums', 'MyLibraryController@getAlbums');

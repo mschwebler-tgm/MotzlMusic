@@ -1,5 +1,5 @@
 <template>
-    <component v-if="$root.statusInfoComponent" :is="$root.statusInfoComponent"></component>
+    <component v-if="$root.statusInfo.show" :is="$root.statusInfo.component" v-bind="$root.statusInfo.data"></component>
 </template>
 
 <script>

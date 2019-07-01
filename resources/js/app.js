@@ -30,7 +30,11 @@ const app = new Vue({
         return {
             showSpotifyImport: false,
             isDarkTheme: localStorage.getItem('useDarkTheme') === '1',
-            statusInfoComponent: null,
+            statusInfo: {
+                show: false,
+                component: null,
+                data: {},
+            },
             mainContentHeaderComponent: MainContentHeaders.DEFAULT,
             user: null,
             isTouch: false,

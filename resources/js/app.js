@@ -39,6 +39,7 @@ const app = new Vue({
                 text: '',
                 buttonText: 'close',
                 callback: () => this.snackbar.show = false,
+                color: undefined,
             }
         }
     },
@@ -71,13 +72,14 @@ const app = new Vue({
 
             return imageToReturn || window.playlistFallback;
         },
-        showAlert(text, buttonText = 'close', callback = () => this.snackbar.show = false) {
+        showAlert(text, buttonText = 'close', callback = () => this.snackbar.show = false, color = undefined) {
             this.snackbar.show = false;
             setTimeout(() => {
                 this.snackbar.buttonText = buttonText;
                 this.snackbar.text = text;
                 this.snackbar.callback = callback;
                 this.snackbar.show = true;
+                this.snackbar.color = color;
             });
         }
     },

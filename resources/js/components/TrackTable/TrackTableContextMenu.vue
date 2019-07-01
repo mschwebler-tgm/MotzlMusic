@@ -23,7 +23,7 @@
                 </v-list-tile-title>
             </v-list-tile>
             <v-divider></v-divider>
-            <v-list-tile @click="show = false">
+            <v-list-tile @click="removeTrackFromLibrary">
                 <v-list-tile-avatar>
                     <v-icon small>delete</v-icon>
                 </v-list-tile-avatar>
@@ -74,6 +74,12 @@
             addToQueue() {
                 this.show = false;
                 this.$store.commit('player/addTrackToQueue', this.track);
+            },
+            removeTrackFromLibrary() {
+                this.show = false;
+                setTimeout(() => {
+                    this.$store.dispatch('myLibrary/removeTrack', this.track.id);
+                }, 30);
             },
             initMenuListener() {
                 const table = document.getElementById(this.tableId);

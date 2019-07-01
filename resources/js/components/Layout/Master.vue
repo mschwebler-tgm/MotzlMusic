@@ -220,8 +220,9 @@
 
             <v-snackbar
                     v-model="$root.snackbar.show"
-                    bottom
-                    :timeout="3000">
+                    :color="$root.snackbar.color"
+                    :timeout="3000"
+                    bottom>
                 {{ $root.snackbar.text }}
                 <v-btn color="accent"
                        v-show="$root.snackbar.buttonText"

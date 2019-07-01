@@ -19,4 +19,11 @@ export default {
         state.albums = validateArray(albums);
         state.albumsInitialized = true;
     },
+    removeTrack(state, trackId) {
+        const removeTrack = track => track.id !== trackId;
+        state.tracks = state.tracks.filter(removeTrack);
+        state.artists.forEach(item => item.tracks && (item.tracks = item.tracks.filter(removeTrack)));
+        state.albums.forEach(item => item.tracks && (item.tracks = item.tracks.filter(removeTrack)));
+        Object.values(state.playlists).forEach(item => item.tracks && (item.tracks = item.tracks.filter(removeTrack)));
+    },
 }

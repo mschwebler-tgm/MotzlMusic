@@ -34,6 +34,10 @@ const app = new Vue({
             mainContentHeaderComponent: MainContentHeaders.DEFAULT,
             user: null,
             isTouch: false,
+            snackbar: {
+                show: false,
+                text: '',
+            }
         }
     },
     created() {
@@ -64,6 +68,10 @@ const app = new Vue({
             });
 
             return imageToReturn || window.playlistFallback;
+        },
+        showAlert(text) {
+            this.snackbar.text = text;
+            this.snackbar.show = true;
         }
     },
     watch: {

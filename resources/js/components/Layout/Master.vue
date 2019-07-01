@@ -111,7 +111,8 @@
                                      active-class="accent white--text primary--text">
                             <v-list-tile-title class="white--text">Import from Spotify</v-list-tile-title>
                             <v-list-tile-action>
-                                <img src="/images/spotify_black.png" alt="spotify-logo" class="spotify-logo invert--color" width="22" height="22">
+                                <img src="/images/spotify_black.png" alt="spotify-logo"
+                                     class="spotify-logo invert--color" width="22" height="22">
                             </v-list-tile-action>
                         </v-list-tile>
                         <v-divider inset></v-divider>
@@ -149,8 +150,8 @@
                 <v-toolbar-title>MotzlMusic</v-toolbar-title>
                 <v-spacer></v-spacer>
                 <v-toolbar-items class="hidden-sm-and-down">
-<!--                    <v-btn flat>Link One</v-btn>-->
-<!--                    <v-btn flat>Link Two</v-btn>-->
+                    <!--                    <v-btn flat>Link One</v-btn>-->
+                    <!--                    <v-btn flat>Link Two</v-btn>-->
                     <v-menu transition="slide-y-transition"
                             :close-delay="500"
                             bottom left open-on-hover offset-y>
@@ -173,7 +174,8 @@
                             <v-divider></v-divider>
                             <v-list-tile @click="$router.push('/import/spotify')">
                                 <v-list-tile-avatar>
-                                    <img src="/images/spotify_black.png" alt="spotify-logo" class="spotify-logo invert--color" width="22" height="22">
+                                    <img src="/images/spotify_black.png" alt="spotify-logo"
+                                         class="spotify-logo invert--color" width="22" height="22">
                                 </v-list-tile-avatar>
                                 <v-list-tile-title>Import from Spotify</v-list-tile-title>
                             </v-list-tile>
@@ -215,6 +217,18 @@
                     </v-layout>
                 </v-container>
             </v-content>
+
+            <v-snackbar
+                    v-model="$root.snackbar.show"
+                    bottom
+                    :timeout="3000">
+                {{ $root.snackbar.text }}
+                <v-btn color="accent"
+                       flat
+                       @click="$root.snackbar.show = false">
+                    Close
+                </v-btn>
+            </v-snackbar>
 
             <!-- FOOTER -->
             <v-footer app height="36" style="z-index: 5;">

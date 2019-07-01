@@ -72,10 +72,13 @@ const app = new Vue({
             return imageToReturn || window.playlistFallback;
         },
         showAlert(text, buttonText = 'close', callback = () => this.snackbar.show = false) {
-            this.snackbar.buttonText = buttonText;
-            this.snackbar.text = text;
-            this.snackbar.show = true;
-            this.snackbar.callback = callback;
+            this.snackbar.show = false;
+            setTimeout(() => {
+                this.snackbar.buttonText = buttonText;
+                this.snackbar.text = text;
+                this.snackbar.callback = callback;
+                this.snackbar.show = true;
+            });
         }
     },
     watch: {

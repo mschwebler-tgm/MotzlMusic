@@ -27,7 +27,6 @@ export default {
         dispatch('play', state.queueController.currentTrack);
     },
     playList({state, dispatch}, {type, list}) {
-        console.log(type, list)
         state.playerController.loading = true;
         state.activeItem = {type, id: list.id};
         if (!list.tracks) {

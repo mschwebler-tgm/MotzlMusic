@@ -15,7 +15,7 @@
                     indeterminate>
             </v-progress-circular>
         </div>
-        <track-table-context-menu :table-id="tableId"></track-table-context-menu>
+        <track-table-context-menu :table-id="tableId" ref="contextMenu"></track-table-context-menu>
     </v-flex>
 </template>
 
@@ -37,6 +37,7 @@
                 scrollContainerHeight: this.height || '500px',
                 isInitialized: false,
                 activeTrackElement: null,
+                touchDragging: false,
             }
         },
         mounted() {
@@ -64,12 +65,20 @@
                 this.setActiveClassFor(this.playingTrackId);
             },
             initDoubleClickListener() {
-                document.getElementById(this.identifier + '-contentArea').addEventListener('dblclick', event => {
-                    const trackElement = this.findTrackElement(event.target);
+                const playTrack = $event => {
+                    const trackElement = this.findTrackElement($event.target);
                     const track = this.getTrackFromDomElement(trackElement);
                     this.toggleActiveClass(trackElement);
                     this.$emit('track-selected', track);
+                };
+                this.$refs.scrollArea.addEventListener('dblclick', playTrack);
+                this.$refs.scrollArea.addEventListener('touchend', $event => {
+                    if (!this.touchDragging && !this.$refs.contextMenu.show) {
+                        playTrack($event)
+                    }
                 });
+                this.$refs.scrollArea.addEventListener('touchstart', () => this.touchDragging = false);
+                this.$refs.scrollArea.addEventListener('touchmove', () => this.touchDragging = true);
             },
             findTrackElement(element) {
                 return element.classList.contains('track') ? element : this.findTrackElement(element.parentElement);

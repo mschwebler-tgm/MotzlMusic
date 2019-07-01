@@ -64,12 +64,15 @@
             }
         },
         mounted() {
-            this.initMenuListener();
-            this.initTouchMenuListener();
+            if (this.$root.isTouch) {
+                this.initTouchMenuListener();
+            } else {
+                this.initMenuListener();
+            }
         },
         methods: {
             addToQueue() {
-                this.$emit('update:show', false);
+                this.show = false;
                 this.$store.commit('player/addTrackToQueue', this.track);
             },
             initMenuListener() {

@@ -15,8 +15,7 @@
                     indeterminate>
             </v-progress-circular>
         </div>
-        <track-table-context-menu v-if="!$root.isTouch"
-                                  :table-id="tableId"></track-table-context-menu>
+        <track-table-context-menu :table-id="tableId"></track-table-context-menu>
     </v-flex>
 </template>
 

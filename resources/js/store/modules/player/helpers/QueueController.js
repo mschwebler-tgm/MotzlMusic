@@ -10,6 +10,7 @@ export default class QueueController {
     }
 
     addTrackToQueue(track) {
+        console.log(track);
         track.isQueued = true;
         let index = this._findNextSlotForTrackToQueue();
         this._insertTrack(index, track);

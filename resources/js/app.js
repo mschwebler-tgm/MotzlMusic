@@ -76,7 +76,7 @@ const app = new Vue({
 
             return imageToReturn || window.playlistFallback;
         },
-        showAlert(text, buttonText = 'close', callback = () => this.snackbar.show = false, color = undefined) {
+        showAlert(text, buttonText = 'close', callback = () => this.snackbar.show = false, color = 'info') {
             this.snackbar.show = false;
             setTimeout(() => {
                 this.snackbar.buttonText = buttonText;

@@ -37,6 +37,8 @@ const app = new Vue({
             snackbar: {
                 show: false,
                 text: '',
+                buttonText: 'close',
+                callback: () => this.snackbar.show = false,
             }
         }
     },
@@ -69,9 +71,11 @@ const app = new Vue({
 
             return imageToReturn || window.playlistFallback;
         },
-        showAlert(text) {
+        showAlert(text, buttonText = 'close', callback = () => this.snackbar.show = false) {
+            this.snackbar.buttonText = buttonText;
             this.snackbar.text = text;
             this.snackbar.show = true;
+            this.snackbar.callback = callback;
         }
     },
     watch: {

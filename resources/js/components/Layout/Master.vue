@@ -224,9 +224,10 @@
                     :timeout="3000">
                 {{ $root.snackbar.text }}
                 <v-btn color="accent"
+                       v-show="$root.snackbar.buttonText"
                        flat
-                       @click="$root.snackbar.show = false">
-                    Close
+                       @click="$root.snackbar.callback">
+                    {{ $root.snackbar.buttonText }}
                 </v-btn>
             </v-snackbar>
 

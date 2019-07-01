@@ -1,4 +1,5 @@
 import app from '../../../app';
+import StatusInfos from "../../../components/Layout/StatusInfo/StatusInfos";
 
 export default {
     init({commit}) {
@@ -8,14 +9,25 @@ export default {
         axios.get('/api/my/albums/byFirstLetter').then(res => commit('setMyAlbums', res.data));
     },
     removeTrack({state, commit, dispatch}, trackId) {
+        app.statusInfo.component = StatusInfos.GENERIC;
+        app.statusInfo.data.text = 'Removing track';
+        app.statusInfo.show = true;
         return axios.delete(`/api/my/tracks/${trackId}`)
             .then(() => commit('removeTrack', trackId))
-            .then(() => app.showAlert('Track removed from Library', 'undo', () => dispatch('restoreTrack', trackId)))
+            .then(() => app.statusInfo.show = false)
+            .then(() => app.showAlert('Track removed from Library', 'undo', () => {
+                app.snackbar.show = false;
+                dispatch('restoreTrack', trackId)
+            }))
             .catch(() => app.showAlert('Failed to remove track from Library', null, null, 'error'));
     },
     restoreTrack({dispatch, commit}, trackId) {
+        app.statusInfo.component = StatusInfos.GENERIC;
+        app.statusInfo.data.text = 'Restoring track';
+        app.statusInfo.show = true;
         return axios.put(`/api/my/tracks/${trackId}`)
             .then(() => axios.get('/api/my/tracks').then(res => commit('setMyTracks', res.data)))
+            .then(() => app.statusInfo.show = false)
             .then(() => app.showAlert('Track successfully restored'));
     }
 }

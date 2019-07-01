@@ -4,9 +4,11 @@
 
 <script>
     import StatusInfoFileUpload from "./StatusInfoFileUpload";
+    import StatusInfoGeneric from "./StatusInfoGeneric";
+
     export default {
         name: "StatusInfo",
-        components: {StatusInfoFileUpload}
+        components: {StatusInfoGeneric, StatusInfoFileUpload}
     }
 </script>
 

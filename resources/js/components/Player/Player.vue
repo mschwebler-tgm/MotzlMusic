@@ -18,6 +18,10 @@
         },
         methods: {
             initListeners() {
+                this.handleProgress();
+                this.handleActiveClass();
+            },
+            handleProgress() {
                 this.$store.watch(
                     $store => $store.player.playerController.progressPercent,
                     progressPercent => {
@@ -25,6 +29,21 @@
                             this.$store.dispatch('player/playNext');
                         }
                     });
+            },
+            handleActiveClass() {
+                this.$store.watch(
+                    state => state.player.playerController.playingTrack,
+                    (newTrack, oldTrack) => {
+                        if (oldTrack) {
+                            const trackRows = [...document.getElementsByClassName(`track-row-${oldTrack.id}`)];
+                            trackRows.forEach($row => $row.classList.remove('active'));
+                        }
+                        if (newTrack) {
+                            const trackRows = [...document.getElementsByClassName(`track-row-${newTrack.id}`)];
+                            trackRows.forEach($row => $row.classList.add('active'));
+                        }
+                    }
+                );
             }
         }
     }

@@ -36,7 +36,6 @@
                 identifier: Math.random().toString(36).substring(7),
                 scrollContainerHeight: this.height || '500px',
                 isInitialized: false,
-                activeTrackElement: null,
                 touchDragging: false,
             }
         },
@@ -50,9 +49,6 @@
             tracks() {
                 this.initializeTracksTable();
             },
-            playingTrackId(trackId) {
-                this.setActiveClassFor(trackId);
-            }
         },
         methods: {
             initializeTracksTable() {
@@ -62,13 +58,11 @@
                     contentId: this.identifier + '-contentArea',
                     rows: this.renderFunction(this.tracks, this.playingTrackId),
                 });
-                this.setActiveClassFor(this.playingTrackId);
             },
             initDoubleClickListener() {
                 const playTrack = $event => {
                     const trackElement = this.findTrackElement($event.target);
                     const track = this.getTrackFromDomElement(trackElement);
-                    this.toggleActiveClass(trackElement);
                     this.$emit('track-selected', track);
                 };
                 this.$refs.scrollArea.addEventListener('dblclick', playTrack);
@@ -86,19 +80,6 @@
             getTrackFromDomElement(trackElement) {
                 const trackId = trackElement.getAttribute('data-id');
                 return this.tracks.filter(track => track.id === parseInt(trackId))[0];
-            },
-            toggleActiveClass(element) {
-                if (this.activeTrackElement) {
-                    this.activeTrackElement.classList.remove('active');
-                }
-                element.classList.add('active');
-                this.activeTrackElement = element;
-            },
-            setActiveClassFor(trackId) {
-                const elements = this.$refs.scrollArea.querySelectorAll(`[data-id='${trackId}']`);
-                if (elements.length > 0) {
-                    this.toggleActiveClass(elements[0]);
-                }
             },
         },
         computed: {

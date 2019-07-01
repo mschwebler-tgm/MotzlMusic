@@ -13,7 +13,7 @@ class Clusterizer {
 
     _generateHtmlRowFor(track, index) {
         const rowContent = this._generateHtmlRowContent(track, index);
-        const classes = ['track', 'is-unselectable'];
+        const classes = ['track', `track-row-${track.id}`, 'is-unselectable'];
         if (this._playingTrackId === track.id) {
             classes.push('active');
         }

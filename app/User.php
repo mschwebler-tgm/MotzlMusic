@@ -2,8 +2,8 @@
 
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
@@ -16,7 +16,16 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'spotify_id', 'birthdate', 'spotify_access_token', 'spotify_refresh_token', 'spotify_token_expire', 'email_verified_at'
+        'name',
+        'email',
+        'password',
+        'spotify_id',
+        'birthdate',
+        'spotify_access_token',
+        'spotify_refresh_token',
+        'spotify_token_expire',
+        'email_verified_at',
+        'profile_image'
     ];
 
     /**
@@ -25,7 +34,10 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token', 'spotify_access_token', 'spotify_refresh_token'
+        'password',
+        'remember_token',
+        'spotify_access_token',
+        'spotify_refresh_token'
     ];
 
     protected $casts = [

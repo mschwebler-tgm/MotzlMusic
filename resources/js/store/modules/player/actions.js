@@ -3,6 +3,7 @@ export default {
     },
     play({state}, track) {
         // TODO validateTrack: play track before validating? load artist and album afterwards?
+        updateActiveTrackClass(track, state.playerController.playingTrack);
         validateTrack(track).then(() => {
             return state.playerController.play(track);
         });
@@ -52,4 +53,15 @@ function validateTrack(track) {
             .then(resolve)
             .catch(reject);
     });
+}
+
+function updateActiveTrackClass(newTrack, oldTrack) {
+    if (oldTrack) {
+        const trackRows = [...document.getElementsByClassName(`track-row-${oldTrack.id}`)];
+        trackRows.forEach($row => $row.classList.remove('active'));
+    }
+    if (newTrack) {
+        const trackRows = [...document.getElementsByClassName(`track-row-${newTrack.id}`)];
+        trackRows.forEach($row => $row.classList.add('active'));
+    }
 }

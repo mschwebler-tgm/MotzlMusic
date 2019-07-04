@@ -1,5 +1,5 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
-    <div class="playlist-actions">
+    <div :class="{'playlist-actions': !$root.isMobile}">
         <v-btn flat class="hidden-sm-and-down">
             <v-icon>shuffle</v-icon>
             &nbsp;Shuffle
@@ -59,5 +59,10 @@
 </script>
 
 <style scoped>
-
+    .playlist-actions {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        display: flex;
+    }
 </style>

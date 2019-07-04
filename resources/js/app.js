@@ -38,6 +38,7 @@ const app = new Vue({
             mainContentHeaderComponent: MainContentHeaders.DEFAULT,
             user: null,
             isTouch: false,
+            isMobile: screen.width < 600,
             snackbar: {
                 show: false,
                 text: '',

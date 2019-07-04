@@ -1,5 +1,5 @@
 <template>
-    <v-flex class="track-table" id="my-library-tracks-table">
+    <div class="track-table">
         <div :id="tableId"
              :style="{'max-height': scrollContainerHeight}"
              class="clusterize-scroll"
@@ -16,7 +16,7 @@
             </v-progress-circular>
         </div>
         <track-table-context-menu :table-id="tableId" ref="contextMenu"></track-table-context-menu>
-    </v-flex>
+    </div>
 </template>
 
 <script>
@@ -67,7 +67,7 @@
                 };
                 this.$refs.scrollArea.addEventListener('dblclick', playTrack);
                 this.$refs.scrollArea.addEventListener('touchend', $event => {
-                    if (!this.touchDragging && !this.$refs.contextMenu.show) {
+                    if (!this.touchDragging && !this.$refs.contextMenu.show && !$event.target.classList.contains('track-options')) {
                         playTrack($event)
                     }
                 });

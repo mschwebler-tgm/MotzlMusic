@@ -64,11 +64,8 @@
             }
         },
         mounted() {
-            if (this.$root.isTouch) {
-                this.initTouchMenuListener();
-            } else {
-                this.initMenuListener();
-            }
+            this.initTouchMenuListener();
+            this.initMenuListener();
         },
         methods: {
             addToQueue() {

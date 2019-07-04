@@ -259,7 +259,7 @@
         props: ['user'],
         data() {
             return {
-                showDrawer: true,
+                showDrawer: !this.$root.isMobile,
                 dragging: false,
             }
         },

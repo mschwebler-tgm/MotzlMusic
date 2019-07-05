@@ -18,7 +18,7 @@ class Clusterizer {
             classes.push('active');
         }
 
-        return `<div class="${classes.join(' ')}" data-id="${track.id}" tabindex="1">${rowContent}</div>`;
+        return `<div class="${classes.join(' ')}" data-id="${track.id}" tabindex="-1">${rowContent}</div>`;
     }
 
     _generateHtmlRowContent(track, index) {
@@ -89,7 +89,7 @@ class MobileClusterizer {
             classes.push('active');
         }
 
-        return `<div class="${classes.join(' ')}" data-id="${track.id}" tabindex="1">${rowContent}</div>`;
+        return `<div class="${classes.join(' ')}" data-id="${track.id}" tabindex="-1">${rowContent}</div>`;
     }
 
     _generateHtmlRowContent(track) {

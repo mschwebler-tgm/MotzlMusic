@@ -40,6 +40,7 @@
                         player.addListener('ready', ({device_id}) => {
                             // playback workaround https://github.com/spotify/web-playback-sdk/issues/75
                             const iframe = document.querySelector('iframe[src="https://sdk.scdn.co/embedded/index.html"]');
+                            iframe.setAttribute('title', 'Spotify player');
                             if (iframe) {
                                 iframe.style.display = 'block';
                                 iframe.style.position = 'absolute';

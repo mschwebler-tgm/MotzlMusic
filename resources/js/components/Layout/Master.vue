@@ -129,10 +129,10 @@
                     <!-- DARK -->
                     <v-list-tile @click="$root.isDarkTheme = !$root.isDarkTheme">
                         <v-list-tile-action>
-                            <v-switch v-model="$root.isDarkTheme"></v-switch>
+                            <v-switch v-model="$root.isDarkTheme" id="menu__use-dark-theme"></v-switch>
                         </v-list-tile-action>
-                        <v-list-tile-title>
-                            Use dark theme
+                        <v-list-tile-title tag="label">
+                            <label for="menu__use-dark-theme">Use dark theme</label>
                         </v-list-tile-title>
                     </v-list-tile>
                     <v-divider></v-divider>
@@ -182,10 +182,10 @@
                             <v-divider></v-divider>
                             <v-list-tile @click="$root.isDarkTheme = !$root.isDarkTheme">
                                 <v-list-tile-action>
-                                    <v-switch v-model="$root.isDarkTheme" color="accent"></v-switch>
+                                    <v-switch v-model="$root.isDarkTheme" color="accent" id="nav__use-dark-theme"></v-switch>
                                 </v-list-tile-action>
                                 <v-list-tile-title>
-                                    Use dark theme
+                                    <label for="nav__use-dark-theme">Use dark theme</label>
                                 </v-list-tile-title>
                             </v-list-tile>
                             <v-divider></v-divider>

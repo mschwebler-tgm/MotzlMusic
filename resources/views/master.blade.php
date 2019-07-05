@@ -12,10 +12,10 @@
         <script src="/js/greenSock.js" async></script>
         <script src="/js/spotify-player.js" async></script>
 
-        <!-- Fonts -->
-        <link href="/fonts/nunito/nunito.css" rel="stylesheet" type="text/css">
-        <link rel="stylesheet" href="/fonts/materialdesignicons/css/materialdesignicons.min.css">
-
+        <!-- Preconnect DNS -->
+        <link rel="preconnect" href="https://apresolve.spotify.com">
+        <link rel="preconnect" href="https://sdk.scdn.co">
+        <link rel="preconnect" href="https://www.gravatar.com">
     </head>
     <body>
         <div id="root">
@@ -28,5 +28,8 @@
         <script>
             window.playlistFallback = '{{ env('PLAYLIST_FALLBACK', '/images/playlistFallback.jpeg') }}';
         </script>
+        <!-- Fonts -->
+        <link href="/fonts/nunito/nunito.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="/fonts/materialdesignicons/css/materialdesignicons.min.css">
     </body>
 </html>

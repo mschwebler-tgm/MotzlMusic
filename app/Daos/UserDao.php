@@ -26,7 +26,6 @@ class UserDao
             'spotify_access_token' => $oauth2User->token,
             'spotify_refresh_token' => $oauth2User->refreshToken,
             'birthdate' => $oauth2User->user['birthdate'],
-            'password' => bcrypt(str_random(20)),
         ]);
         $user->save();
         return $user;

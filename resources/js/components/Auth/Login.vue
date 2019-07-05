@@ -1,7 +1,7 @@
 <template>
     <v-flex lg4 md8 sm8 xs12>
         <div class="item elevation-24 pa-4 login-card grey darken-4 login-panel">
-            <v-btn flat icon absolute v-if="showForgotPassword" @click="showForgotPassword = false">
+            <v-btn flat icon absolute v-if="showForgotPassword" @click="showForgotPassword = false" aria-label="Back">
                 <v-icon>arrow_back</v-icon>
             </v-btn>
             <h1 class="display-2 font-weight-light text-xs-center">Login</h1>
@@ -17,6 +17,7 @@
         <v-layout justify-center row class="mt-4">
             <v-btn depressed
                    tag="a"
+                   aria-label="Use Spotify to login"
                    color="spotify grey darken-4"
                    class="elevation-2"
                    href="/spotify/authorize">

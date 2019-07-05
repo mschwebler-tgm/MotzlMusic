@@ -15,10 +15,11 @@
                    @click="playAlbum"
                    :class="{'force-show': $root.isTouch}"
                    color="secondary"
+                   aria-label="Play"
                    class="overlay-play-icon">
                 <v-icon medium>play_arrow</v-icon>
             </v-btn>
-            <v-btn icon disabled class="overlay-playing-icon" v-else>
+            <v-btn icon disabled class="overlay-playing-icon" aria-label="Playing" v-else>
                 <v-icon color="white">equalizer</v-icon> <!-- TODO animated SVG? -->
             </v-btn>
         </div>

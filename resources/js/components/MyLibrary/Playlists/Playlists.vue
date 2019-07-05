@@ -31,8 +31,8 @@
             <div class="d-flex align-center flex-column">
                 <p class="subheading text-xs-center">You have no playlists in your library.</p>
                 <div>
-                    <v-btn color="primary">create one!</v-btn>
-                    <v-btn flat color="primary" to="/import/spotify">Import from spotify</v-btn>
+                    <v-btn color="primary" aria-label="Create playlist">create one!</v-btn>
+                    <v-btn flat color="primary" to="/import/spotify" aria-label="Import from spotify">Import from spotify</v-btn>
                 </div>
             </div>
         </v-container>

@@ -20,6 +20,7 @@
                 <v-btn flat
                        tag="a"
                        href="https://github.com/mschwebler-tgm/MotzlMusic"
+                       aria-label="View on github"
                        target="_blank"
                        right
                        absolute>

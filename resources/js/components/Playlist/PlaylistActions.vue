@@ -6,7 +6,7 @@
         </v-btn>
         <v-menu bottom left offset-x>
             <template v-slot:activator="{ on }">
-                <v-btn flat icon v-on="on">
+                <v-btn flat icon v-on="on" aria-label="Playlist Options">
                     <v-icon>mdi-dots-vertical</v-icon>
                 </v-btn>
             </template>

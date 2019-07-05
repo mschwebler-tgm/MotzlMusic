@@ -64,10 +64,11 @@
                     <v-btn icon fab absolute bottom right medium
                            v-if="!isPlaying"
                            @click="playPlaylist"
+                           aria-label="Start playlist"
                            color="secondary">
                         <v-icon large>play_arrow</v-icon>
                     </v-btn>
-                    <v-btn icon disabled large class="overlay-playing-icon" v-else>
+                    <v-btn icon disabled large class="overlay-playing-icon" aria-label="Playing" v-else>
                         <v-icon large color="white">equalizer</v-icon> <!-- TODO animated SVG? -->
                     </v-btn>
                 </div>

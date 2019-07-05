@@ -146,7 +146,7 @@
 
             <!-- NAV BAR -->
             <v-toolbar app clipped-left dense color="primary" height="48">
-                <v-toolbar-side-icon @click="showDrawer = !showDrawer"></v-toolbar-side-icon>
+                <v-toolbar-side-icon @click="showDrawer = !showDrawer" aria-label="menu"></v-toolbar-side-icon>
                 <v-toolbar-title>MotzlMusic</v-toolbar-title>
                 <v-spacer></v-spacer>
                 <v-toolbar-items class="hidden-sm-and-down">
@@ -155,7 +155,7 @@
                     <v-menu transition="slide-y-transition"
                             :close-delay="500"
                             bottom left open-on-hover offset-y>
-                        <v-btn slot="activator" color="primary" depressed :ripple="false">
+                        <v-btn slot="activator" color="primary" depressed :ripple="false" aria-label="Profile">
                             {{ user.name }}
                         </v-btn>
                         <v-list dense>
@@ -227,6 +227,7 @@
                 <v-btn color="white"
                        v-show="$root.snackbar.buttonText"
                        flat
+                       :aria-label="$root.snackbar.buttonText"
                        @click="$root.snackbar.callback">
                     {{ $root.snackbar.buttonText }}
                 </v-btn>

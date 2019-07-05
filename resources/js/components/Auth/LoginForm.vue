@@ -31,10 +31,12 @@
             <div v-show="!loading">
                 <v-btn class="primary"
                        type="submit"
+                       aria-label="Login"
                        @click="loading = true">Login</v-btn>
                 <v-btn tag="a"
                        class="primary"
                        href="/register"
+                       aria-label="Register"
                        outline>Register
                 </v-btn>
             </div>

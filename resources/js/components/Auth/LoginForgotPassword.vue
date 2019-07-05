@@ -15,6 +15,7 @@
                :loading="loading"
                :disabled="emailWasSent"
                class="primary"
+               aria-label="Send password reset link"
                @click="resetPassword">
             {{ emailWasSent ? 'Email was sent' : 'Send Password Reset Link' }}
         </v-btn>

@@ -1,9 +1,9 @@
-<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
+<template>
     <v-layout column fill-height>
         <v-flex shrink class="pb-0">
             <v-layout justify-end>
                 <v-flex shrink>
-                    <v-btn flat icon>
+                    <v-btn flat icon aria-label="Settings">
                         <v-icon>settings</v-icon>
                     </v-btn>
                 </v-flex>

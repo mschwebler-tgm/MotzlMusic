@@ -4,7 +4,7 @@
              :style="{'max-height': scrollContainerHeight}"
              class="clusterize-scroll"
              ref="scrollArea">
-            <div :id="identifier + '-contentArea'" class="clusterize-content">
+            <div :id="identifier + '-contentArea'" class="clusterize-content" @focusin="onTrackFocus" @focusout="resetTrackFocus">
                 <div class="clusterize-no-data">
                 </div>
             </div>
@@ -51,6 +51,13 @@
             },
         },
         methods: {
+            onTrackFocus($event) {
+                const track = this.getTrackFromDomElement($event.target);
+                this.$store.commit('subContent/setFocusedTracks', [track]);
+            },
+            resetTrackFocus() {
+                this.$store.commit('subContent/setFocusedTracks', []);
+            },
             initializeTracksTable() {
                 this.isInitialized = true;
                 this.clusterize = new Clusterize({

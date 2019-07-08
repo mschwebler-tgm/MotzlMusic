@@ -29,6 +29,11 @@ class Track extends Model
         return $this->belongsToMany(User::class, 'user_has_track');
     }
 
+    public function audioFeatures()
+    {
+        return $this->hasOne(SpotifyAudioFeature::class, 'track_id', 'id');
+    }
+
     /**
      * @param $query Builder
      * @return Builder

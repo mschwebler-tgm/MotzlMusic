@@ -45,7 +45,7 @@ class MyLibraryDao
     public function getAllTracks()
     {
         return Track::ofCurrentUser()
-            ->with('artists', 'album')
+            ->with('artists', 'album', 'audioFeatures')
             ->orderBy('name', 'asc')->get();
     }
 

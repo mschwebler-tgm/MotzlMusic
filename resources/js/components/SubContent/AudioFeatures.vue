@@ -24,17 +24,17 @@
         },
         methods: {
             updateTrackData(track) {
-                if (!track.audioFeatures) {
+                if (!track.audio_features) {
                     this.fetchAudioFeatures(track);
                 } else {
-                    this.setChartData(track.audioFeatures);
+                    this.setChartData(track.audio_features);
                 }
             },
             fetchAudioFeatures(track) {
                 axios.get(`/api/track/${track.id}/audio-features`)
                     .then(res => {
-                        track.audioFeatures = res.data;
-                        this.setChartData(track.audioFeatures);
+                        track.audio_features = res.data;
+                        this.setChartData(track.audio_features);
                     });
             },
             setChartData(audioFeatures) {

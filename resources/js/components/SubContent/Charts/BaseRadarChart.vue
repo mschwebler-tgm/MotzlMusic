@@ -1,7 +1,9 @@
 <script>
-    import {Radar} from 'vue-chartjs';
+    import {mixins, Radar} from 'vue-chartjs';
     import theme from '../../../theme';
     import {hexToRgba} from '../../../helpers/colorsTransform'
+
+    const {reactiveProp} = mixins;
 
     const chartOptions = {
         legend: {
@@ -48,42 +50,21 @@
 
     export default {
         props: {
+            chartData: Object,
             playingTrack: Array,
             focusedTracks: Array,
         },
         name: "BaseRadarChart",
         extends: Radar,
+        mixins: [reactiveProp],
         mounted() {
             this.draw();
         },
         methods: {
             draw() {
-                let datasets = [
-                    {
-                        label: 'Focused tracks',
-                        backgroundColor: hexToRgba(theme.primary, .5),
-                        borderColor: theme.primary,
-                        borderWidth: 2,
-                        pointRadius: 2,
-                        pointHitRadius: 20,
-                        data: this.focusedTracks,
-                    },
-                    {
-                        label: 'Current track',
-                        backgroundColor: hexToRgba(theme.secondary, .5),
-                        borderColor: theme.secondary,
-                        borderWidth: 2,
-                        pointRadius: 2,
-                        pointHitRadius: 20,
-                        data: this.playingTrack,
-                    },
-                ];
 
                 this.renderChart(
-                    {
-                        labels: ['Happy', 'Dance', 'Speech', 'Acoustic', 'Instruments', 'Energy'],
-                        datasets: datasets
-                    },
+                    this.chartData,
                     chartOptions
                 );
             }

@@ -1,20 +1,22 @@
 <template>
     <div>
         <div class="chart-wrapper" style="display: flex; justify-content: center">
-            <base-radar-chart :height="320" :width="320" v-bind="chartData" ref="chart"></base-radar-chart>
+            <base-radar-chart :height="320" :width="320" :chart-data="chartData" ref="chart" v-if="shouldShowChart"></base-radar-chart>
         </div>
     </div>
 </template>
 
 <script>
     import BaseRadarChart from "./Charts/BaseRadarChart";
+    import {hexToRgba} from "../../helpers/colorsTransform";
+    import theme from "../../theme";
 
     export default {
         name: "AudioFeatures",
         components: {BaseRadarChart},
         data() {
             return {
-                chartData: {
+                chartDataSets: {
                     playingTrack: [],
                     focusedTracks: [],
                 },
@@ -45,7 +47,7 @@
             },
             setPlayingTrackChartData() {
                 let audioFeatures = this.playingTrack.audio_features;
-                this.chartData.playingTrack = [
+                this.chartDataSets.playingTrack = [
                     audioFeatures.valence,
                     audioFeatures.danceability,
                     audioFeatures.speechiness,
@@ -53,16 +55,16 @@
                     audioFeatures.instrumentalness,
                     audioFeatures.energy,
                 ];
-                this.$nextTick(() => {
-                    this.$refs.chart.draw();
-                });
+                // this.$nextTick(() => {
+                //     this.$refs.chart.draw();
+                // });
             },
             updateFocusedTracksData() {
                 if (!this._shouldDrawFocusedTrackData()) {
-                    this.chartData.focusedTracks = [];
-                    this.$nextTick(() => {
-                        this.$refs.chart.draw();
-                    });
+                    this.chartDataSets.focusedTracks = [];
+                    // this.$nextTick(() => {
+                    //     this.$refs.chart.draw();
+                    // });
                     return;
                 }
 
@@ -85,11 +87,11 @@
                         avgAudioFeatures[key] = avgAudioFeatures[key].reduce((a, b) => a + b, 0) / avgAudioFeatures[key].length;
                     });
 
-                    this.chartData.focusedTracks = Object.values(avgAudioFeatures);
+                    this.chartDataSets.focusedTracks = Object.values(avgAudioFeatures);
 
-                    this.$nextTick(() => {
-                        this.$refs.chart.draw();
-                    });
+                    // this.$nextTick(() => {
+                    //     this.$refs.chart.draw();
+                    // });
                 });
 
             },
@@ -108,6 +110,34 @@
             },
             focusedTracks() {
                 return this.$store.getters['subContent/focusedTracks'];
+            },
+            chartData() {
+                return {
+                    labels: ['Happy', 'Dance', 'Speech', 'Acoustic', 'Instruments', 'Energy'],
+                    datasets: [
+                        {
+                            label: 'Focused tracks',
+                            backgroundColor: hexToRgba(theme.primary, .5),
+                            borderColor: theme.primary,
+                            borderWidth: 2,
+                            pointRadius: 2,
+                            pointHitRadius: 20,
+                            data: this.chartDataSets.focusedTracks,
+                        },
+                        {
+                            label: 'Current track',
+                            backgroundColor: hexToRgba(theme.secondary, .5),
+                            borderColor: theme.secondary,
+                            borderWidth: 2,
+                            pointRadius: 2,
+                            pointHitRadius: 20,
+                            data: this.chartDataSets.playingTrack,
+                        },
+                    ]
+                }
+            },
+            shouldShowChart() {  // bug in vue-chartjs: when no initial data is available, animations are not working
+                return this.chartData.datasets.reduce((total, dataset) => total + dataset.data.length, 0) > 0;
             },
         }
     }

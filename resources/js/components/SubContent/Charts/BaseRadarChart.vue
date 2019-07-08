@@ -48,8 +48,8 @@
 
     export default {
         props: {
-            data: Array,
-            default: () => [],
+            playingTrack: Array,
+            focusedTracks: Array,
         },
         name: "BaseRadarChart",
         extends: Radar,
@@ -58,20 +58,31 @@
         },
         methods: {
             draw() {
+                let datasets = [
+                    {
+                        label: 'Focused tracks',
+                        backgroundColor: hexToRgba(theme.primary, .5),
+                        borderColor: theme.primary,
+                        borderWidth: 2,
+                        pointRadius: 2,
+                        pointHitRadius: 20,
+                        data: this.focusedTracks,
+                    },
+                    {
+                        label: 'Current track',
+                        backgroundColor: hexToRgba(theme.secondary, .5),
+                        borderColor: theme.secondary,
+                        borderWidth: 2,
+                        pointRadius: 2,
+                        pointHitRadius: 20,
+                        data: this.playingTrack,
+                    },
+                ];
+
                 this.renderChart(
                     {
                         labels: ['Happy', 'Dance', 'Speech', 'Acoustic', 'Instruments', 'Energy'],
-                        datasets: [
-                            {
-                                label: 'Current track',
-                                backgroundColor: hexToRgba(theme.primary, .5),
-                                borderColor: theme.primary,
-                                borderWidth: 2,
-                                pointRadius: 2,
-                                pointHitRadius: 20,
-                                data: this.data,
-                            },
-                        ]
+                        datasets: datasets
                     },
                     chartOptions
                 );

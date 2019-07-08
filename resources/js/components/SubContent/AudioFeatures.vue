@@ -7,6 +7,8 @@
 </template>
 
 <script>
+    // TODO change chart library to highcharts
+
     import BaseRadarChart from "./Charts/BaseRadarChart";
     import {hexToRgba} from "../../helpers/colorsTransform";
     import theme from "../../theme";

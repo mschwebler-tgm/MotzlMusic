@@ -10,6 +10,8 @@
         default: () => [null, null, null, null, null, null],
         validator: arr => arr.length === 6,
     };
+    const primaryIndex = 1;
+    const secondaryIndex = 0;
 
     export default {
         name: "ReactiveRadarChart",
@@ -25,6 +27,11 @@
                 default: 'Playing track',
             },
         },
+        data() {
+            return {
+                chart: null,
+            }
+        },
         created() {
             radarChartConfig.series[0].data = this.secondaryData;
             radarChartConfig.series[0].name = this.secondaryLabel;
@@ -32,7 +39,20 @@
             radarChartConfig.series[1].name = this.primaryLabel;
         },
         mounted() {
-            Highcharts.chart('chart', radarChartConfig);
+            this.chart = Highcharts.chart('chart', radarChartConfig);
+        },
+        methods: {
+            updateSeries(dataIndex, data) {
+                this.chart.series[dataIndex].setData(data);
+            },
+        },
+        watch: {
+            primaryData(data) {
+                this.updateSeries(primaryIndex, data);
+            },
+            secondaryData(data) {
+                this.updateSeries(secondaryIndex, data);
+            },
         }
     }
 </script>

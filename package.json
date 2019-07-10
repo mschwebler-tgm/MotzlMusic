@@ -31,6 +31,8 @@
         "chart.js": "^2.8.0",
         "chartjs": "^0.3.24",
         "clusterize.js": "^0.18.1",
+        "highcharts": "^7.1.2",
+        "highcharts-more": "^0.1.7",
         "lodash.camelcase": "^4.3.0",
         "material-icons": "^0.3.0",
         "smooth-dnd": "^0.12.0",

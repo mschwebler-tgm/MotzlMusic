@@ -76,3 +76,7 @@ html {
   background: linear-gradient(45deg, rgba(30,87,153,0) 0%,rgba(30,87,153,0) 2%,rgba(30,87,153,0) 21%, rgb(37, 98, 37) 22%,rgb(47, 157, 47) 42%,rgba(30,87,153,0) 43%,rgba(30,87,153,0) 94%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#001e5799', endColorstr='#001e5799',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
+
+text.highcharts-credits {
+  display: none;  // muhahahaha
+}

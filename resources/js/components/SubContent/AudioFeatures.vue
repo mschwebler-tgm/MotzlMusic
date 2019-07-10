@@ -38,7 +38,7 @@
             },
             primaryData() {
                 if (!this.playingTrack || !this.playingTrack.audio_features) {
-                    return [0,0,0,0,0,0];
+                    return [0, 0, 0, 0, 0, 0];
                 }
                 const audioFeatures = this.playingTrack.audio_features;
 
@@ -56,9 +56,5 @@
 </script>
 
 <style scoped>
-    .chart-wrapper {
-        display: flex;
-        justify-content: center;
-        padding: 10px 0 20px 0;
-    }
+
 </style>

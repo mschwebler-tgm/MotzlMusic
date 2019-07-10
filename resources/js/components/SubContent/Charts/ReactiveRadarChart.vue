@@ -8,7 +8,6 @@
     const seriesData = {
         type: Array,
         default: () => [null, null, null, null, null, null],
-        validator: arr => arr.length === 6,
     };
     const primaryIndex = 1;
     const secondaryIndex = 0;

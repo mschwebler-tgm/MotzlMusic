@@ -30,13 +30,12 @@
 </template>
 
 <script>
-    import BaseRadarChart from "../SubContent/Charts/BaseRadarChart";
     import AudioFeatures from "../SubContent/AudioFeatures";
     import PlayerControls from "../SubContent/PlayerControls";
     import TrackInfo from "../SubContent/TrackInfo";
     export default {
         name: "SubContent",
-        components: {TrackInfo, PlayerControls, AudioFeatures, BaseRadarChart}
+        components: {TrackInfo, PlayerControls, AudioFeatures}
     }
 </script>
 

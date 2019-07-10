@@ -59,7 +59,7 @@ export default {
     series: [
         {
             name: 'Playing track',
-            data: [.5, .3, .1, .01, .8, 1],
+            data: [null, null, null, null, null, null],
             color: theme.secondary,
             pointPlacement: 'on',
             marker: {
@@ -76,7 +76,7 @@ export default {
         {
             name: 'Selected tracks (avg)',
             color: theme.primary,
-            data: [.8, .39000, .42000, .31000, .26000, .14000],
+            data: [null, null, null, null, null, null],
             pointPlacement: 'on',
             marker: {
                 enabled: true,

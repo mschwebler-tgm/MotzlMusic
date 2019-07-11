@@ -1,7 +1,8 @@
 <template>
     <div>
         <reactive-radar-chart
-                :secondary-data="primaryData">
+                :secondary-data="secondaryData"
+                :primary-data="primaryData">
         </reactive-radar-chart>
     </div>
 </template>
@@ -28,19 +29,11 @@
 
                 return Promise.all(promises);
             },
-        },
-        computed: {
-            playingTrack() {
-                return this.$store.getters['player/playingTrack'];
-            },
-            focusedTracks() {
-                return this.$store.getters['subContent/focusedTracks'];
-            },
-            primaryData() {
-                if (!this.playingTrack || !this.playingTrack.audio_features) {
+            getAudioFeaturesAsArray(track) {
+                if (!track || !track.audio_features) {
                     return [0, 0, 0, 0, 0, 0];
                 }
-                const audioFeatures = this.playingTrack.audio_features;
+                const audioFeatures = track.audio_features;
 
                 return [
                     audioFeatures.valence,
@@ -50,6 +43,21 @@
                     audioFeatures.instrumentalness,
                     audioFeatures.energy,
                 ];
+            }
+        },
+        computed: {
+            playingTrack() {
+                return this.$store.getters['player/playingTrack'];
+            },
+            focusedTracks() {
+                return this.$store.getters['subContent/focusedTracks'];
+            },
+            secondaryData() {
+                return this.getAudioFeaturesAsArray(this.playingTrack);
+            },
+            primaryData() {
+                // noinspection JSPotentiallyInvalidTargetOfIndexedPropertyAccess
+                return this.getAudioFeaturesAsArray(this.focusedTracks.length > 0 ? this.focusedTracks[0] : null);
             }
         }
     }

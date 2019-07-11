@@ -32,6 +32,8 @@
 </template>
 
 <script>
+    import {slugify} from "../../../helpers";
+
     export default {
         name: "PlaylistItem",
         props: {
@@ -40,7 +42,7 @@
         methods: {
             openPlaylistDetails() {
                 this.$store.commit('cache/setSelectedPlaylist', this.playlist);
-                this.$router.push(`/my-library/playlists/${this.playlist.name}/${this.playlist.id}`);
+                this.$router.push(`/my-library/playlists/${slugify(this.playlist.name)}/${this.playlist.id}`);
             },
             playPlaylist($event) {
                 $event.stopPropagation();

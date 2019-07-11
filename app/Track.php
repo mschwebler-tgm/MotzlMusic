@@ -19,6 +19,11 @@ class Track extends Model
         return $this->belongsTo(Album::class);
     }
 
+    public function playlists()
+    {
+        return $this->belongsToMany(Playlist::class, 'playlist_has_track');
+    }
+
     public function owningUsers()
     {
         return $this->belongsToMany(User::class, 'user_has_track')->wherePivot('type', 'owner');

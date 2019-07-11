@@ -3,7 +3,7 @@ import getters from './getters';
 import actions from './actions';
 
 const state = {
-    focusedTracks: [],
+    focusedItems: [],
 };
 
 export default {

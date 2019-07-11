@@ -1,5 +1,5 @@
 export default {
-    setFocusedTracks(state, tracks) {
-        state.focusedTracks = tracks;
+    setFocusedItems(state, items) {
+        state.focusedItems = items;
     }
 }

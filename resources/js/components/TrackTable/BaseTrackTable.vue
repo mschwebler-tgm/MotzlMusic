@@ -53,10 +53,10 @@
         methods: {
             onTrackFocus($event) {
                 const track = this.getTrackFromDomElement($event.target);
-                this.$store.commit('subContent/setFocusedTracks', [track]);
+                this.$store.commit('subContent/setFocusedItems', [track]);
             },
             resetTrackFocus() {
-                this.$store.commit('subContent/setFocusedTracks', []);
+                this.$store.commit('subContent/setFocusedItems', []);
             },
             initializeTracksTable() {
                 this.isInitialized = true;

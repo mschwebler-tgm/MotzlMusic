@@ -1,3 +1,3 @@
 export default {
-    focusedTracks: state => state.focusedTracks,
+    focusedItems: state => state.focusedItems,
 }

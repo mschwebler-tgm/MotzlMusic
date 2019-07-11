@@ -49,15 +49,15 @@
             playingTrack() {
                 return this.$store.getters['player/playingTrack'];
             },
-            focusedTracks() {
-                return this.$store.getters['subContent/focusedTracks'];
+            focusedItems() {
+                return this.$store.getters['subContent/focusedItems'];
             },
             secondaryData() {
                 return this.getAudioFeaturesAsArray(this.playingTrack);
             },
             primaryData() {
                 // noinspection JSPotentiallyInvalidTargetOfIndexedPropertyAccess
-                return this.getAudioFeaturesAsArray(this.focusedTracks.length > 0 ? this.focusedTracks[0] : null);
+                return this.getAudioFeaturesAsArray(this.focusedItems.length > 0 ? this.focusedItems[0] : null);
             }
         }
     }

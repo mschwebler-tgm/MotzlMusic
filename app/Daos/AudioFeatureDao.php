@@ -2,22 +2,31 @@
 
 namespace App\Daos;
 
-use App\Playlist;
+use App\HasTracks;
 use App\SpotifyAudioFeature;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
-class PlaylistDao
+class AudioFeatureDao
 {
-    public function addAudioFeatures(Collection $playlists)
+    /**
+     * @param Collection $hasTracksModels
+     * @return Collection
+     */
+    public function addAverageAudioFeaturesTo(Collection $hasTracksModels)
     {
-        return $playlists->map(function (Playlist $playlist) {
-            return $playlist->setAttribute('audio_features', $this->getAverageAudioFeatures($playlist));
+        return $hasTracksModels->map(function (Model $hasTracksModel) {
+            return $hasTracksModel->setAttribute('audio_features', $this->getAverageAudioFeatures($hasTracksModel));
         });
     }
 
-    private function getAverageAudioFeatures(Playlist $playlist)
+    /**
+     * @param HasTracks|Model $hasTracksModel
+     * @return SpotifyAudioFeature
+     */
+    private function getAverageAudioFeatures(HasTracks $hasTracksModel)
     {
-        $audioFeatures = $playlist->tracks()->with('audioFeatures')->get()->pluck('audioFeatures');
+        $audioFeatures = $hasTracksModel->tracks()->with('audioFeatures')->get()->pluck('audioFeatures');
 
         return new SpotifyAudioFeature([
             'valence' => $this->averageAudioFeature($audioFeatures, 'valence'),

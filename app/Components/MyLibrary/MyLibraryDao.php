@@ -2,7 +2,7 @@
 
 namespace App\Components\MyLibrary;
 
-use App\Daos\PlaylistDao;
+use App\Daos\AudioFeatureDao;
 use App\Playlist;
 use App\Track;
 use App\User;
@@ -11,12 +11,12 @@ class MyLibraryDao
 {
     /** @var User */
     private $user;
-    private $playlistDao;
+    private $audioFeatureDao;
 
-    public function __construct(PlaylistDao $playlistDao)
+    public function __construct(AudioFeatureDao $playlistDao)
     {
         $this->user = apiUser();
-        $this->playlistDao = $playlistDao;
+        $this->audioFeatureDao = $playlistDao;
     }
 
     public function getAllPlaylistsExcept(array $except = [])
@@ -26,7 +26,7 @@ class MyLibraryDao
             ->whereNotIn('id', $except)
             ->get();
 
-        return $this->playlistDao->addAudioFeatures($playlists);
+        return $this->audioFeatureDao->addAverageAudioFeaturesTo($playlists);
     }
 
     public function getRecentPlaylists($amount)
@@ -36,7 +36,7 @@ class MyLibraryDao
             ->limit($amount)
             ->get();
 
-        return $this->playlistDao->addAudioFeatures($playlists);
+        return $this->audioFeatureDao->addAverageAudioFeaturesTo($playlists);
     }
 
     public function getSpotifyPlaylists()
@@ -46,7 +46,7 @@ class MyLibraryDao
             ->whereNotNull('spotify_id')
             ->get();
 
-        return $this->playlistDao->addAudioFeatures($playlists);
+        return $this->audioFeatureDao->addAverageAudioFeaturesTo($playlists);
     }
 
     public function getAllTracks()

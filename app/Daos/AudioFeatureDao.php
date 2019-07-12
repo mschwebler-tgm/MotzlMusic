@@ -6,6 +6,7 @@ use App\HasTracks;
 use App\SpotifyAudioFeature;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 
 class AudioFeatureDao
 {
@@ -16,8 +17,24 @@ class AudioFeatureDao
     public function addAverageAudioFeaturesTo(Collection $hasTracksModels)
     {
         return $hasTracksModels->map(function (Model $hasTracksModel) {
-            return $hasTracksModel->setAttribute('audio_features', $this->getAverageAudioFeatures($hasTracksModel));
+            return $hasTracksModel->setAttribute('audio_features', $this->getCachedAverageAudioFeatures($hasTracksModel));
         });
+    }
+
+    /**
+     * @param HasTracks|Model $hasTracksModel
+     * @return mixed
+     */
+    private function getCachedAverageAudioFeatures(HasTracks $hasTracksModel)
+    {
+        $cacheKey = __METHOD__ . "_" . get_class($hasTracksModel) . "_{$hasTracksModel->id}";
+        $audioFeatures = Cache::get($cacheKey);
+        if (!$audioFeatures) {
+            $audioFeatures = $this->getAverageAudioFeatures($hasTracksModel);
+            Cache::put($cacheKey, $audioFeatures, 120);
+        }
+
+        return $audioFeatures;
     }
 
     /**

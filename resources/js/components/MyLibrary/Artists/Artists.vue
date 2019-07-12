@@ -109,7 +109,7 @@
                     .flat();
 
                 return {
-                    name: 'All Singles',
+                    name: 'My one hit wonders',
                     id: 'myLibrarySingles',
                     total_tracks: singleTracks.length,
                     tracks: singleTracks,

@@ -8,6 +8,7 @@
 </template>
 
 <script>
+    import Vue from "vue";
     import ReactiveRadarChart from "./Charts/ReactiveRadarChart";
 
     export default {
@@ -24,7 +25,7 @@
                     .filter(track => !track.audio_features)
                     .map(track => {
                         return axios.get(`/api/track/${track.id}/audio-features`)
-                            .then(res => track.audio_features = res.data);
+                            .then(res => Vue.set(track, 'audio_features', res.data));
                     });
 
                 return Promise.all(promises);

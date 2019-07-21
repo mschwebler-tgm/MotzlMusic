@@ -2,6 +2,8 @@
     <v-card tile
             hover
             @click="openAlbumDetails"
+            @mouseenter="showAudioFeatures"
+            @mouseleave="hideAudioFeatures"
             class="overlay-play-icon-toggle">
         <div class="relative">
             <v-img
@@ -46,6 +48,12 @@
             playAlbum($event) {
                 $event.stopPropagation();
                 this.$store.dispatch('player/playList', {type: 'album', list: this.album});
+            },
+            showAudioFeatures() {
+                this.$store.commit('subContent/setFocusedItems', [this.album]);
+            },
+            hideAudioFeatures() {
+                this.$store.commit('subContent/setFocusedItems', []);
             },
         },
         computed: {

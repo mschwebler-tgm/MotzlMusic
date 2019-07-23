@@ -4,7 +4,6 @@ namespace App\DTOs;
 
 use App\Components\Spotify\Models\Track as SpotifyTrack;
 use App\Track;
-use App\User;
 use Illuminate\Support\Collection;
 
 class TrackDTO implements SpotifyDTO
@@ -60,6 +59,7 @@ class TrackDTO implements SpotifyDTO
         return [
             'name' => $spotifyTrack->name,
             'spotify_id' => $spotifyTrack->id,
+            'isrc' => $spotifyTrack->externalIds->isrc,
             'duration' => $spotifyTrack->duration,
             'popularity' => $spotifyTrack->popularity,
             'spotify_href' => $spotifyTrack->href,

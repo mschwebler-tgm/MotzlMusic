@@ -24,7 +24,7 @@ abstract class AbstractByLetterDao
         $this->loadItemsForOccurrences($alphaLetterOccurrences);
         $this->loadItemsForOccurrences($nonAlphaLetterOccurrences);
 
-        return $alphaLetterOccurrences->prepend($nonAlphaLetterOccurrences);
+        return $alphaLetterOccurrences->prepend($nonAlphaLetterOccurrences)->filter();
     }
 
     /**
@@ -69,6 +69,10 @@ abstract class AbstractByLetterDao
 
     private function loadItemsForOccurrences($occurrences)
     {
+        if (!$occurrences) {
+            return;
+        }
+
         /** @var ArtistByLetterOccurrence $occurrence */
         foreach ($occurrences as $occurrence) {
             $occurrence->loadItems();

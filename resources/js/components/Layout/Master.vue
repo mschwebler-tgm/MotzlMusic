@@ -27,7 +27,7 @@
                     </v-list>
                 </v-toolbar>
 
-                <v-list dense>
+                <v-list dense expand>
                     <!-- HOME -->
                     <v-list-tile @click="$router.push('/')">
                         <v-list-tile-action>
@@ -138,7 +138,7 @@
                     <v-divider></v-divider>
 
                     <!-- LOGOUT -->
-                    <v-list-tile @click="logout()">
+                    <v-list-tile @click="logout()" v-if="$root.isMobile">
                         <v-list-tile-title>Logout</v-list-tile-title>
                     </v-list-tile>
                 </v-list>

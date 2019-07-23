@@ -26,4 +26,10 @@ class TrackDao
     {
         return Track::with('artists', 'album')->find($id);
     }
+
+    public function updateLocalPath(Track $track, $path)
+    {
+        $track->local_path = $path;
+        return $track->save();
+    }
 }

@@ -26,13 +26,14 @@ class DeezerDownloader
     {
         $track = $this->trackDao->get($id);
         if (!$track->isrc) {
-            return Log::info("Track could not be downloaded (isrc missing). ID: $track->id");
+            Log::info("Track could not be downloaded (isrc missing). ID: $track->id");
+            return false;
         }
 
-        $scriptPath = $this->getDownloadScriptPath();
         $deezerUrl = $this->deezerClient->getDeezerTrackUrl($track->isrc);
-        $output = exec("python3 $scriptPath --link $deezerUrl -q 2");
-        dd($output);
+        $filePath = $this->fetchFile($deezerUrl);
+
+        return $this->trackDao->updateLocalPath($track, $filePath);
     }
 
     /**
@@ -41,5 +42,18 @@ class DeezerDownloader
     protected function getDownloadScriptPath(): string
     {
         return __DIR__ . '/script/deezpy.py';
+    }
+
+    /**
+     * @param $deezerUrl
+     * @return mixed|string
+     */
+    protected function fetchFile($deezerUrl)
+    {
+        $scriptPath = $this->getDownloadScriptPath();
+        $filePath = exec("python3 $scriptPath --link $deezerUrl -q 2");
+        $filePath = str_replace(storage_path('app/'), '', $filePath);
+
+        return str_replace(' already exists!', '', $filePath);
     }
 }

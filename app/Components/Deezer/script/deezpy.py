@@ -393,7 +393,7 @@ def downloadTrack(filename, ext, url, bfKey):
         i = filesize/2048
         req = resumeDownload(url, filesize)
     else:
-        print(f"Downloading: {realFile}...", end='', flush=True)
+        print(f"{realFile}", end='', flush=True)
         filesize = 0
         i = 0
         req = requests_retry_session().get(url, stream=True)
@@ -497,7 +497,7 @@ def downloadDeezer(url):
     mediaType, mediaId = deezerTypeId(url)
     if mediaType == 'track':
         if getTrack(mediaId):
-            print("Done!")
+            print("")
     # we can't invoke downloadDeezer() again, as in the else block because
     # playlists have a different tracklisting, not available in JSON
     elif mediaType == 'playlist':

@@ -29,6 +29,10 @@ class TrackDao
 
     public function updateLocalPath(Track $track, $path)
     {
+        if (!file_exists(storage_path("app/$path"))) {
+            return false;
+        }
+
         $track->local_path = $path;
         return $track->save();
     }

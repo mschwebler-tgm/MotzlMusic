@@ -27,7 +27,7 @@
                     </v-list>
                 </v-toolbar>
 
-                <v-list dense>
+                <v-list dense expand>
                     <!-- HOME -->
                     <v-list-tile @click="$router.push('/')">
                         <v-list-tile-action>

@@ -2,6 +2,8 @@
 
 return [
 
+    'download_tracks' => env('DOWNLOAD_TRACKS', false),
+
     /*
     |--------------------------------------------------------------------------
     | Application Name

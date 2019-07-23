@@ -13,9 +13,11 @@
                     <v-divider></v-divider>
                 </template>
             </v-list>
-            <v-container class="settings-content">
-                <router-view></router-view>
-            </v-container>
+            <div class="settings-content">
+                <transition name="settings" mode="out-in">
+                    <router-view></router-view>
+                </transition>
+            </div>
         </v-container>
     </v-card>
 </template>
@@ -55,6 +57,7 @@
 <style scoped>
     .settings-wrapper {
         display: flex;
+        align-items: flex-start;
     }
 
     .settings-menu {
@@ -65,5 +68,50 @@
 
     .settings-content {
         flex: 1;
+        padding: 0 24px;
+    }
+
+    .settings-enter {
+        -webkit-transform: translate3d(-5px, 0, 0);
+        -moz-transform: translate3d(-5px, 0, 0);
+        -ms-transform: translate3d(-5px, 0, 0);
+        -o-transform: translate3d(-5px, 0, 0);
+        transform: translate3d(-5px, 0, 0);
+        opacity: 0;
+    }
+
+    .settings-enter-to {
+        -webkit-transform: translate3d(0, 0, 0);
+        -moz-transform: translate3d(0, 0, 0);
+        -ms-transform: translate3d(0, 0, 0);
+        -o-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+        opacity: 1;
+    }
+
+    .settings-enter-active, .settings-leave-active {
+        -webkit-transition: transform .15s ease-in-out, opacity .15s ease-in;
+        -moz-transition: transform .15s ease-in-out, opacity .15s ease-in;
+        -ms-transition: transform .15s ease-in-out, opacity .15s ease-in;
+        -o-transition: transform .15s ease-in-out, opacity .15s ease-in;
+        transition: transform .15s ease-in-out, opacity .15s ease-in;
+    }
+
+    .settings-leave {
+        -webkit-transform: translate3d(0, 0, 0);
+        -moz-transform: translate3d(0, 0, 0);
+        -ms-transform: translate3d(0, 0, 0);
+        -o-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+        opacity: 1;
+    }
+
+    .settings-leave-to {
+        -webkit-transform: translate3d(-5px, 0, 0);
+        -moz-transform: translate3d(-5px, 0, 0);
+        -ms-transform: translate3d(-5px, 0, 0);
+        -o-transform: translate3d(-5px, 0, 0);
+        transform: translate3d(-5px, 0, 0);
+        opacity: 0;
     }
 </style>

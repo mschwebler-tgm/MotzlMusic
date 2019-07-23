@@ -29,6 +29,12 @@ html {
   flex-direction: column;
 }
 
+.flex-space-between {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 .flex-1 {
   flex: 1;
 }

@@ -4,6 +4,11 @@ import Master from './components/Layout/Master';
 import Home from './components/Home/Home';
 import Profile from './components/Profile/Profile';
 import Settings from './components/Settings/Settings';
+import SettingsGeneral from './components/Settings/Categories/General';
+import SettingsDeleteAccount from './components/Settings/Categories/DeleteAccount';
+import SettingsNotifications from './components/Settings/Categories/Notifications';
+import SettingsPrivacy from './components/Settings/Categories/Privacy';
+import SettingsProfile from './components/Settings/Categories/Profile';
 import SpotifyImport from './components/SpotifyImport/SpotifyImport';
 import Upload from './components/Upload/Upload';
 import MyLibrary from './components/MyLibrary/MyLibrary';
@@ -38,6 +43,34 @@ export default new VueRouter({
                     path: 'settings',
                     name: 'settings',
                     component: Settings,
+                    redirect: '/settings/general',
+                    children: [
+                        {
+                            path: 'general',
+                            name: 'General',
+                            component: SettingsGeneral,
+                        },
+                        {
+                            path: 'notifications',
+                            name: 'Notifications',
+                            component: SettingsNotifications,
+                        },
+                        {
+                            path: 'privacy',
+                            name: 'Privacy',
+                            component: SettingsPrivacy,
+                        },
+                        {
+                            path: 'profile',
+                            name: 'Profile',
+                            component: SettingsProfile,
+                        },
+                        {
+                            path: 'delete-account',
+                            name: 'Delete Account',
+                            component: SettingsDeleteAccount,
+                        },
+                    ],
                 },
                 {
                     path: 'import/spotify',
@@ -82,7 +115,7 @@ export default new VueRouter({
                         },
                     ]
                 }
-           ],
+            ],
         },
     ],
 });

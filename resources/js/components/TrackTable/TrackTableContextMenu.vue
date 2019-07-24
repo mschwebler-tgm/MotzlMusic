@@ -6,39 +6,39 @@
                offset-x
                absolute>
         <v-list light :dense="isDense">
-            <v-list-tile @click="addToQueue">
-                <v-list-tile-avatar>
+            <v-list-item @click="addToQueue">
+                <v-list-item-title>
                     <v-icon small>add_to_queue</v-icon>
-                </v-list-tile-avatar>
-                <v-list-tile-title>
+                </v-list-item-title>
+                <v-list-item-title>
                     Add to Queue
-                </v-list-tile-title>
-            </v-list-tile>
-            <v-list-tile @click="show = false">
-                <v-list-tile-avatar>
+                </v-list-item-title>
+            </v-list-item>
+            <v-list-item @click="show = false">
+                <v-list-item-title>
                     <v-icon small>playlist_add</v-icon>
-                </v-list-tile-avatar>
-                <v-list-tile-title>
+                </v-list-item-title>
+                <v-list-item-title>
                     Add to Playlist
-                </v-list-tile-title>
-            </v-list-tile>
+                </v-list-item-title>
+            </v-list-item>
             <v-divider></v-divider>
-            <v-list-tile @click="removeTrackFromLibrary">
-                <v-list-tile-avatar>
+            <v-list-item @click="removeTrackFromLibrary">
+                <v-list-item-title>
                     <v-icon small>delete</v-icon>
-                </v-list-tile-avatar>
-                <v-list-tile-title>
+                </v-list-item-title>
+                <v-list-item-title>
                     Remove from your Library
-                </v-list-tile-title>
-            </v-list-tile>
-            <v-list-tile @click="show = false">
-                <v-list-tile-avatar>
+                </v-list-item-title>
+            </v-list-item>
+            <v-list-item @click="show = false">
+                <v-list-item-title>
                     <v-icon small>edit</v-icon>
-                </v-list-tile-avatar>
-                <v-list-tile-title>
+                </v-list-item-title>
+                <v-list-item-title>
                     Edit
-                </v-list-tile-title>
-            </v-list-tile>
+                </v-list-item-title>
+            </v-list-item>
         </v-list>
     </component>
 </template>

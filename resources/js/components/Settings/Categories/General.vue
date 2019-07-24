@@ -2,12 +2,10 @@
     <div>
         <h3 class="headline">General Information</h3>
         <v-divider class="mb-3 mt-3"></v-divider>
-        <v-text-field class="nickname" box label="Nickname" v-model="user.name"></v-text-field>
-        <v-text-field class="email" box label="Email" :value="user.email" disabled></v-text-field>
-        <v-chip class="mb-2" outline color="spotify" v-if="user.spotify_id" title="You are linked with your spotify account">
-            <v-avatar>
-                <v-icon>check_circle</v-icon>
-            </v-avatar>
+        <v-text-field class="nickname" filled label="Nickname" v-model="user.name"></v-text-field>
+        <v-text-field class="email" filled label="Email" :value="user.email" disabled></v-text-field>
+        <v-chip class="mb-2" color="spotify" v-if="user.spotify_id" title="You are linked with your spotify account">
+            <v-icon left>check_circle</v-icon>
             Spotify connected
         </v-chip>
         <v-divider class="mb-3 mt-3"></v-divider>

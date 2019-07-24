@@ -1,15 +1,15 @@
 <template>
     <v-card>
-        <v-container><h2 class="headline">Settings</h2></v-container>
-        <v-container class="settings-wrapper">
+        <v-container class="pa-5"><h2 class="headline">Settings</h2></v-container>
+        <v-container class="settings-wrapper pa-5">
             <v-list class="settings-menu" subheader>
                 <v-divider></v-divider>
                 <template v-for="setting in settings">
-                    <v-list-tile :to="setting.to">
-                        <v-list-tile-content>
-                            <v-list-tile-title>{{ setting.name }}</v-list-tile-title>
-                        </v-list-tile-content>
-                    </v-list-tile>
+                    <v-list-item :to="setting.to">
+                        <v-list-item-content>
+                            <v-list-item-title>{{ setting.name }}</v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
                     <v-divider></v-divider>
                 </template>
             </v-list>

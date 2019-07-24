@@ -25,8 +25,7 @@
                 id="remember"
                 label="'member me">
         </v-checkbox>
-        <v-layout justify-space-between align-center row>
-
+        <v-layout justify-space-between align-center row class="pa-3">
             <v-progress-linear :indeterminate="true" v-show="loading"></v-progress-linear>
             <div v-show="!loading">
                 <v-btn class="primary"
@@ -37,11 +36,11 @@
                        class="primary"
                        href="/register"
                        aria-label="Register"
-                       outline>Register
+                       outlined>Register
                 </v-btn>
             </div>
             <v-btn v-show="!loading"
-                   flat right
+                   text right
                    :ripple="false"
                    @click="$emit('update:showForgotPassword', true)"
                    color="primary">

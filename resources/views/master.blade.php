@@ -9,6 +9,7 @@
         <title>{{ config('app.name', 'MotzlMusic') }}</title>
 
         <link rel="stylesheet" href="/css/app.css">
+        <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic|Quicksand|Source+Sans+Pro:300,400,600,700|Titillium+Web:300,400,600,700&display=swap" rel="stylesheet">
         <script src="{{ mix('/js/app.js') }}" defer></script>
         <script src="/js/greenSock.js" async></script>
         <script src="/js/spotify-player.js" async></script>

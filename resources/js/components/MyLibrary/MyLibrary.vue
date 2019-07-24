@@ -1,8 +1,8 @@
 <template>
     <v-card>
-        <v-container v-if="!$root.isTouch"><h2 class="headline">{{ $route.name }}</h2></v-container>
+        <v-container v-if="!$root.isTouch" class="pa-5"><h2 class="headline">{{ $route.name }}</h2></v-container>
         <transition name="my-library" mode="out-in">
-            <router-view></router-view>
+            <router-view class="pa-3"></router-view>
         </transition>
     </v-card>
 </template>

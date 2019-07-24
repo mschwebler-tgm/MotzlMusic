@@ -12,10 +12,10 @@
                     :alt="playlist.name"
                     aspect-ratio="1">
             </v-img>
-            <v-btn icon fab absolute bottom right small
+            <v-btn fab absolute depressed bottom right small
                    v-if="!isPlaying"
                    @click="playPlaylist"
-                   :class="{'force-show': $root.isTouch}"
+                   :class="{'force-show': true}"
                    color="secondary"
                    aria-label="Start Playlist"
                    class="overlay-play-icon">
@@ -27,7 +27,7 @@
         </div>
         <v-card-title primary-title>
             <div class="no-overflow">
-                <h4 class="subheading mb-0 playlist-title">{{ playlist.name }}</h4>
+                <h4 class="subtitle-1 text-none mb-0 playlist-title">{{ playlist.name }}</h4>
             </div>
         </v-card-title>
     </v-card>

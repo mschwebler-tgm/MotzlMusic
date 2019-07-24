@@ -3,7 +3,7 @@ import router from './router';
 import store from './store/store';
 
 import 'clusterize.js';
-import 'vuetify/dist/vuetify.min.css'; // Ensure you are using css-loader
+import 'vuetify/dist/vuetify.min.css';
 
 import Vue from 'vue';
 import Vuetify from 'vuetify'
@@ -15,17 +15,18 @@ Vue.component('auth-login', require('./components/Auth/Login').default);
 Vue.component('auth-register', require('./components/Auth/Register').default);
 
 Vue.use(VueRouter);
-Vue.use(Vuetify, {
-    theme,
-    options: {
-        customProperties: true,  // generate css variables
-    }
-});
+Vue.use(Vuetify);
 
 const app = new Vue({
     el: '#root',
     router,
     store,
+    vuetify: new Vuetify({
+        theme,
+        icons: {
+            iconfont: 'mdiSvg',
+        }
+    }),
     data() {
         return {
             showSpotifyImport: false,

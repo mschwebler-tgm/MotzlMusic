@@ -27,7 +27,7 @@
                   :disabled="settings.incognito"
                   label="Profile visibility"
                   class="profile-visibility"
-                  box></v-select>
+                  filled></v-select>
         <v-divider class="mb-3 mt-3"></v-divider>
         <v-btn color="accent" @click="save">Save</v-btn>
     </div>

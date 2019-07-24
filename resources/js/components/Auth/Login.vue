@@ -1,10 +1,10 @@
 <template>
     <v-flex lg4 md8 sm8 xs12>
         <div class="item elevation-24 pa-4 login-card grey darken-4 login-panel">
-            <v-btn flat icon absolute v-if="showForgotPassword" @click="showForgotPassword = false" aria-label="Back">
+            <v-btn text icon absolute v-if="showForgotPassword" @click="showForgotPassword = false" aria-label="Back">
                 <v-icon>arrow_back</v-icon>
             </v-btn>
-            <h1 class="display-2 font-weight-light text-xs-center">Login</h1>
+            <h1 class="display-2 font-weight-light text-center">Login</h1>
             <v-divider class="mb-3 mt-3"></v-divider>
             <auth-login-form v-show="!showForgotPassword"
                              ref="loginForm"

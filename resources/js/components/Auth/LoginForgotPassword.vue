@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h2 class="headline font-weight-thin text-xs-center mb-5">Reset Your Password</h2>
+        <h2 class="headline font-weight-thin text-center mb-5">Reset Your Password</h2>
         <v-text-field solo required single-line light
                       v-model="email"
                       :loading="loading"

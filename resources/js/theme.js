@@ -1,18 +1,35 @@
 // import colors from "vuetify/es5/util/colors";
 
 const theme = {
-    primary: '#42A4F5',
-    secondary: '#92D050',
-    accent: '#1D69A8',
-    success: '#92D050',
-    warning: '#A3A825',
-    error: '#F7615B'
+    dark: true,
+    themes: {
+        dark: {
+            primary: '#42A4F5',
+            secondary: '#92D050',
+            accent: '#1D69A8',
+            success: '#92D050',
+            warning: '#A3A825',
+            error: '#F7615B'
+        },
+        light: {
+            primary: '#42A4F5',
+            secondary: '#92D050',
+            accent: '#1D69A8',
+            success: '#92D050',
+            warning: '#A3A825',
+            error: '#F7615B'
+        },
+    },
+    options: {
+        customProperties: true,  // generate css variables
+    },
 };
+
 
 const setSystemBarColor = function (color) {
     color = color ? theme[color] : theme.primary;
 
-    const appendMetaTag = function(name, color) {
+    const appendMetaTag = function (name, color) {
         const meta = document.createElement('meta');
         meta.name = name;
         meta.content = color;

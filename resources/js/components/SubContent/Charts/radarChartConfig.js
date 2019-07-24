@@ -60,7 +60,7 @@ export default {
         {
             name: 'Playing track',
             data: [null, null, null, null, null, null],
-            color: theme.secondary,
+            color: theme.themes.dark.secondary,
             pointPlacement: 'on',
             marker: {
                 enabled: true,
@@ -75,7 +75,7 @@ export default {
         },
         {
             name: 'Selected tracks (avg)',
-            color: theme.primary,
+            color: theme.themes.dark.primary,
             data: [null, null, null, null, null, null],
             pointPlacement: 'on',
             marker: {

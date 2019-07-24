@@ -1,47 +1,49 @@
 <template>
-    <v-container>
-        <div class="d-flex justify-center" v-if="!albumsInitialized">
-            <v-progress-circular
-                    v-if="!albumsInitialized"
-                    color="primary"
-                    indeterminate>
-            </v-progress-circular>
-        </div>
+    <div>
+        <v-container>
+            <div class="d-flex justify-center" v-if="!albumsInitialized">
+                <v-progress-circular
+                        v-if="!albumsInitialized"
+                        color="primary"
+                        indeterminate>
+                </v-progress-circular>
+            </div>
 
-        <div v-else>
-            <div class="text-xs-center album-letters">
-                <div v-for="albumsByLetter in albumsByLetters"
-                      :key="albumsByLetter.letter"
-                      v-ripple
-                      @click="clickedAlbums = albumsByLetter"
-                      :class="{active: selectedAlbums.letter === albumsByLetter.letter}"
-                      class="pa-2 subheading album-letter">
-                    {{ albumsByLetter.letter }}
+            <div v-else>
+                <div class="text-center album-letters">
+                    <div v-for="albumsByLetter in albumsByLetters"
+                         :key="albumsByLetter.letter"
+                         v-ripple
+                         @click="clickedAlbums = albumsByLetter"
+                         :class="{active: selectedAlbums.letter === albumsByLetter.letter}"
+                         class="pa-2 subheading album-letter">
+                        {{ albumsByLetter.letter }}
+                    </div>
                 </div>
+                <div class="tools">
+                    <v-checkbox v-model="hideSingles" label="Hide singles"></v-checkbox>
+                    <span class="subheading">{{ albumCount }} Album{{ albumCount > 1 ? 's' : ''}}</span>
+                </div>
+                <v-divider></v-divider>
+                <v-layout row wrap class="mt-2">
+                    <v-flex v-for="album in selectedAlbums.items"
+                            :key="album.id"
+                            xs6 sm4 md4 lg3 xl2 d-block justify-center>
+                        <album-item :album="album"></album-item>
+                    </v-flex>
+                </v-layout>
+                <div class="d-flex pa-3 mt-2" v-if="!selectedAlbums.items.length">
+                    <span class="subheading text-center">No albums here. Check filters and try again.</span>
+                </div>
+                <v-divider class="mt-3 mb-3"></v-divider>
+                <v-layout>
+                    <v-flex xs6 sm4 md4 lg3 xl2 d-block justify-center>
+                        <album-item :album="allSinglesInAlbum"></album-item>
+                    </v-flex>
+                </v-layout>
             </div>
-            <div class="tools">
-                <v-checkbox v-model="hideSingles" label="Hide singles"></v-checkbox>
-                <span class="subheading">{{ albumCount }} Album{{ albumCount > 1 ? 's' : ''}}</span>
-            </div>
-            <v-divider></v-divider>
-            <v-layout row wrap class="mt-2">
-                <v-flex v-for="album in selectedAlbums.items"
-                        :key="album.id"
-                        xs6 sm4 md4 lg3 xl2 d-block justify-center>
-                    <album-item :album="album"></album-item>
-                </v-flex>
-            </v-layout>
-            <div class="d-flex pa-3 mt-2" v-if="!selectedAlbums.items.length">
-                <span class="subheading text-xs-center">No albums here. Check filters and try again.</span>
-            </div>
-            <v-divider class="mt-3 mb-3"></v-divider>
-            <v-layout>
-                <v-flex xs6 sm4 md4 lg3 xl2 d-block justify-center>
-                    <album-item :album="allSinglesInAlbum"></album-item>
-                </v-flex>
-            </v-layout>
-        </div>
-    </v-container>
+        </v-container>
+    </div>
 </template>
 
 <script>

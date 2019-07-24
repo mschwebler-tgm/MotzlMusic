@@ -6,7 +6,7 @@
                     <p class="subheading">You have no playlists in your library</p>
                     <div>
                         <v-btn color="primary" to="/upload">upload some!</v-btn>
-                        <v-btn flat color="primary" to="/import/spotify">Import from spotify</v-btn>
+                        <v-btn text color="primary" to="/import/spotify">Import from spotify</v-btn>
                     </div>
                 </div>
             </div>

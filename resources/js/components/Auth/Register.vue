@@ -1,7 +1,7 @@
 <template>
     <v-flex lg4 md8 sm8 xs12>
         <div class="item elevation-24 pa-4 login-card grey darken-4 register-panel">
-            <h1 class="display-2 font-weight-light text-xs-center">Register</h1>
+            <h1 class="display-2 font-weight-light text-center">Register</h1>
             <v-divider class="mb-3 mt-3"></v-divider>
             <v-form lazy-validation method="POST" action="/register" id="register-form">
                 <input type="hidden" name="_token" :value="csrf">
@@ -50,7 +50,7 @@
                     <v-btn tag="a"
                            class="success"
                            href="/login"
-                           outline>Already have an account?
+                           outlined>Already have an account?
                     </v-btn>
                 </div>
             </v-form>

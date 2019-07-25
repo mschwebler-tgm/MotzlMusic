@@ -268,6 +268,14 @@
         animation: bounce-in .2s;
     }
 
+    .bounce-leave-to {
+        opacity: 0;
+    }
+
+    .bounce-enter {
+        opacity: 0;
+    }
+
     .bounce-leave-active {
         animation: bounce-in .2s reverse;
     }

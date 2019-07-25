@@ -24,6 +24,7 @@ Route::prefix('my')->namespace('Personal')->group(function () {
 Route::prefix('settings')->namespace('\App\Components\UserSettings\Http')->group(function () {
     Route::post('notifications', 'SettingsController@storeNotificationSettings');
     Route::post('privacy', 'SettingsController@storePrivacySettings');
+    Route::post('nickname', 'SettingsController@storeUserNickname');
 });
 
 Route::prefix('player')->namespace('Player')->group(function () {

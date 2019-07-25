@@ -26,6 +26,11 @@ class UserSettingsNotifications
 
     public function toArray()
     {
-        return get_object_vars($this);
+        $settings = [];
+        foreach (get_object_vars($this) as $key => $setting) {
+            $settings[snake_case($key)] = $setting;
+        }
+
+        return $settings;
     }
 }

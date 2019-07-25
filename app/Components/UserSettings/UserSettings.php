@@ -24,6 +24,11 @@ class UserSettings implements JsonSerializable
         );
     }
 
+    public function toJson()
+    {
+        return json_encode($this->jsonSerialize());
+    }
+
     public function jsonSerialize()
     {
         return [
@@ -35,5 +40,10 @@ class UserSettings implements JsonSerializable
     public static function defaultSettingsJSON()
     {
         return json_encode(config('user-settings.default-settings'));
+    }
+
+    public function setNotificationSettings(UserSettingsNotifications $notificationSettings)
+    {
+        $this->notificationSettings = $notificationSettings;
     }
 }

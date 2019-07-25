@@ -21,6 +21,10 @@ Route::prefix('my')->namespace('Personal')->group(function () {
     Route::get('albums', 'MyLibraryController@getAlbums');
 });
 
+Route::prefix('settings')->namespace('\App\Components\UserSettings\Http')->group(function () {
+    Route::post('notifications', 'SettingsController@storeNotificationSettings');
+});
+
 Route::prefix('player')->namespace('Player')->group(function () {
     Route::put('/spotify/playTrack', 'SpotifyPlayerController@playTrack');
 });

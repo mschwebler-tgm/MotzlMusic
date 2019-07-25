@@ -57,7 +57,7 @@ class User extends Authenticatable implements HasTracks
 
     public function setSettingsAttribute(UserSettings $settings)
     {
-        $this->attributes['settings'] = $settings->jsonSerialize();
+        $this->attributes['settings'] = $settings->toJson();
     }
 
     public function getSettingsAttribute()

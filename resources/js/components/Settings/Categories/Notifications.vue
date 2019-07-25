@@ -24,7 +24,7 @@
         },
         methods: {
             save() {
-                alert('Coming soon');
+                axios.post('/api/settings/notifications', this.settings);
             }
         },
     }

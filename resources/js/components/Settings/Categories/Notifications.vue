@@ -31,8 +31,10 @@
             save() {
                 this.loading = true;
                 axios.post('/api/settings/notifications', this.settings)
-                    .then(() => {
+                    .then(res => {
                         this.success = true;
+                        this.error = false;
+                        this.$root.user.settings = res.data;
                         setTimeout(() => this.success = false, 5000);
                     })
                     .catch(err => this.error = err.message)

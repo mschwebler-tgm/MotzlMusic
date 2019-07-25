@@ -18,11 +18,11 @@ class SettingsController extends Controller
 
     public function storeNotificationSettings(UserSettingsNotificationsRequest $request)
     {
-        $this->settingsDao->updateNotificationSettingsForUser(apiUser(), $request->getNotificationSettings());
+        return $this->settingsDao->updateNotificationSettingsForUser(apiUser(), $request->getNotificationSettings());
     }
 
     public function storePrivacySettings(UserSettingsPrivacyRequest $request)
     {
-        $this->settingsDao->updatePrivacySettingsForUser(apiUser(), $request->getPrivacySettings());
+        return $this->settingsDao->updatePrivacySettingsForUser(apiUser(), $request->getPrivacySettings());
     }
 }

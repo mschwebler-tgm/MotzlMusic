@@ -14,6 +14,8 @@ class SettingsDao
             $user->settings->getPrivacySettings()
         );
         $user->save();
+
+        return $user->settings;
     }
 
     public function updatePrivacySettingsForUser(User $user, UserSettingsPrivacy $privacySettings)
@@ -23,5 +25,7 @@ class SettingsDao
             $privacySettings
         );
         $user->save();
+
+        return $user->settings;
     }
 }

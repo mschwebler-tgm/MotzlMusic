@@ -8,9 +8,9 @@
         <v-alert type="error" border="left" v-show="error">
             {{ error }}
         </v-alert>
-        <v-switch v-model="settings.uploads" label="New tracks available (from other users)"></v-switch>
-        <v-switch v-model="settings.messages" label="Chat messages"></v-switch>
-        <v-switch v-model="settings.concerts" label="Nearby concert announcements"></v-switch>
+        <v-switch v-model="settings.uploads" :disabled="loading" label="New tracks available (from other users)"></v-switch>
+        <v-switch v-model="settings.messages" :disabled="loading" label="Chat messages"></v-switch>
+        <v-switch v-model="settings.concerts" :disabled="loading" label="Nearby concert announcements"></v-switch>
         <v-divider class="mb-3 mt-3"></v-divider>
         <v-btn color="accent" @click="save" :loading="loading">Save</v-btn>
     </div>

@@ -7,34 +7,34 @@
                absolute>
         <v-list light :dense="isDense">
             <v-list-item @click="addToQueue">
-                <v-list-item-title>
+                <v-list-item-icon>
                     <v-icon small>add_to_queue</v-icon>
-                </v-list-item-title>
+                </v-list-item-icon>
                 <v-list-item-title>
                     Add to Queue
                 </v-list-item-title>
             </v-list-item>
             <v-list-item @click="show = false">
-                <v-list-item-title>
+                <v-list-item-icon>
                     <v-icon small>playlist_add</v-icon>
-                </v-list-item-title>
+                </v-list-item-icon>
                 <v-list-item-title>
                     Add to Playlist
                 </v-list-item-title>
             </v-list-item>
             <v-divider></v-divider>
             <v-list-item @click="removeTrackFromLibrary">
-                <v-list-item-title>
+                <v-list-item-icon>
                     <v-icon small>delete</v-icon>
-                </v-list-item-title>
+                </v-list-item-icon>
                 <v-list-item-title>
                     Remove from your Library
                 </v-list-item-title>
             </v-list-item>
             <v-list-item @click="show = false">
-                <v-list-item-title>
+                <v-list-item-icon>
                     <v-icon small>edit</v-icon>
-                </v-list-item-title>
+                </v-list-item-icon>
                 <v-list-item-title>
                     Edit
                 </v-list-item-title>

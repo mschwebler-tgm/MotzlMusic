@@ -1,7 +1,7 @@
 <template>
     <v-card>
         <v-container class="pa-5"><h2 class="headline">Settings</h2></v-container>
-        <v-container class="settings-wrapper pa-5">
+        <v-container class="settings-wrapper pa-5" v-if="!$root.isMobile">
             <v-list class="settings-menu" subheader>
                 <v-divider></v-divider>
                 <template v-for="setting in settings">
@@ -19,12 +19,43 @@
                 </transition>
             </div>
         </v-container>
+        <v-container v-else>
+            <v-expansion-panels>
+                <v-expansion-panel>
+                    <v-expansion-panel-header>General</v-expansion-panel-header>
+                    <v-expansion-panel-content><general></general></v-expansion-panel-content>
+                </v-expansion-panel>
+                <v-expansion-panel>
+                    <v-expansion-panel-header>Notifications</v-expansion-panel-header>
+                    <v-expansion-panel-content><notifications></notifications></v-expansion-panel-content>
+                </v-expansion-panel>
+                <v-expansion-panel>
+                    <v-expansion-panel-header>Privacy</v-expansion-panel-header>
+                    <v-expansion-panel-content><privacy></privacy></v-expansion-panel-content>
+                </v-expansion-panel>
+                <v-expansion-panel>
+                    <v-expansion-panel-header>Profile</v-expansion-panel-header>
+                    <v-expansion-panel-content><profile></profile></v-expansion-panel-content>
+                </v-expansion-panel>
+                <v-expansion-panel>
+                    <v-expansion-panel-header>Delete Account</v-expansion-panel-header>
+                    <v-expansion-panel-content><delete-account></delete-account></v-expansion-panel-content>
+                </v-expansion-panel>
+            </v-expansion-panels>
+        </v-container>
     </v-card>
 </template>
 
 <script>
+    import General from "./Categories/General";
+    import Notifications from "./Categories/Notifications";
+    import Privacy from "./Categories/Privacy";
+    import Profile from "../Profile/Profile";
+    import DeleteAccount from "./Categories/DeleteAccount";
+
     export default {
         name: "Settings",
+        components: {DeleteAccount, Profile, Privacy, Notifications, General},
         data() {
             return {
                 settings: [
@@ -61,8 +92,8 @@
     }
 
     .settings-menu {
-        border-left: 1px solid hsla(0,0%,100%,.12);
-        border-right: 1px solid hsla(0,0%,100%,.12);
+        border-left: 1px solid hsla(0, 0%, 100%, .12);
+        border-right: 1px solid hsla(0, 0%, 100%, .12);
         padding: 0;
     }
 

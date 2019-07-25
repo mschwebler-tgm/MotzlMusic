@@ -41,7 +41,8 @@ class User extends Authenticatable implements HasTracks
     ];
 
     protected $casts = [
-        'spotify_import_complete' => 'boolean'
+        'spotify_import_complete' => 'boolean',
+        'settings' => 'array',
     ];
 
     public function getMp3StoragePath()

@@ -15,7 +15,7 @@
             <v-btn fab absolute depressed bottom right small
                    v-if="!isPlaying"
                    @click="playPlaylist"
-                   :class="{'force-show': true}"
+                   :class="{'force-show': $root.isTouch}"
                    color="secondary"
                    aria-label="Start Playlist"
                    class="overlay-play-icon">

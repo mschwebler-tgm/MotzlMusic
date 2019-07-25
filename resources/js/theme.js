@@ -27,7 +27,7 @@ const theme = {
 
 
 const setSystemBarColor = function (color) {
-    color = color ? theme[color] : theme.primary;
+    color = color ? theme.themes[theme.dark ? 'dark' : 'light'][color] : theme.themes.dark.primary;
 
     const appendMetaTag = function (name, color) {
         const meta = document.createElement('meta');

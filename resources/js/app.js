@@ -91,6 +91,7 @@ const app = new Vue({
     },
     watch: {
         isDarkTheme(isDark) {
+            this.$vuetify.theme.isDark = isDark;
             localStorage.setItem('useDarkTheme', 0 + isDark);
         }
     }

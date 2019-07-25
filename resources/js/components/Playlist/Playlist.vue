@@ -35,7 +35,7 @@
                             </v-layout>
                         </template>
                     </v-img>
-                    <div class="playlist-name pa-3 relative">
+                    <div class="playlist-name pa-3 relative flex-grow-1">
                         <h1 class="display-1 font-weight-light">{{ playlist.name }}</h1>
                         <h2 class="subheading">{{ playlistType }}</h2>
                         <playlist-actions :playlist-id="id"></playlist-actions>
@@ -181,6 +181,7 @@
 
     .playlist-image {
         max-width: 190px;
+        min-width: 190px;
     }
 
     .playlist-name {

@@ -6,9 +6,16 @@
             Privacy settings updated!
         </v-alert>
         <v-alert type="error" border="left" v-show="error">
-            {{ error }}
+            {{ error.message }}
+            <ul>
+                <li v-for="errorMessage in error.errors" class="caption">{{ errorMessage[0] }}</li>
+            </ul>
         </v-alert>
-        <v-text-field class="nickname" filled label="Nickname" v-model="user.name" :disabled="loading"></v-text-field>
+        <v-text-field filled
+                      v-model="user.name"
+                      :disabled="loading"
+                      class="nickname"
+                      label="Nickname"></v-text-field>
         <v-text-field class="email" filled label="Email" :value="user.email" disabled></v-text-field>
         <v-chip class="mb-2" color="spotify" v-if="user.spotify_id" title="You are linked with your spotify account">
             <v-icon left>check_circle</v-icon>
@@ -42,7 +49,7 @@
                     })
                     .catch(err => {
                         this.success = false;
-                        this.error = err.message;
+                        this.error = err.response.data;
                     })
                     .finally(() => this.loading = false);
             }

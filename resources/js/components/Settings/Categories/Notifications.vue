@@ -6,7 +6,10 @@
             Notification settings updated!
         </v-alert>
         <v-alert type="error" border="left" v-show="error">
-            {{ error }}
+            {{ error.message }}
+            <ul>
+                <li v-for="errorMessage in error.errors" class="caption">{{ errorMessage[0] }}</li>
+            </ul>
         </v-alert>
         <v-switch v-model="settings.uploads" :disabled="loading" label="New tracks available (from other users)"></v-switch>
         <v-switch v-model="settings.messages" :disabled="loading" label="Chat messages"></v-switch>
@@ -37,7 +40,10 @@
                         this.$root.user.settings = res.data;
                         setTimeout(() => this.success = false, 5000);
                     })
-                    .catch(err => this.error = err.message)
+                    .catch(err => {
+                        this.success = false;
+                        this.error = err.response.data;
+                    })
                     .finally(() => this.loading = false);
             }
         },

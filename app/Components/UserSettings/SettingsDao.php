@@ -15,4 +15,13 @@ class SettingsDao
         $user->settings = $settings;
         $user->save();
     }
+
+    public function updatePrivacySettingsForUser(User $user, UserSettingsPrivacy $privacySettings)
+    {
+        /** @var UserSettings $settings */
+        $settings = $user->settings;
+        $settings->setPrivacySettings($privacySettings);
+        $user->settings = $settings;
+        $user->save();
+    }
 }

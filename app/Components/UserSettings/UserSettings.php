@@ -46,4 +46,9 @@ class UserSettings implements JsonSerializable
     {
         $this->notificationSettings = $notificationSettings;
     }
+
+    public function setPrivacySettings(UserSettingsPrivacy $privacySettings)
+    {
+        $this->privacySettings = $privacySettings;
+    }
 }

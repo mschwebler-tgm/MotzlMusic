@@ -4,6 +4,8 @@ namespace App\Components\UserSettings;
 
 class UserSettingsPrivacy
 {
+    const PROFILE_VISIBILITY_OPTIONS = ['everybody', 'friends', 'nobody'];
+
     private $incognito;
     private $likeActivity;
     private $onlineStatus;

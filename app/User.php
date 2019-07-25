@@ -7,6 +7,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 
+/**
+ * Class User
+ * @package App
+ * @property UserSettings $settings
+ */
 class User extends Authenticatable implements HasTracks
 {
     use HasApiTokens, Notifiable;

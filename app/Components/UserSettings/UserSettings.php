@@ -42,13 +42,19 @@ class UserSettings implements JsonSerializable
         return json_encode(config('user-settings.default-settings'));
     }
 
-    public function setNotificationSettings(UserSettingsNotifications $notificationSettings)
+    /**
+     * @return UserSettingsNotifications
+     */
+    public function getNotificationSettings(): UserSettingsNotifications
     {
-        $this->notificationSettings = $notificationSettings;
+        return $this->notificationSettings;
     }
 
-    public function setPrivacySettings(UserSettingsPrivacy $privacySettings)
+    /**
+     * @return UserSettingsPrivacy
+     */
+    public function getPrivacySettings(): UserSettingsPrivacy
     {
-        $this->privacySettings = $privacySettings;
+        return $this->privacySettings;
     }
 }

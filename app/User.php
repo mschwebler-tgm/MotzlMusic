@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Components\UserSettings\UserSettings;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
@@ -42,7 +43,6 @@ class User extends Authenticatable implements HasTracks
 
     protected $casts = [
         'spotify_import_complete' => 'boolean',
-        'settings' => 'array',
     ];
 
     public function getMp3StoragePath()
@@ -53,5 +53,15 @@ class User extends Authenticatable implements HasTracks
     public function tracks()
     {
         return $this->belongsToMany(Track::class, 'user_has_track');
+    }
+
+    public function setSettingsAttribute(UserSettings $settings)
+    {
+        $this->attributes['settings'] = $settings->jsonSerialize();
+    }
+
+    public function getSettingsAttribute()
+    {
+        return UserSettings::fromJson($this->attributes['settings']);
     }
 }

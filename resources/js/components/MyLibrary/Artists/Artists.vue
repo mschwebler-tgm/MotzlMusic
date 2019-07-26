@@ -29,7 +29,7 @@
                     <v-flex v-for="artist in selectedArtists.items"
                             :key="artist.id"
                             xs6 sm4 md4 lg3 xl2 d-block justify-center>
-                        <base-playable-item-card :item="artist">
+                        <base-playable-item-card :item="artist" rounded>
                             <span slot="footer" class="caption grey--text">
                                 {{ artist.tracks.length }} track{{ artist.tracks.length > 1 ? 's' : '' }}
                             </span>
@@ -145,15 +145,9 @@
         justify-content: center;
         align-items: center;
 
-    &
-    :hover,
-
-    &
-    .active {
-        color: var(--v-primary-base);
-
-    }
-
+        &:hover, &.active {
+            color: var(--v-primary-base);
+        }
     }
 
     .tools {
@@ -170,15 +164,14 @@
             overflow-x: scroll;
             overflow-y: hidden;
 
-    &::-webkit-scrollbar {
-         display: none;
-     }
+            &::-webkit-scrollbar {
+                 display: none;
+            }
 
-        .artist-letter {
-            line-height: 1em;
-            font-size: 1em !important;
+            .artist-letter {
+                line-height: 1em;
+                font-size: 1em !important;
+            }
         }
-    }
-
     }
 </style>

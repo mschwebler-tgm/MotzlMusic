@@ -1,12 +1,14 @@
 <template>
     <v-card tile
-            hover
+            :hover="!rounded"
+            :flat="rounded"
             @click="openItemDetails"
             @mouseenter="showAudioFeatures"
             @mouseleave="hideAudioFeatures"
             class="overlay-play-icon-toggle">
         <div class="relative">
             <v-img
+                    :class="{'image-rounded': rounded}"
                     :src="fullResolutionImage"
                     :lazy-src="intermediateImage"
                     :alt="item.name"
@@ -41,6 +43,7 @@
         name: "BasePlayableItemCard",
         props: {
             item: Object,
+            rounded: Boolean,
         },
         methods: {
             openItemDetails() {
@@ -104,5 +107,12 @@
 
     .overlay-play-icon-toggle:hover .overlay-play-icon {
         display: block;
+    }
+
+    .image-rounded {
+        -webkit-border-radius: 100%;
+        -moz-border-radius: 100%;
+        border-radius: 100%;
+        overflow: hidden;
     }
 </style>

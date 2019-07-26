@@ -16,7 +16,7 @@ class CreateUserTrackRatingTable extends Migration
         Schema::create('user_track_rating', function (Blueprint $table) {
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('track_id');
-            $table->unsignedSmallInteger('rating');
+            $table->float('rating');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');

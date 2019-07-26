@@ -29,7 +29,11 @@
                     <v-flex v-for="album in selectedAlbums.items"
                             :key="album.id"
                             xs6 sm4 md4 lg3 xl2 d-block justify-center>
-                        <album-item :album="album"></album-item>
+                        <base-playable-item-card :item="album">
+                            <span slot="footer" class="caption grey--text">
+                                {{ album.tracks.length }} track{{ album.tracks.length > 1 ? 's' : '' }}
+                            </span>
+                        </base-playable-item-card>
                     </v-flex>
                 </v-layout>
                 <div class="d-flex pa-3 mt-2" v-if="!selectedAlbums.items.length">
@@ -38,7 +42,11 @@
                 <v-divider class="mt-3 mb-3"></v-divider>
                 <v-layout>
                     <v-flex xs6 sm4 md4 lg3 xl2 d-block justify-center>
-                        <album-item :album="allSinglesInAlbum"></album-item>
+                        <base-playable-item-card :item="allSinglesInAlbum">
+                            <span slot="footer" class="caption grey--text">
+                                {{ allSinglesInAlbum.tracks.length }} track{{ allSinglesInAlbum.tracks.length > 1 ? 's' : '' }}
+                            </span>
+                        </base-playable-item-card>
                     </v-flex>
                 </v-layout>
             </div>
@@ -47,11 +55,11 @@
 </template>
 
 <script>
-    import AlbumItem from "./AlbumItem";
+    import BasePlayableItemCard from "../../_BaseComponents/BasePlayableItemCard";
 
     export default {
         name: "Albums",
-        components: {AlbumItem},
+        components: {BasePlayableItemCard},
         data() {
             return {
                 clickedAlbums: JSON.parse(sessionStorage.getItem('myLibraryClickedAlbums')) || {},

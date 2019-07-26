@@ -114,6 +114,7 @@
         created() {
             this.loadPlaylistIfNeeded();
             this.loadTracks();
+            this.initArrowListeners();
         },
         methods: {
             loadPlaylistIfNeeded() {
@@ -138,6 +139,33 @@
             playPlaylist() {
                 this.$store.dispatch('player/playList', {type: 'playlist', list: this.playlist});
             },
+            initArrowListeners() {
+                const handleKeyDown = $event => {
+                    if ($event.key === 'ArrowUp' || $event.key === 'ArrowDown') {
+                        $event.preventDefault();
+                        $event.stopPropagation();
+                        document.removeEventListener("keydown", handleKeyDown);
+                        $event.key === 'ArrowDown' ? this.selectFirstTrack() : this.selectLastTrack();
+                    }
+                };
+                document.addEventListener('keydown', handleKeyDown);
+            },
+            getTrackElements() {
+                const trackHolderElement = this.$el.querySelector('.track-table .clusterize-content');
+                return trackHolderElement.childNodes;
+            },
+            selectFirstTrack() {
+                const trackElements = this.getTrackElements();
+                if (trackElements.length) {
+                    trackElements[0].focus();
+                }
+            },
+            selectLastTrack() {
+                const trackElements = this.getTrackElements();
+                if (trackElements.length) {
+                    trackElements[trackElements.length - 1].focus();
+                }
+            }
         },
         computed: {
             playlist() {

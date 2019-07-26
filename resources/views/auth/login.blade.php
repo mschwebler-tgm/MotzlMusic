@@ -13,13 +13,14 @@
             </v-content>
             <v-footer app color="primary darken-4">
                 <v-layout justify-center row align-center>
-                    <div class="text-xs-center">
+                    <div class="text-center">
                         &copy;2019 - <strong>motzlmusic</strong>
                     </div>
                 </v-layout>
-                <v-btn flat
+                <v-btn text
                        tag="a"
                        href="https://github.com/mschwebler-tgm/MotzlMusic"
+                       aria-label="View on github"
                        target="_blank"
                        right
                        absolute>

@@ -17,4 +17,14 @@ class HomeController extends Controller
         $user = json_encode($transformer->transform(Auth::user()));
         return view('master')->with(['user' => $user]);
     }
+
+    public function app()
+    {
+        $user = Auth::user();
+        if (!$user) {
+            return redirect('/login');
+        }
+
+        return view('master')->with(['user' => $user]);
+    }
 }

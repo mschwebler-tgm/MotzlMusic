@@ -12,11 +12,11 @@ export default class PlayerController {
     }
 
     play(track) {
-        this._updateBrowserTitle(track);
         if (!track) {
             return this._resume();
         }
 
+        this._updateBrowserTitle(track);
         if (track.type === 'spotify') {
             this.loading = true;
             return this.spotifyPlayer.play(track).then(() => this._setPlayingTrack(track))

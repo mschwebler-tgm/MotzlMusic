@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
-class Album extends Model
+class Album extends Model implements HasTracks
 {
     protected $guarded = [];
 

@@ -4,14 +4,14 @@
             <v-flex grow>
                 <v-layout justify-center>
                     <v-flex shrink>
-                        <v-btn flat icon>
+                        <v-btn text icon aria-label="Play previous">
                             <v-icon @click="playPrevious">skip_previous</v-icon>
                         </v-btn>
-                        <v-btn flat icon :loading="loading" @click="togglePlay">
+                        <v-btn text icon :loading="loading" @click="togglePlay" :aria-label="playing ? 'Pause' : 'Play'">
                             <v-icon large class="secondary--text" v-if="playing">pause_circle_filled</v-icon>
                             <v-icon large class="secondary--text" v-else>play_circle_filled</v-icon>
                         </v-btn>
-                        <v-btn flat icon>
+                        <v-btn text icon aria-label="Play next">
                             <v-icon @click="playNext">skip_next</v-icon>
                         </v-btn>
                     </v-flex>

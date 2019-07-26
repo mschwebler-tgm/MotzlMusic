@@ -2,6 +2,8 @@
     <v-card tile
             hover
             @click="openAlbumDetails"
+            @mouseenter="showAudioFeatures"
+            @mouseleave="hideAudioFeatures"
             class="overlay-play-icon-toggle">
         <div class="relative">
             <v-img
@@ -15,10 +17,11 @@
                    @click="playAlbum"
                    :class="{'force-show': $root.isTouch}"
                    color="secondary"
+                   aria-label="Play"
                    class="overlay-play-icon">
                 <v-icon medium>play_arrow</v-icon>
             </v-btn>
-            <v-btn icon disabled class="overlay-playing-icon" v-else>
+            <v-btn icon disabled class="overlay-playing-icon" aria-label="Playing" v-else>
                 <v-icon color="white">equalizer</v-icon> <!-- TODO animated SVG? -->
             </v-btn>
         </div>
@@ -44,7 +47,13 @@
             },
             playAlbum($event) {
                 $event.stopPropagation();
-                this.$store.dispatch('player/playAlbum', this.album);
+                this.$store.dispatch('player/playList', {type: 'album', list: this.album});
+            },
+            showAudioFeatures() {
+                this.$store.commit('subContent/setFocusedItems', [this.album]);
+            },
+            hideAudioFeatures() {
+                this.$store.commit('subContent/setFocusedItems', []);
             },
         },
         computed: {

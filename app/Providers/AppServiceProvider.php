@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Observers\TrackObserver;
+use App\Track;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -16,6 +18,13 @@ class AppServiceProvider extends ServiceProvider
         if (\App::environment() === 'production') {
             $this->app['request']->server->set('HTTPS', true);
         }
+
+        $this->registerModelObserver();
+    }
+
+    private function registerModelObserver()
+    {
+        Track::observe(TrackObserver::class);
     }
 
     /**

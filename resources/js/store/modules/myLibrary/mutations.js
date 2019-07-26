@@ -11,16 +11,19 @@ export default {
         state.tracks = validateArray(tracks);
         state.tracksInitialized = true;
     },
-    setMyTopArtists(state, artists) {
-        state.topArtists = validateArray(artists);
-        state.topArtistsInitialized = true;
-    },
-    setMyRecentArtists(state, artists) {
-        state.recentArtists = validateArray(artists);
-        state.recentArtistsInitialized = true;
+    setMyArtists(state, artists) {
+        state.artists = validateArray(artists);
+        state.artistsInitialized = true;
     },
     setMyAlbums(state, albums) {
         state.albums = validateArray(albums);
         state.albumsInitialized = true;
+    },
+    removeTrack(state, trackId) {
+        const removeTrack = track => track.id !== trackId;
+        state.tracks = state.tracks.filter(removeTrack);
+        state.artists.forEach(item => item.tracks && (item.tracks = item.tracks.filter(removeTrack)));
+        state.albums.forEach(item => item.tracks && (item.tracks = item.tracks.filter(removeTrack)));
+        Object.values(state.playlists).forEach(item => item.tracks && (item.tracks = item.tracks.filter(removeTrack)));
     },
 }

@@ -2,6 +2,8 @@
     <v-card tile
             hover
             @click="openPlaylistDetails"
+            @mouseenter="showAudioFeatures"
+            @mouseleave="hideAudioFeatures"
             class="overlay-play-icon-toggle">
         <div class="relative">
             <v-img
@@ -10,27 +12,30 @@
                     :alt="playlist.name"
                     aspect-ratio="1">
             </v-img>
-            <v-btn icon fab absolute bottom right small
+            <v-btn fab absolute depressed bottom right small
                    v-if="!isPlaying"
                    @click="playPlaylist"
                    :class="{'force-show': $root.isTouch}"
                    color="secondary"
+                   aria-label="Start Playlist"
                    class="overlay-play-icon">
                 <v-icon medium>play_arrow</v-icon>
             </v-btn>
-            <v-btn icon disabled class="overlay-playing-icon" v-else>
+            <v-btn icon disabled class="overlay-playing-icon" aria-label="Start Playlist" v-else>
                 <v-icon color="white">equalizer</v-icon> <!-- TODO animated SVG? -->
             </v-btn>
         </div>
         <v-card-title primary-title>
             <div class="no-overflow">
-                <h4 class="subheading mb-0 playlist-title">{{ playlist.name }}</h4>
+                <h4 class="subtitle-1 text-none mb-0 playlist-title">{{ playlist.name }}</h4>
             </div>
         </v-card-title>
     </v-card>
 </template>
 
 <script>
+    import {slugify} from "../../../helpers";
+
     export default {
         name: "PlaylistItem",
         props: {
@@ -39,11 +44,17 @@
         methods: {
             openPlaylistDetails() {
                 this.$store.commit('cache/setSelectedPlaylist', this.playlist);
-                this.$router.push(`/my-library/playlists/${this.playlist.name}/${this.playlist.id}`);
+                this.$router.push(`/my-library/playlists/${slugify(this.playlist.name)}/${this.playlist.id}`);
             },
             playPlaylist($event) {
                 $event.stopPropagation();
-                this.$store.dispatch('player/playPlaylist', this.playlist);
+                this.$store.dispatch('player/playList', {type: 'playlist', list: this.playlist});
+            },
+            showAudioFeatures() {
+                this.$store.commit('subContent/setFocusedItems', [this.playlist]);
+            },
+            hideAudioFeatures() {
+                this.$store.commit('subContent/setFocusedItems', []);
             },
         },
         computed: {

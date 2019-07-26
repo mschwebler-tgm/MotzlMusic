@@ -18,6 +18,9 @@
         },
         methods: {
             initListeners() {
+                this.handleProgress();
+            },
+            handleProgress() {
                 this.$store.watch(
                     $store => $store.player.playerController.progressPercent,
                     progressPercent => {
@@ -25,7 +28,7 @@
                             this.$store.dispatch('player/playNext');
                         }
                     });
-            }
+            },
         }
     }
 </script>

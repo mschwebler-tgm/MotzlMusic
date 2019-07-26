@@ -6,10 +6,8 @@ export default {
     tracks: state => state.tracks,
     tracksInitialized: state => state.tracksInitialized,
     tracksClusterized: state => clusterizeTracks(state.tracks),
-    topArtists: state => state.topArtists,
-    topArtistsInitialized: state => state.topArtistsInitialized,
-    recentArtists: state => state.recentArtists,
-    recentArtistsInitialized: state => state.recentArtistsInitialized,
+    artists: state => state.artists,
+    artistsInitialized: state => state.artistsInitialized,
     albums: state => state.albums,
     albumsInitialized: state => state.albumsInitialized,
 }

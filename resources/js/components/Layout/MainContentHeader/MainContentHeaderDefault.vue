@@ -1,6 +1,6 @@
-<template functional>
-    <div class="justify-space-between pa-0" style="display: flex;">
-        <v-btn flat @click="$router.go(-1)" class="ml-0" style="flex: 0 !important;">
+<template>
+    <div class="justify-space-between pa-0 d-flex align-center">
+        <v-btn text @click="$router.go(-1)" class="mt-2 mb-3">
             <v-icon dark left>arrow_back</v-icon>
             Back
         </v-btn>

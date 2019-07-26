@@ -1,20 +1,3 @@
-
-window._ = require('lodash');
-window.Popper = require('popper.js').default;
-
-/**
- * We'll load jQuery and the Bootstrap jQuery plugin which provides support
- * for JavaScript based Bootstrap features such as modals and tabs. This
- * code may be modified to fit the specific needs of your application.
- */
-
-try {
-    window.$ = window.jQuery = require('jquery');
-
-    require('bootstrap');
-} catch (e) {}
-
-
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
  * to our Laravel back-end. This library automatically handles sending the
@@ -38,6 +21,14 @@ if (token) {
 } else {
     console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
+
+
+/**
+ * Highcharts setup
+ */
+window.Highcharts = require('highcharts');
+import more from 'highcharts/highcharts-more';
+more(window.Highcharts);
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

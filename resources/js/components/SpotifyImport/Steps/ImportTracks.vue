@@ -79,7 +79,7 @@
         },
         methods: {
             loadPage() {
-                if (_.isEmpty(this.pagination)) {
+                if (!this.pagination.page) {
                     return;
                 }
                 this.loading = true;

@@ -1,3 +1,5 @@
+import app from '../../../app'
+
 export default {
     setPlayerController(state, playerController) {
         state.playerController = playerController;
@@ -19,5 +21,9 @@ export default {
     },
     setQueueTrack(state, track) {
         state.queueController.setActiveTrack(track);
+    },
+    addTrackToQueue(state, track) {
+        state.queueController.addTrackToQueue(track);
+        app.showAlert('1 track added to queue');
     },
 }

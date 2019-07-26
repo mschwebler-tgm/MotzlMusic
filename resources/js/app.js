@@ -3,7 +3,7 @@ import router from './router';
 import store from './store/store';
 
 import 'clusterize.js';
-import 'vuetify/dist/vuetify.min.css'; // Ensure you are using css-loader
+import 'vuetify/dist/vuetify.min.css';
 
 import Vue from 'vue';
 import Vuetify from 'vuetify'
@@ -15,25 +15,38 @@ Vue.component('auth-login', require('./components/Auth/Login').default);
 Vue.component('auth-register', require('./components/Auth/Register').default);
 
 Vue.use(VueRouter);
-Vue.use(Vuetify, {
-    theme,
-    options: {
-        customProperties: true,  // generate css variables
-    }
-});
+Vue.use(Vuetify);
 
 const app = new Vue({
     el: '#root',
     router,
     store,
+    vuetify: new Vuetify({
+        theme,
+        icons: {
+            iconfont: 'mdiSvg',
+        }
+    }),
     data() {
         return {
             showSpotifyImport: false,
             isDarkTheme: localStorage.getItem('useDarkTheme') === '1',
-            statusInfoComponent: null,
+            statusInfo: {
+                show: false,
+                component: null,
+                data: {},
+            },
             mainContentHeaderComponent: MainContentHeaders.DEFAULT,
             user: null,
             isTouch: false,
+            isMobile: screen.width < 600,
+            snackbar: {
+                show: false,
+                text: '',
+                buttonText: 'close',
+                callback: () => this.snackbar.show = false,
+                color: undefined,
+            }
         }
     },
     created() {
@@ -64,10 +77,21 @@ const app = new Vue({
             });
 
             return imageToReturn || window.playlistFallback;
+        },
+        showAlert(text, buttonText = 'close', callback = () => this.snackbar.show = false, color = 'info') {
+            this.snackbar.show = false;
+            setTimeout(() => {
+                this.snackbar.buttonText = buttonText;
+                this.snackbar.text = text;
+                this.snackbar.callback = callback;
+                this.snackbar.show = true;
+                this.snackbar.color = color;
+            });
         }
     },
     watch: {
         isDarkTheme(isDark) {
+            this.$vuetify.theme.isDark = isDark;
             localStorage.setItem('useDarkTheme', 0 + isDark);
         }
     }

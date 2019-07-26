@@ -1,5 +1,5 @@
 // Register all Vuex module by a camelCase version of their filename.
-import camelCase from 'lodash/camelCase';
+const camelCase = require('lodash.camelcase');
 
 // Get all the files
 const requireModule = require.context(

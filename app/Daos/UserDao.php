@@ -2,18 +2,23 @@
 
 namespace App\Daos;
 
+use App\Components\Profile\ProfileImageService;
 use App\User;
 
 class UserDao
 {
     public function createFromSpotifyAuthorization(\SocialiteProviders\Manager\OAuth2\User $oauth2User)
     {
-        /** @var User $user */
-        $user = User::firstOrCreate([
+        $columns = [
             'name' => $oauth2User->name,
             'email' => $oauth2User->email,
-            'spotify_id' => $oauth2User->id
-        ]);
+        ];
+        $user = User::where($columns)->first();
+
+        if (!$user) {
+            $user = $this->createUser($columns);
+        }
+
         $user->fill([
             'name' => $oauth2User->name,
             'email' => $oauth2User->email,
@@ -21,10 +26,20 @@ class UserDao
             'spotify_access_token' => $oauth2User->token,
             'spotify_refresh_token' => $oauth2User->refreshToken,
             'birthdate' => $oauth2User->user['birthdate'],
-            'password' => bcrypt(str_random(20))
         ]);
         $user->save();
         return $user;
+    }
+
+    /**
+     * @param array $options column => value
+     * @return User
+     */
+    public function createUser(array $options)
+    {
+        $options['profile_image'] = $options['profile_image'] ?? ProfileImageService::fromEmail($options['email']);
+
+        return User::create($options);
     }
 
     public function setSpotifyImportComplete()
@@ -37,5 +52,13 @@ class UserDao
     public function getCurrentUsersAccessToken()
     {
         return apiUser()->spotify_access_token;
+    }
+
+    public function updateName(User $user, $name)
+    {
+        $user->name = $name;
+        $user->save();
+
+        return $user->name;
     }
 }

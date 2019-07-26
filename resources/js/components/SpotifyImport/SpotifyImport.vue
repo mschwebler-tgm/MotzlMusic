@@ -16,22 +16,22 @@
                     <v-stepper-items>
                         <v-stepper-content step="1">
                             <import-playlists @selectPlaylists="selectPlaylists"></import-playlists>
-                            <v-btn outline color="spotify" @click="step++">Continue</v-btn>
-                            <v-btn flat @click="step=3">Back</v-btn>
+                            <v-btn outlined color="spotify" @click="step++">Continue</v-btn>
+                            <v-btn text @click="step=3">Back</v-btn>
                             <p class="headline spotify--text right ma-2">{{ accumulatedSelectedTracksCount }}</p>
                         </v-stepper-content>
 
                         <v-stepper-content step="2">
                             <import-tracks @updateSelectCount="updateSelectedSavedTracksCount"></import-tracks>
-                            <v-btn outline color="spotify" @click="step++">Continue</v-btn>
-                            <v-btn flat @click="step--">Back</v-btn>
+                            <v-btn outlined color="spotify" @click="step++">Continue</v-btn>
+                            <v-btn text @click="step--">Back</v-btn>
                             <p class="headline spotify--text right ma-2">{{ accumulatedSelectedTracksCount }}</p>
                         </v-stepper-content>
 
                         <v-stepper-content step="3">
                             <import-albums></import-albums>
-                            <v-btn outline color="spotify" @click="submit">Import</v-btn>
-                            <v-btn flat @click="step--">Back</v-btn>
+                            <v-btn outlined color="spotify" @click="submit">Import</v-btn>
+                            <v-btn text @click="step--">Back</v-btn>
                             <p class="headline spotify--text right ma-2">{{ accumulatedSelectedTracksCount }}</p>
                         </v-stepper-content>
                     </v-stepper-items>

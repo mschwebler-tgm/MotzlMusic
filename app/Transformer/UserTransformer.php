@@ -2,9 +2,11 @@
 
 namespace App\Transformer;
 
+use App\User;
+
 class UserTransformer
 {
-    public function transform($user)
+    public function transform(User $user)
     {
         return [
             'id' => $user->id,
@@ -12,7 +14,8 @@ class UserTransformer
             'email' => $user->email,
             'is_spotify' => (bool) $user->spotify_id,
             'spotify_import_complete' => $user->spotify_import_complete,
-            'birthdate' => $user->birthdate
+            'birthdate' => $user->birthdate,
+            'profile_image' => $user->profile_image
         ];
     }
 }

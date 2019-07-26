@@ -1,4 +1,4 @@
-<template>
+<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
     <div id="master" @dragenter="dragging = true">
         <div v-show="dragging"
              @dragover="dragOver"
@@ -9,191 +9,143 @@
              id="drop-zone">
             <img src="/images/cloud_upload.svg" @dragover="dragOver">
         </div>
-        <v-app :dark="$root.isDarkTheme">
+        <v-app>
             <!-- SIDE MENU -->
-            <v-navigation-drawer v-model="showDrawer" app clipped floating dark
+            <v-navigation-drawer v-model="showDrawer" clipped floating dark app
                                  :mobile-break-point="927">
                 <v-toolbar flat class="transparent">
                     <v-list class="pa-0">
-                        <v-list-tile avatar>
-                            <v-list-tile-avatar>
-                                <img src="https://randomuser.me/api/portraits/men/85.jpg">
-                            </v-list-tile-avatar>
+                        <v-list-item>
+                            <v-list-item-avatar color="rgba(0, 0, 0, 0.5)">
+                                <img :src="user.profile_image" :alt="user.name">
+                            </v-list-item-avatar>
 
-                            <v-list-tile-content>
-                                <v-list-tile-title>{{ user.name }}</v-list-tile-title>
-                            </v-list-tile-content>
-                        </v-list-tile>
+                            <v-list-item-content>
+                                <v-list-item-title>{{ user.name }}</v-list-item-title>
+                            </v-list-item-content>
+                        </v-list-item>
                     </v-list>
                 </v-toolbar>
 
-                <v-list dense>
-                    <!-- HOME -->
-                    <v-list-tile @click="$router.push('/')">
-                        <v-list-tile-action>
-                            <v-icon class="grey--text">home</v-icon>
-                        </v-list-tile-action>
-                        <v-list-tile-title>Home</v-list-tile-title>
-                    </v-list-tile>
-                    <v-divider></v-divider>
+                <v-divider></v-divider>
 
-                    <!-- LIBRARY -->
-                    <v-list-group prepend-icon="library_music"
-                                  value="true"
-                                  append-icon=""
-                                  no-action>
-                        <v-list-tile slot="activator">
-                            <v-list-tile-title>My library</v-list-tile-title>
-                        </v-list-tile>
-                        <v-list-tile to="/my-library/playlists" class="grey darken-4 white--text"
-                                     active-class="accent white--text primary--text">
-                            <v-list-tile-title class="white--text">Playlists</v-list-tile-title>
-                            <v-list-tile-action>
+                <v-list dense expand nav>
+                    <v-list-item to="/">
+                        <v-list-item-icon>
+                            <v-icon>home</v-icon>
+                        </v-list-item-icon>
+
+                        <v-list-item-title>Home</v-list-item-title>
+                    </v-list-item>
+
+                    <v-list-group prepend-icon="library_music" value="true" color="white" no-action>
+                        <v-list-item slot="activator">
+                            <v-list-item-content>
+                                <v-list-item-title>My library</v-list-item-title>
+                            </v-list-item-content>
+                        </v-list-item>
+                        <v-list-item to="/my-library/playlists">
+                            <v-list-item-icon>
                                 <v-icon>playlist_play</v-icon>
-                            </v-list-tile-action>
-                        </v-list-tile>
-                        <v-divider inset></v-divider>
-                        <v-list-tile to="/my-library/tracks" class="grey darken-4 white--text"
-                                     active-class="accent white--text primary--text">
-                            <v-list-tile-title class="white--text">Tracks</v-list-tile-title>
-                            <v-list-tile-action>
+                            </v-list-item-icon>
+                            <v-list-item-title>Playlists</v-list-item-title>
+                        </v-list-item>
+                        <v-list-item to="/my-library/tracks">
+                            <v-list-item-icon>
                                 <v-icon>music_note</v-icon>
-                            </v-list-tile-action>
-                        </v-list-tile>
-                        <v-divider inset></v-divider>
-                        <v-list-tile to="/my-library/albums" class="grey darken-4 white--text"
-                                     active-class="accent white--text primary--text">
-                            <v-list-tile-title class="white--text">Albums</v-list-tile-title>
-                            <v-list-tile-action>
+                            </v-list-item-icon>
+                            <v-list-item-title>Tracks</v-list-item-title>
+                        </v-list-item>
+                        <v-list-item to="/my-library/albums">
+                            <v-list-item-icon>
                                 <v-icon>album</v-icon>
-                            </v-list-tile-action>
-                        </v-list-tile>
-                        <v-divider inset></v-divider>
-                        <v-list-tile to="/my-library/artists" class="grey darken-4 white--text"
-                                     active-class="accent white--text primary--text">
-                            <v-list-tile-title class="white--text">Artists</v-list-tile-title>
-                            <v-list-tile-action>
+                            </v-list-item-icon>
+                            <v-list-item-title>Albums</v-list-item-title>
+                        </v-list-item>
+                        <v-list-item to="/my-library/artists">
+                            <v-list-item-icon>
                                 <v-icon>account_box</v-icon>
-                            </v-list-tile-action>
-                        </v-list-tile>
+                            </v-list-item-icon>
+                            <v-list-item-title>Artists</v-list-item-title>
+                        </v-list-item>
+                        <v-divider></v-divider>
                     </v-list-group>
-                    <v-divider></v-divider>
 
-                    <!-- USER -->
-                    <v-list-group prepend-icon="account_circle" no-action>
-                        <v-list-tile slot="activator">
-                            <v-list-tile-title>User</v-list-tile-title>
-                        </v-list-tile>
-                        <v-list-tile to="/profile/me" class="grey darken-4 white--text"
-                                     active-class="accent white--text primary--text">
-                            <v-list-tile-title class="white--text">Profile</v-list-tile-title>
-                            <v-list-tile-action>
-                                <v-icon>account_circle</v-icon>
-                            </v-list-tile-action>
-                        </v-list-tile>
-                        <v-divider inset></v-divider>
-                        <v-list-tile to="/settings" class="grey darken-4 white--text"
-                                     active-class="accent white--text primary--text">
-                            <v-list-tile-title class="white--text">Settings</v-list-tile-title>
-                            <v-list-tile-action>
-                                <v-icon>settings</v-icon>
-                            </v-list-tile-action>
-                        </v-list-tile>
-                    </v-list-group>
-                    <v-divider></v-divider>
+                    <v-list-group prepend-icon="account_circle" value="true" color="white" no-action>
+                        <template slot="activator">
+                            <v-list-item-content>
+                                <v-list-item-title>Manage Content</v-list-item-title>
+                            </v-list-item-content>
+                        </template>
 
-                    <!-- UPLOAD/IMPORT -->
-                    <v-list-group no-action>
-                        <v-list-tile slot="activator">
-                            <v-list-tile-title>Manage content</v-list-tile-title>
-                        </v-list-tile>
-                        <v-list-tile to="/import/spotify" class="grey darken-4 white--text"
-                                     active-class="accent white--text primary--text">
-                            <v-list-tile-title class="white--text">Import from Spotify</v-list-tile-title>
-                            <v-list-tile-action>
-                                <img src="/images/spotify_black.png" alt="spotify-logo" class="spotify-logo invert--color" width="22" height="22">
-                            </v-list-tile-action>
-                        </v-list-tile>
-                        <v-divider inset></v-divider>
-                        <v-list-tile to="/upload" class="grey darken-4 white--text"
-                                     active-class="accent white--text primary--text">
-                            <v-list-tile-title class="white--text">Upload MP3s</v-list-tile-title>
-                            <v-list-tile-action>
+                        <v-list-item to="/import/spotify">
+                            <v-list-item-icon>
+                                <img src="/images/spotify_black.png" alt="spotify-logo"
+                                     class="spotify-logo invert--color" width="22" height="22">
+                            </v-list-item-icon>
+                            <v-list-item-title class="white--text">Import</v-list-item-title>
+                        </v-list-item>
+                        <v-list-item to="/upload">
+                            <v-list-item-icon>
                                 <v-icon>cloud_upload</v-icon>
-                            </v-list-tile-action>
-                        </v-list-tile>
+                            </v-list-item-icon>
+                            <v-list-item-title class="white--text">Upload MP3s</v-list-item-title>
+                        </v-list-item>
                     </v-list-group>
-                    <v-divider></v-divider>
-
-                    <!-- DARK -->
-                    <v-list-tile @click="$root.isDarkTheme = !$root.isDarkTheme">
-                        <v-list-tile-action>
-                            <v-switch v-model="$root.isDarkTheme"></v-switch>
-                        </v-list-tile-action>
-                        <v-list-tile-title>
-                            Use dark theme
-                        </v-list-tile-title>
-                    </v-list-tile>
-                    <v-divider></v-divider>
-
-                    <!-- LOGOUT -->
-                    <v-list-tile @click="logout()">
-                        <v-list-tile-title>Logout</v-list-tile-title>
-                    </v-list-tile>
                 </v-list>
             </v-navigation-drawer>
 
             <!-- NAV BAR -->
-            <v-toolbar app clipped-left dense color="primary" height="48">
-                <v-toolbar-side-icon @click="showDrawer = !showDrawer"></v-toolbar-side-icon>
+            <v-app-bar app clipped-left dense color="primary" height="48">
+                <v-app-bar-nav-icon @click="showDrawer = !showDrawer" aria-label="menu"></v-app-bar-nav-icon>
                 <v-toolbar-title>MotzlMusic</v-toolbar-title>
                 <v-spacer></v-spacer>
                 <v-toolbar-items class="hidden-sm-and-down">
-<!--                    <v-btn flat>Link One</v-btn>-->
-<!--                    <v-btn flat>Link Two</v-btn>-->
+                    <!--                    <v-btn text>Link One</v-btn>-->
+                    <!--                    <v-btn text>Link Two</v-btn>-->
                     <v-menu transition="slide-y-transition"
                             :close-delay="500"
                             bottom left open-on-hover offset-y>
-                        <v-btn slot="activator" color="primary" depressed :ripple="false">
-                            {{ user.name }}
-                        </v-btn>
+                        <template v-slot:activator="{on: menu}">
+                            <v-btn v-on="menu" color="primary" depressed :ripple="false" aria-label="Profile">
+                                {{ user.name }}
+                            </v-btn>
+                        </template>
                         <v-list dense>
-                            <v-list-tile @click="$router.push('/profile')">
-                                <v-list-tile-avatar>
+                            <v-list-item @click="$router.push('/profile')">
+                                <v-list-item-icon>
                                     <v-icon class="grey--text">account_circle</v-icon>
-                                </v-list-tile-avatar>
-                                <v-list-tile-title>Profile</v-list-tile-title>
-                            </v-list-tile>
-                            <v-list-tile @click="$router.push('/settings')">
-                                <v-list-tile-avatar>
+                                </v-list-item-icon>
+                                <v-list-item-title>Profile</v-list-item-title>
+                            </v-list-item>
+                            <v-divider></v-divider>
+                            <v-list-item @click="$router.push('/settings')">
+                                <v-list-item-icon>
                                     <v-icon class="grey--text">settings</v-icon>
-                                </v-list-tile-avatar>
-                                <v-list-tile-title>Settings</v-list-tile-title>
-                            </v-list-tile>
+                                </v-list-item-icon>
+                                <v-list-item-title>Settings</v-list-item-title>
+                            </v-list-item>
                             <v-divider></v-divider>
-                            <v-list-tile @click="$router.push('/import/spotify')">
-                                <v-list-tile-avatar>
-                                    <img src="/images/spotify_black.png" alt="spotify-logo" class="spotify-logo invert--color" width="22" height="22">
-                                </v-list-tile-avatar>
-                                <v-list-tile-title>Import from Spotify</v-list-tile-title>
-                            </v-list-tile>
+                            <v-list-item @click="$root.isDarkTheme = !$root.isDarkTheme">
+                                <v-list-item-action>
+                                    <v-switch v-model="$root.isDarkTheme" color="accent"
+                                              id="nav__use-dark-theme"></v-switch>
+                                </v-list-item-action>
+                                <v-list-item-title>
+                                    <label for="nav__use-dark-theme" class="pointer">Use dark theme</label>
+                                </v-list-item-title>
+                            </v-list-item>
                             <v-divider></v-divider>
-                            <v-list-tile @click="$root.isDarkTheme = !$root.isDarkTheme">
-                                <v-list-tile-action>
-                                    <v-switch v-model="$root.isDarkTheme" color="accent"></v-switch>
-                                </v-list-tile-action>
-                                <v-list-tile-title>
-                                    Use dark theme
-                                </v-list-tile-title>
-                            </v-list-tile>
-                            <v-divider></v-divider>
-                            <v-list-tile @click="logout()">
-                                <v-list-tile-title>Logout</v-list-tile-title>
-                            </v-list-tile>
+                            <v-list-item @click="logout()">
+                                <v-list-item-title>Logout</v-list-item-title>
+                                <v-list-item-icon>
+                                    <v-icon class="grey--text">exit_to_app</v-icon>
+                                </v-list-item-icon>
+                            </v-list-item>
                         </v-list>
                     </v-menu>
                 </v-toolbar-items>
-            </v-toolbar>
+            </v-app-bar>
 
             <!-- CONTENT -->
             <v-content class="content-container">
@@ -215,6 +167,21 @@
                     </v-layout>
                 </v-container>
             </v-content>
+
+            <v-snackbar
+                    v-model="$root.snackbar.show"
+                    :color="$root.snackbar.color"
+                    :timeout="3000"
+                    bottom>
+                {{ $root.snackbar.text }}
+                <v-btn color="white"
+                       v-show="$root.snackbar.buttonText"
+                       text
+                       :aria-label="$root.snackbar.buttonText"
+                       @click="$root.snackbar.callback">
+                    {{ $root.snackbar.buttonText }}
+                </v-btn>
+            </v-snackbar>
 
             <!-- FOOTER -->
             <v-footer app height="36" style="z-index: 5;">
@@ -243,7 +210,7 @@
         props: ['user'],
         data() {
             return {
-                showDrawer: true,
+                showDrawer: !this.$root.isMobile,
                 dragging: false,
             }
         },
@@ -299,6 +266,14 @@
 
     .bounce-enter-active {
         animation: bounce-in .2s;
+    }
+
+    .bounce-leave-to {
+        opacity: 0;
+    }
+
+    .bounce-enter {
+        opacity: 0;
     }
 
     .bounce-leave-active {

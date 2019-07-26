@@ -11,6 +11,7 @@ export default {
         commit('setShowInfoBox', true);
         const uploader = new Uploader(state, commit);
         uploader.uploadFiles(state.files);
-        VueRoot.statusInfoComponent = StatusInfos.UPLOAD_INFO;
+        VueRoot.statusInfo.component = StatusInfos.UPLOAD_INFO;
+        VueRoot.statusInfo.show = true;
     }
 }

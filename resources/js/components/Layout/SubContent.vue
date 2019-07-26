@@ -1,9 +1,9 @@
-<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
+<template>
     <v-layout column fill-height>
         <v-flex shrink class="pb-0">
             <v-layout justify-end>
                 <v-flex shrink>
-                    <v-btn flat icon>
+                    <v-btn text icon aria-label="Settings">
                         <v-icon>settings</v-icon>
                     </v-btn>
                 </v-flex>
@@ -30,13 +30,12 @@
 </template>
 
 <script>
-    import BaseRadarChart from "../SubContent/Charts/BaseRadarChart";
     import AudioFeatures from "../SubContent/AudioFeatures";
     import PlayerControls from "../SubContent/PlayerControls";
     import TrackInfo from "../SubContent/TrackInfo";
     export default {
         name: "SubContent",
-        components: {TrackInfo, PlayerControls, AudioFeatures, BaseRadarChart}
+        components: {TrackInfo, PlayerControls, AudioFeatures}
     }
 </script>
 

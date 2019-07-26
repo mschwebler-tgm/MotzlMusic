@@ -1,12 +1,14 @@
 <template>
-    <component v-if="$root.statusInfoComponent" :is="$root.statusInfoComponent"></component>
+    <component v-if="$root.statusInfo.show" :is="$root.statusInfo.component" v-bind="$root.statusInfo.data"></component>
 </template>
 
 <script>
     import StatusInfoFileUpload from "./StatusInfoFileUpload";
+    import StatusInfoGeneric from "./StatusInfoGeneric";
+
     export default {
         name: "StatusInfo",
-        components: {StatusInfoFileUpload}
+        components: {StatusInfoGeneric, StatusInfoFileUpload}
     }
 </script>
 

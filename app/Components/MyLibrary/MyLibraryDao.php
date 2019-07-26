@@ -2,82 +2,67 @@
 
 namespace App\Components\MyLibrary;
 
-use App\Album;
+use App\Daos\AudioFeatureDao;
 use App\Playlist;
 use App\Track;
 use App\User;
-use Illuminate\Support\Collection;
 
 class MyLibraryDao
 {
     /** @var User */
     private $user;
+    private $audioFeatureDao;
 
-    public function __construct()
+    public function __construct(AudioFeatureDao $playlistDao)
     {
         $this->user = apiUser();
+        $this->audioFeatureDao = $playlistDao;
     }
 
     public function getAllPlaylistsExcept(array $except = [])
     {
-        return Playlist::where('user_id', $this->user->id)
+        $playlists = Playlist::where('user_id', $this->user->id)
             ->orderBy('updated_at', 'desc')
             ->whereNotIn('id', $except)
             ->get();
+
+        return $this->audioFeatureDao->addAverageAudioFeaturesTo($playlists);
     }
 
     public function getRecentPlaylists($amount)
     {
-        return Playlist::where('user_id', $this->user->id)
+        $playlists = Playlist::where('user_id', $this->user->id)
             ->orderBy('created_at', 'desc')
             ->limit($amount)
             ->get();
+
+        return $this->audioFeatureDao->addAverageAudioFeaturesTo($playlists);
     }
 
     public function getSpotifyPlaylists()
     {
-        return Playlist::where('user_id', $this->user->id)
+        $playlists = Playlist::where('user_id', $this->user->id)
             ->orderBy('created_at', 'desc')
             ->whereNotNull('spotify_id')
             ->get();
+
+        return $this->audioFeatureDao->addAverageAudioFeaturesTo($playlists);
     }
 
     public function getAllTracks()
     {
         return Track::ofCurrentUser()
-            ->with('artists', 'album')
+            ->with('artists', 'album', 'audioFeatures')
             ->orderBy('name', 'asc')->get();
     }
 
-    public function getArtistsWithMostTracks()
+    public function addTrack($id)
     {
-        $userTrackIds = Track::ofCurrentUser()
-            ->select('id')
-            ->get()
-            ->pluck('id');
-
-        $artists = \DB::query()
-            ->selectRaw('count(*) as track_amount, artist_id, artists.*')
-            ->from('track_has_artist')
-            ->join('artists', 'artist_id', '=', 'artists.id')
-            ->whereIn('track_id', $userTrackIds)
-            ->groupBy('artist_id')
-            ->orderByDesc('track_amount')
-            ->limit(10)
-            ->get();
-
-        return $artists;
+        apiUser()->tracks()->attach($id);
     }
 
-    public function getRecentArtists()
+    public function removeTrack($id)
     {
-        // TODO: return recent artists instead of random
-        return \DB::query()
-            ->selectRaw('count(*) as track_amount, artist_id, artists.*')
-            ->from('track_has_artist')
-            ->join('artists', 'artist_id', '=', 'artists.id')
-            ->groupBy('artist_id')
-            ->limit(100)
-            ->get()->random(10);
+        apiUser()->tracks()->detach([$id]);
     }
 }

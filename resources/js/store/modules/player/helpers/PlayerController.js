@@ -17,7 +17,7 @@ export default class PlayerController {
         }
 
         this._updateBrowserTitle(track);
-        if (track.type === 'spotify') {
+        if (track.provider === 'spotify') {
             this.loading = true;
             return this.spotifyPlayer.play(track).then(() => this._setPlayingTrack(track))
                 .then(() => this.loading = false);
@@ -25,14 +25,14 @@ export default class PlayerController {
     }
 
     pause() {
-        if (this.playingTrack.type === 'spotify') {
+        if (this.playingTrack.provider === 'spotify') {
             this.playing = false;
             return this.spotifyPlayer.pause();
         }
     }
 
     _resume() {
-        if (this.playingTrack.type === 'spotify') {
+        if (this.playingTrack.provider === 'spotify') {
             this.playing = true;
             return this.spotifyPlayer.resume();
         }

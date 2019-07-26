@@ -45,8 +45,9 @@ class TrackDTO implements SpotifyDTO
             'artists' => ArtistDTO::toApiResponse($track->artists),
             'audio_features' => AudioFeatureDTO::singleAudioFeatureToApiResponse($track->audioFeatures),
             'spotify_id' => $track->spotify_id,
-            'type' => $track->type,
+            'provider' => $track->provider,
             'spotify_track_number' => $track->spotify_track_number,
+            'type' => 'track',
         ];
     }
 

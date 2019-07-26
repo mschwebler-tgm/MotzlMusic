@@ -7,6 +7,7 @@ use App\Components\MyLibrary\AlbumDao;
 use App\Components\MyLibrary\ArtistDao;
 use App\Components\MyLibrary\MyLibraryDao;
 use App\DTOs\AlbumDTO;
+use App\DTOs\PlaylistDTO;
 use App\DTOs\TrackDTO;
 use App\Http\Controllers\Controller;
 
@@ -25,9 +26,9 @@ class MyLibraryController extends Controller
         $spotify = $this->libraryDao->getSpotifyPlaylists();
         $remaining = $this->libraryDao->getAllPlaylistsExcept($recent->pluck('id')->merge($spotify->pluck('id'))->toArray());
         return [
-            'recent' => $recent,
-            'spotify' => $spotify,
-            'ungrouped' => $remaining,
+            'recent' => PlaylistDTO::toApiResponse($recent),
+            'spotify' => PlaylistDTO::toApiResponse($spotify),
+            'ungrouped' => PlaylistDTO::toApiResponse($remaining),
         ];
     }
 

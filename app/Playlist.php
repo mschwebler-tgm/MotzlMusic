@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Playlist extends Model implements HasTracks
 {
     protected $guarded = [];
+    protected $casts = [
+        'is_public' => 'boolean',
+    ];
 
     public function tracks()
     {

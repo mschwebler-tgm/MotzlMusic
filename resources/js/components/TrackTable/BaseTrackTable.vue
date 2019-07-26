@@ -4,7 +4,12 @@
              :style="{'max-height': scrollContainerHeight}"
              class="clusterize-scroll"
              ref="scrollArea">
-            <div :id="identifier + '-contentArea'" class="clusterize-content" @focusin="onTrackFocus" @focusout="resetTrackFocus">
+            <div :id="identifier + '-contentArea'"
+                 class="clusterize-content"
+                 @focusin="onTrackFocus"
+                 @focusout="resetTrackFocus"
+                 @keydown.down.prevent="onKeyDown"
+                 @keydown.up.prevent="onKeyUp">
                 <div class="clusterize-no-data">
                 </div>
             </div>
@@ -88,6 +93,18 @@
                 const trackId = trackElement.getAttribute('data-id');
                 return this.tracks.filter(track => track.id === parseInt(trackId))[0];
             },
+            onKeyDown() {
+                const nextTrackElement = document.activeElement.nextElementSibling;
+                if (nextTrackElement) {
+                    nextTrackElement.focus();
+                }
+            },
+            onKeyUp() {
+                const previousTrackElement = document.activeElement.previousElementSibling;
+                if (previousTrackElement) {
+                    previousTrackElement.focus();
+                }
+            }
         },
         computed: {
             showLoading() {

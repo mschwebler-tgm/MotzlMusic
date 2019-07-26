@@ -25,7 +25,7 @@ class SpotifyDao
         $track = Track::firstOrCreate([
             'spotify_id' => $spotifyTrack->id,
             'name' => $spotifyTrack->name,
-            'type' => 'spotify',
+            'provider' => 'spotify',
         ]);
         UserHasTrack::firstOrCreate([
             'track_id' => $track->id,

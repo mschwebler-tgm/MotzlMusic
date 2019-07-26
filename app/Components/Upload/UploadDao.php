@@ -17,7 +17,7 @@ class UploadDao extends SpotifyDao
         $track = Track::firstOrCreate([
             'spotify_id' => $spotifyTrack->id,
             'name' => $spotifyTrack->name,
-            'type' => 'local',
+            'provider' => 'local',
         ]);
         UserHasTrack::firstOrCreate([
             'track_id' => $track->id,

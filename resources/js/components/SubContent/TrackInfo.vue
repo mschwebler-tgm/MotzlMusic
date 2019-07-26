@@ -13,6 +13,7 @@
                     </div>
                     <div class="pt-2">
                         <v-rating v-model="rating"
+                                  @input="updateRating"
                                   color="secondary"
                                   background-color="secondary darken2"
                                   :size="24"
@@ -30,6 +31,11 @@
         data() {
             return {
                 rating: 3.5
+            }
+        },
+        methods: {
+            updateRating() {
+                axios.put(`/api/track/${this.currentTrack.id}/rate`, {rating: this.rating});
             }
         },
         computed: {

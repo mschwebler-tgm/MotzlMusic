@@ -35,6 +35,7 @@ Route::namespace('Api')->group(function () {
     Route::get('/playlist/{id}', 'PlaylistController@playlist');
     Route::get('/playlist/{id}/tracks', 'PlaylistController@tracks');
     Route::get('/track/{id}/audio-features', 'TrackController@audioFeatures');
+    Route::put('/track/{id}/rate', 'TrackController@rateTrack');
     Route::get('/track/{id}', 'TrackController@getDetails');
 });
 

@@ -4,6 +4,7 @@ namespace App\Service\GenericDaos;
 
 use App\Service\GenericDaos\Exceptions\TrackNotFoundException;
 use App\Track;
+use App\UserTrackRating;
 
 class TrackDao
 {
@@ -35,5 +36,20 @@ class TrackDao
 
         $track->local_path = $path;
         return $track->save();
+    }
+
+    public function setUserRating($trackId, $userId, $stars)
+    {
+        /** @var UserTrackRating $rating */
+        $rating = UserTrackRating::where('user_id', '=', $trackId)
+            ->where('track_id', '=', $userId)
+            ->first();
+        if (!$rating) {
+            $rating = new UserTrackRating();
+            $rating->track_id = $trackId;
+            $rating->user_id = $userId;
+        }
+        $rating->rating = $stars;
+        $rating->save();
     }
 }

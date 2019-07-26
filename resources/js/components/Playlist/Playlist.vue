@@ -141,11 +141,18 @@
             },
             initArrowListeners() {
                 const handleKeyDown = $event => {
-                    if ($event.key === 'ArrowUp' || $event.key === 'ArrowDown') {
+                    let somethingIsFocused = this.$store.getters['subContent/focusedItems'].length > 0;
+                    let shouldRemoveEventListener = somethingIsFocused || $event.key === 'ArrowUp' || $event.key === 'ArrowDown';
+                    if (shouldRemoveEventListener) {
                         $event.preventDefault();
                         $event.stopPropagation();
                         document.removeEventListener("keydown", handleKeyDown);
-                        $event.key === 'ArrowDown' ? this.selectFirstTrack() : this.selectLastTrack();
+                        if (!somethingIsFocused && $event.key === 'ArrowDown') {
+                            this.selectFirstTrack();
+                        }
+                        if (!somethingIsFocused && $event.key === 'ArrowUp') {
+                            this.selectLastTrack();
+                        }
                     }
                 };
                 document.addEventListener('keydown', handleKeyDown);

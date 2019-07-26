@@ -10,6 +10,8 @@ import Vuetify from 'vuetify'
 import theme from './theme';
 import {setSystemBarColor} from './theme';
 import MainContentHeaders from './components/Layout/MainContentHeader/MainContentHeaders';
+import {shortcuts} from "./helpers/shortcuts";
+import hotkeys from "hotkeys-js";
 
 Vue.component('auth-login', require('./components/Auth/Login').default);
 Vue.component('auth-register', require('./components/Auth/Register').default);
@@ -52,6 +54,7 @@ const app = new Vue({
     created() {
         this.detectTouch();
         setSystemBarColor('accent');
+        this.initHotkeys();
     },
     methods: {
         detectTouch() {
@@ -87,6 +90,9 @@ const app = new Vue({
                 this.snackbar.show = true;
                 this.snackbar.color = color;
             });
+        },
+        initHotkeys() {
+            hotkeys(shortcuts.QUEUE_NEXT, () => this.$store.dispatch('player/addSelectedToQueue'));
         }
     },
     watch: {

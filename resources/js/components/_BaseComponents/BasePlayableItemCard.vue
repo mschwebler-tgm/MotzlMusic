@@ -28,6 +28,7 @@
         <v-card-title primary-title>
             <div class="no-overflow">
                 <h4 class="subtitle-1 text-none mb-0 item-title">{{ item.name }}</h4>
+                <slot name="footer"></slot>
             </div>
         </v-card-title>
     </v-card>

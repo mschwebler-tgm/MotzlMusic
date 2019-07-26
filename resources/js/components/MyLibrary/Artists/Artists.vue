@@ -29,8 +29,11 @@
                     <v-flex v-for="artist in selectedArtists.items"
                             :key="artist.id"
                             xs6 sm4 md4 lg3 xl2 d-block justify-center>
-                        <artist-item :artist="artist"></artist-item>
-                        <!--                    {{ artist.name }}-->
+                        <base-playable-item-card :item="artist">
+                            <span slot="footer" class="caption grey--text">
+                                {{ artist.tracks.length }} track{{ artist.tracks.length > 1 ? 's' : '' }}
+                            </span>
+                        </base-playable-item-card>
                     </v-flex>
                 </v-layout>
                 <div class="d-flex pa-3 mt-2" v-if="!selectedArtists.items.length">
@@ -39,8 +42,12 @@
                 <v-divider class="mt-3 mb-3"></v-divider>
                 <v-layout>
                     <v-flex xs6 sm4 md4 lg3 xl2 d-block justify-center>
-                        <artist-item :artist="artistsWithOneTrack"></artist-item>
-                        <!--                    Artist with one track-->
+                        <base-playable-item-card :item="artistsWithOneTrack">
+                            <!-- Artist with one track-->
+                            <span slot="footer" class="caption grey--text">
+                                {{ artistsWithOneTrack.tracks.length }} track{{ artistsWithOneTrack.tracks.length > 1 ? 's' : '' }}
+                            </span>
+                        </base-playable-item-card>
                     </v-flex>
                 </v-layout>
             </div>
@@ -49,11 +56,11 @@
 </template>
 
 <script>
-    import ArtistItem from "./ArtistItem";
+    import BasePlayableItemCard from "../../_BaseComponents/BasePlayableItemCard";
 
     export default {
         name: "Artists",
-        components: {ArtistItem},
+        components: {BasePlayableItemCard},
         data() {
             return {
                 clickedArtists: JSON.parse(sessionStorage.getItem('myLibraryClickedArtist')) || {},
@@ -138,10 +145,15 @@
         justify-content: center;
         align-items: center;
 
-        &:hover, &.active {
-            color: var(--v-primary-base);
+    &
+    :hover,
 
-        }
+    &
+    .active {
+        color: var(--v-primary-base);
+
+    }
+
     }
 
     .tools {
@@ -158,14 +170,15 @@
             overflow-x: scroll;
             overflow-y: hidden;
 
-            &::-webkit-scrollbar {
-                display: none;
-            }
+    &::-webkit-scrollbar {
+         display: none;
+     }
 
-            .artist-letter {
-                line-height: 1em;
-                font-size: 1em !important;
-            }
+        .artist-letter {
+            line-height: 1em;
+            font-size: 1em !important;
         }
+    }
+
     }
 </style>

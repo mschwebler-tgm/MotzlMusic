@@ -13,7 +13,7 @@ class CreateUserTrackRatingTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_track_rating', function (Blueprint $table) {
+        Schema::create('user_track_ratings', function (Blueprint $table) {
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('track_id');
             $table->float('rating');
@@ -31,6 +31,6 @@ class CreateUserTrackRatingTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_track_rating');
+        Schema::dropIfExists('user_track_ratings');
     }
 }

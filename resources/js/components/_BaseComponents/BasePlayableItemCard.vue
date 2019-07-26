@@ -1,7 +1,7 @@
 <template>
     <v-card tile
             hover
-            @click="openPlaylistDetails"
+            @click="openItemDetails"
             @mouseenter="showAudioFeatures"
             @mouseleave="hideAudioFeatures"
             class="overlay-play-icon-toggle">
@@ -9,12 +9,12 @@
             <v-img
                     :src="fullResolutionImage"
                     :lazy-src="intermediateImage"
-                    :alt="playlist.name"
+                    :alt="item.name"
                     aspect-ratio="1">
             </v-img>
             <v-btn fab absolute depressed bottom right small
                    v-if="!isPlaying"
-                   @click="playPlaylist"
+                   @click="playItem"
                    :class="{'force-show': $root.isTouch}"
                    color="secondary"
                    aria-label="Start Playlist"
@@ -27,31 +27,32 @@
         </div>
         <v-card-title primary-title>
             <div class="no-overflow">
-                <h4 class="subtitle-1 text-none mb-0 playlist-title">{{ playlist.name }}</h4>
+                <h4 class="subtitle-1 text-none mb-0 item-title">{{ item.name }}</h4>
             </div>
         </v-card-title>
     </v-card>
 </template>
 
 <script>
-    import {slugify} from "../../../helpers";
+    import {slugify} from "../../helpers";
 
     export default {
-        name: "PlaylistItem",
+        name: "BasePlayableItemCard",
         props: {
-            playlist: Object,
+            item: Object,
         },
         methods: {
-            openPlaylistDetails() {
-                this.$store.commit('cache/setSelectedPlaylist', this.playlist);
-                this.$router.push(`/my-library/playlists/${slugify(this.playlist.name)}/${this.playlist.id}`);
+            openItemDetails() {
+                const typeCapitalized = this.item.type.charAt(0).toUpperCase() + this.item.type.slice(1);
+                this.$store.commit(`cache/setSelected${typeCapitalized}`, this.item);
+                this.$router.push(`/my-library/${this.item.type}/${slugify(this.item.name)}/${this.item.id}`);
             },
-            playPlaylist($event) {
+            playItem($event) {
                 $event.stopPropagation();
-                this.$store.dispatch('player/playList', {type: 'playlist', list: this.playlist});
+                this.$store.dispatch('player/playList', {type: this.item.type, list: this.item});
             },
             showAudioFeatures() {
-                this.$store.commit('subContent/setFocusedItems', [this.playlist]);
+                this.$store.commit('subContent/setFocusedItems', [this.item]);
             },
             hideAudioFeatures() {
                 this.$store.commit('subContent/setFocusedItems', []);
@@ -59,16 +60,17 @@
         },
         computed: {
             fullResolutionImage() {
-                return this.$root.getSpotifyImage(this.playlist, 'medium');
+                return this.$root.getSpotifyImage(this.item, 'medium');
             },
             intermediateImage() {
-                return this.$root.getSpotifyImage(this.playlist, 'small');
+                return this.$root.getSpotifyImage(this.item, 'small');
             },
             isPlaying() {
                 const activeItem = this.$store.getters['player/activeItem'];
-                return activeItem.type === 'playlist' && activeItem.id === this.playlist.id;
+                return activeItem.type === this.item.type && activeItem.id === this.item.id;
             }
-        }
+        },
+
     }
 </script>
 
@@ -77,13 +79,13 @@
         overflow: hidden;
     }
 
-    .playlist-title {
+    .item-title {
         text-overflow: fade;
         white-space: nowrap;
         overflow: hidden;
     }
 
-    .playlist-tile.theme--dark {
+    .item-tile.theme--dark {
         background-color: #343434;
         border-color: #343434;
     }

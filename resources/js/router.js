@@ -89,7 +89,7 @@ export default new VueRouter({
                     redirect: '/my-library/playlists',
                     children: [
                         {
-                            path: 'playlists/:name/:id',
+                            path: 'playlist/:name/:id',
                             component: PlaylistView,
                             props: true,
                         },

@@ -3,17 +3,17 @@
         <v-flex v-for="playlist in playlists"
                 :key="playlist.id"
                 xs6 sm4 md4 lg3 xl2 d-block justify-center>
-            <playlist-item :playlist="playlist"></playlist-item>
+            <base-playable-item-card :item="playlist"></base-playable-item-card>
         </v-flex>
     </v-layout>
 </template>
 
 <script>
-    import PlaylistItem from "./PlaylistItem";
+    import BasePlayableItemCard from "../../_BaseComponents/BasePlayableItemCard";
 
     export default {
         name: "PlaylistItemList",
-        components: {PlaylistItem},
+        components: {BasePlayableItemCard},
         props: {
             playlists: {
                 type: Array,
@@ -22,7 +22,3 @@
         }
     }
 </script>
-
-<style scoped>
-
-</style>

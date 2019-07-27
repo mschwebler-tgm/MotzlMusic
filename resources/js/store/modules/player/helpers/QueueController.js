@@ -8,11 +8,20 @@ export default class QueueController {
     }
 
     setActiveTrack(track) {
-        this._currentIndex = this._queue.findIndex(queueItem => queueItem.track.id === track.id);
+        this._currentIndex = this._findTrackIndexInQueue(track);
+    }
+
+    _findTrackIndexInQueue(track) {
+        return this._queue.findIndex(queueItem => queueItem.track.id === track.id);
     }
 
     addTrackToQueue(track) {
-        let index = this._findNextSlotForTrackToQueue();
+        const index = this._findNextSlotForTrackToQueue();
+        const existingIndex = this._findTrackIndexInQueue(track);
+        if (this._queue[existingIndex].isQueued) {
+            return;
+        }
+
         this._insertTrack(index, new QueueItem(track, true));
     }
 

@@ -30,13 +30,20 @@
         name: "TrackInfo",
         data() {
             return {
-                rating: 3.5
+                rating: null,
             }
         },
         methods: {
             updateRating() {
-                axios.put(`/api/track/${this.currentTrack.id}/rate`, {rating: this.rating});
+                this.$store.dispatch('tracks/rateTrack', {track: this.currentTrack, rating: this.rating});
             }
+        },
+        watch: {
+            currentTrack(newTrack) {
+                if (newTrack) {
+                    this.rating = newTrack.rating;
+                }
+            },
         },
         computed: {
             currentTrack() {

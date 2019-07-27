@@ -41,8 +41,8 @@ class TrackDao
     public function setUserRating($trackId, $userId, $stars)
     {
         /** @var UserTrackRating $rating */
-        $rating = UserTrackRating::where('user_id', '=', $trackId)
-            ->where('track_id', '=', $userId)
+        $rating = UserTrackRating::where('user_id', '=', $userId)
+            ->where('track_id', '=', $trackId)
             ->first();
         if (!$rating) {
             $rating = new UserTrackRating();

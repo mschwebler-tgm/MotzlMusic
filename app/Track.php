@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Track extends Model
 {
     protected $guarded = [];
+    protected $with = ['rating'];
 
     public function artists()
     {
@@ -37,6 +38,12 @@ class Track extends Model
     public function audioFeatures()
     {
         return $this->hasOne(SpotifyAudioFeature::class, 'track_id', 'id');
+    }
+
+    public function rating()
+    {
+        return $this->hasOne(UserTrackRating::class)
+            ->where('user_id', '=', apiUser()->id);
     }
 
     /**

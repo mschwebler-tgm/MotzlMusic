@@ -16,7 +16,7 @@ export default {
             return;
         }
 
-        state.queueController.queue = trackList;
+        state.queueController.setQueue(trackList);
         dispatch('play', trackList[0]);
     },
     playNext({state, dispatch}) {

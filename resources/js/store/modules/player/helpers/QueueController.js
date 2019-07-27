@@ -1,3 +1,5 @@
+import QueueItem from "./QueueItem";
+
 export default class QueueController {
 
     constructor() {
@@ -6,13 +8,12 @@ export default class QueueController {
     }
 
     setActiveTrack(track) {
-        this._currentIndex = this._queue.findIndex(queueTrack => queueTrack.id === track.id);
+        this._currentIndex = this._queue.findIndex(queueItem => queueItem.track.id === track.id);
     }
 
     addTrackToQueue(track) {
-        track.isQueued = true;
         let index = this._findNextSlotForTrackToQueue();
-        this._insertTrack(index, track);
+        this._insertTrack(index, new QueueItem(track, true));
     }
 
     _findNextSlotForTrackToQueue() {
@@ -23,8 +24,8 @@ export default class QueueController {
         return index;
     }
 
-    _insertTrack(index, track) {
-        this._queue.splice(index, 0, track);
+    _insertTrack(index, queueItem) {
+        this._queue.splice(index, 0, queueItem);
     }
 
     setNext() {
@@ -43,11 +44,25 @@ export default class QueueController {
         this._currentIndex--;
     }
 
-    set queue(queue) {
-        this._queue = [...queue];
+    getQueuedTracks() {
+        const queuedTracks = [];
+        for (let i = 0; i < this._queue.length; i++) {
+            console.log(this._queue[i]);
+            if (this._queue[i].isQueued) {
+                queuedTracks.push(this._queue[i]);
+            } else {
+                break;
+            }
+        }
+
+        return queuedTracks;
+    }
+
+    setQueue(queue) {
+        this._queue = queue.map(track => new QueueItem(track));
     }
 
     get currentTrack() {
-        return this._queue[this._currentIndex];
+        return this._queue[this._currentIndex].track;
     }
 }

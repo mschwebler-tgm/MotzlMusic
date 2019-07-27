@@ -27,7 +27,7 @@
 <script>
     import Clusterize from "clusterize.js";
     import TrackTableContextMenu from "./TrackTableContextMenu";
-    import {Clusterizer} from "../../store/modules/myLibrary/helpers/clusterizeTracks";
+    import handleMutations from './StoreWatchers';
 
     export default {
         name: "BaseTrackTable",
@@ -111,15 +111,7 @@
                 }
             },
             initStoreWatchers() {
-                this.$store.subscribe(mutation => {
-                    if (mutation.type === 'tracks/setTrackRating') {
-                        const track = mutation.payload.track;
-                        const trackElement = this.findElementByTrackId(track.id);
-                        if (trackElement) {
-                            trackElement.querySelector('.track-list-rating').innerHTML = Clusterizer._rowRating(track);
-                        }
-                    }
-                });
+                this.$store.subscribe(mutation => handleMutations.apply(this, [mutation]));
             },
         },
         computed: {

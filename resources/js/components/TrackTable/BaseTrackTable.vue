@@ -73,11 +73,16 @@
                     rows: this.renderFunction(this.tracks, this.playingTrackId),
                 });
             },
+            playTrack(track) {
+                this.$store.dispatch('player/play', track);
+                this.$store.commit('player/setQueue', this.tracks);
+                this.$store.commit('player/setQueueTrack', track);
+            },
             initDoubleClickListener() {
                 const playTrack = $event => {
                     const trackElement = this.findTrackElement($event.target);
                     const track = this.getTrackFromDomElement(trackElement);
-                    this.$emit('track-selected', track);
+                    this.playTrack(track);
                 };
                 this.$refs.scrollArea.addEventListener('dblclick', playTrack);
                 this.$refs.scrollArea.addEventListener('touchend', $event => {

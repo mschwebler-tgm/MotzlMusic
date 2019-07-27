@@ -8,7 +8,8 @@ const handleTrackRatingChange = function (payload) {
     }
 };
 
-const handleTrackQueue = function (payload, state) {
+const handleTrackQueueIndicators = function (payload, state) {
+    _removeExtraInfoFromTrack.apply(this, [payload]);
     const queuedTracks = state.player.queueController.getQueuedTracks();
     queuedTracks.forEach((track, index) => {
         const trackTitleElement = this.findElementByTrackId(track.id).querySelector('.track-list-title');
@@ -16,9 +17,15 @@ const handleTrackQueue = function (payload, state) {
     });
 };
 
+const _removeExtraInfoFromTrack = function (track) {
+    const trackElement = this.findElementByTrackId(track.id);
+    trackElement.querySelector('.track-list-title').innerHTML = Clusterizer._rowTitle(track.name);
+};
+
 const handlerByMutation = {
     'tracks/setTrackRating': handleTrackRatingChange,
-    'player/addTrackToQueue': handleTrackQueue,
+    'player/addTrackToQueue': handleTrackQueueIndicators,
+    'player/setPlayingTrack': handleTrackQueueIndicators,
 };
 
 /**

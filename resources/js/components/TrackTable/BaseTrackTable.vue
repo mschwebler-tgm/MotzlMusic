@@ -27,6 +27,7 @@
 <script>
     import Clusterize from "clusterize.js";
     import TrackTableContextMenu from "./TrackTableContextMenu";
+    import {Clusterizer} from "../../store/modules/myLibrary/helpers/clusterizeTracks";
 
     export default {
         name: "BaseTrackTable",
@@ -49,6 +50,7 @@
                 this.initializeTracksTable();
             }
             this.initDoubleClickListener();
+            this.initStoreWatchers();
         },
         watch: {
             tracks() {
@@ -89,6 +91,9 @@
             findTrackElement(element) {
                 return element.classList.contains('track') ? element : this.findTrackElement(element.parentElement);
             },
+            findElementByTrackId(id) {
+                return this.$refs.scrollArea.querySelector(`[data-id="${id}"]`);
+            },
             getTrackFromDomElement(trackElement) {
                 const trackId = trackElement.getAttribute('data-id');
                 return this.tracks.filter(track => track.id === parseInt(trackId))[0];
@@ -104,7 +109,18 @@
                 if (previousTrackElement) {
                     previousTrackElement.focus();
                 }
-            }
+            },
+            initStoreWatchers() {
+                this.$store.subscribe(mutation => {
+                    if (mutation.type === 'tracks/setTrackRating') {
+                        const track = mutation.payload.track;
+                        const trackElement = this.findElementByTrackId(track.id);
+                        if (trackElement) {
+                            trackElement.querySelector('.track-list-rating').innerHTML = Clusterizer._rowRating(track);
+                        }
+                    }
+                });
+            },
         },
         computed: {
             showLoading() {

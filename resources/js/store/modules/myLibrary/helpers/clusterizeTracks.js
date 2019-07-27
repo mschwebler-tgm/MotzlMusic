@@ -14,7 +14,7 @@ class Clusterizer {
     }
 
     _generateHtmlRowFor(track, index) {
-        const rowContent = this._generateHtmlRowContent(track, index);
+        const rowContent = Clusterizer._generateHtmlRowContent(track, index);
         const classes = ['track', `track-row-${track.id}`, 'is-unselectable'];
         if (this._playingTrackId === track.id) {
             classes.push('active');
@@ -23,34 +23,34 @@ class Clusterizer {
         return `<div class="${classes.join(' ')}" data-id="${track.id}" tabindex="-1">${rowContent}</div>`;
     }
 
-    _generateHtmlRowContent(track, index) {
-        return this._rowNumber(index) +
-            this._rowTitle(track) +
-            this._rowDuration(track) +
-            this._rowArtist(track) +
-            this._rowRating(track) +
-            this._rowTags(track) +
-            this._rowOptions(track);
+    static _generateHtmlRowContent(track, index) {
+        return Clusterizer._rowNumber(index) +
+            Clusterizer._rowTitle(track) +
+            Clusterizer._rowDuration(track) +
+            Clusterizer._rowArtist(track) +
+            Clusterizer._rowRating(track) +
+            Clusterizer._rowTags(track) +
+            Clusterizer._rowOptions(track);
     }
 
-    _rowNumber(index) {
+    static _rowNumber(index) {
         return `<div class="track-list-number">&nbsp;<span>${index + 1}.</span></div>`;
     }
 
-    _rowTitle(track) {
+    static _rowTitle(track) {
         return `<div class="track-list-title">&nbsp;<span title="${track.name}" class="text-truncate">${track.name}</span></div>`;
     }
 
-    _rowDuration(track) {
+    static _rowDuration(track) {
         return `<div class="track-list-duration">&nbsp;<span>${track.duration_formatted}</span></div>`;
     }
 
-    _rowArtist(track) {
+    static _rowArtist(track) {
         const artists = track.artists.map(artist => artist.name).join(', ');
         return `<div class="track-list-artist">&nbsp;<span title="${artists}" class="text-truncate">${artists}</span></div>`;
     }
 
-    _rowRating(track) {
+    static _rowRating(track) {
         const stars = [];
         for (let i = 0; i < Math.floor(track.rating); i++) {
             stars.push(starFull);
@@ -62,13 +62,13 @@ class Clusterizer {
         return `<div class="track-list-rating">${stars.join('')}</div>`;
     }
 
-    _rowTags(track) {
+    static _rowTags(track) {
         return `<div class="flex-1 track-list-options-trigger"></div>` +
-            this._getIconsForTrack(track) +
+            Clusterizer._getIconsForTrack(track) +
             `<div class="flex-1 track-list-options-trigger"></div>`;
     }
 
-    _getIconsForTrack(track) {
+    static _getIconsForTrack(track) {
         let icons = '';
         if (track.provider === 'spotify') {
             icons += '<div class="track-list-options-trigger"><span class="icon has-text-grey-light" title="From Spotify"><i class="mdi mdi-spotify mdi-24px"></i></span></div>';
@@ -77,7 +77,7 @@ class Clusterizer {
         return icons;
     }
 
-    _rowOptions(track) {
+    static _rowOptions(track) {
         return `<div class="track-list-more-options track-options"><span class="icon has-text-grey-light pointer track-options" title="More options"><i class="mdi mdi-dots-vertical mdi-24px track-options"></i></span></div>`;
     }
 }
@@ -139,4 +139,4 @@ function clusterizeTracksMobile(tracks, playingTrackId) {
 }
 
 export default clusterizeTracks;
-export {clusterizeTracksMobile};
+export {clusterizeTracksMobile, Clusterizer};

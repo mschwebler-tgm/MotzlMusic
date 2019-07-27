@@ -14,6 +14,7 @@ class CreateUserTrackRatingTable extends Migration
     public function up()
     {
         Schema::create('user_track_ratings', function (Blueprint $table) {
+            $table->increments('id');
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('track_id');
             $table->float('rating');

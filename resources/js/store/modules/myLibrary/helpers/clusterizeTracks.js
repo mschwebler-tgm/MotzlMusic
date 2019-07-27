@@ -1,3 +1,5 @@
+import {starFull, starHalf} from "./starsSVGs";
+
 class Clusterizer {
 
     constructor(tracks, playingTrackId) {
@@ -49,7 +51,15 @@ class Clusterizer {
     }
 
     _rowRating(track) {
-        return `<div class="track-list-rating">&nbsp;Star rating</div>`;
+        const stars = [];
+        for (let i = 0; i < Math.floor(track.rating); i++) {
+            stars.push(starFull);
+        }
+        if (track.rating % 1 === 0.5) {
+            stars.push(starHalf);
+        }
+
+        return `<div class="track-list-rating">${stars.join('')}</div>`;
     }
 
     _rowTags(track) {
@@ -60,7 +70,7 @@ class Clusterizer {
 
     _getIconsForTrack(track) {
         let icons = '';
-        if (track.type === 'spotify') {
+        if (track.provider === 'spotify') {
             icons += '<div class="track-list-options-trigger"><span class="icon has-text-grey-light" title="From Spotify"><i class="mdi mdi-spotify mdi-24px"></i></span></div>';
         }
         // `<div class="track-list-options-trigger"><span class="icon has-text-grey-light" title="Subscribed from Timi Hendrix"><i class="mdi mdi-account-multiple mdi-24px"></i></span></div>`

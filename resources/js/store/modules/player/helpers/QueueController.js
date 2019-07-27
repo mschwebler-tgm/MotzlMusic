@@ -45,17 +45,7 @@ export default class QueueController {
     }
 
     getQueuedTracks() {
-        const queuedTracks = [];
-        for (let i = 0; i < this._queue.length; i++) {
-            console.log(this._queue[i]);
-            if (this._queue[i].isQueued) {
-                queuedTracks.push(this._queue[i]);
-            } else {
-                break;
-            }
-        }
-
-        return queuedTracks;
+        return this._queue.filter(queueItem => queueItem.isQueued);
     }
 
     setQueue(queue) {
@@ -63,6 +53,9 @@ export default class QueueController {
     }
 
     get currentTrack() {
-        return this._queue[this._currentIndex].track;
+        const queueItem = this._queue[this._currentIndex];
+        queueItem.isQueued = false;
+
+        return queueItem.track;
     }
 }

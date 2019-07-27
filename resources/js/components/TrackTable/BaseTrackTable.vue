@@ -111,7 +111,7 @@
                 }
             },
             initStoreWatchers() {
-                this.$store.subscribe(mutation => handleMutations.apply(this, [mutation]));
+                this.$store.subscribe((mutation, state) => handleMutations.apply(this, [mutation, state]));
             },
         },
         computed: {

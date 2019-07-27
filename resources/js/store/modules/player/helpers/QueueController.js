@@ -45,7 +45,7 @@ export default class QueueController {
     }
 
     getQueuedTracks() {
-        return this._queue.filter(queueItem => queueItem.isQueued);
+        return this._queue.filter(queueItem => queueItem.isQueued).map(queueItem => queueItem.track);
     }
 
     setQueue(queue) {

@@ -8,17 +8,27 @@ const handleTrackRatingChange = function (payload) {
     }
 };
 
+const handleTrackQueue = function (payload, state) {
+    const queuedTracks = state.player.queueController.getQueuedTracks();
+    queuedTracks.forEach((track, index) => {
+        const trackTitleElement = this.findElementByTrackId(track.id).querySelector('.track-list-title');
+        trackTitleElement.innerHTML = Clusterizer._rowTitle(track.name, `[${index + 1}]`);
+    });
+};
+
 const handlerByMutation = {
     'tracks/setTrackRating': handleTrackRatingChange,
+    'player/addTrackToQueue': handleTrackQueue,
 };
 
 /**
  * this context refers to BaseTrackTable component
  * @param mutation vuex mutation
+ * @param state
  */
-export default function (mutation) {
+export default function (mutation, state) {
     let handler = handlerByMutation[mutation.type];
     if (handler) {
-        handler.apply(this, [mutation.payload]);
+        handler.apply(this, [mutation.payload, state]);
     }
 };

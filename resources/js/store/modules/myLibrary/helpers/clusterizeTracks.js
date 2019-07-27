@@ -25,7 +25,7 @@ class Clusterizer {
 
     static _generateHtmlRowContent(track, index) {
         return Clusterizer._rowNumber(index) +
-            Clusterizer._rowTitle(track) +
+            Clusterizer._rowTitle(track.name) +
             Clusterizer._rowDuration(track) +
             Clusterizer._rowArtist(track) +
             Clusterizer._rowRating(track) +
@@ -37,8 +37,8 @@ class Clusterizer {
         return `<div class="track-list-number">&nbsp;<span>${index + 1}.</span></div>`;
     }
 
-    static _rowTitle(track) {
-        return `<div class="track-list-title">&nbsp;<span title="${track.name}" class="text-truncate">${track.name}</span></div>`;
+    static _rowTitle(title, extraInfo) {
+        return `<div class="track-list-title">&nbsp;<span title="${title}" class="text-truncate">${title} ${extraInfo || ''}</span></div>`;
     }
 
     static _rowDuration(track) {

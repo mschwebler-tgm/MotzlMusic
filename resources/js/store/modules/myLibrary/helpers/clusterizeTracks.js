@@ -1,4 +1,4 @@
-import {starFull, starHalf} from "./starsSVGs";
+import StarRating from "../../../../components/_BaseComponents/StarRating";
 
 class Clusterizer {
 
@@ -51,14 +51,7 @@ class Clusterizer {
     }
 
     static _rowRating(track) {
-        const stars = [];
-        for (let i = 0; i < Math.floor(track.rating); i++) {
-            stars.push(starFull);
-        }
-        if (track.rating % 1 === 0.5) {
-            stars.push(starHalf);
-        }
-
+        const stars = StarRating.getStarSVGs(track.rating);
         return `<div class="track-list-rating">${stars.join('')}</div>`;
     }
 

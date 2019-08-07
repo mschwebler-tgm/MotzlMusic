@@ -4,6 +4,7 @@ export default class StarRating {
 
     constructor(wrapperElement) {
         this._wrapperElement = wrapperElement;
+        this._wrapperElementOffsetX = wrapperElement.getBoundingClientRect().x;
         this._previousStarsAmount = null;
         this._onRateCallback = () => console.warn('[warning] no callback for star rating input defined');
         this._onRateHoverCallback = () => console.warn('[warning] no callback for star rating hover defined');
@@ -27,7 +28,7 @@ export default class StarRating {
 
     _calculateStarsAmountForMousePosition($event) {
         const starWidth = 24;
-        const offsetLeft = $event.pageX - this._wrapperElement.getBoundingClientRect().x;
+        const offsetLeft = $event.pageX - this._wrapperElementOffsetX;
         const halfStarsAmount = Math.ceil(offsetLeft / (starWidth / 2));
 
         return halfStarsAmount / 2;

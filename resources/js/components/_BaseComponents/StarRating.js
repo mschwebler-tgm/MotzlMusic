@@ -29,7 +29,7 @@ export default class StarRating {
     _calculateStarsAmountForMousePosition($event) {
         const starWidth = 24;
         const offsetLeft = $event.pageX - this._wrapperElementOffsetX;
-        const halfStarsAmount = Math.ceil(offsetLeft / (starWidth / 2));
+        const halfStarsAmount = Math.ceil((offsetLeft - 2) / (starWidth / 2));  // -2px for usability reasons
 
         return halfStarsAmount / 2;
     }

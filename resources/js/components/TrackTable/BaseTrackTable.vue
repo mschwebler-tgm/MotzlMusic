@@ -28,6 +28,7 @@
     import Clusterize from "clusterize.js";
     import TrackTableContextMenu from "./TrackTableContextMenu";
     import handleMutations from './StoreWatchers';
+    import StarRating from "../_BaseComponents/StarRating";
 
     export default {
         name: "BaseTrackTable",
@@ -71,7 +72,13 @@
                     scrollId: this.tableId,
                     contentId: this.identifier + '-contentArea',
                     rows: this.renderFunction(this.tracks, this.playingTrackId),
+                    callbacks: {
+                        clusterChanged: () => this.clusterChanged()
+                    }
                 });
+            },
+            clusterChanged() {
+                this.initStarRatings();
             },
             playTrack(track) {
                 this.$store.dispatch('player/play', track);
@@ -118,6 +125,30 @@
             initStoreWatchers() {
                 this.$store.subscribe((mutation, state) => handleMutations.apply(this, [mutation, state]));
             },
+            initStarRatings() {
+                const self = this;
+                this.$refs.scrollArea.querySelectorAll(`.track-list-rating`).forEach(element => {
+                    let selectedRating = 0;
+                    const mouseEnter = $event => {
+                        const starWrapperElement = $event.target;
+                        const track = self.getTrackFromDomElement(starWrapperElement.parentNode);
+                        const starRating = new StarRating(starWrapperElement);
+                        element.removeEventListener('mouseenter', mouseEnter);
+                        starRating.onRateHover(amount => starWrapperElement.innerHTML = StarRating.getStarSVGs(amount, true).join(''));
+                        starRating.onRate(amount => {
+                            selectedRating = amount;
+                            self.$store.dispatch('tracks/rateTrack', {track, rating: amount})
+                        });
+                    };
+
+                    element.addEventListener('mouseenter', mouseEnter);
+                    element.addEventListener('mouseleave', $event => {
+                        const starWrapperElement = $event.target;
+                        const track = this.getTrackFromDomElement(starWrapperElement.parentNode);
+                        starWrapperElement.innerHTML = StarRating.getStarSVGs(selectedRating || track.rating).join('')
+                    });
+                })
+            }
         },
         computed: {
             showLoading() {

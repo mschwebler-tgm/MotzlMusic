@@ -52,6 +52,7 @@
             }
             this.initDoubleClickListener();
             this.initStoreWatchers();
+            this.initKeyboardListeners();
         },
         watch: {
             tracks() {
@@ -124,6 +125,14 @@
             },
             initStoreWatchers() {
                 this.$store.subscribe((mutation, state) => handleMutations.apply(this, [mutation, state]));
+            },
+            initKeyboardListeners() {
+                this.$refs.scrollArea.addEventListener('keydown', $event => {
+                    if ($event.key === 'Enter') {
+                        const track = this.getTrackFromDomElement($event.target);
+                        this.$store.dispatch('player/play', track);
+                    }
+                })
             },
             initStarRatings() {
                 const self = this;

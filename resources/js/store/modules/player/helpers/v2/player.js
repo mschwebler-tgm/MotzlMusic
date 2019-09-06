@@ -1,6 +1,9 @@
+import PlayerClient from "./playerClient";
+
 export default class Player {
 
-    constructor() {
+    constructor(playerClient) {
+        this._playerClient = playerClient || new PlayerClient();
         this._currentTrackList = [];
         this._playingTrackIndex = 0;
     }
@@ -8,9 +11,10 @@ export default class Player {
     playList(tracks = [], startIndex = 0) {
         this._currentTrackList = tracks;
         this._playingTrackIndex = startIndex;
+        this._playerClient.play(this.currentTrack);
     }
 
-    get playingTrack() {
+    get currentTrack() {
         return this._currentTrackList[this._playingTrackIndex];
     }
 }

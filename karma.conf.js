@@ -8,7 +8,7 @@ module.exports = function(config) {
         basePath: './resources/js/tests/',
         frameworks: ['jasmine'],
         files: [
-            { pattern: '*.spec.js', watched: false }
+            { pattern: 'setup.js', watched: false }
         ],
         exclude: [],
 
@@ -19,7 +19,7 @@ module.exports = function(config) {
         // },
         preprocessors: {
             'app.js': ['webpack'],
-            '*.spec.js': ['webpack']
+            'setup.js': ['webpack']
         },
 
         reporters: ['progress'],

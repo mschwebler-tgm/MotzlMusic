@@ -11,34 +11,37 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css')
-    .browserSync({
-        files: [
-            './resources/**/*',
-        ],
-        proxy: 'mm.local',
-      })
-    .webpackConfig({
-        module: {
-            rules: [
-                {
-                    test: /\.jsx?$/,
-                    exclude: /node_modules(?!\/foundation-sites)|bower_components/,
-                    use: [
-                        {
-                            loader: 'babel-loader',
-                            options: Config.babel(),
-                        }
-                    ]
+mix.js('resources/js/app.js', 'public/js');
+
+if (process.env.APP_ENV !== 'testing') {
+    mix.sass('resources/sass/app.scss', 'public/css')
+        .browserSync({
+            files: [
+                './resources/**/*',
+            ],
+            proxy: 'mm.local',
+        })
+        .webpackConfig({
+            module: {
+                rules: [
+                    {
+                        test: /\.jsx?$/,
+                        exclude: /node_modules(?!\/foundation-sites)|bower_components/,
+                        use: [
+                            {
+                                loader: 'babel-loader',
+                                options: Config.babel(),
+                            }
+                        ]
+                    }
+                ]
+            },
+            resolve: {
+                alias: {
+                    '@': path.resolve('resources/assets/sass'),
                 }
-            ]
-        },
-        resolve: {
-            alias: {
-                '@': path.resolve('resources/assets/sass'),
             }
-        }
-      })
-    .version()
-    .sourceMaps();
+        })
+        .version()
+        .sourceMaps();
+}

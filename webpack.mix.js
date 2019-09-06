@@ -11,7 +11,15 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js');
+mix.js('resources/js/app.js', 'public/js')
+    .webpackConfig({
+        resolve: {
+            alias: {
+                '$components': path.resolve('resources/js'),
+                '$store': path.resolve('resources/js/store/modules'),
+            }
+        }
+    });
 
 if (process.env.APP_ENV !== 'testing') {
     mix.sass('resources/sass/app.scss', 'public/css')
@@ -36,11 +44,6 @@ if (process.env.APP_ENV !== 'testing') {
                     }
                 ]
             },
-            resolve: {
-                alias: {
-                    '@': path.resolve('resources/assets/sass'),
-                }
-            }
         })
         .version()
         .sourceMaps();

@@ -1,5 +1,21 @@
 import Player from '$store/player/helpers/v2/player';
 
+let playWasCalled = false;
+let trackToPlay = null;
+
+function preparePlayer() {
+    playWasCalled = false;
+    trackToPlay = null;
+    const playerClient = {
+        play(track) {
+            playWasCalled = true;
+            trackToPlay = track;
+        }
+    };
+
+    return new Player(playerClient);
+}
+
 describe('Player', () => {
     it('should set list of tracks with starting index', () => {
         const player = new Player();
@@ -11,15 +27,7 @@ describe('Player', () => {
     });
 
     it('should dispatch play request for second track', () => {
-        let playWasCalled = false;
-        let trackToPlay = null;
-        const playerClient = {
-            play(track) {
-                playWasCalled = true;
-                trackToPlay = track;
-            }
-        };
-        const player = new Player(playerClient);
+        const player = preparePlayer();
 
         player.playList([1, 2, 3], 1);
 
@@ -28,15 +36,7 @@ describe('Player', () => {
     });
 
     it('should set next track to current track', () => {
-        let playWasCalled = false;
-        let trackToPlay = null;
-        const playerClient = {
-            play(track) {
-                playWasCalled = true;
-                trackToPlay = track;
-            }
-        };
-        const player = new Player(playerClient);
+        const player = preparePlayer();
         player.playList([1, 2, 3], 1);
 
         player.playNext();

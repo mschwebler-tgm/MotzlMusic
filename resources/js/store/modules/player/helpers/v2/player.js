@@ -1,5 +1,7 @@
 import PlayerClient from "./playerClient";
 
+const DEBUG = true;
+
 export default class Player {
 
     constructor(playerClient) {
@@ -15,6 +17,11 @@ export default class Player {
     }
 
     playNext() {
+        if (this._currentTrackIndex + 1 >= this._currentTrackList.length) {
+            this._log('Tried to call playNext(), but end of track list was already reached.');
+            return;
+        }
+
         this._currentTrackIndex++;
         this._playCurrentTrack();
     }
@@ -25,5 +32,9 @@ export default class Player {
 
     get currentTrack() {
         return this._currentTrackList[this._currentTrackIndex];
+    }
+
+    _log(msg) {
+        DEBUG && console.log(msg);
     }
 }

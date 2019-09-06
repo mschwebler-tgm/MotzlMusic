@@ -38,6 +38,7 @@ describe('Player', () => {
     it('should set next track to current track', () => {
         const player = preparePlayer();
         player.playList([1, 2, 3], 1);
+        playWasCalled = false;
 
         player.playNext();
 
@@ -45,5 +46,19 @@ describe('Player', () => {
         expect(currentTrack).toBe(3);
         expect(trackToPlay).toBe(3);
         expect(playWasCalled).toBe(true);
+    });
+
+    it('should do nothing if last track is played and play next is called', () => {
+        const player = preparePlayer();
+        player.playList([1, 2, 3], 2);
+        playWasCalled = false;
+        trackToPlay = null;
+
+        player.playNext();
+
+        const currentTrack = player.currentTrack;
+        expect(currentTrack).toBe(3);
+        expect(trackToPlay).toBeNull();
+        expect(playWasCalled).toBe(false);
     });
 });

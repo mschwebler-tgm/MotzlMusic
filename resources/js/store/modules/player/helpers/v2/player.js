@@ -8,6 +8,7 @@ export default class Player {
         this._playerClient = playerClient || new PlayerClient();
         this._currentTrackList = [];
         this._currentTrackIndex = 0;
+        this._isPlaying = true;
     }
 
     playList(tracks = [], startIndex = 0) {
@@ -26,6 +27,13 @@ export default class Player {
         this._playCurrentTrack();
     }
 
+    pause() {
+        if (this._isPlaying) {
+            this._playerClient.pause();
+            this._isPlaying = false;
+        }
+    }
+
     _playCurrentTrack() {
         this._playerClient.play(this.currentTrack);
     }
@@ -40,5 +48,9 @@ export default class Player {
 
     get currentTrack() {
         return this._currentTrackList[this._currentTrackIndex];
+    }
+
+    get isPaused() {
+        return !this._isPlaying;
     }
 }

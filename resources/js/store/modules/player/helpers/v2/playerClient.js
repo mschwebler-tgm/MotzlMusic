@@ -1,5 +1,9 @@
 export default class PlayerClient {
-    play() {
+    play(track) {
+        // TODO implement, test
+    }
+
+    pause() {
         // TODO implement, test
     }
 }

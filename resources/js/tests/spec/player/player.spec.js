@@ -1,15 +1,20 @@
 import Player from '$store/player/helpers/v2/player';
 
 let playWasCalled = false;
+let pauseWasCalled = false;
 let trackToPlay = null;
 
 function preparePlayer() {
     playWasCalled = false;
+    pauseWasCalled = false;
     trackToPlay = null;
     const playerClient = {
         play(track) {
             playWasCalled = true;
             trackToPlay = track;
+        },
+        pause() {
+            pauseWasCalled = true;
         }
     };
 
@@ -60,5 +65,15 @@ describe('Player', () => {
         expect(currentTrack).toBe(3);
         expect(trackToPlay).toBeNull();
         expect(playWasCalled).toBe(false);
+    });
+
+    it('should dispatch pause request to player client', () => {
+        const player = preparePlayer();
+        player.playList([1, 2, 3]);
+
+        player.pause();
+
+        expect(pauseWasCalled).toBe(true);
+        expect(player.isPaused).toBe(true);
     });
 });

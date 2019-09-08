@@ -1,4 +1,5 @@
 import PlayerClient from "./playerClient";
+import Track from "./Track";
 
 const DEBUG = true;
 const KEEP_PAST_TRACKS = 15;
@@ -11,11 +12,10 @@ export default class Player {
         this._currentTrackIndex = 0;
         this._isPlaying = true;
         this._pastTracksAmountToKeep = KEEP_PAST_TRACKS;
-        this._queue = [];
     }
 
     playList(tracks = [], startIndex = 0) {
-        this._currentTrackList = tracks;
+        this._currentTrackList = tracks.map(track => new Track(track));
         this._currentTrackIndex = startIndex;
         this._playCurrentTrack();
         this._setTrackList();
@@ -47,14 +47,21 @@ export default class Player {
     }
 
     playTrackImmediately(track) {
-        this._currentTrackList.splice(this._currentTrackIndex + 1, 0, track);
+        this._currentTrackList.splice(this._currentTrackIndex + 1, 0, new Track(track));
         this._currentTrackIndex++;
         this._setTrackList();
         this._playCurrentTrack();
     }
 
     queueTrack(track) {
-        this._queue.push(track);
+        let index = this._currentTrackIndex;
+        while (index < this._currentTrackList.length) {
+            if (!this._currentTrackList[index].isQueued) {
+                this._currentTrackList.splice(index + 1, 0, new Track(track, 1));
+                break;
+            }
+            index++;
+        }
     }
 
     _playCurrentTrack() {
@@ -74,7 +81,7 @@ export default class Player {
     }
 
     get currentTrack() {
-        return this._currentTrackList[this._currentTrackIndex];
+        return this._currentTrackList[this._currentTrackIndex].trackData;
     }
 
     get isPaused() {
@@ -82,11 +89,11 @@ export default class Player {
     }
 
     get trackList() {
-        return this._currentTrackList;
+        return this._currentTrackList.map(track => track.trackData);
     }
 
     get queuedTracks() {
-        return this._queue;
+        return this._currentTrackList.filter(track => track.isQueued).map(track => track.trackData);
     }
 }
 

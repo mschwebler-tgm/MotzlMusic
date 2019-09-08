@@ -150,8 +150,7 @@ describe('Player', () => {
 
         player.queueTrack(101);
 
-        expect(playWasCalled).toBe(true);
-        expect(player.trackList[2]).toBe(3);
+        expect(player.trackList[2]).toBe(101);
         expect(player.queuedTracks[0]).toBe(101);
     });
 });

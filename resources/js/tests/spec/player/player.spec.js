@@ -103,4 +103,32 @@ describe('Player', () => {
         expect(trackList.length).toBe(3);
         expect(trackList[0]).toBe(1);
     });
+
+    it('should only keep specific amount of past tracks in list', () => {
+        const player = preparePlayer();
+        player._pastTracksAmountToKeep = 3;
+        player.playList([1, 2, 3, 4, 5, 6, 7, 8], 4);
+
+        const trackList = player.trackList;
+
+        expect(trackList.length).toBe(7);
+        expect(trackList[0]).toBe(2);
+        expect(trackList[1]).toBe(3);
+        expect(trackList[2]).toBe(4);
+        expect(player.currentTrack).toBe(5);
+    });
+
+    it('should only keep specific amount of past tracks in list: end of list', () => {
+        const player = preparePlayer();
+        player._pastTracksAmountToKeep = 3;
+        player.playList([1, 2, 3, 4, 5, 6, 7, 8], 7);
+
+        const trackList = player.trackList;
+
+        expect(trackList.length).toBe(4);
+        expect(trackList[0]).toBe(5);
+        expect(trackList[1]).toBe(6);
+        expect(trackList[2]).toBe(7);
+        expect(player.currentTrack).toBe(8);
+    });
 });

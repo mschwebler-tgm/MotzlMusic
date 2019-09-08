@@ -1,6 +1,7 @@
 import PlayerClient from "./playerClient";
 
 const DEBUG = true;
+const KEEP_PAST_TRACKS = 15;
 
 export default class Player {
 
@@ -9,13 +10,14 @@ export default class Player {
         this._currentTrackList = [];
         this._currentTrackIndex = 0;
         this._isPlaying = true;
-        this._queue = [];
+        this._pastTracksAmountToKeep = KEEP_PAST_TRACKS;
     }
 
     playList(tracks = [], startIndex = 0) {
         this._currentTrackList = tracks;
         this._currentTrackIndex = startIndex;
         this._playCurrentTrack();
+        this._setTrackList();
     }
 
     playNext() {
@@ -26,6 +28,7 @@ export default class Player {
 
         this._currentTrackIndex++;
         this._playCurrentTrack();
+        this._setTrackList();
     }
 
     pause() {
@@ -44,6 +47,14 @@ export default class Player {
 
     _playCurrentTrack() {
         this._playerClient.play(this.currentTrack);
+    }
+
+    _setTrackList() {
+        const pastTracksToRemove = this._currentTrackIndex - this._pastTracksAmountToKeep;
+        if (pastTracksToRemove > 0) {
+            this._currentTrackList = this._currentTrackList.slice(pastTracksToRemove);
+            this._currentTrackIndex = this._currentTrackIndex - pastTracksToRemove;
+        }
     }
 
     _log(msg) {

@@ -9,6 +9,7 @@ export default class Player {
         this._currentTrackList = [];
         this._currentTrackIndex = 0;
         this._isPlaying = true;
+        this._queue = [];
     }
 
     playList(tracks = [], startIndex = 0) {
@@ -59,5 +60,9 @@ export default class Player {
 
     get isPaused() {
         return !this._isPlaying;
+    }
+
+    get trackList() {
+        return this._currentTrackList;
     }
 }

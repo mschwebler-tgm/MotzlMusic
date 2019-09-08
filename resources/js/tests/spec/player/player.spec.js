@@ -93,4 +93,14 @@ describe('Player', () => {
         expect(resumeWasCalled).toBe(true);
         expect(player.isPaused).toBe(false);
     });
+
+    it('should return track list', () => {
+        const player = preparePlayer();
+        player.playList([1, 2, 3], 0);
+
+        const trackList = player.trackList;
+
+        expect(trackList.length).toBe(3);
+        expect(trackList[0]).toBe(1);
+    });
 });

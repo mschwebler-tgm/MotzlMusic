@@ -45,6 +45,13 @@ export default class Player {
         }
     }
 
+    playTrackImmediately(track) {
+        this._currentTrackList.splice(this._currentTrackIndex + 1, 0, track);
+        this._currentTrackIndex++;
+        this._setTrackList();
+        this._playCurrentTrack();
+    }
+
     _playCurrentTrack() {
         this._playerClient.play(this.currentTrack);
     }

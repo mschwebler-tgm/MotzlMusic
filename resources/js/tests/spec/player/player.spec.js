@@ -131,4 +131,16 @@ describe('Player', () => {
         expect(trackList[2]).toBe(7);
         expect(player.currentTrack).toBe(8);
     });
+
+    it('play track immediately without loosing current track list', () => {
+        const player = preparePlayer();
+        player.playList([1, 2, 3], 1);
+        playWasCalled = false;
+
+        player.playTrackImmediately(100);
+
+        expect(playWasCalled).toBe(true);
+        expect(player.currentTrack).toBe(100);
+        expect(player.trackList[2]).toBe(100);
+    });
 });

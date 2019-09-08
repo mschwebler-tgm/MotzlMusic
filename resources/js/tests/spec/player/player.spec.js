@@ -2,11 +2,13 @@ import Player from '$store/player/helpers/v2/player';
 
 let playWasCalled = false;
 let pauseWasCalled = false;
+let resumeWasCalled = false;
 let trackToPlay = null;
 
 function preparePlayer() {
     playWasCalled = false;
     pauseWasCalled = false;
+    resumeWasCalled = false;
     trackToPlay = null;
     const playerClient = {
         play(track) {
@@ -15,6 +17,9 @@ function preparePlayer() {
         },
         pause() {
             pauseWasCalled = true;
+        },
+        resume() {
+            resumeWasCalled = true;
         }
     };
 
@@ -75,5 +80,17 @@ describe('Player', () => {
 
         expect(pauseWasCalled).toBe(true);
         expect(player.isPaused).toBe(true);
+    });
+
+    it('should dispatch resume request to player client', () => {
+        const player = preparePlayer();
+        player.playList([1, 2, 3]);
+
+        player.pause();
+        player.resume();
+
+        expect(pauseWasCalled).toBe(true);
+        expect(resumeWasCalled).toBe(true);
+        expect(player.isPaused).toBe(false);
     });
 });

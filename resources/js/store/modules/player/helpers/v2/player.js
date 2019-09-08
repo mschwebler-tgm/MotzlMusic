@@ -34,6 +34,13 @@ export default class Player {
         }
     }
 
+    resume() {
+        if (this.currentTrack && this.isPaused) {
+            this._playerClient.resume();
+            this._isPlaying = true;
+        }
+    }
+
     _playCurrentTrack() {
         this._playerClient.play(this.currentTrack);
     }

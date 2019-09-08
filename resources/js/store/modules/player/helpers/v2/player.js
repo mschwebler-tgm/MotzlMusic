@@ -47,7 +47,7 @@ export default class Player {
     }
 
     playTrackImmediately(track) {
-        this._currentTrackList.splice(this._currentTrackIndex + 1, 0, new Track(track));
+        this._insertTrackAfter(this._currentTrackIndex, new Track(track));
         this._currentTrackIndex++;
         this._setTrackList();
         this._playCurrentTrack();
@@ -57,11 +57,15 @@ export default class Player {
         let index = this._currentTrackIndex;
         while (index < this._currentTrackList.length) {
             if (!this._currentTrackList[index].isQueued) {
-                this._currentTrackList.splice(index + 1, 0, new Track(track, 1));
+                this._insertTrackAfter(index, new Track(track, true));
                 break;
             }
             index++;
         }
+    }
+
+    _insertTrackAfter(index, track) {
+        this._currentTrackList.splice(index + 1, 0, track);
     }
 
     _playCurrentTrack() {
@@ -98,5 +102,5 @@ export default class Player {
 }
 
 function _log(msg) {
-    DEBUG && console.log('[Player]' + msg);
+    DEBUG && console.log('[Player] ' + msg);
 }

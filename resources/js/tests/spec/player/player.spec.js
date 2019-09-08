@@ -163,4 +163,15 @@ describe('Player', () => {
 
         expect(player.currentTrack).toBe(101);
     });
+
+    it('should unmark queued track when being played', () => {
+        const player = preparePlayer();
+        player.playList([1, 2, 3], 1);
+        player.queueTrack(101);
+
+        player.playNext();
+
+        expect(player.currentTrack).toBe(101);
+        expect(player.queuedTracks.length).toBe(0);
+    });
 });

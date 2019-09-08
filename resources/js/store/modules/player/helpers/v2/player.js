@@ -11,6 +11,7 @@ export default class Player {
         this._currentTrackIndex = 0;
         this._isPlaying = true;
         this._pastTracksAmountToKeep = KEEP_PAST_TRACKS;
+        this._queue = [];
     }
 
     playList(tracks = [], startIndex = 0) {
@@ -52,6 +53,10 @@ export default class Player {
         this._playCurrentTrack();
     }
 
+    queueTrack(track) {
+        this._queue.push(track);
+    }
+
     _playCurrentTrack() {
         this._playerClient.play(this.currentTrack);
     }
@@ -78,6 +83,10 @@ export default class Player {
 
     get trackList() {
         return this._currentTrackList;
+    }
+
+    get queuedTracks() {
+        return this._queue;
     }
 }
 

@@ -22,7 +22,7 @@ export default class Player {
 
     playNext() {
         if (this.canPlayNext) {
-            this._log('Tried to call playNext(), but end of track list was already reached.');
+            _log('Tried to call playNext(), but end of track list was already reached.');
             return;
         }
 
@@ -64,10 +64,6 @@ export default class Player {
         }
     }
 
-    _log(msg) {
-        DEBUG && console.log(msg);
-    }
-
     get canPlayNext() {
         return this._currentTrackIndex + 1 >= this._currentTrackList.length;
     }
@@ -83,4 +79,8 @@ export default class Player {
     get trackList() {
         return this._currentTrackList;
     }
+}
+
+function _log(msg) {
+    DEBUG && console.log('[Player]' + msg);
 }

@@ -153,4 +153,14 @@ describe('Player', () => {
         expect(player.trackList[2]).toBe(101);
         expect(player.queuedTracks[0]).toBe(101);
     });
+
+    it('should play queued track', () => {
+        const player = preparePlayer();
+        player.playList([1, 2, 3], 1);
+        player.queueTrack(101);
+
+        player.playNext();
+
+        expect(player.currentTrack).toBe(101);
+    });
 });

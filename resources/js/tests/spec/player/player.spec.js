@@ -195,4 +195,14 @@ describe('Player', () => {
 
         expect(queuedTrack.id).toBe(101);
     });
+
+    it('should not emit event when accessing a getter property', () => {
+        let callbackWasExecuted = false;
+        player.playList([{id: 1, provider: 'spotify'}]);
+
+        player.on('currentTrack', () => callbackWasExecuted = true);
+        player.currentTrack;
+
+        expect(callbackWasExecuted).toBe(false);
+    });
 });

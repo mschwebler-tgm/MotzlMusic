@@ -222,7 +222,7 @@ describe('Player', () => {
 
         player.once('queueTrack', () => callAmount++);
         player.queueTrack({id: 101, provider: 'spotify'});
-        player.queueTrack({id: 101, provider: 'spotify'});
+        player.queueTrack({id: 102, provider: 'spotify'});
 
         expect(callAmount).toBe(1);
     });

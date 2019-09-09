@@ -69,6 +69,9 @@ export class Player {
     }
 
     on(property, callback) {
+        if (LISTENER_BLACKLIST.includes(property)) {
+            return;
+        }
         if (!this._onListeners[property]) {
             this._onListeners[property] = [];
         }
@@ -76,6 +79,9 @@ export class Player {
     }
 
     once(property, callback) {
+        if (LISTENER_BLACKLIST.includes(property)) {
+            return;
+        }
         if (!this._onceListeners[property]) {
             this._onceListeners[property] = [];
         }
@@ -132,16 +138,28 @@ let handler = {
     get: function (playerObj, propKey) {
         const origMethod = playerObj[propKey];
         return function (...args) {
+            processOnListeners(args);
+            processOnceListeners(args);
+            return origMethod.apply(playerObj, args);
+        };
+
+        function processOnListeners(args) {
             const onListeners = playerObj._onListeners[propKey];
-            if (onListeners && !LISTENER_BLACKLIST.includes(propKey)) {
-                onListeners.forEach(callback => callback(...args));
+            if (onListeners) {
+                executeCallbacks(onListeners, args);
             }
+        }
+
+        function processOnceListeners(args) {
             const onceListeners = playerObj._onceListeners[propKey];
-            if (onceListeners && !LISTENER_BLACKLIST.includes(propKey)) {
-                onceListeners.forEach(callback => callback(...args));
+            if (onceListeners) {
+                executeCallbacks(onceListeners, args);
                 playerObj._onceListeners[propKey] = [];
             }
-            return origMethod.apply(playerObj, args);
+        }
+
+        function executeCallbacks(onListeners, args) {
+            onListeners.forEach(callback => callback(...args));
         }
     }
 };

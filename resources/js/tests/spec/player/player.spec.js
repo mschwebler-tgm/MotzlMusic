@@ -28,7 +28,7 @@ function preparePlayer() {
 
 describe('Player', () => {
     it('should set list of tracks with starting index', () => {
-        const player = new Player();
+        const player = preparePlayer();
 
         player.playList([1, 2, 3], 1);
 

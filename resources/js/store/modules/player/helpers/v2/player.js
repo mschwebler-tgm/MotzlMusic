@@ -1,5 +1,6 @@
 import PlayerClient from "./playerClient";
 import Track from "./Track";
+import SpotifyProvider from "./providers/SpotifyProvider";
 
 const DEBUG = true;
 const KEEP_PAST_TRACKS = 15;
@@ -12,6 +13,7 @@ export class Player {
         this._currentTrackIndex = 0;
         this._isPlaying = true;
         this._pastTracksAmountToKeep = KEEP_PAST_TRACKS;
+        this._onListeners = {};
     }
 
     playList(tracks = [], startIndex = 0) {
@@ -103,8 +105,34 @@ export class Player {
     get queuedTracks() {
         return this._currentTrackList.filter(track => track.isQueued).map(track => track.trackData);
     }
+
+    on(property, callback) {
+        if (!this._onListeners[property]) {
+            this._onListeners[property] = [];
+        }
+        this._onListeners[property].push(callback);
+    }
 }
 
 function _log(msg) {
     DEBUG && console.log('[Player] ' + msg);
 }
+
+const player = new Player(new PlayerClient(new SpotifyProvider()));
+let handler = {
+    get: function(playerObj, propKey) {
+        const origMethod = playerObj[propKey];
+        return function(...args) {
+            const listeners = playerObj._onListeners;
+            if (listeners[propKey]) {
+                listeners[propKey].forEach(callback => callback(...args));
+            }
+            return origMethod.apply(playerObj, args);
+        }
+    }
+};
+
+/** @type Player */
+const playerProxy = new Proxy(player, handler);
+
+export default playerProxy;

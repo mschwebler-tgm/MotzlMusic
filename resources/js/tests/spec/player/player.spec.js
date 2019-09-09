@@ -1,4 +1,6 @@
 import {Player} from '$store/player/helpers/v2/player';
+/** @type Player */
+import player from '$store/player/helpers/v2/player';
 
 let playWasCalled = false;
 let pauseWasCalled = false;
@@ -182,5 +184,15 @@ describe('Player', () => {
 
         expect(player.currentTrack).toBe(101);
         expect(player.queuedTracks.length).toBe(0);
+    });
+
+    it('should emit event when track is queued', () => {
+        let queuedTrack = null;
+        player.playList([{id: 1, provider: 'spotify'}]);
+
+        player.on('queueTrack', track => queuedTrack = track);
+        player.queueTrack({id: 101, provider: 'spotify'});
+
+        expect(queuedTrack.id).toBe(101);
     });
 });

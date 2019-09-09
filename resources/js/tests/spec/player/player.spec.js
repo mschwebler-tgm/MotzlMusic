@@ -205,4 +205,14 @@ describe('Player', () => {
 
         expect(callbackWasExecuted).toBe(false);
     });
+
+    it('should not emit event when accessing a getter property', () => {
+        let callbackWasExecuted = false;
+        player.playList([{id: 1, provider: 'spotify'}]);
+
+        player.on('on', () => callbackWasExecuted = true);
+        player.on('test', () => {});
+
+        expect(callbackWasExecuted).toBe(false);
+    });
 });

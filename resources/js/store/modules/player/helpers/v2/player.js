@@ -4,6 +4,7 @@ import SpotifyProvider from "./providers/SpotifyProvider";
 
 const DEBUG = true;
 const KEEP_PAST_TRACKS = 15;
+const LISTENER_BLACKLIST = ['on'];
 
 export class Player {
 
@@ -123,9 +124,9 @@ let handler = {
     get: function(playerObj, propKey) {
         const origMethod = playerObj[propKey];
         return function(...args) {
-            const listeners = playerObj._onListeners;
-            if (listeners[propKey]) {
-                listeners[propKey].forEach(callback => callback(...args));
+            const listeners = playerObj._onListeners[propKey];
+            if (listeners && !LISTENER_BLACKLIST.includes(propKey)) {
+                listeners.forEach(callback => callback(...args));
             }
             return origMethod.apply(playerObj, args);
         }

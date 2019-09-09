@@ -19,4 +19,11 @@ describe('PlayerClient', () => {
 
         expect(spotifyPlayWasCalled).toBe(true);
     });
+
+    it('should throw error when no provider found', () => {
+        const client = new PlayerClient();
+
+        expect(() => client.play({id: 1, provider: 'iDoNotExist'}))
+            .toThrow(new Error('Provider "iDoNotExist" not found. Track id: 1'));
+    });
 });

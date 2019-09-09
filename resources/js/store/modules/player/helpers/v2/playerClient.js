@@ -18,6 +18,11 @@ export default class PlayerClient {
     }
 
     _getProviderFor(track) {
-        return this._providers.find(provider => provider.identifier === track.provider);
+        const provider = this._providers.find(provider => provider.identifier === track.provider);
+        if (!provider) {
+            throw new Error(`Provider "${track.provider}" not found. Track id: ${track.id}`);
+        }
+
+        return provider;
     }
 }

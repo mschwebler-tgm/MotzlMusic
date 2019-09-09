@@ -5,4 +5,8 @@ export default class Track {
         this.isQueued = isQueued;
     }
 
+    get provider() {
+        return this.trackData.provider;
+    }
+
 }

@@ -4,7 +4,7 @@ import Track from "./Track";
 const DEBUG = true;
 const KEEP_PAST_TRACKS = 15;
 
-export default class Player {
+export class Player {
 
     constructor(playerClient) {
         this._playerClient = playerClient || new PlayerClient();

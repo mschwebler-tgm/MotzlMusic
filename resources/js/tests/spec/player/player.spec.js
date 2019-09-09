@@ -1,4 +1,4 @@
-import Player from '$store/player/helpers/v2/player';
+import {Player} from '$store/player/helpers/v2/player';
 
 let playWasCalled = false;
 let pauseWasCalled = false;

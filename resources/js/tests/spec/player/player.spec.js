@@ -215,4 +215,15 @@ describe('Player', () => {
 
         expect(callbackWasExecuted).toBe(false);
     });
+
+    it('should only listen once to an event', () => {
+        let callAmount = 0;
+        player.playList([{id: 1, provider: 'spotify'}]);
+
+        player.once('queueTrack', () => callAmount++);
+        player.queueTrack({id: 101, provider: 'spotify'});
+        player.queueTrack({id: 101, provider: 'spotify'});
+
+        expect(callAmount).toBe(1);
+    });
 });

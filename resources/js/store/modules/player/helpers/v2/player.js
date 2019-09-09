@@ -15,6 +15,7 @@ export class Player {
         this._isPlaying = true;
         this._pastTracksAmountToKeep = KEEP_PAST_TRACKS;
         this._onListeners = {};
+        this._onceListeners = {};
     }
 
     playList(tracks = [], startIndex = 0) {
@@ -67,6 +68,20 @@ export class Player {
         }
     }
 
+    on(property, callback) {
+        if (!this._onListeners[property]) {
+            this._onListeners[property] = [];
+        }
+        this._onListeners[property].push(callback);
+    }
+
+    once(property, callback) {
+        if (!this._onceListeners[property]) {
+            this._onceListeners[property] = [];
+        }
+        this._onceListeners[property].push(callback);
+    }
+
     _insertTrackAfter(index, track) {
         this._currentTrackList.splice(index + 1, 0, track);
     }
@@ -106,13 +121,6 @@ export class Player {
     get queuedTracks() {
         return this._currentTrackList.filter(track => track.isQueued).map(track => track.trackData);
     }
-
-    on(property, callback) {
-        if (!this._onListeners[property]) {
-            this._onListeners[property] = [];
-        }
-        this._onListeners[property].push(callback);
-    }
 }
 
 function _log(msg) {
@@ -121,12 +129,17 @@ function _log(msg) {
 
 const player = new Player(new PlayerClient(new SpotifyProvider()));
 let handler = {
-    get: function(playerObj, propKey) {
+    get: function (playerObj, propKey) {
         const origMethod = playerObj[propKey];
-        return function(...args) {
-            const listeners = playerObj._onListeners[propKey];
-            if (listeners && !LISTENER_BLACKLIST.includes(propKey)) {
-                listeners.forEach(callback => callback(...args));
+        return function (...args) {
+            const onListeners = playerObj._onListeners[propKey];
+            if (onListeners && !LISTENER_BLACKLIST.includes(propKey)) {
+                onListeners.forEach(callback => callback(...args));
+            }
+            const onceListeners = playerObj._onceListeners[propKey];
+            if (onceListeners && !LISTENER_BLACKLIST.includes(propKey)) {
+                onceListeners.forEach(callback => callback(...args));
+                playerObj._onceListeners[propKey] = [];
             }
             return origMethod.apply(playerObj, args);
         }

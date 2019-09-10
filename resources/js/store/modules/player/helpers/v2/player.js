@@ -50,8 +50,13 @@ export class Player {
     }
 
     playTrackImmediately(track) {
-        this._insertTrackAfter(this._currentTrackIndex, new Track(track));
-        this._currentTrackIndex++;
+        if (this._currentTrackList.length === 0) {
+            this._currentTrackList = [new Track(track)];
+            this._currentTrackIndex = 0;
+        } else {
+            this._insertTrackAfter(this._currentTrackIndex, new Track(track));
+            this._currentTrackIndex++;
+        }
         this._setTrackList();
         this._playCurrentTrack();
     }

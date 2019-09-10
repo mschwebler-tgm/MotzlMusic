@@ -10,6 +10,7 @@ export default class SpotifyProvider {
         this._deviceId = deviceId;
         this._spotifyPlayerInstance = spotifyPlayerInstance;
         this._pollInterval = null;
+        this._initListeners();
     }
 
     play(track) {
@@ -58,6 +59,23 @@ export default class SpotifyProvider {
         if (total - current <= 1000) {
             this._unsubscribeFromProgress();
             player.playNext();
+        }
+    }
+
+    _initListeners() {
+        this._spotifyPlayerInstance.addListener('player_state_changed', state => this._handlePlayerStateChanged(state));
+    }
+
+    /** @param state WebPlaybackState https://developer.spotify.com/documentation/web-playback-sdk/reference/#object-web-playback-state */
+    _handlePlayerStateChanged(state) {
+        this._setPlayingState(state.paused);
+    }
+
+    _setPlayingState(isPaused) {
+        if (isPaused) {
+            player.pause();
+        } else {
+            player.resume();
         }
     }
 

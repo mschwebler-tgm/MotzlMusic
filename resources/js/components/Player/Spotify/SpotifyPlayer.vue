@@ -1,5 +1,5 @@
 <script>
-    import SpotifyProvider from "../../../store/modules/player/helpers/v2/providers/SpotifyProvider";
+    import SpotifyProvider from "$store/player/helpers/v2/providers/SpotifyProvider";
 
     export default {
         name: "SpotifyPlayer",

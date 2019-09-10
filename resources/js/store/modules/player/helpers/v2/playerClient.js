@@ -3,11 +3,14 @@ export default class PlayerClient {
     constructor(...providers) {
         this._providers = providers;
         this._currentTrack = null;
+        this.isLoading = false;
     }
 
     play(track) {
+        this.isLoading = true;
         this._currentTrack = track;
-        this.provider.play(track);
+        this.provider.play(track)
+            .finally(() => this.isLoading = false);
     }
 
     pause() {

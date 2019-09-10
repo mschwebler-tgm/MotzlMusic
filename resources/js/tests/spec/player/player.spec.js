@@ -1,12 +1,12 @@
-import player, {Player} from '$store/player/helpers/v2/player';
+import {Player, playerProxy} from '$store/player/helpers/v2/player';
 
 const spotifyProviderMock = {
     identifier: 'spotify',
     play() {
-
+        return new Promise(resolve => resolve());
     }
 };
-player.addProvider(spotifyProviderMock);
+playerProxy.addProvider(spotifyProviderMock);
 
 let playWasCalled = false;
 let pauseWasCalled = false;
@@ -194,30 +194,30 @@ describe('Player', () => {
 
     it('should emit event when track is queued', () => {
         let queuedTrack = null;
-        player.playList([{id: 1, provider: 'spotify'}]);
+        playerProxy.playList([{id: 1, provider: 'spotify'}]);
 
-        player.on('queueTrack', track => queuedTrack = track);
-        player.queueTrack({id: 101, provider: 'spotify'});
+        playerProxy.on('queueTrack', track => queuedTrack = track);
+        playerProxy.queueTrack({id: 101, provider: 'spotify'});
 
         expect(queuedTrack.id).toBe(101);
     });
 
     it('should not emit event when accessing a getter property', () => {
         let callbackWasExecuted = false;
-        player.playList([{id: 1, provider: 'spotify'}]);
+        playerProxy.playList([{id: 1, provider: 'spotify'}]);
 
-        player.on('currentTrack', () => callbackWasExecuted = true);
-        player.currentTrack;
+        playerProxy.on('currentTrack', () => callbackWasExecuted = true);
+        playerProxy.currentTrack;
 
         expect(callbackWasExecuted).toBe(false);
     });
 
     it('should not emit event when accessing a getter property', () => {
         let callbackWasExecuted = false;
-        player.playList([{id: 1, provider: 'spotify'}]);
+        playerProxy.playList([{id: 1, provider: 'spotify'}]);
 
-        player.on('on', () => callbackWasExecuted = true);
-        player.on('test', () => {
+        playerProxy.on('on', () => callbackWasExecuted = true);
+        playerProxy.on('test', () => {
         });
 
         expect(callbackWasExecuted).toBe(false);
@@ -225,11 +225,11 @@ describe('Player', () => {
 
     it('should only listen once to an event', () => {
         let callAmount = 0;
-        player.playList([{id: 1, provider: 'spotify'}]);
+        playerProxy.playList([{id: 1, provider: 'spotify'}]);
 
-        player.once('queueTrack', () => callAmount++);
-        player.queueTrack({id: 101, provider: 'spotify'});
-        player.queueTrack({id: 102, provider: 'spotify'});
+        playerProxy.once('queueTrack', () => callAmount++);
+        playerProxy.queueTrack({id: 101, provider: 'spotify'});
+        playerProxy.queueTrack({id: 102, provider: 'spotify'});
 
         expect(callAmount).toBe(1);
     });
@@ -237,13 +237,14 @@ describe('Player', () => {
     it('should add provider', () => {
         let providerWasCalled = false;
         const providerIdentifier = 'customProvider';
-        player.addProvider({
+        playerProxy.addProvider({
             identifier: providerIdentifier,
             play() {
                 providerWasCalled = true;
+                return new Promise(resolve => resolve());
             }
         });
-        player.playList([{id: 1, provider: providerIdentifier}]);
+        playerProxy.playList([{id: 1, provider: providerIdentifier}]);
 
         expect(providerWasCalled).toBe(true);
     });

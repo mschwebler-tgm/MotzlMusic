@@ -150,6 +150,10 @@ export class Player {
     get queuedTracks() {
         return this._currentTrackList.filter(track => track.isQueued).map(track => track.trackData);
     }
+
+    get isLoading() {
+        return this._playerClient.isLoading;
+    }
 }
 
 function _log(msg) {
@@ -190,4 +194,5 @@ let handler = {
 /** @type Player */
 const playerProxy = new Proxy(player, handler);
 
-export default playerProxy;
+export default player;
+export {playerProxy};

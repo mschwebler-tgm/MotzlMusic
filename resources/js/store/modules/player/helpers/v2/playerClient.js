@@ -2,25 +2,27 @@ export default class PlayerClient {
 
     constructor(...providers) {
         this._providers = providers;
+        this._currentTrack = null;
     }
 
     play(track) {
-        const provider = this._getProviderFor(track);
-        provider.play(track);
+        this._currentTrack = track;
+        this.provider.play(track);
     }
 
     pause() {
-        // TODO implement, test
+        this.provider.pause();
     }
 
     resume() {
-
+        this.provider.resume();
     }
 
-    _getProviderFor(track) {
-        const trackProvider = this._providers.find(provider => provider.identifier === track.provider);
+    get provider() {
+
+        const trackProvider = this._providers.find(provider => provider.identifier === this._currentTrack.provider);
         if (!trackProvider) {
-            throw new Error(`Provider "${track.provider}" not found. Track id: ${track.id}`);
+            throw new Error(`Provider "${this._currentTrack.provider}" not found. Track id: ${this._currentTrack.id}`);
         }
 
         return trackProvider;

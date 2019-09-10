@@ -3,7 +3,7 @@
         <v-flex shrink class="pb-0">
             <v-layout justify-end>
                 <v-flex shrink>
-                    <v-btn text icon aria-label="Settings">
+                    <v-btn text icon aria-label="Settings" class="mt-2 mb-3">
                         <v-icon>settings</v-icon>
                     </v-btn>
                 </v-flex>

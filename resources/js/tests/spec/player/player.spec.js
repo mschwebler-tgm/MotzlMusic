@@ -1,6 +1,4 @@
-import {Player} from '$store/player/helpers/v2/player';
-/** @type Player */
-import player from '$store/player/helpers/v2/player';
+import player, {Player} from '$store/player/helpers/v2/player';
 
 let playWasCalled = false;
 let pauseWasCalled = false;
@@ -211,7 +209,8 @@ describe('Player', () => {
         player.playList([{id: 1, provider: 'spotify'}]);
 
         player.on('on', () => callbackWasExecuted = true);
-        player.on('test', () => {});
+        player.on('test', () => {
+        });
 
         expect(callbackWasExecuted).toBe(false);
     });
@@ -225,5 +224,19 @@ describe('Player', () => {
         player.queueTrack({id: 102, provider: 'spotify'});
 
         expect(callAmount).toBe(1);
+    });
+
+    it('should add provider', () => {
+        let providerWasCalled = false;
+        const providerIdentifier = 'customProvider';
+        player.addProvider({
+            identifier: providerIdentifier,
+            play() {
+                providerWasCalled = true;
+            }
+        });
+        player.playList([{id: 1, provider: providerIdentifier}]);
+
+        expect(providerWasCalled).toBe(true);
     });
 });

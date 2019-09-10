@@ -88,6 +88,10 @@ export class Player {
         this._onceListeners[property].push(callback);
     }
 
+    addProvider(provider) {
+        this._playerClient.addProvider(provider);
+    }
+
     _insertTrackAfter(index, track) {
         this._currentTrackList.splice(index + 1, 0, track);
     }

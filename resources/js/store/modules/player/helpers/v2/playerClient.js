@@ -18,8 +18,11 @@ export default class PlayerClient {
         this.provider.resume();
     }
 
-    get provider() {
+    addProvider(provider) {
+        this._providers.push(provider);
+    }
 
+    get provider() {
         const trackProvider = this._providers.find(provider => provider.identifier === this._currentTrack.provider);
         if (!trackProvider) {
             throw new Error(`Provider "${this._currentTrack.provider}" not found. Track id: ${this._currentTrack.id}`);

@@ -1,6 +1,5 @@
 import PlayerClient from "./playerClient";
 import Track from "./Track";
-import SpotifyProvider from "./providers/SpotifyProvider";
 
 const DEBUG = true;
 const KEEP_PAST_TRACKS = 15;

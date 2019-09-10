@@ -1,5 +1,13 @@
 import player, {Player} from '$store/player/helpers/v2/player';
 
+const spotifyProviderMock = {
+    identifier: 'spotify',
+    play() {
+
+    }
+};
+player.addProvider(spotifyProviderMock);
+
 let playWasCalled = false;
 let pauseWasCalled = false;
 let resumeWasCalled = false;

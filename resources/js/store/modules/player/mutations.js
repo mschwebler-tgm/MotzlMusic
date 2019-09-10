@@ -24,7 +24,9 @@ export default {
         state.queueController.setActiveTrack(track);
     },
     addTrackToQueue(state, track) {
-        player.queueTrack(track);
-        app.showAlert('1 track added to queue');
+        const wasQueued = player.queueTrack(track);
+        if (wasQueued) {
+            app.showAlert('1 track added to queue');
+        }
     },
 }

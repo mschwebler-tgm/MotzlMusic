@@ -10,7 +10,7 @@ class ArtistByLetterOccurrence extends AbstractItemByLetter
     public function loadItems()
     {
         $this->items = Artist::ofCurrentUser()
-            ->with('tracks')
+            ->with('tracks.artists', 'tracks.album')
             ->whereRaw("substr(UPPER(name), 1, 1) = '{$this->getLetter()}'")
             ->orderBy('name', 'asc')
             ->get();

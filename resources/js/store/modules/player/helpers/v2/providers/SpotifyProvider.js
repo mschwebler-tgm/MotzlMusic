@@ -3,10 +3,10 @@ import axios from 'axios';
 
 export default class SpotifyProvider {
 
-    constructor(deviceId) {
+    constructor(deviceId, spotifyPlayerInstance) {
         this.progress = 0;
         this._deviceId = deviceId;
-        this._spotifyPlayerInstance = null;
+        this._spotifyPlayerInstance = spotifyPlayerInstance;
     }
 
     play(track) {
@@ -19,10 +19,6 @@ export default class SpotifyProvider {
 
     resume() {
         this._spotifyPlayerInstance.resume();
-    }
-
-    setSpotifyPlayerInstance(instance) {
-        this._spotifyPlayerInstance = instance;
     }
 
     get identifier() {

@@ -1,4 +1,5 @@
 export default {
+    player: state => state.player,
     controller: state => state.playerController,
     queueController: state => state.queueController,
     playingTrack: state => state.playerController ? state.playerController.playingTrack : null,

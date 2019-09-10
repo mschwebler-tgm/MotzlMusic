@@ -121,7 +121,12 @@ export class Player {
     }
 
     get currentTrack() {
-        return this._currentTrackList[this._currentTrackIndex].trackData;
+        return this._currentTrackList[this._currentTrackIndex] ?
+            this._currentTrackList[this._currentTrackIndex].trackData : null;
+    }
+
+    get currentTrackId() {
+        return this.currentTrack ? this.currentTrack.id : null;
     }
 
     get isPaused() {

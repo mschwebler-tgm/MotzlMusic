@@ -29,6 +29,7 @@
     import TrackTableContextMenu from "./TrackTableContextMenu";
     import handleMutations from './StoreWatchers';
     import StarRating from "../_BaseComponents/StarRating";
+    import player from '$store/player/helpers/v2/player';
 
     export default {
         name: "BaseTrackTable",
@@ -82,9 +83,7 @@
                 this.initStarRatings();
             },
             playTrack(track) {
-                this.$store.dispatch('player/play', track);
-                this.$store.commit('player/setQueue', this.tracks);
-                this.$store.commit('player/setQueueTrack', track);
+                player.playList(this.tracks, this.tracks.findIndex(tracks => tracks.id === track.id));
             },
             initDoubleClickListener() {
                 const playTrack = $event => {
@@ -130,7 +129,7 @@
                 this.$refs.scrollArea.addEventListener('keydown', $event => {
                     if ($event.key === 'Enter') {
                         const track = this.getTrackFromDomElement($event.target);
-                        this.$store.dispatch('player/play', track);
+                        this.playTrack(track);
                     }
                 })
             },
@@ -163,12 +162,8 @@
             showLoading() {
                 return this.tracks.length === 0 || !this.isInitialized;
             },
-            playerController() {
-                return this.$store.getters['player/controller'];
-            },
             playingTrackId() {
-                const playingTrack = this.$store.getters['player/playingTrack'];
-                return playingTrack ? playingTrack.id : null;
+                return player.currentTrackId;
             },
             tableId() {
                 return this.identifier + '-scrollArea';

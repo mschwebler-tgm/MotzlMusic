@@ -1,6 +1,6 @@
 All Providers must support following methods:
 
-- play(track)
+- play(track): Promise
 - pause()
 - resume()
 - get identifier()

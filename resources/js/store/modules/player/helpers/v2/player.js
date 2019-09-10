@@ -15,6 +15,7 @@ export class Player {
         this._pastTracksAmountToKeep = KEEP_PAST_TRACKS;
         this._onListeners = {};
         this._onceListeners = {};
+        this._loadingForced = false;
     }
 
     playList(tracks = [], startIndex = 0) {
@@ -25,7 +26,7 @@ export class Player {
     }
 
     playNext() {
-        if (this.canPlayNext) {
+        if (!this.canPlayNext) {
             _log('Tried to call playNext(), but end of track list was already reached.');
             return;
         }
@@ -33,6 +34,16 @@ export class Player {
         this._currentTrackIndex++;
         this._playCurrentTrack();
         this._setTrackList();
+    }
+
+    playPrevious() {
+        if (!this.canPlayPrevious) {
+            _log('Tried to call playPrevious() at start of track list.');
+            return;
+        }
+
+        this._currentTrackIndex--;
+        this._playCurrentTrack();
     }
 
     pause() {
@@ -98,6 +109,10 @@ export class Player {
         this._playerClient.addProvider(provider);
     }
 
+    forceLoading(force) {
+        this._loadingForced = force;
+    }
+
     _insertTrackAfter(index, track) {
         this._currentTrackList.splice(index + 1, 0, track);
     }
@@ -127,7 +142,11 @@ export class Player {
     }
 
     get canPlayNext() {
-        return this._currentTrackIndex + 1 >= this._currentTrackList.length;
+        return this._currentTrackIndex + 1 < this._currentTrackList.length;
+    }
+
+    get canPlayPrevious() {
+        return this._currentTrackIndex > 0;
     }
 
     get currentTrack() {
@@ -152,7 +171,7 @@ export class Player {
     }
 
     get isLoading() {
-        return this._playerClient.isLoading;
+        return this._loadingForced || this._playerClient.isLoading;
     }
 
     get progress() {

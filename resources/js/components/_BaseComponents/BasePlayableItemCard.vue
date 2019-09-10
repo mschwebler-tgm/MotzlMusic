@@ -38,6 +38,7 @@
 
 <script>
     import {slugify} from "../../helpers";
+    import player from "$store/player/helpers/v2/player";
 
     export default {
         name: "BasePlayableItemCard",
@@ -53,7 +54,15 @@
             },
             playItem($event) {
                 $event.stopPropagation();
-                this.$store.dispatch('player/playList', {type: this.item.type, list: this.item});
+                if (!this.item.tracks) {
+                    player.forceLoading(true);
+                    axios.get(`/api/${this.item.type}/${this.item.id}/tracks`)
+                        .then(res => this.item.tracks = res.data)
+                        .then(() => player.playList(this.item.tracks))
+                        .finally(() => player.forceLoading(false));
+                } else {
+                    player.playList(this.item.tracks);
+                }
             },
             showAudioFeatures() {
                 this.$store.commit('subContent/setFocusedItems', [this.item]);
@@ -70,8 +79,9 @@
                 return this.$root.getSpotifyImage(this.item, 'small');
             },
             isPlaying() {
-                const activeItem = this.$store.getters['player/activeItem'];
-                return activeItem.type === this.item.type && activeItem.id === this.item.id;
+                // const activeItem = this.$store.getters['player/activeItem'];
+                // return activeItem.type === this.item.type && activeItem.id === this.item.id;
+                // TODO active item
             }
         },
 

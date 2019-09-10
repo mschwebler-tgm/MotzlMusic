@@ -1,16 +1,11 @@
 import mutations from './mutations';
 import getters from './getters';
 import actions from './actions';
-import QueueController from './helpers/QueueController';
 /** @type Player */
-import playerObj from './helpers/v2/player';
+import playerObject from './helpers/v2/player';
 
 const state = {
-    player: playerObj,
-    playerController: null,
-    spotifyPlayer: null,
-    queueController: new QueueController(),
-    activeItem: {},
+    player: playerObject,
 };
 
 export default {

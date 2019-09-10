@@ -1,8 +1,8 @@
 <template>
     <div>
         <reactive-radar-chart
-                :secondary-data="secondaryData"
-                :primary-data="primaryData">
+            :secondary-data="secondaryData"
+            :primary-data="primaryData">
         </reactive-radar-chart>
     </div>
 </template>
@@ -10,6 +10,7 @@
 <script>
     import Vue from "vue";
     import ReactiveRadarChart from "./Charts/ReactiveRadarChart";
+    import player from "$store/player/helpers/v2/player";
 
     export default {
         name: "AudioFeatures",
@@ -48,7 +49,7 @@
         },
         computed: {
             playingTrack() {
-                return this.$store.getters['player/playingTrack'];
+                return player.currentTrack;
             },
             focusedItems() {
                 return this.$store.getters['subContent/focusedItems'];

@@ -1,4 +1,5 @@
 import {Clusterizer} from "../../store/modules/myLibrary/helpers/clusterizeTracks";
+import player from "../../store/modules/player/helpers/v2/player";
 
 const handleTrackRatingChange = function (payload) {
     const track = payload.track;
@@ -8,9 +9,9 @@ const handleTrackRatingChange = function (payload) {
     }
 };
 
-const handleTrackQueueIndicators = function (payload, state) {
+const handleTrackQueueIndicators = function (payload) {
     _removeExtraInfoFromTrack.apply(this, [payload]);
-    const queuedTracks = state.player.queueController.getQueuedTracks();
+    const queuedTracks = player.queuedTracks;
     queuedTracks.forEach((track, index) => {
         const trackTitleElement = this.findElementByTrackId(track.id).querySelector('.track-list-title');
         trackTitleElement.innerHTML = Clusterizer._rowTitle(track.name, `[${index + 1}]`);
@@ -25,7 +26,6 @@ const _removeExtraInfoFromTrack = function (track) {
 const handlerByMutation = {
     'tracks/setTrackRating': handleTrackRatingChange,
     'player/addTrackToQueue': handleTrackQueueIndicators,
-    'player/setPlayingTrack': handleTrackQueueIndicators,
 };
 
 /**

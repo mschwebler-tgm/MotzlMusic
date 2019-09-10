@@ -16,8 +16,8 @@
         </div>
         <div class="d-flex justify-center" v-if="showLoading">
             <v-progress-circular
-                    color="accent"
-                    indeterminate>
+                color="accent"
+                indeterminate>
             </v-progress-circular>
         </div>
         <track-table-context-menu :table-id="tableId" ref="contextMenu"></track-table-context-menu>
@@ -30,6 +30,7 @@
     import handleMutations from './StoreWatchers';
     import StarRating from "../_BaseComponents/StarRating";
     import player from '$store/player/helpers/v2/player';
+    import {Clusterizer} from "../../store/modules/myLibrary/helpers/clusterizeTracks";
 
     export default {
         name: "BaseTrackTable",
@@ -124,6 +125,21 @@
             },
             initStoreWatchers() {
                 this.$store.subscribe((mutation, state) => handleMutations.apply(this, [mutation, state]));
+                this.$store.watch(
+                    state => state.player.player.currentTrack,
+                    track => this.handleTrackQueueIndicators(track)
+                );
+            },
+            handleTrackQueueIndicators(track) {
+                this.removeExtraInfoFromTrack(track);
+                player.queuedTracks.forEach((queuedTrack, index) => {
+                    const trackTitleElement = this.findElementByTrackId(queuedTrack.id).querySelector('.track-list-title');
+                    trackTitleElement.innerHTML = Clusterizer._rowTitle(queuedTrack.name, `[${index + 1}]`);
+                });
+            },
+            removeExtraInfoFromTrack(track) {
+                const trackElement = this.findElementByTrackId(track.id);
+                trackElement.querySelector('.track-list-title').innerHTML = Clusterizer._rowTitle(track.name);
             },
             initKeyboardListeners() {
                 this.$refs.scrollArea.addEventListener('keydown', $event => {

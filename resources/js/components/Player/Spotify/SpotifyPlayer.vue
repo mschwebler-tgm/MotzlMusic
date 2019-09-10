@@ -1,5 +1,6 @@
 <script>
     import SpotifyProvider from "$store/player/helpers/v2/providers/SpotifyProvider";
+    import player from '$store/player/helpers/v2/player';
 
     export default {
         name: "SpotifyPlayer",
@@ -19,7 +20,6 @@
                 this.setupSpotifyProvider(deviceId);
             },
             setupSpotifyProvider(deviceId) {
-                const player = this.$store.getters['player/player'];
                 const spotifyProvider = new SpotifyProvider(deviceId, this.spotifyPlayer);
                 player.addProvider(spotifyProvider);
             },

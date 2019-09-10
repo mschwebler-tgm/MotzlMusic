@@ -1,6 +1,6 @@
 <template>
     <transition name="slideFromTop">
-        <v-card v-if="this.currentTrack">
+        <v-card v-if="currentTrack">
             <div class="d-flex">
                 <v-flex shrink class="pa-0" style="flex: 0 !important;">
                     <img :src="imageSrc" width="150" height="150" :alt="albumDate">
@@ -26,6 +26,8 @@
 </template>
 
 <script>
+    import player from "$store/player/helpers/v2/player";
+
     export default {
         name: "TrackInfo",
         data() {
@@ -47,7 +49,7 @@
         },
         computed: {
             currentTrack() {
-                return this.$store.getters['player/playingTrack'];
+                return player.currentTrack;
             },
             imageSrc() {
                 return this.currentTrack ? this.$root.getSpotifyImage(this.currentTrack.album, 'small') : null;

@@ -4,14 +4,14 @@
             <v-flex grow>
                 <v-layout justify-center>
                     <v-flex shrink>
-                        <v-btn text icon aria-label="Play previous">
+                        <v-btn text icon aria-label="Play previous" :disabled="noPreviousTrack">
                             <v-icon @click="playPrevious">skip_previous</v-icon>
                         </v-btn>
                         <v-btn text icon :loading="loading" @click="togglePlay" :aria-label="playing ? 'Pause' : 'Play'">
                             <v-icon large class="secondary--text" v-if="playing">pause_circle_filled</v-icon>
                             <v-icon large class="secondary--text" v-else>play_circle_filled</v-icon>
                         </v-btn>
-                        <v-btn text icon aria-label="Play next">
+                        <v-btn text icon aria-label="Play next" :disabled="noNextTrack">
                             <v-icon @click="playNext">skip_next</v-icon>
                         </v-btn>
                     </v-flex>
@@ -34,6 +34,8 @@
 <script>
     import player from "$store/player/helpers/v2/player";
 
+    console.log(player);
+
     export default {
         name: "PlayerControls",
         methods: {
@@ -48,7 +50,7 @@
                 player.playNext();
             },
             playPrevious() {
-                this.$store.dispatch('player/playPrevious');
+                player.playPrevious();
             },
         },
         computed: {
@@ -69,6 +71,12 @@
             },
             progressPercent() {
                 return player.progressPercent;
+            },
+            noNextTrack() {
+                return !player.canPlayNext;
+            },
+            noPreviousTrack() {
+                return !player.canPlayPrevious;
             },
         }
     }

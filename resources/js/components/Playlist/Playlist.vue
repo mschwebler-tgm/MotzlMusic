@@ -21,16 +21,16 @@
             <div class="hidden-sm-and-down">
                 <div class="d-flex pa-3">
                     <v-img
-                            :src="$root.getSpotifyImage(playlist, 'medium')"
-                            :lazy-src="$root.getSpotifyImage(playlist, 'small')"
-                            aspect-ratio="1"
-                            class="grey lighten-2 playlist-image">
+                        :src="$root.getSpotifyImage(playlist, 'medium')"
+                        :lazy-src="$root.getSpotifyImage(playlist, 'small')"
+                        aspect-ratio="1"
+                        class="grey lighten-2 playlist-image">
                         <template v-slot="placeholder">
                             <v-layout
-                                    fill-height
-                                    align-center
-                                    justify-center
-                                    ma-0>
+                                fill-height
+                                align-center
+                                justify-center
+                                ma-0>
                                 <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
                             </v-layout>
                         </template>
@@ -46,17 +46,17 @@
             <div class="hidden-md-and-up">
                 <div class="relative">
                     <v-img
-                            :src="$root.getSpotifyImage(playlist, 'medium')"
-                            :lazy-src="$root.getSpotifyImage(playlist, 'small')"
-                            aspect-ratio="1"
-                            min-width="100%"
-                            class="grey lighten-2 playlist-image">
+                        :src="$root.getSpotifyImage(playlist, 'medium')"
+                        :lazy-src="$root.getSpotifyImage(playlist, 'small')"
+                        aspect-ratio="1"
+                        min-width="100%"
+                        class="grey lighten-2 playlist-image">
                         <template v-slot="placeholder">
                             <v-layout
-                                    fill-height
-                                    align-center
-                                    justify-center
-                                    ma-0>
+                                fill-height
+                                align-center
+                                justify-center
+                                ma-0>
                                 <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
                             </v-layout>
                         </template>
@@ -96,6 +96,7 @@
     import TrackTable from "../TrackTable/TrackTable";
     import clusterizeTracks, {clusterizeTracksMobile} from '../../store/modules/myLibrary/helpers/clusterizeTracks';
     import PlaylistActions from "./PlaylistActions";
+    import player from "$store/player/helpers/v2/player";
 
     export default {
         name: "Playlist",
@@ -137,7 +138,7 @@
                 }))(error.response);
             },
             playPlaylist() {
-                this.$store.dispatch('player/playList', {type: 'playlist', list: this.playlist});
+                player.playList(this.playlist.tracks);
             },
             initArrowListeners() {
                 const handleKeyDown = $event => {
@@ -191,8 +192,9 @@
                 return 'Playlist';
             },
             isPlaying() {
-                const activeItem = this.$store.getters['player/activeItem'];
-                return activeItem.type === 'playlist' && activeItem.id === this.playlist.id;
+                // const activeItem = this.$store.getters['player/activeItem'];
+                // return activeItem.type === 'playlist' && activeItem.id === this.playlist.id;
+                // TODO: active item
             }
         }
     }

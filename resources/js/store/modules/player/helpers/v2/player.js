@@ -137,7 +137,7 @@ function _log(msg) {
     DEBUG && console.log('[Player] ' + msg);
 }
 
-const player = new Player(new PlayerClient(new SpotifyProvider()));
+const player = new Player(new PlayerClient());
 let handler = {
     get: function (playerObj, propKey) {
         const origMethod = playerObj[propKey];

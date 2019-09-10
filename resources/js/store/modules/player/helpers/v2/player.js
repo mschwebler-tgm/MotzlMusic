@@ -154,6 +154,14 @@ export class Player {
     get isLoading() {
         return this._playerClient.isLoading;
     }
+
+    get progress() {
+        return this._playerClient.progress;
+    }
+
+    get progressPercent() {
+        return this._playerClient.progressPercent;
+    }
 }
 
 function _log(msg) {

@@ -26,11 +26,23 @@ export default class PlayerClient {
     }
 
     get provider() {
+        if (!this._currentTrack) {
+            return null;
+        }
+
         const trackProvider = this._providers.find(provider => provider.identifier === this._currentTrack.provider);
         if (!trackProvider) {
             throw new Error(`Provider "${this._currentTrack.provider}" not found. Track id: ${this._currentTrack.id}`);
         }
 
         return trackProvider;
+    }
+
+    get progress() {
+        return this.provider ? this.provider.progress : 0;
+    }
+
+    get progressPercent() {
+        return this.provider ? this.provider.progressPercent : 0;
     }
 }

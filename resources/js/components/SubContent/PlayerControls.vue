@@ -24,7 +24,7 @@
                     <span class="caption">{{ artists }}</span>
                 </v-flex>
                 <v-flex shrink class="pa-0 d-flex align-center" style="flex: 0 !important;">
-                    <v-progress-circular :value="progress"></v-progress-circular>
+                    <v-progress-circular :value="progressPercent"></v-progress-circular>
                 </v-flex>
             </v-flex>
         </v-layout>
@@ -67,8 +67,8 @@
             loading() {
                 return player.isLoading;
             },
-            progress() {
-                return this.$store.getters['player/progressPercent'];
+            progressPercent() {
+                return player.progressPercent;
             },
         }
     }

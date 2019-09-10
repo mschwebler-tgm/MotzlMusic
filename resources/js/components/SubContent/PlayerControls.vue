@@ -32,18 +32,20 @@
 </template>
 
 <script>
+    import player from "$store/player/helpers/v2/player";
+
     export default {
         name: "PlayerControls",
         methods: {
             togglePlay() {
                 if (this.playing) {
-                    this.$store.dispatch('player/pause');
+                    player.pause();
                 } else {
-                    this.$store.dispatch('player/play');
+                    player.resume();
                 }
             },
             playNext() {
-                this.$store.dispatch('player/playNext');
+                player.playNext();
             },
             playPrevious() {
                 this.$store.dispatch('player/playPrevious');
@@ -57,19 +59,16 @@
                 return this.currentTrack ? this.currentTrack.artists.map(artist => artist.name).join(', ') : '-';
             },
             playing() {
-                return this.$store.getters['player/playing'];
+                return !player.isPaused;
             },
             currentTrack() {
-                return this.$store.getters['player/playingTrack'];
+                return player.currentTrack;
             },
             loading() {
-                return this.$store.getters['player/loading']
+                return player.isLoading;
             },
             progress() {
                 return this.$store.getters['player/progressPercent'];
-            },
-            queueController() {
-                return this.$store.getters['player/queueController'];
             },
         }
     }

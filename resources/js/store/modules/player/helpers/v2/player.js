@@ -62,14 +62,16 @@ export class Player {
     }
 
     queueTrack(track) {
-        let index = this._currentTrackIndex;
+        let index = this._currentTrackIndex + 1;
         while (index < this._currentTrackList.length) {
             if (!this._currentTrackList[index].isQueued) {
-                this._insertTrackAfter(index, new Track(track, true));
-                break;
+                this._insertTrackAfter(index - 1, new Track(track, true));
+                return true;
             }
             index++;
         }
+
+        return false;
     }
 
     on(property, callback) {

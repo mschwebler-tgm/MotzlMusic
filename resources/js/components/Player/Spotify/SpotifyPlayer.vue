@@ -59,8 +59,6 @@
                         });
 
                         this.spotifyPlayer.connect();
-
-                        this.$store.commit('player/setSpotifyPlayer', this.spotifyPlayer);
                     });
                 }
             },

@@ -165,8 +165,8 @@ describe('Player', () => {
     it('should queue multiple tracks', () => {
         const player = preparePlayer();
         player.playList([1, 2, 3], 1);
-        player.queueTrack(101);
-        player.queueTrack(102);
+        player.queueTrack({id: 101});
+        player.queueTrack({id: 102});
 
         expect(player.queuedTracks.length).toBe(2);
     });
@@ -179,6 +179,16 @@ describe('Player', () => {
         player.playNext();
 
         expect(player.currentTrack).toBe(101);
+    });
+
+    it('should not queue track if it is queued already', () => {
+        const player = preparePlayer();
+        player.playList([1, 2, 3], 1);
+
+        player.queueTrack({id: 101});
+        player.queueTrack({id: 101});
+
+        expect(player.queuedTracks).toEqual([{id: 101}]);
     });
 
     it('should unmark queued track when being played', () => {

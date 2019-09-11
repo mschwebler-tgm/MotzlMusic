@@ -73,6 +73,9 @@ export class Player {
     }
 
     queueTrack(track) {
+        if (this.trackIsQueued(track)) {
+            return;
+        }
         let index = this._currentTrackIndex + 1;
         while (index < this._currentTrackList.length) {
             if (!this._currentTrackList[index].isQueued) {
@@ -83,6 +86,10 @@ export class Player {
         }
 
         return false;
+    }
+
+    trackIsQueued(track) {
+        return this.queuedTracks.some(queuedTrack => queuedTrack.id === track.id);
     }
 
     on(property, callback) {

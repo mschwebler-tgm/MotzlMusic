@@ -74,6 +74,9 @@ export class Player {
 
     queueTrack(track) {
         if (this.trackIsQueued(track)) {
+            if (this.lastQueuedTrack.id === track.id) {
+                this.removeTrackFromQueue(track.id);
+            }
             return;
         }
         let index = this._currentTrackIndex + 1;
@@ -86,6 +89,15 @@ export class Player {
         }
 
         return false;
+    }
+
+    removeTrackFromQueue(trackId) {
+        for (let i = 0; i < this._currentTrackList.length; i++) {
+            const track = this._currentTrackList[i];
+            if (track.trackData.id === trackId && track.isQueued) {
+                this._currentTrackList.splice(i, 1);
+            }
+        }
     }
 
     trackIsQueued(track) {
@@ -187,6 +199,11 @@ export class Player {
 
     get progressPercent() {
         return this._playerClient.progressPercent;
+    }
+
+    get lastQueuedTrack() {
+        const queuedTracks = this.queuedTracks;
+        return queuedTracks.length > 0 ? queuedTracks[queuedTracks.length - 1] : null;
     }
 }
 

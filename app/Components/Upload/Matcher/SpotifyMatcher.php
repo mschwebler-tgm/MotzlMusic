@@ -35,10 +35,14 @@ class SpotifyMatcher
         return $trackMatches ? $spotifyTrack : null;
     }
 
-    // TODO cut disc numbers like "01 - 3 doors down - kryptonite"
     private function cutDisturbingStrings(string $trackName)
     {
         $trackName = strtolower($trackName);
+
+        // disc numbers like "01 - 3 doors down - kryptonite"
+        if (preg_match('/^\d{1,2} ?-/', $trackName, $matches)) {
+            $trackName = str_replace($matches[0], '', $trackName);
+        }
 
         $parenthesises = [];
         if (!preg_match('/[\(\[].*[\)\]]/', $trackName, $parenthesises)) {

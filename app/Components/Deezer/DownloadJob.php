@@ -23,7 +23,6 @@ class DownloadJob implements ShouldQueue
     {
         $downloader = app(DeezerDownloader::class);
         try {
-            \Log::info('handle Job');
             $downloader->downloadTrack($this->trackId);
         } catch (TrackNotFoundException $exception) {
             \Log::info("Failed to download track. Track with id '$this->trackId' not found");

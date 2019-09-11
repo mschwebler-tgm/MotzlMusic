@@ -10,7 +10,6 @@ class TrackObserver
     public function updated(Track $track)
     {
         if (config('app.download_tracks') && $track->wasChanged('isrc')) {
-            \Log::info('dispatch Job');
             dispatch(new DownloadJob($track->id));
         }
     }

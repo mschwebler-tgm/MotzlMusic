@@ -35,11 +35,11 @@ class DeezerClient
         if ($response->getStatusCode() !== 200) {
             return Log::info(
                 "Deezer api request failed with status code {$response->getStatusCode()}. ($url)",
-                $responseBody
+                (array)$responseBody
             );
         }
         if (isset($responseBody->error)) {
-            return Log::info("Deezer api request failed. ($url)", $responseBody);
+            return Log::info("Deezer api request failed. ($url)", (array)$responseBody);
         }
 
         return $responseBody;

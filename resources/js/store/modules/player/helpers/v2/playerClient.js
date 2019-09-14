@@ -25,6 +25,12 @@ export default class PlayerClient {
         return this.provider.seek(ms);
     }
 
+    setVolume(volume) {
+        if (this.provider) {
+            this.provider.setVolume(volume);
+        }
+    }
+
     addProvider(provider) {
         this._providers.push(provider);
     }

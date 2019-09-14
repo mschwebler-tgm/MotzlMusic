@@ -68,6 +68,11 @@ export class Player {
         return Promise.reject();
     }
 
+    setVolume(volume) {
+        volume = volume > 1 ? volume / 100 : volume;  // validate range 0-100 -> 0-1
+        this._playerClient.setVolume(volume);
+    }
+
     playTrackImmediately(track) {
         if (this._currentTrackList.length === 0) {
             this._currentTrackList = [new Track(track)];

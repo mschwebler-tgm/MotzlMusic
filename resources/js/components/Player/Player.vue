@@ -25,7 +25,13 @@
                         <span class="body-2">{{ artists }}</span>
                     </v-flex>
                     <v-flex xs3 class="flex-center">
-<!--                        Subcontent-->
+                        <v-slider v-model="volume"
+                                  thumb-label
+                                  thumb-size="24"
+                                  min="0"
+                                  max="100"
+                                  prepend-icon="volume_up"
+                                  color="grey"></v-slider>
                     </v-flex>
                 </v-layout>
             </v-container>
@@ -48,6 +54,7 @@
             return {
                 progressInterval: null,
                 progressMs: 0,
+                volumePercent: parseInt(localStorage.getItem('volume')) || 50
             }
         },
         computed: {
@@ -63,6 +70,15 @@
             },
             playerProgress() {
                 return player.progress;
+            },
+            volume: {
+                get() {
+                    return this.volumePercent;
+                },
+                set(volume) {
+                    localStorage.setItem('volume', volume);
+                    player.setVolume(volume);
+                }
             }
         },
         watch: {

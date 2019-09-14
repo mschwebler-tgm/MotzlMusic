@@ -22,7 +22,7 @@ export default class PlayerClient {
     }
 
     seek(ms) {
-        this.provider.seek(ms);
+        return this.provider.seek(ms);
     }
 
     addProvider(provider) {

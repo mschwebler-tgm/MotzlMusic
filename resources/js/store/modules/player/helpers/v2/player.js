@@ -62,8 +62,10 @@ export class Player {
 
     seek(ms) {
         if (this.currentTrack) {
-            this._playerClient.seek(ms);
+            return this._playerClient.seek(ms);
         }
+
+        return Promise.reject();
     }
 
     playTrackImmediately(track) {

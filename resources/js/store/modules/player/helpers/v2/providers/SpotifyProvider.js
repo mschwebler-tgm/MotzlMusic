@@ -29,7 +29,7 @@ export default class SpotifyProvider {
     }
 
     seek(ms) {
-        this._spotifyPlayerInstance.seek(ms);
+        return this._spotifyPlayerInstance.seek(ms);
     }
 
     _subscribeToProgress() {

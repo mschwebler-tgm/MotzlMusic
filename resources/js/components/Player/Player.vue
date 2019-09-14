@@ -33,18 +33,24 @@
                     return this.progressMs
                 },
                 set(milliseconds) {
-                    player.seek(milliseconds);
+                    clearInterval(this.progressInterval);
                     this.progressMs = milliseconds;
+                    player.seek(milliseconds).then(this.setProgressInterval);
                 }
             }
         },
         watch: {
             playing(playing) {
                 if (playing) {
-                    this.progressInterval = setInterval(() => this.progressMs += 100, 100);
+                    this.setProgressInterval();
                 } else {
                     clearInterval(this.progressInterval);
                 }
+            }
+        },
+        methods: {
+            setProgressInterval() {
+                this.progressInterval = setInterval(() => this.progressMs += 100, 100);
             }
         }
     }

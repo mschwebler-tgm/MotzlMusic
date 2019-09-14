@@ -60,6 +60,9 @@
                     this.progressMs = milliseconds;
                     player.seek(milliseconds).then(this.setProgressInterval);
                 }
+            },
+            playerProgress() {
+                return player.progress;
             }
         },
         watch: {
@@ -69,6 +72,9 @@
                 } else {
                     clearInterval(this.progressInterval);
                 }
+            },
+            playerProgress(progress) {
+                this.progressMs = progress;
             }
         },
         methods: {

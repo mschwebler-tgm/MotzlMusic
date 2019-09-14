@@ -11,7 +11,7 @@ export class Player {
         this._playerClient = playerClient || new PlayerClient();
         this._currentTrackList = [];
         this._currentTrackIndex = 0;
-        this._isPlaying = true;
+        this._isPlaying = false;
         this._pastTracksAmountToKeep = KEEP_PAST_TRACKS;
         this._onListeners = {};
         this._onceListeners = {};
@@ -179,6 +179,10 @@ export class Player {
 
     get isPaused() {
         return !this._isPlaying;
+    }
+
+    get isPlaying() {
+        return this._isPlaying;
     }
 
     get trackList() {

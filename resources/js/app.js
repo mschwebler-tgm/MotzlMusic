@@ -33,6 +33,7 @@ const app = new Vue({
         return {
             showSpotifyImport: false,
             isDarkTheme: localStorage.getItem('useDarkTheme') === '1',
+            useExtraDarkTheme: false,
             statusInfo: {
                 show: false,
                 component: null,
@@ -48,7 +49,7 @@ const app = new Vue({
                 buttonText: 'close',
                 callback: () => this.snackbar.show = false,
                 color: undefined,
-            }
+            },
         }
     },
     created() {

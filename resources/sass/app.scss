@@ -93,3 +93,12 @@ html {
 text.highcharts-credits {
   display: none;  // muhahahaha
 }
+
+.extra-dark {
+    .v-card, .v-list, .v-navigation-drawer {
+        background-color: #262525 !important;
+    }
+    .v-application {
+        background-color: #1f1f1f !important;
+    }
+}

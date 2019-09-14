@@ -17,6 +17,18 @@
                     <v-icon @click="playNext">skip_next</v-icon>
                 </v-btn>
             </div>
+            <v-container fluid class="pt-0 pb-0">
+                <v-layout row wrap class="h-100">
+                    <v-flex xs9 class="flex-center">
+                        <span class="subtitle-2">{{ title }}</span>
+                        <span class="grey--text">&nbsp;&nbsp;-&nbsp;&nbsp;</span>
+                        <span class="body-2">{{ artists }}</span>
+                    </v-flex>
+                    <v-flex xs3 class="flex-center">
+<!--                        Subcontent-->
+                    </v-flex>
+                </v-layout>
+            </v-container>
         </div>
         <spotify-player></spotify-player>
     </div>
@@ -85,6 +97,12 @@
 
         .player-content {
             display: flex;
+
+            .player-controls {
+                min-width: 256px;
+                display: flex;
+                justify-content: center;
+            }
         }
     }
 </style>

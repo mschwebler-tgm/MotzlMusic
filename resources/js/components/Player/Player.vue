@@ -1,9 +1,10 @@
 <template>
     <div class="player-wrapper">
-        <v-slider class="player-progress-bar"
-                  color="secondary"
+        <v-slider hide-details
                   v-model="progress"
-                  :max="trackDuration"></v-slider>
+                  :max="trackDuration"
+                  class="player-progress-bar"
+                  color="secondary"></v-slider>
         <div class="player-content">
             <div class="player-controls">
                 <v-btn text icon aria-label="Play previous" :disabled="noPreviousTrack">
@@ -19,13 +20,14 @@
             </div>
             <v-container fluid class="pt-0 pb-0">
                 <v-layout row wrap class="h-100">
-                    <v-flex xs9 class="flex-center">
+                    <v-flex xs9 class="flex-center pl-4 pr-4">
                         <span class="subtitle-2">{{ title }}</span>
                         <span class="grey--text">&nbsp;&nbsp;-&nbsp;&nbsp;</span>
                         <span class="body-2">{{ artists }}</span>
                     </v-flex>
-                    <v-flex xs3 class="flex-center">
+                    <v-flex xs3 class="flex-center pl-4 pr-2">
                         <v-slider v-model="volume"
+                                  hide-details
                                   thumb-label
                                   thumb-size="24"
                                   min="0"
@@ -115,6 +117,10 @@
             top: calc(-50% + 2px);
             left: 0;
             width: 100%;
+
+            .v-slider {
+                margin: 0;
+            }
         }
 
         .player-content {

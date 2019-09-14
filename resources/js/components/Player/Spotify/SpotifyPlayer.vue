@@ -42,7 +42,8 @@
                             name: this.spotifyPlayerName,
                             getOAuthToken: callback => {
                                 callback(accessToken);
-                            }
+                            },
+                            volume: parseInt(localStorage.getItem('volume')) / 100 || .5,
                         });
 
                         // Error handling

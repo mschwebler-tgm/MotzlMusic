@@ -21,6 +21,10 @@ export default class PlayerClient {
         this.provider.resume();
     }
 
+    seek(ms) {
+        this.provider.seek(ms);
+    }
+
     addProvider(provider) {
         this._providers.push(provider);
     }

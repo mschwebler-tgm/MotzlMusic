@@ -60,6 +60,12 @@ export class Player {
         }
     }
 
+    seek(ms) {
+        if (this.currentTrack) {
+            this._playerClient.seek(ms);
+        }
+    }
+
     playTrackImmediately(track) {
         if (this._currentTrackList.length === 0) {
             this._currentTrackList = [new Track(track)];

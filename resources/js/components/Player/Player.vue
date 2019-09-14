@@ -2,7 +2,7 @@
     <div class="player-wrapper">
         <v-slider class="player-progress-bar"
                   color="secondary"
-                  :value="progressMs"
+                  v-model="progress"
                   :max="trackDuration"></v-slider>
         <spotify-player></spotify-player>
     </div>
@@ -27,6 +27,15 @@
             },
             trackDuration() {
                 return player.currentTrack ? player.currentTrack.duration : 0;
+            },
+            progress: {
+                get() {
+                    return this.progressMs
+                },
+                set(milliseconds) {
+                    player.seek(milliseconds);
+                    this.progressMs = milliseconds;
+                }
             }
         },
         watch: {

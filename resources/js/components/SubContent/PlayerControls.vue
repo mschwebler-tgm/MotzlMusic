@@ -7,7 +7,8 @@
                         <v-btn text icon aria-label="Play previous" :disabled="noPreviousTrack">
                             <v-icon @click="playPrevious">skip_previous</v-icon>
                         </v-btn>
-                        <v-btn text icon :loading="loading" @click="togglePlay" :aria-label="playing ? 'Pause' : 'Play'">
+                        <v-btn text icon :loading="loading" @click="togglePlay"
+                               :aria-label="playing ? 'Pause' : 'Play'">
                             <v-icon large class="secondary--text" v-if="playing">pause_circle_filled</v-icon>
                             <v-icon large class="secondary--text" v-else>play_circle_filled</v-icon>
                         </v-btn>
@@ -33,53 +34,18 @@
 
 <script>
     import player from "$store/player/helpers/v2/player";
+    import playerControlsMixin from "../Player/playerControlsMixin";
+    import Vue from 'vue';
 
-    console.log(player);
-
-    export default {
+    export default Vue.extend({
         name: "PlayerControls",
-        methods: {
-            togglePlay() {
-                if (this.playing) {
-                    player.pause();
-                } else {
-                    player.resume();
-                }
-            },
-            playNext() {
-                player.playNext();
-            },
-            playPrevious() {
-                player.playPrevious();
-            },
-        },
+        mixins: [playerControlsMixin],
         computed: {
-            title() {
-                return this.currentTrack ? this.currentTrack.name : 'No track';
-            },
-            artists() {
-                return this.currentTrack ? this.currentTrack.artists.map(artist => artist.name).join(', ') : '-';
-            },
-            playing() {
-                return !player.isPaused;
-            },
-            currentTrack() {
-                return player.currentTrack;
-            },
-            loading() {
-                return player.isLoading;
-            },
             progressPercent() {
                 return player.progressPercent;
             },
-            noNextTrack() {
-                return !player.canPlayNext;
-            },
-            noPreviousTrack() {
-                return !player.canPlayPrevious;
-            },
         }
-    }
+    });
 </script>
 
 <style scoped>

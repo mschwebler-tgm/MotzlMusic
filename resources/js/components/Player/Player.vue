@@ -25,10 +25,13 @@
 <script>
     import SpotifyPlayer from "./Spotify/SpotifyPlayer";
     import player from '$store/player/helpers/v2/player';
+    import playerControlsMixin from "./playerControlsMixin";
+    import Vue from 'vue';
 
-    export default {
+    export default Vue.extend({
         name: "Player",
         components: {SpotifyPlayer},
+        mixins: [playerControlsMixin],
         data() {
             return {
                 progressInterval: null,
@@ -36,21 +39,6 @@
             }
         },
         computed: {
-            playing() {
-                return player.isPlaying;
-            },
-            trackDuration() {
-                return player.currentTrack ? player.currentTrack.duration : 0;
-            },
-            noNextTrack() {
-                return !player.canPlayNext;
-            },
-            noPreviousTrack() {
-                return !player.canPlayPrevious;
-            },
-            loading() {
-                return player.isLoading;
-            },
             progress: {
                 get() {
                     return this.progressMs
@@ -75,21 +63,8 @@
             setProgressInterval() {
                 this.progressInterval = setInterval(() => this.progressMs += 100, 100);
             },
-            togglePlay() {
-                if (this.playing) {
-                    player.pause();
-                } else {
-                    player.resume();
-                }
-            },
-            playNext() {
-                player.playNext();
-            },
-            playPrevious() {
-                player.playPrevious();
-            },
         }
-    }
+    });
 </script>
 
 <style lang="scss">

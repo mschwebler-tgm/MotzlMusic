@@ -151,6 +151,7 @@ export class Player {
 
     _playCurrentTrack() {
         this._playerClient.play(this.currentTrack);
+        this._isPlaying = true;
         const currentTrack = this._currentTrackList[this._currentTrackIndex];
         if (currentTrack.isQueued) {
             currentTrack.isQueued = false;

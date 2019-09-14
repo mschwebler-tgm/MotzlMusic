@@ -262,7 +262,7 @@ describe('Player', () => {
             identifier: providerIdentifier,
             play() {
                 providerWasCalled = true;
-                return new Promise(resolve => resolve());
+                return Promise.resolve();
             }
         });
         playerProxy.playList([{id: 1, provider: providerIdentifier}]);

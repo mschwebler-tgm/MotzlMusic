@@ -7,7 +7,7 @@ function spotifyProvider() {
         identifier: 'spotify',
         play() {
             spotifyPlayWasCalled = true;
-            return new Promise(resolve => resolve());
+            return Promise.resolve();
         }
     }
 }

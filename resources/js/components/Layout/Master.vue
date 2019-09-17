@@ -1,5 +1,5 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
-    <div id="master" @dragenter="dragging = true">
+    <div id="master" @dragenter="dragging = true" :class="{'extra-dark': $root.isDarkTheme && $root.useExtraDarkTheme}">
         <div v-show="dragging"
              @dragover="dragOver"
              @drop="drop"

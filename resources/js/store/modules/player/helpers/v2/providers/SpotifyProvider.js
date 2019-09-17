@@ -28,6 +28,14 @@ export default class SpotifyProvider {
         this._spotifyPlayerInstance.resume();
     }
 
+    seek(ms) {
+        return this._spotifyPlayerInstance.seek(ms);
+    }
+
+    setVolume(volume) {
+        this._spotifyPlayerInstance.setVolume(volume);
+    }
+
     _subscribeToProgress() {
         this._pollInterval = setInterval(() => {
             this._spotifyPlayerInstance.getCurrentState().then(state => state && this._handleProgress(state));

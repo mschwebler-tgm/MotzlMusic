@@ -1,5 +1,5 @@
 const mix = require('laravel-mix');
-
+const webpackConfig = require('./webpack.config');
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -12,14 +12,7 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js')
-    .webpackConfig({
-        resolve: {
-            alias: {
-                '$components': path.resolve('resources/js'),
-                '$store': path.resolve('resources/js/store/modules'),
-            }
-        }
-    });
+    .webpackConfig(webpackConfig);
 
 if (process.env.APP_ENV !== 'testing') {
     mix.sass('resources/sass/app.scss', 'public/css')

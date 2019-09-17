@@ -11,7 +11,7 @@ export class Player {
         this._playerClient = playerClient || new PlayerClient();
         this._currentTrackList = [];
         this._currentTrackIndex = 0;
-        this._isPlaying = true;
+        this._isPlaying = false;
         this._pastTracksAmountToKeep = KEEP_PAST_TRACKS;
         this._onListeners = {};
         this._onceListeners = {};
@@ -58,6 +58,19 @@ export class Player {
             this._playerClient.resume();
             this._isPlaying = true;
         }
+    }
+
+    seek(ms) {
+        if (this.currentTrack) {
+            return this._playerClient.seek(ms);
+        }
+
+        return Promise.reject();
+    }
+
+    setVolume(volume) {
+        volume = volume > 1 ? volume / 100 : volume;  // validate range 0-100 -> 0-1
+        this._playerClient.setVolume(volume);
     }
 
     playTrackImmediately(track) {
@@ -138,6 +151,7 @@ export class Player {
 
     _playCurrentTrack() {
         this._playerClient.play(this.currentTrack);
+        this._isPlaying = true;
         const currentTrack = this._currentTrackList[this._currentTrackIndex];
         if (currentTrack.isQueued) {
             currentTrack.isQueued = false;
@@ -179,6 +193,10 @@ export class Player {
 
     get isPaused() {
         return !this._isPlaying;
+    }
+
+    get isPlaying() {
+        return this._isPlaying;
     }
 
     get trackList() {

@@ -10,7 +10,9 @@ export default class PlayerClient {
         this.isLoading = true;
         this._currentTrack = track;
         this.provider.play(track)
-            .finally(() => this.isLoading = false);
+            .then(() => this.isLoading = false)
+            .catch(() => this.isLoading = false);
+            // .finally(() => this.isLoading = false);  disabled for tests
     }
 
     pause() {
@@ -19,6 +21,16 @@ export default class PlayerClient {
 
     resume() {
         this.provider.resume();
+    }
+
+    seek(ms) {
+        return this.provider.seek(ms);
+    }
+
+    setVolume(volume) {
+        if (this.provider) {
+            this.provider.setVolume(volume);
+        }
     }
 
     addProvider(provider) {

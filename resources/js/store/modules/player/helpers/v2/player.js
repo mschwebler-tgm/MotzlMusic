@@ -145,6 +145,12 @@ export class Player {
         this._loadingForced = force;
     }
 
+    playTrackIndex(index) {
+        this._currentTrackIndex = index;
+        this._playCurrentTrack();
+        this._setTrackList();
+    }
+
     _insertTrackAfter(index, track) {
         this._currentTrackList.splice(index + 1, 0, track);
     }
@@ -222,6 +228,10 @@ export class Player {
     get lastQueuedTrack() {
         const queuedTracks = this.queuedTracks;
         return queuedTracks.length > 0 ? queuedTracks[queuedTracks.length - 1] : null;
+    }
+
+    get currentTrackIndex() {
+        return this._currentTrackIndex;
     }
 }
 

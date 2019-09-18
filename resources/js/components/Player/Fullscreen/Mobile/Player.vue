@@ -18,16 +18,9 @@
                 </div>
                 <v-container class="fullscreen-player-content h-100 pa-4">
                     <div class="mt-5">
-                        <v-window class="fullscreen-player-track-window">
-                            <v-window-item>
-                                <div class="fullscreen-player-track-image-container">
-                                    <v-img class="elevation-15"
-                                           :src="albumCover"
-                                           max-width="100%"
-                                           width="100%"
-                                           contain
-                                           aspect-ratio="1"></v-img>
-                                </div>
+                        <v-window class="fullscreen-player-track-window" v-model="activeTrackWindow">
+                            <v-window-item v-for="track in trackList" :key="track.id">
+                                <player-image-slide :track="track"></player-image-slide>
                             </v-window-item>
                         </v-window>
                         <div class="fullscreen-player-track-data mt-3">
@@ -83,10 +76,13 @@
 <script>
     import playerControlsMixin from "$components/components/Player/playerControlsMixin";
     import Vue from 'vue';
+    import player from "$store/player/helpers/v2/player";
+    import PlayerImageSlide from './PlayerImageSlide';
 
     export default Vue.extend({
         name: "PlayerFullscreenMobile",
         mixins: [playerControlsMixin],
+        components: {PlayerImageSlide},
         props: {
             show: Boolean,
             backgroundColor: {
@@ -98,6 +94,19 @@
                 type: String,
                 default: '#0065a8',
             },
+        },
+        data() {
+            return {
+                activeTrackWindow: null,
+            }
+        },
+        watch: {
+            activeTrackWindow(index) {
+                player.playTrackIndex(index);
+            },
+            'currentTrack.id'() {
+                this.activeTrackWindow = player.currentTrackIndex;
+            }
         },
         computed: {
             staticGradient() {
@@ -123,6 +132,9 @@
                     this.currentTrack.rating = rating;
                     this.$store.dispatch('tracks/rateTrack', {track: this.currentTrack, rating});
                 }
+            },
+            trackList() {
+                return player.trackList;
             }
         }
     });
@@ -148,11 +160,6 @@
             flex-direction: column;
             justify-content: flex-start;
             z-index: 10000;
-        }
-
-        &-track-image-container {
-            display: flex;
-            justify-content: center;
         }
 
         &-track-data{

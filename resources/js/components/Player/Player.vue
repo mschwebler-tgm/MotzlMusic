@@ -11,7 +11,8 @@
                     <v-btn text icon aria-label="Play previous" :disabled="noPreviousTrack">
                         <v-icon @click="playPrevious">skip_previous</v-icon>
                     </v-btn>
-                    <v-btn text large icon :loading="loading" @click="togglePlay" :aria-label="playing ? 'Pause' : 'Play'">
+                    <v-btn text large icon :loading="loading" @click="togglePlay"
+                           :aria-label="playing ? 'Pause' : 'Play'">
                         <v-icon v-if="playing">pause_circle_filled</v-icon>
                         <v-icon v-else>play_circle_filled</v-icon>
                     </v-btn>
@@ -31,12 +32,14 @@
                                aspect-ratio="1"
                                style="z-index: -1"
                                class="hidden-md-and-up"></v-img>
-                        <v-flex xs9 class="flex-center pl-4 pr-4 player-track-text">
+                        <v-flex xs9 class="flex-center pl-4 pr-4 player-track-text"
+                                @click="openFullscreenPlayer()">
                             <p class="ma-0 text-center w-100">
                                 <span class="body-2">{{ title }}</span>
                                 <br class="hidden-md-and-up">
                                 <span class="hidden-md-and-down">&nbsp;&nbsp;</span>
-                                <span class="caption grey--text font-weight-light">&diams;&nbsp;&nbsp;{{ artists }}</span>
+                                <span
+                                    class="caption grey--text font-weight-light">&diams;&nbsp;&nbsp;{{ artists }}</span>
                             </p>
                         </v-flex>
                         <v-flex xs3 class="flex-center pl-4 pr-2 hidden-md-and-down">
@@ -53,6 +56,7 @@
                 </v-container>
             </div>
             <spotify-player></spotify-player>
+            <component :is="fullscreenVueComponent" :show.sync="showFullscreenPlayer"></component>
         </div>
     </div>
 </template>
@@ -62,16 +66,18 @@
     import player from '$store/player/helpers/v2/player';
     import playerControlsMixin from "./playerControlsMixin";
     import Vue from 'vue';
+    import PlayerFullscreenMobile from "$components/components/Player/Fullscreen/Mobile/Player";
 
     export default Vue.extend({
         name: "Player",
-        components: {SpotifyPlayer},
+        components: {PlayerFullscreenMobile, SpotifyPlayer},
         mixins: [playerControlsMixin],
         data() {
             return {
                 progressInterval: null,
                 progressMs: 0,
-                volumePercent: parseInt(localStorage.getItem('volume')) || 50
+                volumePercent: parseInt(localStorage.getItem('volume')) || 50,
+                showFullscreenPlayer: false,
             }
         },
         computed: {
@@ -103,6 +109,11 @@
                 }
 
                 return this.$root.getSpotifyImage(this.currentTrack.album, 'small');
+            },
+            fullscreenVueComponent() {
+                return 'player-fullscreen-mobile';
+                // TODO: implement desktop fullscreen player
+                // return screen.width < 960 ? 'player-fullscreen-mobile' : 'player-fullscreen';
             }
         },
         watch: {
@@ -121,6 +132,11 @@
             setProgressInterval() {
                 this.progressInterval = setInterval(() => this.progressMs += 100, 100);
             },
+            openFullscreenPlayer() {
+                if (screen.width < 960) {
+                    this.showFullscreenPlayer = true;
+                }
+            }
         }
     });
 </script>

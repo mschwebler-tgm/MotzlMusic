@@ -30,16 +30,16 @@
                                contain
                                aspect-ratio="1"
                                style="z-index: -1"
-                               class="hidden-sm-and-up"></v-img>
+                               class="hidden-md-and-up"></v-img>
                         <v-flex xs9 class="flex-center pl-4 pr-4 player-track-text">
                             <p class="ma-0 text-center w-100">
                                 <span class="body-2">{{ title }}</span>
-                                <br class="hidden-sm-and-up">
-                                <span class="hidden-xs-only">&nbsp;&nbsp;</span>
+                                <br class="hidden-md-and-up">
+                                <span class="hidden-md-and-down">&nbsp;&nbsp;</span>
                                 <span class="caption grey--text font-weight-light">&diams;&nbsp;&nbsp;{{ artists }}</span>
                             </p>
                         </v-flex>
-                        <v-flex xs3 class="flex-center pl-4 pr-2 hidden-xs-only">
+                        <v-flex xs3 class="flex-center pl-4 pr-2 hidden-md-and-down">
                             <v-slider v-model="volume"
                                       hide-details
                                       thumb-label
@@ -169,7 +169,7 @@
         align-items: center;
     }
 
-    @media screen and (min-width: 0) and (max-width: 599px) {
+    @media screen and (min-width: 0) and (max-width: 960px) {
         .footer-height {
             height: 50px;
 
@@ -187,6 +187,7 @@
 
                 .player-track-text {
                     justify-content: flex-start;
+                    line-height: 0;
                 }
             }
         }

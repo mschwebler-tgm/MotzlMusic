@@ -61,13 +61,17 @@
                                   :max="trackDuration || 1"
                                   :disabled="!trackDuration"
                                   class="fullscreen-player-progress-bar mt-4"></v-slider>
-                        <v-rating v-model="rating"
-                                  color="secondary"
-                                  :size="24"
-                                  style="z-index: 10001"
-                                  background-color="secondary darken2"
-                                  class="mt-2 mb-2"
-                                  dense half-increments></v-rating>
+                        <div class="flex-space-between w-100">
+                            <div class="caption grey--text">{{ progressFormatted }}</div>
+                            <v-rating v-model="rating"
+                                      color="secondary"
+                                      :size="24"
+                                      style="z-index: 10001"
+                                      background-color="secondary darken2"
+                                      class="mt-3 mb-2"
+                                      dense half-increments></v-rating>
+                            <div class="caption grey--text">{{ durationFormatted}}</div>
+                        </div>
                     </div>
                 </v-container>
             </v-container>

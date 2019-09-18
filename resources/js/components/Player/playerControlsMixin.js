@@ -52,6 +52,18 @@ export default {
         playerProgress() {
             return player.progress;
         },
+        durationFormatted() {
+            return this.currentTrack ? this.currentTrack.duration_formatted : '-:-'
+        },
+        progressFormatted() {
+            let seconds = Math.floor(this.progressMs / 1000);
+            const minutes = Math.floor(seconds / 60);
+            seconds = seconds - minutes * 60;
+
+            seconds = seconds < 10 ? `0${seconds}` : seconds;
+
+            return `${minutes}:${seconds}`;
+        }
     },
     methods: {
         togglePlay() {

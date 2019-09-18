@@ -51,7 +51,11 @@
                                 <v-icon @click="playNext">skip_next</v-icon>
                             </v-btn>
                         </div>
-<!--                        <v-slider></v-slider>-->
+                        <v-slider hide-details
+                                  v-model="progress"
+                                  :max="trackDuration || 1"
+                                  :disabled="!trackDuration"
+                                  class="fullscreen-player-progress-bar mt-4"></v-slider>
                     </div>
                 </v-container>
             </v-container>
@@ -127,9 +131,15 @@
 
         &-controls {
             display: flex;
+            flex-direction: column;
+            align-items: center;
             justify-content: center;
             margin-bottom: 10%;
             margin-top: 10%;
+        }
+
+        &-progress-bar {
+            width: 100%;
         }
     }
 

@@ -1,10 +1,12 @@
 <template>
     <v-expand-transition>
         <div class="fullscreen-player grey darken-4" v-show="show">
-            <div id="fullscreen-player-gradient-static" :style="staticGradient">
-                <div :style="animatedGradient1" id="fullscreen-player-gradient-1"></div>
-                <div :style="animatedGradient2" id="fullscreen-player-gradient-2"></div>
-            </div>
+            <v-fade-transition>
+                <div id="fullscreen-player-gradient-static" :style="staticGradient" v-show="show">
+                    <div :style="animatedGradient1" id="fullscreen-player-gradient-1"></div>
+                    <div :style="animatedGradient2" id="fullscreen-player-gradient-2"></div>
+                </div>
+            </v-fade-transition>
             <v-container class="h-100">
                 <div class="fullscreen-player-header">
                     <v-btn text icon @click="$emit('update:show', false)">
@@ -49,6 +51,7 @@
                                 <v-icon @click="playNext">skip_next</v-icon>
                             </v-btn>
                         </div>
+<!--                        <v-slider></v-slider>-->
                     </div>
                 </v-container>
             </v-container>
@@ -90,7 +93,7 @@
                 return {
                     background: `linear-gradient(315deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 40%, ${this.backgroundColorAccent} 100%)`,
                 }
-            }
+            },
         }
     });
 </script>

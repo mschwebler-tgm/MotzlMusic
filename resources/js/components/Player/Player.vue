@@ -103,13 +103,6 @@
                     player.setVolume(volume);
                 }
             },
-            albumCover() {
-                if (!this.currentTrack || !this.currentTrack.album) {
-                    return window.playlistFallback;
-                }
-
-                return this.$root.getSpotifyImage(this.currentTrack.album, 'small');
-            },
             fullscreenVueComponent() {
                 return 'player-fullscreen-mobile';
                 // TODO: implement desktop fullscreen player

@@ -26,6 +26,13 @@ export default {
         artists() {
             return this.currentTrack ? this.currentTrack.artists.map(artist => artist.name).join(', ') : '-';
         },
+        albumCover() {
+            if (!this.currentTrack || !this.currentTrack.album) {
+                return window.playlistFallback;
+            }
+
+            return this.$root.getSpotifyImage(this.currentTrack.album, 'small');
+        },
     },
     methods: {
         togglePlay() {

@@ -74,26 +74,11 @@
         mixins: [playerControlsMixin],
         data() {
             return {
-                progressInterval: null,
-                progressMs: 0,
                 volumePercent: parseInt(localStorage.getItem('volume')) || 50,
-                showFullscreenPlayer: false,
+                showFullscreenPlayer: true,
             }
         },
         computed: {
-            progress: {
-                get() {
-                    return this.progressMs
-                },
-                set(milliseconds) {
-                    clearInterval(this.progressInterval);
-                    this.progressMs = milliseconds;
-                    player.seek(milliseconds).then(this.setProgressInterval);
-                }
-            },
-            playerProgress() {
-                return player.progress;
-            },
             volume: {
                 get() {
                     return this.volumePercent;
@@ -109,22 +94,7 @@
                 // return screen.width < 960 ? 'player-fullscreen-mobile' : 'player-fullscreen';
             }
         },
-        watch: {
-            playing(playing) {
-                if (playing) {
-                    this.setProgressInterval();
-                } else {
-                    clearInterval(this.progressInterval);
-                }
-            },
-            playerProgress(progress) {
-                this.progressMs = progress;
-            }
-        },
         methods: {
-            setProgressInterval() {
-                this.progressInterval = setInterval(() => this.progressMs += 100, 100);
-            },
             openFullscreenPlayer() {
                 if (screen.width < 960) {
                     this.showFullscreenPlayer = true;

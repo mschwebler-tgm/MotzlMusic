@@ -1,6 +1,12 @@
 import player from '$store/player/helpers/v2/player';
 
 export default {
+    data() {
+        return {
+            progressInterval: null,
+            progressMs: 0,
+        }
+    },
     computed: {
         playing() {
             return player.isPlaying;
@@ -33,6 +39,19 @@ export default {
 
             return this.$root.getSpotifyImage(this.currentTrack.album, 'small');
         },
+        progress: {
+            get() {
+                return this.progressMs
+            },
+            set(milliseconds) {
+                clearInterval(this.progressInterval);
+                this.progressMs = milliseconds;
+                player.seek(milliseconds).then(this.setProgressInterval);
+            }
+        },
+        playerProgress() {
+            return player.progress;
+        },
     },
     methods: {
         togglePlay() {
@@ -48,5 +67,20 @@ export default {
         playPrevious() {
             player.playPrevious();
         },
-    }
+        setProgressInterval() {
+            this.progressInterval = setInterval(() => this.progressMs += 100, 100);
+        },
+    },
+    watch: {
+        playing(playing) {
+            if (playing) {
+                this.setProgressInterval();
+            } else {
+                clearInterval(this.progressInterval);
+            }
+        },
+        playerProgress(progress) {
+            this.progressMs = progress;
+        }
+    },
 }

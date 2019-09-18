@@ -41,7 +41,7 @@
                             </v-btn>
                         </div>
                     </div>
-                    <div class="fullscreen-player-controls">
+                    <div class="fullscreen-player-controls mb-5">
                         <div>
                             <v-btn text x-large icon aria-label="Play previous" :disabled="noPreviousTrack">
                                 <v-icon @click="playPrevious">skip_previous</v-icon>
@@ -61,6 +61,13 @@
                                   :max="trackDuration || 1"
                                   :disabled="!trackDuration"
                                   class="fullscreen-player-progress-bar mt-4"></v-slider>
+                        <v-rating v-model="rating"
+                                  color="secondary"
+                                  :size="24"
+                                  style="z-index: 10001"
+                                  background-color="secondary darken2"
+                                  class="mt-2 mb-2"
+                                  dense half-increments></v-rating>
                     </div>
                 </v-container>
             </v-container>
@@ -103,6 +110,15 @@
                     background: `linear-gradient(315deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 40%, ${this.backgroundColorAccent} 100%)`,
                 }
             },
+            rating: {
+                get() {
+                    return this.currentTrack ? this.currentTrack.rating : null;
+                },
+                set(rating) {
+                    this.currentTrack.rating = rating;
+                    this.$store.dispatch('tracks/rateTrack', {track: this.currentTrack, rating});
+                }
+            }
         }
     });
 </script>
@@ -144,8 +160,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            margin-bottom: 10%;
-            margin-top: 10%;
+            margin-top: auto;
         }
 
         &-progress-bar {

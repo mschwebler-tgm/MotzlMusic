@@ -22,7 +22,7 @@
                 <v-container fluid class="pt-0 pb-0">
                     <v-layout row wrap class="h-100">
                         <v-img v-if="currentTrack"
-                               :src="$root.getSpotifyImage(currentTrack, 'medium')"
+                               :src="albumCover"
                                height="50px"
                                max-height="50kpx"
                                max-width="50px"
@@ -32,9 +32,12 @@
                                style="z-index: -1"
                                class="hidden-sm-and-up"></v-img>
                         <v-flex xs9 class="flex-center pl-4 pr-4 player-track-text">
-                            <span class="subtitle-2">{{ title }}</span>
-                            <span class="grey--text">&nbsp;&nbsp;-&nbsp;&nbsp;</span>
-                            <span class="body-2">{{ artists }}</span>
+                            <p class="ma-0 text-center w-100">
+                                <span class="body-2">{{ title }}</span>
+                                <br class="hidden-sm-and-up">
+                                <span class="hidden-xs-only">&nbsp;&nbsp;</span>
+                                <span class="caption grey--text font-weight-light">&diams;&nbsp;&nbsp;{{ artists }}</span>
+                            </p>
                         </v-flex>
                         <v-flex xs3 class="flex-center pl-4 pr-2 hidden-xs-only">
                             <v-slider v-model="volume"
@@ -93,6 +96,13 @@
                     localStorage.setItem('volume', volume);
                     player.setVolume(volume);
                 }
+            },
+            albumCover() {
+                if (!this.currentTrack || !this.currentTrack.album) {
+                    return window.playlistFallback;
+                }
+
+                return this.$root.getSpotifyImage(this.currentTrack.album, 'small');
             }
         },
         watch: {

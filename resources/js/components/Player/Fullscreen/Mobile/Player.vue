@@ -60,6 +60,7 @@
                                   v-model="progress"
                                   :max="trackDuration || 1"
                                   :disabled="!trackDuration"
+                                  color="secondary"
                                   class="fullscreen-player-progress-bar mt-4"></v-slider>
                         <div class="flex-space-between w-100">
                             <div class="caption grey--text">{{ progressFormatted }}</div>

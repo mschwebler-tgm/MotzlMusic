@@ -30,10 +30,15 @@
                                 </div>
                             </v-window-item>
                         </v-window>
-                        <div class="mt-3">
-                            <span class="headline">{{ title }}</span>
-                            <br>
-                            <span class="subtitle-1">{{ artists }}</span>
+                        <div class="fullscreen-player-track-data mt-3">
+                            <div class="flex-grow-1">
+                                <span class="headline">{{ title }}</span>
+                                <br>
+                                <span class="subtitle-1">{{ artists }}</span>
+                            </div>
+                            <v-btn text icon>
+                                <v-icon>mdi-dots-vertical</v-icon>
+                            </v-btn>
                         </div>
                     </div>
                     <div class="fullscreen-player-controls">
@@ -127,6 +132,11 @@
         &-track-image-container {
             display: flex;
             justify-content: center;
+        }
+
+        &-track-data{
+            display: flex;
+            justify-content: space-between;
         }
 
         &-controls {

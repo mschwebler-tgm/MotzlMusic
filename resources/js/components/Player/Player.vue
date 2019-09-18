@@ -75,7 +75,7 @@
         data() {
             return {
                 volumePercent: parseInt(localStorage.getItem('volume')) || 50,
-                showFullscreenPlayer: true,
+                showFullscreenPlayer: false,
             }
         },
         computed: {

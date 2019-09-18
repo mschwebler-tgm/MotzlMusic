@@ -1,6 +1,6 @@
 <template>
     <v-expand-transition>
-        <div class="fullscreen-player grey darken-4" v-show="show">
+        <div class="fullscreen-player grey darken-4" v-show="show" v-touch="{down: () => $emit('update:show', false)}">
             <v-fade-transition>
                 <div id="fullscreen-player-gradient-static" :style="staticGradient" v-show="show">
                     <div :style="animatedGradient1" id="fullscreen-player-gradient-1"></div>
@@ -18,7 +18,7 @@
                 </div>
                 <v-container class="fullscreen-player-content h-100 pa-4">
                     <div class="mt-5">
-                        <v-window class="fullscreen-player-track-window" v-model="activeTrackWindow">
+                        <v-window class="fullscreen-player-track-window" v-model="activeTrackWindow" v-touch="{down: () => $emit('update:show', false)}">
                             <v-window-item v-for="track in trackList" :key="track.id">
                                 <player-image-slide :track="track"></player-image-slide>
                             </v-window-item>
@@ -148,6 +148,7 @@
         left: 0;
         width: 100%;
         height: 100%;
+        touch-action: none;
 
         &-header {
             display: flex;

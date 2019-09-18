@@ -5,7 +5,7 @@
                 <div :style="animatedGradient1" id="fullscreen-player-gradient-1"></div>
                 <div :style="animatedGradient2" id="fullscreen-player-gradient-2"></div>
             </div>
-            <v-container class="fullscreen-player-content h-100">
+            <v-container class="h-100">
                 <div class="fullscreen-player-header">
                     <v-btn text icon @click="$emit('update:show', false)">
                         <v-icon large>keyboard_arrow_down</v-icon>
@@ -14,22 +14,43 @@
                         <v-icon>mdi-dots-vertical</v-icon>
                     </v-btn>
                 </div>
-                <v-window class="fullscreen-player-track-window">
-                    <v-window-item>
-                        <div class="fullscreen-player-track-image-container">
-                            <v-img v-if="currentTrack || true"
-                                   class="elevation-15"
-                                   :src="'https://i.scdn.co/image/e1e39d7fc409f95d2b3c04964875fb0d7f1fe8a0'"
-                                   max-width="70%"
-                                   width="70%"
-                                   contain
-                                   aspect-ratio="1"></v-img>
+                <v-container class="fullscreen-player-content h-100 pa-4">
+                    <div class="mt-5">
+                        <v-window class="fullscreen-player-track-window">
+                            <v-window-item>
+                                <div class="fullscreen-player-track-image-container">
+                                    <v-img class="elevation-15"
+                                           :src="albumCover"
+                                           max-width="100%"
+                                           width="100%"
+                                           contain
+                                           aspect-ratio="1"></v-img>
+                                </div>
+                            </v-window-item>
+                        </v-window>
+                        <div class="mt-3">
+                            <span class="headline">{{ title }}</span>
+                            <br>
+                            <span class="subtitle-1">{{ artists }}</span>
                         </div>
-                    </v-window-item>
-                </v-window>
-                <div class="fullscreen-player-controls">
-                    Controls
-                </div>
+                    </div>
+                    <div class="fullscreen-player-controls">
+                        <div>
+                            <v-btn text x-large icon aria-label="Play previous" :disabled="noPreviousTrack">
+                                <v-icon @click="playPrevious">skip_previous</v-icon>
+                            </v-btn>
+                            <v-btn x-large fab @click="togglePlay"
+                                   :aria-label="playing ? 'Pause' : 'Play'"
+                                   class="ml-2 mr-2">
+                                <v-icon v-if="playing">pause</v-icon>
+                                <v-icon v-else>play_arrow</v-icon>
+                            </v-btn>
+                            <v-btn text x-large icon aria-label="Play next" :disabled="noNextTrack">
+                                <v-icon @click="playNext">skip_next</v-icon>
+                            </v-btn>
+                        </div>
+                    </div>
+                </v-container>
             </v-container>
         </div>
     </v-expand-transition>
@@ -92,7 +113,7 @@
         &-content {
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            justify-content: flex-start;
             z-index: 10000;
         }
 

@@ -184,7 +184,7 @@
             </v-snackbar>
 
             <!-- FOOTER -->
-            <v-footer app height="36" style="z-index: 5;">
+            <v-footer app height="auto" style="z-index: 5;" class="pa-0">
                 <player></player>
             </v-footer>
         </v-app>

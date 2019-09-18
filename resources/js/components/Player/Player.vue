@@ -1,44 +1,56 @@
 <template>
-    <div class="player-wrapper">
-        <v-slider hide-details
-                  v-model="progress"
-                  :max="trackDuration"
-                  class="player-progress-bar"
-                  color="secondary"></v-slider>
-        <div class="player-content">
-            <div class="player-controls">
-                <v-btn text icon aria-label="Play previous" :disabled="noPreviousTrack">
-                    <v-icon @click="playPrevious">skip_previous</v-icon>
-                </v-btn>
-                <v-btn text icon :loading="loading" @click="togglePlay" :aria-label="playing ? 'Pause' : 'Play'">
-                    <v-icon v-if="playing">pause_circle_filled</v-icon>
-                    <v-icon v-else>play_circle_filled</v-icon>
-                </v-btn>
-                <v-btn text icon aria-label="Play next" :disabled="noNextTrack">
-                    <v-icon @click="playNext">skip_next</v-icon>
-                </v-btn>
+    <div class="footer-height">
+        <div class="player-wrapper">
+            <v-slider hide-details
+                      v-model="progress"
+                      :max="trackDuration"
+                      class="player-progress-bar"
+                      color="secondary"></v-slider>
+            <div class="player-content">
+                <div class="player-controls">
+                    <v-btn text icon aria-label="Play previous" :disabled="noPreviousTrack">
+                        <v-icon @click="playPrevious">skip_previous</v-icon>
+                    </v-btn>
+                    <v-btn text large icon :loading="loading" @click="togglePlay" :aria-label="playing ? 'Pause' : 'Play'">
+                        <v-icon v-if="playing">pause_circle_filled</v-icon>
+                        <v-icon v-else>play_circle_filled</v-icon>
+                    </v-btn>
+                    <v-btn text icon aria-label="Play next" :disabled="noNextTrack">
+                        <v-icon @click="playNext">skip_next</v-icon>
+                    </v-btn>
+                </div>
+                <v-container fluid class="pt-0 pb-0">
+                    <v-layout row wrap class="h-100">
+                        <v-img v-if="currentTrack"
+                               :src="$root.getSpotifyImage(currentTrack, 'medium')"
+                               height="50px"
+                               max-height="50kpx"
+                               max-width="50px"
+                               width="50px"
+                               contain
+                               aspect-ratio="1"
+                               style="z-index: -1"
+                               class="hidden-sm-and-up"></v-img>
+                        <v-flex xs9 class="flex-center pl-4 pr-4 player-track-text">
+                            <span class="subtitle-2">{{ title }}</span>
+                            <span class="grey--text">&nbsp;&nbsp;-&nbsp;&nbsp;</span>
+                            <span class="body-2">{{ artists }}</span>
+                        </v-flex>
+                        <v-flex xs3 class="flex-center pl-4 pr-2 hidden-xs-only">
+                            <v-slider v-model="volume"
+                                      hide-details
+                                      thumb-label
+                                      thumb-size="24"
+                                      min="0"
+                                      max="100"
+                                      prepend-icon="volume_up"
+                                      color="grey"></v-slider>
+                        </v-flex>
+                    </v-layout>
+                </v-container>
             </div>
-            <v-container fluid class="pt-0 pb-0">
-                <v-layout row wrap class="h-100">
-                    <v-flex xs9 class="flex-center pl-4 pr-4">
-                        <span class="subtitle-2">{{ title }}</span>
-                        <span class="grey--text">&nbsp;&nbsp;-&nbsp;&nbsp;</span>
-                        <span class="body-2">{{ artists }}</span>
-                    </v-flex>
-                    <v-flex xs3 class="flex-center pl-4 pr-2">
-                        <v-slider v-model="volume"
-                                  hide-details
-                                  thumb-label
-                                  thumb-size="24"
-                                  min="0"
-                                  max="100"
-                                  prepend-icon="volume_up"
-                                  color="grey"></v-slider>
-                    </v-flex>
-                </v-layout>
-            </v-container>
+            <spotify-player></spotify-player>
         </div>
-        <spotify-player></spotify-player>
     </div>
 </template>
 
@@ -104,32 +116,39 @@
 </script>
 
 <style lang="scss">
-    .player-wrapper {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
+    .footer-height {
+        height: 36px;
 
-        .player-progress-bar {
-            margin: 0;
+        .player-wrapper {
             position: absolute;
-            top: calc(-50% + 2px);
+            top: 0;
             left: 0;
             width: 100%;
+            height: 100%;
 
-            .v-slider {
+            .player-progress-bar {
                 margin: 0;
+                position: absolute;
+                top: calc(-50% + 2px);
+                left: 0;
+                width: 100%;
+
+                .v-slider {
+                    margin: 0;
+                }
             }
-        }
 
-        .player-content {
-            display: flex;
-
-            .player-controls {
-                min-width: 256px;
+            .player-content {
+                max-height: 100%;
+                height: 100%;
                 display: flex;
-                justify-content: center;
+
+                .player-controls {
+                    min-width: 256px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
             }
         }
     }
@@ -138,5 +157,28 @@
         display: flex;
         justify-content: center;
         align-items: center;
+    }
+
+    @media screen and (min-width: 0) and (max-width: 599px) {
+        .footer-height {
+            height: 50px;
+
+            .player-progress-bar {
+                top: calc(-50% + 10px) !important;
+            }
+
+            .player-content {
+                flex-direction: row-reverse;
+
+                .player-controls {
+                    min-width: 110px !important;
+                    flex: 0;
+                }
+
+                .player-track-text {
+                    justify-content: flex-start;
+                }
+            }
+        }
     }
 </style>

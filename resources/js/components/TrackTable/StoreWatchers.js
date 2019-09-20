@@ -23,7 +23,6 @@ const handleTrackQueueIndicators = function (payload) {
 
 const _removeExtraInfoFromTrack = function (track) {
     const clusterizerClass = app.isMobile ? MobileClusterizer : Clusterizer;
-    console.log(clusterizerClass, clusterizerClass._rowTitle);
     const trackElement = this.findElementByTrackId(track.id);
     trackElement.querySelector('.track-list-title').innerHTML = clusterizerClass._rowTitle(track.name);
 };

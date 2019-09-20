@@ -3,7 +3,6 @@ import app from "$components/app";
 
 export default {
     currentTrack() {
-        console.log('evaluated current track');
         return player.currentTrack;
     },
     playing() {

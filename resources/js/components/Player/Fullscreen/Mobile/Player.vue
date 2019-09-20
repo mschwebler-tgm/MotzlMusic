@@ -188,18 +188,18 @@
 
         #fullscreen-player-gradient-1, #fullscreen-player-gradient-2 {
             position: absolute;
-            top: -50vw;
+            top: -20vw;
             left: -50vw;
-            width: 200vw;
-            height: 160vw;
+            width: 230vw;
+            height: 190vw;
             animation: gradient-animation infinite ease-in-out;
         }
 
         #fullscreen-player-gradient-1 {
-            -webkit-animation-duration: 7s;
-            -moz-animation-duration: 7s;
-            -o-animation-duration: 7s;
-            animation-duration: 7s;
+            -webkit-animation-duration: 3s;
+            -moz-animation-duration: 3s;
+            -o-animation-duration: 3s;
+            animation-duration: 3s;
             -webkit-animation-direction: alternate-reverse;
             -moz-animation-direction: alternate-reverse;
             -o-animation-direction: alternate-reverse;
@@ -207,10 +207,10 @@
         }
 
         #fullscreen-player-gradient-2 {
-            -webkit-animation-duration: 5s;
-            -moz-animation-duration: 5s;
-            -o-animation-duration: 5s;
-            animation-duration: 5s;
+            -webkit-animation-duration: 4.5s;
+            -moz-animation-duration: 4.5s;
+            -o-animation-duration: 4.5s;
+            animation-duration: 4.5s;
             -webkit-animation-direction: alternate;
             -moz-animation-direction: alternate;
             -o-animation-direction: alternate;

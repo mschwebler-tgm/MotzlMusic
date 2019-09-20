@@ -1,3 +1,7 @@
+// TODO refactor this:
+// Mobile and desktop should have same end-elements (e.g. .track-list-title). Surrounding elements can differ.
+// This is important for store-watchers, which re-render parts of the table for queue-indicators, star-ratings etc.
+
 import StarRating from "../../../../components/_BaseComponents/StarRating";
 
 class Clusterizer {
@@ -96,25 +100,33 @@ class MobileClusterizer {
     }
 
     _generateHtmlRowContent(track) {
-        return this._rowImage(track) +
-            this._rowName(track) +
-            this._rowDuration(track) +
-            this._rowOptions();
+        return MobileClusterizer._rowImage(track) +
+            MobileClusterizer._rowName(track) +
+            MobileClusterizer._rowDuration(track) +
+            MobileClusterizer._rowOptions();
     }
 
-    _rowImage(track) {
+    static _rowImage(track) {
         return `<div class="track-list-image pa-1"><img src="${track.album.spotify_image_small}" alt="${track.name}"/></div>`;
     }
 
-    _rowName(track) {
-        return `<div class="track-list-name-and-artist pl-2 pr-3"><div class="track-name text-truncate">${track.name}</div><div class="track-artist caption font-weight-thin text-truncate">${track.artists.map(artist => artist.name).join(', ')}</div></div>`;
+    static _rowName(track) {
+        return `<div class="track-list-name-and-artist pl-2 pr-3"><div class="track-list-title">${MobileClusterizer._rowTitle(track.name)}</div><div class="track-artist caption font-weight-thin text-truncate">${track.artists.map(artist => artist.name).join(', ')}</div></div>`;
     }
 
-    _rowDuration(track) {
+    static _rowTitle(title, extraInfo) {
+        return `<div class="track-name text-truncate">${title} ${extraInfo || ''}</div>`;
+    }
+
+    static _rowDuration(track) {
         return `<div class="track-list-duration">&nbsp;<span class="font-weight-light">${track.duration_formatted}</span></div>`;
     }
 
-    _rowOptions() {
+    static _rowRating(track) {
+        // do nothing
+    }
+
+    static _rowOptions() {
         return `<div class="track-list-mobile-options"><span class="icon has-text-grey-light pointer track-options" title="More options"><i class="mdi mdi-dots-vertical mdi-24px track-options"></i></span></div>`;
     }
 }
@@ -132,4 +144,4 @@ function clusterizeTracksMobile(tracks, playingTrackId) {
 }
 
 export default clusterizeTracks;
-export {clusterizeTracksMobile, Clusterizer};
+export {clusterizeTracksMobile, Clusterizer, MobileClusterizer};

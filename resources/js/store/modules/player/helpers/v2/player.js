@@ -156,6 +156,10 @@ export class Player {
     }
 
     _playCurrentTrack() {
+        if (!this.currentTrack) {
+            return;
+        }
+
         this._playerClient.play(this.currentTrack);
         this._isPlaying = true;
         const currentTrack = this._currentTrackList[this._currentTrackIndex];

@@ -61,7 +61,7 @@
                             </v-layout>
                         </template>
                     </v-img>
-                    <v-btn icon fab absolute bottom right medium
+                    <v-btn fab absolute bottom right medium
                            v-if="!isPlaying"
                            @click="playPlaylist"
                            aria-label="Start playlist"
@@ -138,7 +138,7 @@
                 }))(error.response);
             },
             playPlaylist() {
-                player.playList(this.playlist.tracks);
+                player.playList(this.tracks);
             },
             initArrowListeners() {
                 const handleKeyDown = $event => {

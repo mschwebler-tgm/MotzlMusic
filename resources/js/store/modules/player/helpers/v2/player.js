@@ -209,6 +209,10 @@ export class Player {
         return this._currentTrackList.map(track => track.trackData);
     }
 
+    get trackListRaw() {
+        return this._currentTrackList;
+    }
+
     get queuedTracks() {
         return this._currentTrackList.filter(track => track.isQueued).map(track => track.trackData);
     }

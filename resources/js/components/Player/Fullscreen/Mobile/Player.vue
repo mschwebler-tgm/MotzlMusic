@@ -19,8 +19,8 @@
                 <v-container class="fullscreen-player-content h-100 pa-4">
                     <div class="mt-5">
                         <v-window class="fullscreen-player-track-window" v-model="activeTrackWindow" v-touch="{down: () => $emit('update:show', false)}">
-                            <v-window-item v-for="track in trackList" :key="track.id">
-                                <player-image-slide :track="track"></player-image-slide>
+                            <v-window-item v-for="trackItem in trackListRaw" :key="trackItem.trackData.id + '' + trackItem.isQueued">
+                                <player-image-slide :track="trackItem.trackData"></player-image-slide>
                             </v-window-item>
                         </v-window>
                         <div class="fullscreen-player-track-data mt-3">
@@ -133,8 +133,8 @@
                     this.$store.dispatch('tracks/rateTrack', {track: this.currentTrack, rating});
                 }
             },
-            trackList() {
-                return player.trackList;
+            trackListRaw() {
+                return player.trackListRaw;
             }
         }
     });

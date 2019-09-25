@@ -21,7 +21,7 @@
                     </div>
                 </div>
                 <div class="tools">
-                    <v-checkbox v-model="hideSingleTrackArtists" label="Hide artists with 1 track"></v-checkbox>
+                    <v-checkbox v-model="hideSingleTrackArtists" label="Hide artists with single track"></v-checkbox>
                     <span class="subheading">{{ artistCount }} Artist{{ artistCount > 1 ? 's' : ''}}</span>
                 </div>
                 <v-divider></v-divider>

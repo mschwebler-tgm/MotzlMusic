@@ -9,7 +9,8 @@ const theme = {
             accent: '#1D69A8',
             success: '#92D050',
             warning: '#A3A825',
-            error: '#F7615B'
+            error: '#F7615B',
+            spotify: '#1db954',
         },
         light: {
             primary: '#42A4F5',
@@ -17,7 +18,8 @@ const theme = {
             accent: '#1D69A8',
             success: '#92D050',
             warning: '#A3A825',
-            error: '#F7615B'
+            error: '#F7615B',
+            spotify: '#1db954',
         },
     },
     options: {

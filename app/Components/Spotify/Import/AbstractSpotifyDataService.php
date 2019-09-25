@@ -2,14 +2,14 @@
 
 namespace App\Components\Spotify\Import;
 
-use App\Components\Spotify\Api\SpotifyApi;
+use App\Components\Spotify\Api\UserBoundSpotifyApi;
 use App\Transformer\Transformable;
 use Illuminate\Support\Facades\Cache;
 
 abstract class AbstractSpotifyDataService
 {
-    /** @var SpotifyApi */
-    protected $spotifyApi;
+    /** @var UserBoundSpotifyApi */
+    protected $userBoundSpotifyApi;
     /** @var Transformable */
     protected $transformer;
 
@@ -38,7 +38,7 @@ abstract class AbstractSpotifyDataService
         $response = Cache::get($cacheKey);
         if (!$response) {
             $apiServiceMethod = $this->getApiServiceMethod();
-            $response = $this->spotifyApi->$apiServiceMethod(['limit' => $limit, 'offset' => $offset]);
+            $response = $this->userBoundSpotifyApi->$apiServiceMethod(['limit' => $limit, 'offset' => $offset]);
             Cache::put($cacheKey, $response, 3);
         }
 

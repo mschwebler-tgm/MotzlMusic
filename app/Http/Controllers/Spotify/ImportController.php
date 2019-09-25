@@ -21,7 +21,6 @@ class ImportController
 
     public function tracks(SpotifyTrackService $trackService)
     {
-        dd(2);
         return $trackService->paginate();
     }
 

@@ -13,7 +13,7 @@ class SpotifyAlbumImporter extends SpotifyImporter
             return;
         }
 
-        $spotifyAlbumsResponse = $this->spotifyApi->getAlbums($spotifyAlbumIds);
+        $spotifyAlbumsResponse = $this->userBoundSpotifyApi->getAlbums($spotifyAlbumIds);
         $spotifyAlbums = AlbumDTO::spotifyToModels($spotifyAlbumsResponse->albums);
         $spotifyAlbums = $this->setAlbumForAlbumTracks($spotifyAlbums);
         $spotifyTracks = $spotifyAlbums->pluck('tracks')->flatten();

@@ -17,10 +17,9 @@ class RefineArtistsJob implements ShouldQueue
     private $artistSpotifyIds;
     private $user;
 
-    public function __construct($artistSpotifyIds, User $user)
+    public function __construct($artistSpotifyIds)
     {
         $this->artistSpotifyIds = $artistSpotifyIds;
-        $this->user = $user;
     }
 
     /**
@@ -32,7 +31,6 @@ class RefineArtistsJob implements ShouldQueue
     {
         /** @var RefinementService $refinementService */
         $refinementService = app(RefinementService::class);
-        $refinementService->setSpotifyApiUser($this->user);
         $refinementService->refineArtists($this->artistSpotifyIds);
     }
 }

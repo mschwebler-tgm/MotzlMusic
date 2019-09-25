@@ -2,27 +2,21 @@
 
 namespace App\Components\Spotify\Refinement;
 
+use App\Components\Spotify\Api\SpotifyApi;
 use App\Components\Spotify\SpotifyDao;
 use App\DTOs\AlbumDTO;
 use App\DTOs\ArtistDTO;
 use App\DTOs\AudioFeatureDTO;
-use App\Components\Spotify\Api\SpotifyApi;
-use App\User;
 
 class RefinementService
 {
-    private $spotifyApi;
     private $spotifyDao;
+    private $spotifyApi;
 
     public function __construct(SpotifyApi $spotifyApi, SpotifyDao $spotifyDao)
     {
         $this->spotifyApi = $spotifyApi;
         $this->spotifyDao = $spotifyDao;
-    }
-
-    public function setSpotifyApiUser(User $user)
-    {
-        $this->spotifyApi->setApiUser($user);
     }
 
     public function refineAlbums($albumSpotifyIds)

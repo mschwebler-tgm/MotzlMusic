@@ -2,6 +2,7 @@
 
 namespace App\Components\Spotify\Import\Importers;
 
+use App\Components\Spotify\Api\UserBoundSpotifyApi;
 use App\Components\Spotify\Import\TrackImportService;
 use App\Exceptions\FailedSpotifyTokenRefreshException;
 use App\Components\Spotify\Api\SpotifyApi;
@@ -36,14 +37,15 @@ class ProcessSpotifyImportJob implements ShouldQueue
      */
     public function handle()
     {
-        $spotifyApi = app(SpotifyApi::class);
+        /** @var UserBoundSpotifyApi $spotifyApi */
+        $spotifyApi = app(UserBoundSpotifyApi::class);
         $spotifyApi->setApiUser($this->user);
 
         $trackImportService = app(TrackImportService::class);
         $trackImportService->setCurrentUser($this->user);
 
         $this->importer->setUser($this->user);
-        $this->importer->setSpotifyApi($spotifyApi);
+        $this->importer->setUserBoundSpotifyApi($spotifyApi);
         $this->importer->setTrackImportService($trackImportService);
         $this->importer->import($this->importOptions);
     }

@@ -173,7 +173,7 @@ return [
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Arcanedev\LogViewer\LogViewerServiceProvider::class,
 
-        App\Providers\SpotifyApiProvider::class,
+        App\Providers\UserBoundSpotifyApiProvider::class,
     ],
 
     /*

@@ -12,6 +12,7 @@ class UserBoundSpotifyApiProvider extends ServiceProvider
         $this->app->singleton(UserBoundSpotifyApi::class, function ($app) {
             $spotifyApi = new UserBoundSpotifyApi();
             $spotifyApi->setApiUser(apiUser());
+            $spotifyApi->refreshUserTokenIfNeeded();
             return $spotifyApi;
         });
     }

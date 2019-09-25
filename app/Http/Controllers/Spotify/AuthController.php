@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Spotify;
 
+use App\Components\Spotify\Api\UserBoundSpotifyApi;
 use App\Daos\UserDao;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
@@ -35,8 +36,8 @@ class AuthController extends Controller
         return redirect('/');
     }
 
-    public function getAccessToken(UserDao $userDao)
+    public function getAccessToken(UserBoundSpotifyApi $spotifyApi)
     {
-        return $userDao->getCurrentUsersAccessToken();
+        return $spotifyApi->getAccessToken();
     }
 }

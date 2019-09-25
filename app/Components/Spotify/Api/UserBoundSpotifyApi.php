@@ -87,4 +87,9 @@ class UserBoundSpotifyApi extends SpotifyWebAPI
             'spotify_token_expire' => Carbon::now()->addHour()->toDateTimeString()
         ]);
     }
+
+    public function getAccessToken()
+    {
+        return $this->accessToken;
+    }
 }

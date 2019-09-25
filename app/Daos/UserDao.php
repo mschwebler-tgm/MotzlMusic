@@ -49,11 +49,6 @@ class UserDao
         $user->save();
     }
 
-    public function getCurrentUsersAccessToken()
-    {
-        return apiUser()->spotify_access_token;
-    }
-
     public function updateName(User $user, $name)
     {
         $user->name = $name;

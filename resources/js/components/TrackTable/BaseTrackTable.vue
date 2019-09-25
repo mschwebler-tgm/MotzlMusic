@@ -132,7 +132,7 @@
             },
             handleTrackQueueIndicators(track) {
                 this.removeExtraInfoFromTrack(track);
-                player.queuedTracks.forEach((queuedTrack, index) => {
+                this.$store.getters['player/queuedTracks'].forEach((queuedTrack, index) => {
                     const trackTitleElement = this.findElementByTrackId(queuedTrack.id).querySelector('.track-list-title');
                     trackTitleElement.innerHTML = Clusterizer._rowTitle(queuedTrack.name, `[${index + 1}]`);
                 });
@@ -179,7 +179,7 @@
                 return this.tracks.length === 0 || !this.isInitialized;
             },
             playingTrackId() {
-                return player.currentTrackId;
+                return this.$store.getters['player/currentTrackId'];
             },
             tableId() {
                 return this.identifier + '-scrollArea';

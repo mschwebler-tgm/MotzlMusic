@@ -25,7 +25,7 @@
                     <span class="caption">{{ artists }}</span>
                 </v-flex>
                 <v-flex shrink class="pa-0 d-flex align-center" style="flex: 0 !important;">
-                    <v-progress-circular :value="progressPercent"></v-progress-circular>
+                    <v-progress-circular :value="playerProgressPercent"></v-progress-circular>
                 </v-flex>
             </v-flex>
         </v-layout>
@@ -33,18 +33,12 @@
 </template>
 
 <script>
-    import player from "$store/player/helpers/v2/player";
     import playerControlsMixin from "../Player/playerControlsMixin";
     import Vue from 'vue';
 
     export default Vue.extend({
         name: "PlayerControls",
         mixins: [playerControlsMixin],
-        computed: {
-            progressPercent() {
-                return player.progressPercent;
-            },
-        }
     });
 </script>
 

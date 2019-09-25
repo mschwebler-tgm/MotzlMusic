@@ -10,7 +10,6 @@
 <script>
     import Vue from "vue";
     import ReactiveRadarChart from "./Charts/ReactiveRadarChart";
-    import player from "$store/player/helpers/v2/player";
 
     export default {
         name: "AudioFeatures",
@@ -49,7 +48,7 @@
         },
         computed: {
             playingTrack() {
-                return player.currentTrack;
+                return this.$store.getters['player/currentTrack'];
             },
             focusedItems() {
                 return this.$store.getters['subContent/focusedItems'];

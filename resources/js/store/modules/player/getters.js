@@ -5,6 +5,9 @@ export default {
     currentTrack() {
         return player.currentTrack;
     },
+    currentTrackId() {
+        return player.currentTrackId;
+    },
     playing() {
         return player.isPlaying;
     },
@@ -36,7 +39,13 @@ export default {
     playerProgress() {
         return player.progress;
     },
+    playerProgressPercent() {
+        return player.progressPercent;
+    },
     durationFormatted() {
         return player.currentTrack ? player.currentTrack.duration_formatted : '-:-'
     },
+    queuedTracks() {
+        return player.queuedTracks;
+    }
 }

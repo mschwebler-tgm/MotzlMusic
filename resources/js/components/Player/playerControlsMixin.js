@@ -20,6 +20,7 @@ export default {
             artists: 'player/artists',
             albumCover: 'player/albumCover',
             playerProgress: 'player/playerProgress',
+            playerProgressPercent: 'player/playerProgressPercent',
             durationFormatted: 'player/durationFormatted',
         }),
         progress: {

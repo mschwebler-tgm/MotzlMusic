@@ -14,7 +14,7 @@ const handleTrackRatingChange = function (payload) {
 const handleTrackQueueIndicators = function (payload) {
     const clusterizerClass = app.isMobile ? MobileClusterizer : Clusterizer;
     _removeExtraInfoFromTrack.apply(this, [payload]);
-    const queuedTracks = player.queuedTracks;
+    const queuedTracks = app.$store.getters['player/queuedTracks'];
     queuedTracks.forEach((track, index) => {
         const trackTitleElement = this.findElementByTrackId(track.id).querySelector('.track-list-title');
         trackTitleElement.innerHTML = clusterizerClass._rowTitle(track.name, `[${index + 1}]`);

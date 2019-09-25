@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\Spotify;
+namespace App\Components\Spotify\Api;
 
 use App\Exceptions\FailedSpotifyTokenRefreshException;
 use App\Exceptions\NoUserTokenProvidedException;
@@ -11,7 +11,7 @@ use SpotifyWebAPI\Session;
 use SpotifyWebAPI\SpotifyWebAPI;
 use SpotifyWebAPI\SpotifyWebAPIException;
 
-class SpotifyApiService extends SpotifyWebAPI
+class SpotifyApi extends SpotifyWebAPI
 {
     /** @var User */
     private $user;

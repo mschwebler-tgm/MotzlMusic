@@ -3,14 +3,14 @@
 namespace App\Components\Spotify\Import\Importers;
 
 use App\Components\Spotify\Import\TrackImportService;
-use App\Service\Spotify\SpotifyApiService;
+use App\Components\Spotify\Api\SpotifyApi;
 use App\User;
 
 abstract class SpotifyImporter
 {
     protected $user;
-    /** @var SpotifyApiService */
-    protected $spotifyApiService;
+    /** @var SpotifyApi */
+    protected $spotifyApi;
     /** @var TrackImportService */
     protected $trackImportService;
 
@@ -20,8 +20,8 @@ abstract class SpotifyImporter
         $this->user = $user;
     }
 
-    public function setSpotifyApiService(SpotifyApiService $spotifyApiService) {
-        $this->spotifyApiService = $spotifyApiService;
+    public function setSpotifyApi(SpotifyApi $spotifyApi) {
+        $this->spotifyApi = $spotifyApi;
     }
 
     public function setTrackImportService(TrackImportService $trackImportService)

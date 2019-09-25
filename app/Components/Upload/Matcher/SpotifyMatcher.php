@@ -4,11 +4,11 @@ namespace App\Components\Upload\Matcher;
 
 use App\Components\Spotify\Models\Artist;
 use App\Components\Spotify\Models\Track;
-use App\Service\Spotify\SpotifyApiService;
+use App\Components\Spotify\Api\SpotifyApi;
 
 class SpotifyMatcher
 {
-    private $apiService;
+    private $spotifyApi;
 
     const IGNORED_STRINGS = [
         'official',
@@ -16,15 +16,15 @@ class SpotifyMatcher
     ];
     const LEVENSHTEIN_LIMIT = 10;
 
-    public function __construct(SpotifyApiService $apiService)
+    public function __construct(SpotifyApi $spotifyApi)
     {
-        $this->apiService = $apiService;
+        $this->spotifyApi = $spotifyApi;
     }
 
     public function getEstimatedSpotifyMatch(string $trackName)
     {
         $trackName = $this->cutDisturbingStrings($trackName);
-        $results = $this->apiService->search($trackName, 'track')->tracks->items;
+        $results = $this->spotifyApi->search($trackName, 'track')->tracks->items;
         if (empty($results)) {
             return null;
         }

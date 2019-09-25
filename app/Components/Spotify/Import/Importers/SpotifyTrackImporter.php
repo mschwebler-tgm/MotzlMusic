@@ -25,7 +25,7 @@ class SpotifyTrackImporter extends SpotifyImporter
         $offset = 0;
         $tracks = [];
         do {
-            $response = $this->spotifyApiService->getMySavedTracks(['limit' => $itemsPerPage, 'offset' => $offset]);
+            $response = $this->spotifyApi->getMySavedTracks(['limit' => $itemsPerPage, 'offset' => $offset]);
             $tracks = array_merge($response->items, $tracks);
             $offset += $itemsPerPage;
         } while (count($tracks) < $response->total);

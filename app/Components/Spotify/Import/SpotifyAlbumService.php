@@ -2,13 +2,13 @@
 
 namespace App\Components\Spotify\Import;
 
-use App\Service\Spotify\SpotifyApiService;
+use App\Components\Spotify\Api\SpotifyApi;
 
 class SpotifyAlbumService extends AbstractSpotifyDataService
 {
-    public function __construct(SpotifyApiService $apiService, AlbumTransformer $trackTransformer)
+    public function __construct(SpotifyApi $spotifyApi, AlbumTransformer $trackTransformer)
     {
-        $this->apiService = $apiService;
+        $this->spotifyApi = $spotifyApi;
         $this->transformer = $trackTransformer;
     }
 

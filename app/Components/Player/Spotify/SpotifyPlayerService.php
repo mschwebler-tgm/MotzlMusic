@@ -2,17 +2,17 @@
 
 namespace App\Components\Player\Spotify;
 
-use App\Service\Spotify\SpotifyApiService;
+use App\Components\Spotify\Api\SpotifyApi;
 use App\Track;
 
 class SpotifyPlayerService
 {
-    private $apiService;
+    private $spotifyApi;
     private $playerDao;
 
-    public function __construct(SpotifyApiService $apiService, SpotifyPlayerDao $playerDao)
+    public function __construct(SpotifyApi $spotifyApi, SpotifyPlayerDao $playerDao)
     {
-        $this->apiService = $apiService;
+        $this->spotifyApi = $spotifyApi;
         $this->playerDao = $playerDao;
     }
 
@@ -25,7 +25,7 @@ class SpotifyPlayerService
         /** @var Track $track */
         $track = $this->playerDao->getTrackById($trackId);
         $options = $this->generatePlayOptionsFor($track);
-        $this->apiService->play($deviceId, $options);
+        $this->spotifyApi->play($deviceId, $options);
     }
 
     /**

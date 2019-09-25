@@ -34,7 +34,7 @@ class SpotifyPlaylistImporter extends SpotifyImporter
     {
         $playlists = collect();
         foreach ($spotifyPlaylistIds as $id) {
-            $playlistResponse = $this->spotifyApiService->getPlaylist($id);
+            $playlistResponse = $this->spotifyApi->getPlaylist($id);
             $playlists->push(new Playlist($playlistResponse));
         }
         return $playlists;

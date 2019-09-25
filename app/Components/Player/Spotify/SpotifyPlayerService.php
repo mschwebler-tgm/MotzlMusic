@@ -2,7 +2,7 @@
 
 namespace App\Components\Player\Spotify;
 
-use App\Components\Spotify\Api\SpotifyApi;
+use App\Components\Spotify\Api\UserBoundSpotifyApi;
 use App\Track;
 
 class SpotifyPlayerService
@@ -10,9 +10,9 @@ class SpotifyPlayerService
     private $spotifyApi;
     private $playerDao;
 
-    public function __construct(SpotifyApi $spotifyApi, SpotifyPlayerDao $playerDao)
+    public function __construct(UserBoundSpotifyApi $userBoundSpotifyApi, SpotifyPlayerDao $playerDao)
     {
-        $this->spotifyApi = $spotifyApi;
+        $this->spotifyApi = $userBoundSpotifyApi;
         $this->playerDao = $playerDao;
     }
 

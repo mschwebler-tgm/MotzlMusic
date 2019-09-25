@@ -1,26 +1,30 @@
-import {Clusterizer} from "../../store/modules/myLibrary/helpers/clusterizeTracks";
+import {Clusterizer, MobileClusterizer} from "../../store/modules/myLibrary/helpers/clusterizeTracks";
 import player from "../../store/modules/player/helpers/v2/player";
+import app from "$components/app";
 
 const handleTrackRatingChange = function (payload) {
+    const clusterizerClass = app.isMobile ? MobileClusterizer : Clusterizer;
     const track = payload.track;
     const trackElement = this.findElementByTrackId(track.id);
     if (trackElement) {
-        trackElement.querySelector('.track-list-rating').innerHTML = Clusterizer._rowRating(track);
+        trackElement.querySelector('.track-list-rating').innerHTML = clusterizerClass._rowRating(track);
     }
 };
 
 const handleTrackQueueIndicators = function (payload) {
+    const clusterizerClass = app.isMobile ? MobileClusterizer : Clusterizer;
     _removeExtraInfoFromTrack.apply(this, [payload]);
     const queuedTracks = player.queuedTracks;
     queuedTracks.forEach((track, index) => {
         const trackTitleElement = this.findElementByTrackId(track.id).querySelector('.track-list-title');
-        trackTitleElement.innerHTML = Clusterizer._rowTitle(track.name, `[${index + 1}]`);
+        trackTitleElement.innerHTML = clusterizerClass._rowTitle(track.name, `[${index + 1}]`);
     });
 };
 
 const _removeExtraInfoFromTrack = function (track) {
+    const clusterizerClass = app.isMobile ? MobileClusterizer : Clusterizer;
     const trackElement = this.findElementByTrackId(track.id);
-    trackElement.querySelector('.track-list-title').innerHTML = Clusterizer._rowTitle(track.name);
+    trackElement.querySelector('.track-list-title').innerHTML = clusterizerClass._rowTitle(track.name);
 };
 
 const handlerByMutation = {

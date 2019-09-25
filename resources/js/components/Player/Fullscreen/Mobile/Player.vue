@@ -18,11 +18,23 @@
                 </div>
                 <v-container class="fullscreen-player-content h-100 pa-4">
                     <div class="mt-5">
-                        <v-window class="fullscreen-player-track-window" v-model="activeTrackWindow" v-touch="{down: () => $emit('update:show', false)}">
-                            <v-window-item v-for="track in trackList" :key="track.id">
-                                <player-image-slide :track="track"></player-image-slide>
-                            </v-window-item>
-                        </v-window>
+                        <div class="fullscreen-player-track-image">
+                            <transition name="fullscreen-player-track-image-transition" mode="out-in">
+                                <div class="fullscreen-player-track-image-container"
+                                     :key="currentTrack ? currentTrack.id : 'no-track'"
+                                     v-touch="{
+                                     right: playPrevious,
+                                     left: playNext,
+                                     }">
+                                    <v-img class="elevation-15"
+                                           :src="albumCover"
+                                           max-width="100%"
+                                           width="100%"
+                                           contain
+                                           aspect-ratio="1"></v-img>
+                                </div>
+                            </transition>
+                        </div>
                         <div class="fullscreen-player-track-data mt-3">
                             <div class="flex-grow-1">
                                 <span class="headline">{{ title }}</span>
@@ -76,13 +88,10 @@
 <script>
     import playerControlsMixin from "$components/components/Player/playerControlsMixin";
     import Vue from 'vue';
-    import player from "$store/player/helpers/v2/player";
-    import PlayerImageSlide from './PlayerImageSlide';
 
     export default Vue.extend({
         name: "PlayerFullscreenMobile",
         mixins: [playerControlsMixin],
-        components: {PlayerImageSlide},
         props: {
             show: Boolean,
             backgroundColor: {
@@ -94,19 +103,6 @@
                 type: String,
                 default: '#0065a8',
             },
-        },
-        data() {
-            return {
-                activeTrackWindow: null,
-            }
-        },
-        watch: {
-            activeTrackWindow(index) {
-                player.playTrackIndex(index);
-            },
-            'currentTrack.id'() {
-                this.activeTrackWindow = player.currentTrackIndex;
-            }
         },
         computed: {
             staticGradient() {
@@ -133,9 +129,6 @@
                     this.$store.dispatch('tracks/rateTrack', {track: this.currentTrack, rating});
                 }
             },
-            trackList() {
-                return player.trackList;
-            }
         }
     });
 </script>
@@ -163,7 +156,12 @@
             z-index: 10000;
         }
 
-        &-track-data{
+        &-track-image-container {
+            display: flex;
+            justify-content: center;
+        }
+
+        &-track-data {
             display: flex;
             justify-content: space-between;
         }
@@ -190,18 +188,18 @@
 
         #fullscreen-player-gradient-1, #fullscreen-player-gradient-2 {
             position: absolute;
-            top: -50vw;
+            top: -20vw;
             left: -50vw;
-            width: 200vw;
-            height: 160vw;
+            width: 230vw;
+            height: 190vw;
             animation: gradient-animation infinite ease-in-out;
         }
 
         #fullscreen-player-gradient-1 {
-            -webkit-animation-duration: 7s;
-            -moz-animation-duration: 7s;
-            -o-animation-duration: 7s;
-            animation-duration: 7s;
+            -webkit-animation-duration: 3s;
+            -moz-animation-duration: 3s;
+            -o-animation-duration: 3s;
+            animation-duration: 3s;
             -webkit-animation-direction: alternate-reverse;
             -moz-animation-direction: alternate-reverse;
             -o-animation-direction: alternate-reverse;
@@ -209,10 +207,10 @@
         }
 
         #fullscreen-player-gradient-2 {
-            -webkit-animation-duration: 5s;
-            -moz-animation-duration: 5s;
-            -o-animation-duration: 5s;
-            animation-duration: 5s;
+            -webkit-animation-duration: 4.5s;
+            -moz-animation-duration: 4.5s;
+            -o-animation-duration: 4.5s;
+            animation-duration: 4.5s;
             -webkit-animation-direction: alternate;
             -moz-animation-direction: alternate;
             -o-animation-direction: alternate;

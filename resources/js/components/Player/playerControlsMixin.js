@@ -1,4 +1,5 @@
 import player from '$store/player/helpers/v2/player';
+import { mapGetters } from 'vuex'
 
 export default {
     data() {
@@ -8,37 +9,19 @@ export default {
         }
     },
     computed: {
-        playing() {
-            return player.isPlaying;
-        },
-        trackDuration() {
-            return this.currentTrack ? this.currentTrack.duration : 0;
-        },
-        noNextTrack() {
-            return !player.canPlayNext;
-        },
-        noPreviousTrack() {
-            return !player.canPlayPrevious;
-        },
-        loading() {
-            return player.isLoading;
-        },
-        currentTrack() {
-            return player.currentTrack;
-        },
-        title() {
-            return this.currentTrack ? this.currentTrack.name : 'No track';
-        },
-        artists() {
-            return this.currentTrack ? this.currentTrack.artists.map(artist => artist.name).join(', ') : '-';
-        },
-        albumCover() {
-            if (!this.currentTrack || !this.currentTrack.album) {
-                return window.playlistFallback;
-            }
-
-            return this.$root.getSpotifyImage(this.currentTrack.album, 'small');
-        },
+        ...mapGetters({
+            currentTrack: 'player/currentTrack',
+            playing: 'player/playing',
+            trackDuration: 'player/trackDuration',
+            noNextTrack: 'player/noNextTrack',
+            noPreviousTrack: 'player/noPreviousTrack',
+            loading: 'player/loading',
+            title: 'player/title',
+            artists: 'player/artists',
+            albumCover: 'player/albumCover',
+            playerProgress: 'player/playerProgress',
+            durationFormatted: 'player/durationFormatted',
+        }),
         progress: {
             get() {
                 return this.progressMs
@@ -48,12 +31,6 @@ export default {
                 this.progressMs = milliseconds;
                 player.seek(milliseconds).then(this.setProgressInterval);
             }
-        },
-        playerProgress() {
-            return player.progress;
-        },
-        durationFormatted() {
-            return this.currentTrack ? this.currentTrack.duration_formatted : '-:-'
         },
         progressFormatted() {
             let seconds = Math.floor(this.progressMs / 1000);

@@ -156,6 +156,10 @@ export class Player {
     }
 
     _playCurrentTrack() {
+        if (!this.currentTrack) {
+            return;
+        }
+
         this._playerClient.play(this.currentTrack);
         this._isPlaying = true;
         const currentTrack = this._currentTrackList[this._currentTrackIndex];
@@ -207,6 +211,10 @@ export class Player {
 
     get trackList() {
         return this._currentTrackList.map(track => track.trackData);
+    }
+
+    get trackListRaw() {
+        return this._currentTrackList;
     }
 
     get queuedTracks() {

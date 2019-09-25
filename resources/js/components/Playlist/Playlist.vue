@@ -21,23 +21,27 @@
             <div class="hidden-sm-and-down">
                 <div class="d-flex pa-3">
                     <v-img
-                        :src="$root.getSpotifyImage(playlist, 'medium')"
-                        :lazy-src="$root.getSpotifyImage(playlist, 'small')"
-                        aspect-ratio="1"
-                        class="grey lighten-2 playlist-image">
+                            :src="$root.getSpotifyImage(playlist, 'medium')"
+                            :lazy-src="$root.getSpotifyImage(playlist, 'small')"
+                            aspect-ratio="1"
+                            class="grey lighten-2 playlist-image">
                         <template v-slot="placeholder">
                             <v-layout
-                                fill-height
-                                align-center
-                                justify-center
-                                ma-0>
+                                    fill-height
+                                    align-center
+                                    justify-center
+                                    ma-0>
                                 <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
                             </v-layout>
                         </template>
                     </v-img>
-                    <div class="playlist-name pa-3 relative flex-grow-1">
-                        <h1 class="display-1 font-weight-light">{{ playlist.name }}</h1>
-                        <h2 class="subheading">{{ playlistType }}</h2>
+                    <div class="playlist-name pa-3 pt-0 relative flex-grow-1">
+                        <h1 class="display-3 font-weight-thin">{{ playlist.name }}</h1>
+                        <div>
+                            <v-chip :color="playlistType">
+                                {{ playlistTypeLabel }}
+                            </v-chip>
+                        </div>
                         <playlist-actions :playlist-id="id"></playlist-actions>
                     </div>
                 </div>
@@ -46,17 +50,17 @@
             <div class="hidden-md-and-up">
                 <div class="relative">
                     <v-img
-                        :src="$root.getSpotifyImage(playlist, 'medium')"
-                        :lazy-src="$root.getSpotifyImage(playlist, 'small')"
-                        aspect-ratio="1"
-                        min-width="100%"
-                        class="grey lighten-2 playlist-image">
+                            :src="$root.getSpotifyImage(playlist, 'medium')"
+                            :lazy-src="$root.getSpotifyImage(playlist, 'small')"
+                            aspect-ratio="1"
+                            min-width="100%"
+                            class="grey lighten-2 playlist-image">
                         <template v-slot="placeholder">
                             <v-layout
-                                fill-height
-                                align-center
-                                justify-center
-                                ma-0>
+                                    fill-height
+                                    align-center
+                                    justify-center
+                                    ma-0>
                                 <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
                             </v-layout>
                         </template>
@@ -77,8 +81,8 @@
                     <div class="pt-2 playlist-header-mobile">
                         <img src="/images/spotify_black.png" height="30" width="30" alt="spotify">
                         <div class="flex-column pl-2 flex-1">
-                            <div class="body-2 font-weight-regular">Spotify Playlist</div>
-                            <div class="caption font-weight-thin">5 Tracks</div>
+                            <div class="body-2 font-weight-regular">{{ playlistTypeLabel }}</div>
+                            <div class="caption font-weight-thin">{{ tracks.length }} Tracks</div>
                         </div>
                         <playlist-actions :playlist-id="id"></playlist-actions>
                     </div>
@@ -186,6 +190,13 @@
             },
             playlistType() {
                 if (this.playlist.spotify_id) {
+                    return 'spotify';
+                }
+
+                return 'playlist';
+            },
+            playlistTypeLabel() {
+                if (this.playlist.spotify_id) {
                     return 'Spotify Playlist';
                 }
 
@@ -224,7 +235,7 @@
     .playlist-name {
         display: flex;
         flex-direction: column;
-        justify-content: flex-end;
+        justify-content: space-between;
         border-bottom: 1px solid rgba(0, 0, 0, .12);
     }
 

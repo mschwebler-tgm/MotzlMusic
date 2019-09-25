@@ -61,7 +61,7 @@
 <style scoped>
     .playlist-actions {
         position: absolute;
-        bottom: 0;
+        bottom: 12px;
         right: 0;
         display: flex;
     }

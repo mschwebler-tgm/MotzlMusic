@@ -50,6 +50,7 @@ const app = new Vue({
                 callback: () => this.snackbar.show = false,
                 color: undefined,
             },
+            subContentEditModeActive: false,
         }
     },
     created() {

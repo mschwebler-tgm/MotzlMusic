@@ -151,7 +151,7 @@
             <v-content class="content-container">
                 <v-container fluid grid-list-xl class="h-100">
                     <v-layout row wrap class="h-100">
-                        <v-flex xs12 md12 lg12 xl9 class="xs-p0" style="max-height: 100%">
+                        <v-flex xs12 md12 lg12 xl9 class="xs-p0" style="max-height: 100%" :class="{'main-content-edit-mode': $root.subContentEditModeActive}">
                             <component :is="$root.mainContentHeaderComponent"></component>
                             <!-- Main Content -->
                             <div class="main-content pb-4">
@@ -292,6 +292,21 @@
         &::-webkit-scrollbar {
             display: none;
         }
+    }
+
+    .main-content-edit-mode {
+        filter: blur(5px);
+        position: relative;
+    }
+
+    .main-content-edit-mode::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: 0;
+        min-width: 100%;
+        min-height: 200%;
+        background-color: rgba(255, 255, 255, 0.1);
     }
 
     @keyframes bounce-in {

@@ -18,21 +18,12 @@
         </v-flex>
         <v-flex grow fill-height>
             <v-layout column class="fill-height">
-                <v-flex shrink class="pt-0">
+                <v-flex v-for="(content, index) in subContent"
+                        :key="content.component"
+                        shrink
+                        :class="{'pt-0': index === 0}">
                     <v-card>
-                        <audio-features></audio-features>
-                        <v-overlay :value="$root.subContentEditModeActive" absolute color="primary"></v-overlay>
-                    </v-card>
-                </v-flex>
-                <v-flex shrink>
-                    <v-card>
-                        <player-controls></player-controls>
-                        <v-overlay :value="$root.subContentEditModeActive" absolute color="primary"></v-overlay>
-                    </v-card>
-                </v-flex>
-                <v-flex shrink>
-                    <v-card>
-                        <track-info></track-info>
+                        <component :is="content.component"></component>
                         <v-overlay :value="$root.subContentEditModeActive" absolute color="primary"></v-overlay>
                     </v-card>
                 </v-flex>
@@ -48,7 +39,22 @@
 
     export default {
         name: "SubContent",
-        components: {TrackInfo, PlayerControls, AudioFeatures}
+        components: {TrackInfo, PlayerControls, AudioFeatures},
+        data() {
+            return {
+                subContent: [
+                    {
+                        component: 'audio-features',
+                    },
+                    {
+                        component: 'player-controls',
+                    },
+                    {
+                        component: 'track-info',
+                    },
+                ],
+            }
+        },
     }
 </script>
 

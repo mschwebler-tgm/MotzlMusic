@@ -14,7 +14,7 @@ class AddSubContentConfigurationToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('sub_content', 16383)->nullable();
+            $table->text('sub_content')->nullable();
         });
     }
 

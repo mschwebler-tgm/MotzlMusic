@@ -42,8 +42,13 @@ class Track extends Model
 
     public function rating()
     {
-        return $this->hasOne(UserTrackRating::class)
-            ->where('user_id', '=', apiUser()->id);
+        $rating = $this->hasOne(UserTrackRating::class);
+        $user = apiUser();
+        if ($user) {  // for ide-helper
+            $rating->where('user_id', '=', apiUser()->id);
+        }
+
+        return $rating;
     }
 
     /**
@@ -53,8 +58,11 @@ class Track extends Model
     public function scopeOfCurrentUser($query)
     {
         return $query->whereHas('owningUsers', function ($query) {
-            /** @var $query Builder */
-            $query->where('id', apiUser()->id);
+            $user = apiUser();
+            if ($user) {  // for ide-helper
+                /** @var $query Builder */
+                $query->where('id', apiUser()->id);
+            }
         });
     }
 

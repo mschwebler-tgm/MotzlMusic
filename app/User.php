@@ -5,6 +5,7 @@ namespace App;
 use App\Components\UserSettings\UserSettings;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 use Laravel\Passport\HasApiTokens;
 
 /**
@@ -57,7 +58,7 @@ class User extends Authenticatable implements HasTracks
 
     public function getMp3StoragePath()
     {
-        return snake_case("mp3s/{$this->name}");
+        return Str::snake("mp3s/{$this->name}");
     }
 
     public function tracks()

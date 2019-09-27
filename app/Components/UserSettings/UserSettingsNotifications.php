@@ -2,6 +2,8 @@
 
 namespace App\Components\UserSettings;
 
+use Illuminate\Support\Str;
+
 class UserSettingsNotifications
 {
     private $uploads;
@@ -28,7 +30,7 @@ class UserSettingsNotifications
     {
         $settings = [];
         foreach (get_object_vars($this) as $key => $setting) {
-            $settings[snake_case($key)] = $setting;
+            $settings[Str::snake($key)] = $setting;
         }
 
         return $settings;

@@ -3,6 +3,8 @@
 namespace App\Service;
 
 
+use Illuminate\Support\Str;
+
 class GenericTransformer
 {
     private $objectToTransform;
@@ -29,7 +31,7 @@ class GenericTransformer
 
     private function pushPropFromObject(&$result, $objectToTransform, $propName, $propKeyOverwrite = null)
     {
-        if (str_contains($propName, '.')) {
+        if (Str::contains($propName, '.')) {
             $nestedPropName = $this->getFirstNestedProp($propName);
             if (!$propKeyOverwrite) {
                 $this->assureResultKey($result, $nestedPropName);

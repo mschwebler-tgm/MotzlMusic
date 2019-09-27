@@ -5,6 +5,7 @@ namespace App\Components\Upload\Matcher;
 use App\Components\Spotify\Models\Artist;
 use App\Components\Spotify\Models\Track;
 use App\Components\Spotify\Api\SpotifyApi;
+use Illuminate\Support\Str;
 
 class SpotifyMatcher
 {
@@ -50,7 +51,7 @@ class SpotifyMatcher
         };
 
         foreach ($parenthesises as $parenthesis) {
-            if (str_contains($parenthesis, self::IGNORED_STRINGS)) {
+            if (Str::contains($parenthesis, self::IGNORED_STRINGS)) {
                 $trackName = str_replace($parenthesis, '', $trackName);
             };
         }
@@ -64,10 +65,10 @@ class SpotifyMatcher
         $inputTrackName = $this->removeArtistFromName($inputTrackName, $spotifyTrack->artists->first());
         $spotifyTrackName = $this->unifyTrackName($spotifyTrack->name);
 
-        if (str_contains($inputTrackName, $spotifyTrackName)) {
+        if (Str::contains($inputTrackName, $spotifyTrackName)) {
             return true;
         }
-        if (str_contains($spotifyTrackName, $inputTrackName)) {
+        if (Str::contains($spotifyTrackName, $inputTrackName)) {
             return true;
         }
 

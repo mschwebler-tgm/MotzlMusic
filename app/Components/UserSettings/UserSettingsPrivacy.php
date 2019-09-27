@@ -2,6 +2,8 @@
 
 namespace App\Components\UserSettings;
 
+use Illuminate\Support\Str;
+
 class UserSettingsPrivacy
 {
     const PROFILE_VISIBILITY_OPTIONS = ['everybody', 'friends', 'nobody'];
@@ -45,7 +47,7 @@ class UserSettingsPrivacy
     {
         $settings = [];
         foreach (get_object_vars($this) as $key => $setting) {
-            $settings[snake_case($key)] = $setting;
+            $settings[Str::snake($key)] = $setting;
         }
 
         return $settings;

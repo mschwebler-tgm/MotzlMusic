@@ -46,6 +46,18 @@
 </template>
 
 <script>
+    const defaultSubContent = [
+        {
+            component: 'audio-features',
+        },
+        {
+            component: 'player-controls',
+        },
+        {
+            component: 'track-info',
+        },
+    ];
+
     import AudioFeatures from "./Components/AudioFeatures";
     import PlayerControls from "./Components/PlayerControls";
     import TrackInfo from "./Components/TrackInfo";
@@ -56,17 +68,17 @@
         components: {TrackInfo, PlayerControls, AudioFeatures, Container, Draggable},
         data() {
             return {
-                subContent: [
-                    {
-                        component: 'audio-features',
-                    },
-                    {
-                        component: 'player-controls',
-                    },
-                    {
-                        component: 'track-info',
-                    },
-                ],
+                subContent: JSON.parse(localStorage.getItem('subContent')) || [],
+            }
+        },
+        created() {
+            if (!localStorage.getItem('subContent')) {
+                this.subContent = defaultSubContent;
+            }
+        },
+        watch: {
+            subContent(content) {
+                localStorage.setItem('subContent', JSON.stringify(defaultSubContent));
             }
         },
         methods: {

@@ -40,7 +40,7 @@ const app = new Vue({
                 data: {},
             },
             mainContentHeaderComponent: MainContentHeaders.DEFAULT,
-            user: null,
+            user: window.user,
             isTouch: false,
             isMobile: screen.width < 600,
             snackbar: {

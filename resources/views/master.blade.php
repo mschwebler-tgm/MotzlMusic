@@ -29,6 +29,7 @@
 
         <script>
             window.playlistFallback = '{{ env('PLAYLIST_FALLBACK', '/images/playlistFallback.jpeg') }}';
+            window.currentUser = {!! $user !!};
         </script>
         <!-- Fonts -->
         <link href="/fonts/nunito/nunito.css" rel="stylesheet" type="text/css">

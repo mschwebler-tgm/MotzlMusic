@@ -43,7 +43,11 @@ class User extends Authenticatable implements HasTracks
         'password',
         'remember_token',
         'spotify_access_token',
-        'spotify_refresh_token'
+        'spotify_refresh_token',
+        'spotify_token_expire',
+        'email_verified_at',
+        'created_at',
+        'updated_at',
     ];
 
     protected $casts = [

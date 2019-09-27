@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Transformer\UserTransformer;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
@@ -12,9 +11,9 @@ class HomeController extends Controller
         $this->middleware('auth');
     }
 
-    public function index(UserTransformer $transformer)
+    public function index()
     {
-        $user = json_encode($transformer->transform(Auth::user()));
+        $user = json_encode(Auth::user());
         return view('master')->with(['user' => $user]);
     }
 
@@ -25,6 +24,6 @@ class HomeController extends Controller
             return redirect('/login');
         }
 
-        return view('master')->with(['user' => $user]);
+        return view('master')->with(['user' => json_encode($user)]);
     }
 }

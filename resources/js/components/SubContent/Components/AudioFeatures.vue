@@ -9,7 +9,7 @@
 
 <script>
     import Vue from "vue";
-    import ReactiveRadarChart from "./Charts/ReactiveRadarChart";
+    import ReactiveRadarChart from "../Charts/ReactiveRadarChart";
 
     export default {
         name: "AudioFeatures",

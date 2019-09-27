@@ -1,7 +1,7 @@
 <template>
     <div class="d-flex">
         <v-flex shrink class="pa-0" style="flex: 0 !important;">
-            <v-img :src="albumCover" contain width="150" height="150" :alt="albumDate"></v-img>
+            <v-img :src="albumCover" contain width="150" height="150" :alt="albumName"></v-img>
         </v-flex>
         <v-flex grow class="d-flex pl-4 justify-center flex-column">
             <div style="max-width: 180px;">

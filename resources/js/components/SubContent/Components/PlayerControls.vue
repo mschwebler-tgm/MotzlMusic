@@ -33,7 +33,7 @@
 </template>
 
 <script>
-    import playerControlsMixin from "../Player/playerControlsMixin";
+    import playerControlsMixin from "../../Player/playerControlsMixin";
     import Vue from 'vue';
 
     export default Vue.extend({

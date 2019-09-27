@@ -199,7 +199,7 @@
 
 <script>
     import Player from "../Player/Player";
-    import SubContent from "./SubContent";
+    import SubContent from "../SubContent/SubContent";
     import StatusInfo from "./StatusInfo/StatusInfo";
     import MainContentHeaderDefault from "./MainContentHeader/MainContentHeaderDefault";
     import MainContentHeaderMyLibraryNav from "./MainContentHeader/MainContentHeaderMyLibraryNav";

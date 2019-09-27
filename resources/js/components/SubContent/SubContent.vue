@@ -19,18 +19,18 @@
         <v-flex grow fill-height>
             <v-layout column class="fill-height">
                 <v-flex shrink class="pt-0">
-                    <v-card class="relative">
+                    <v-card>
                         <audio-features></audio-features>
                         <v-overlay :value="$root.subContentEditModeActive" absolute color="primary"></v-overlay>
                     </v-card>
                 </v-flex>
-                <v-flex shrink class="relative">
+                <v-flex shrink>
                     <v-card>
                         <player-controls></player-controls>
                         <v-overlay :value="$root.subContentEditModeActive" absolute color="primary"></v-overlay>
                     </v-card>
                 </v-flex>
-                <v-flex class="relative">
+                <v-flex shrink>
                     <v-card>
                         <track-info></track-info>
                         <v-overlay :value="$root.subContentEditModeActive" absolute color="primary"></v-overlay>
@@ -42,9 +42,9 @@
 </template>
 
 <script>
-    import AudioFeatures from "../SubContent/AudioFeatures";
-    import PlayerControls from "../SubContent/PlayerControls";
-    import TrackInfo from "../SubContent/TrackInfo";
+    import AudioFeatures from "./Components/AudioFeatures";
+    import PlayerControls from "./Components/PlayerControls";
+    import TrackInfo from "./Components/TrackInfo";
 
     export default {
         name: "SubContent",

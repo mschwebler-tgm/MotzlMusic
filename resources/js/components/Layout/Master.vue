@@ -305,17 +305,17 @@
     }
 
     .main-content-wrapper.editing {
-        filter: blur(5px);
+        filter: blur(10px);
     }
 
     .main-content-edit-mode {
-        filter: blur(5px);
         position: absolute;
         top: -50%;
         left: 0;
-        min-width: 100%;
+        min-width: 200%;
         min-height: 200%;
-        background-color: rgba(255, 255, 255, 0.1);
+        background-color: var(--v-primary-lighten3);
+        opacity: .1;
         z-index: 5;
     }
 

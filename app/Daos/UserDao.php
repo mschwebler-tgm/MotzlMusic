@@ -56,4 +56,11 @@ class UserDao
 
         return $user->name;
     }
+
+    public function updateSubContent(array $subContent)
+    {
+        $user = apiUser();
+        $user->sub_content = $subContent;
+        $user->save();
+    }
 }

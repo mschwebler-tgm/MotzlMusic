@@ -68,7 +68,7 @@
         components: {TrackInfo, PlayerControls, AudioFeatures, Container, Draggable},
         data() {
             return {
-                subContent: JSON.parse(localStorage.getItem('subContent')) || [],
+                subContent: this.$root.user.sub_content || JSON.parse(localStorage.getItem('subContent')) || [],
             }
         },
         created() {
@@ -79,7 +79,8 @@
         watch: {
             subContent(content) {
                 localStorage.setItem('subContent', JSON.stringify(content));
-            }
+                this.saveSubContent(content);
+            },
         },
         methods: {
             moveContent(dropResult) {
@@ -94,6 +95,9 @@
                 }
                 array.splice(newIndex, 0, array.splice(oldIndex, 1)[0]);
             },
+            saveSubContent(subContent) {
+                axios.put('/api/my/subContent', {subContent})
+            }
         }
     }
 </script>

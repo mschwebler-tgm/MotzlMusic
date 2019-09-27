@@ -72,7 +72,7 @@
             }
         },
         created() {
-            if (!this.subContent) {
+            if (!this.subContent || this.subContent.length === 0) {
                 this.subContent = defaultSubContent;
             }
         },

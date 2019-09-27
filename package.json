@@ -31,6 +31,7 @@
         "sass": "^1.17.0",
         "sass-loader": "^7.1.0",
         "vue": "2.6.10",
+        "vue-smooth-dnd": "^0.8.0",
         "vue-template-compiler": "2.6.10"
     },
     "dependencies": {

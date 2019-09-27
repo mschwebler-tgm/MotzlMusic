@@ -1,7 +1,10 @@
 <?php
 
+use App\User;
+use Illuminate\Support\Arr;
+
 /**
- * @return \App\User|null
+ * @return User|null
  */
 function apiUser() {
     return auth()->guard('api')->user();
@@ -14,4 +17,8 @@ function formatDuration($milliseconds) {
     $seconds = $seconds < 10 ? "0$seconds" : $seconds;
 
     return "$minutes:$seconds";
+}
+
+function array_get($array, $key, $default = null) {
+    return Arr::get($array, $key, $default);
 }

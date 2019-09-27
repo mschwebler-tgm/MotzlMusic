@@ -72,7 +72,7 @@
             }
         },
         created() {
-            if (!localStorage.getItem('subContent')) {
+            if (!this.subContent) {
                 this.subContent = defaultSubContent;
             }
         },

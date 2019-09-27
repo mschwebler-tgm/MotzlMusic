@@ -151,7 +151,13 @@
             <v-content class="content-container">
                 <v-container fluid grid-list-xl class="h-100">
                     <v-layout row wrap class="h-100">
-                        <v-flex xs12 md12 lg12 xl9 class="xs-p0" style="max-height: 100%" :class="{'main-content-edit-mode': $root.subContentEditModeActive}">
+                        <v-flex xs12 md12 lg12 xl9
+                                class="xs-p0 relative main-content-wrapper"
+                                :class="{editing: $root.subContentEditModeActive}"
+                                style="max-height: 100%">
+                            <v-fade-transition>
+                                <div class="main-content-edit-mode" v-show="$root.subContentEditModeActive"></div>
+                            </v-fade-transition>
                             <component :is="$root.mainContentHeaderComponent"></component>
                             <!-- Main Content -->
                             <div class="main-content pb-4">
@@ -294,19 +300,23 @@
         }
     }
 
-    .main-content-edit-mode {
-        filter: blur(5px);
-        position: relative;
+    .main-content-wrapper {
+        filter: blur(0);
     }
 
-    .main-content-edit-mode::before {
-        content: "";
+    .main-content-wrapper.editing {
+        filter: blur(5px);
+    }
+
+    .main-content-edit-mode {
+        filter: blur(5px);
         position: absolute;
         top: -50%;
         left: 0;
         min-width: 100%;
         min-height: 200%;
         background-color: rgba(255, 255, 255, 0.1);
+        z-index: 5;
     }
 
     @keyframes bounce-in {

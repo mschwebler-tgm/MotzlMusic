@@ -7,7 +7,7 @@
                         <template v-slot:activator="{ on }">
                             <v-btn text icon v-on="on"
                                    @click="$root.subContentEditModeActive = !$root.subContentEditModeActive"
-                                   aria-label="Settings" class="mt-2 mb-3" >
+                                   aria-label="Settings" class="mt-2 mb-3">
                                 <v-icon>settings</v-icon>
                             </v-btn>
                         </template>
@@ -19,17 +19,20 @@
         <v-flex grow fill-height>
             <v-layout column class="fill-height">
                 <v-flex shrink class="pt-0">
-                    <v-card>
+                    <v-card class="relative">
                         <audio-features></audio-features>
+                        <v-overlay :value="$root.subContentEditModeActive" absolute color="primary"></v-overlay>
                     </v-card>
                 </v-flex>
-                <v-flex shrink>
+                <v-flex shrink class="relative">
                     <v-card>
                         <player-controls></player-controls>
+                        <v-overlay :value="$root.subContentEditModeActive" absolute color="primary"></v-overlay>
                     </v-card>
                 </v-flex>
-                <v-flex>
+                <v-flex class="relative">
                     <track-info></track-info>
+                    <v-overlay :value="$root.subContentEditModeActive" absolute color="primary"></v-overlay>
                 </v-flex>
             </v-layout>
         </v-flex>

@@ -24,7 +24,7 @@
                         <v-flex shrink :class="{'pt-0': index === 0}">
                             <v-card>
                                 <component :is="content.component"></component>
-                                <v-overlay :value="$root.subContentEditModeActive" absolute color="primary"></v-overlay>
+                                <v-overlay :value="$root.subContentEditModeActive" class="move-cursor" absolute color="primary"></v-overlay>
                             </v-card>
                         </v-flex>
                     </Draggable>
@@ -36,7 +36,7 @@
                             :class="{'pt-0': index === 0}">
                         <v-card>
                             <component :is="content.component"></component>
-                            <v-overlay :value="$root.subContentEditModeActive" absolute color="primary"></v-overlay>
+                            <v-overlay :value="$root.subContentEditModeActive" class="move-cursor" absolute color="primary"></v-overlay>
                         </v-card>
                     </v-flex>
                 </template>

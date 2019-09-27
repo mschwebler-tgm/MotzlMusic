@@ -18,7 +18,7 @@
         </v-flex>
         <v-flex grow fill-height>
             <v-layout column class="fill-height">
-                <Container @drop="moveContent">
+                <Container @drop="moveContent" lock-axis="y" v-if="$root.subContentEditModeActive">
                     <Draggable v-for="(content, index) in subContent"
                                :key="content.component">
                         <v-flex shrink :class="{'pt-0': index === 0}">
@@ -29,6 +29,17 @@
                         </v-flex>
                     </Draggable>
                 </Container>
+                <template v-else>
+                    <v-flex v-for="(content, index) in subContent"
+                            :key="content.component"
+                            shrink
+                            :class="{'pt-0': index === 0}">
+                        <v-card>
+                            <component :is="content.component"></component>
+                            <v-overlay :value="$root.subContentEditModeActive" absolute color="primary"></v-overlay>
+                        </v-card>
+                    </v-flex>
+                </template>
             </v-layout>
         </v-flex>
     </v-layout>

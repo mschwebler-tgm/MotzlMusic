@@ -18,6 +18,8 @@ export default {
             loading: 'player/loading',
             title: 'player/title',
             artists: 'player/artists',
+            album: 'player/album',
+            albumName: 'player/albumName',
             albumCover: 'player/albumCover',
             playerProgress: 'player/playerProgress',
             playerProgressPercent: 'player/playerProgressPercent',

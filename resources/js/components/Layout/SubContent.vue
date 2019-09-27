@@ -31,8 +31,10 @@
                     </v-card>
                 </v-flex>
                 <v-flex class="relative">
-                    <track-info></track-info>
-                    <v-overlay :value="$root.subContentEditModeActive" absolute color="primary"></v-overlay>
+                    <v-card>
+                        <track-info></track-info>
+                        <v-overlay :value="$root.subContentEditModeActive" absolute color="primary"></v-overlay>
+                    </v-card>
                 </v-flex>
             </v-layout>
         </v-flex>

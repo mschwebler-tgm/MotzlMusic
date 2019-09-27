@@ -1,35 +1,34 @@
 <template>
-    <transition name="slideFromTop">
-        <v-card v-if="currentTrack">
-            <div class="d-flex">
-                <v-flex shrink class="pa-0" style="flex: 0 !important;">
-                    <img :src="imageSrc" width="150" height="150" :alt="albumDate">
-                </v-flex>
-                <v-flex grow class="d-flex pl-4 justify-center flex-column">
-                    <div style="max-width: 180px;">
-                        <div class="text-truncate headline">{{ currentTrack.name }}</div>
-                        <div class="text-truncate">{{ album.name }}</div>
-                        <div>({{ albumDate }})</div>
-                    </div>
-                    <div class="pt-2">
-                        <v-rating v-model="rating"
-                                  @input="updateRating"
-                                  color="secondary"
-                                  background-color="secondary darken2"
-                                  :size="24"
-                                  dense half-increments hover></v-rating>
-                    </div>
-                </v-flex>
+    <div class="d-flex">
+        <v-flex shrink class="pa-0" style="flex: 0 !important;">
+            <v-img :src="albumCover" contain width="150" height="150" :alt="albumDate"></v-img>
+        </v-flex>
+        <v-flex grow class="d-flex pl-4 justify-center flex-column">
+            <div style="max-width: 180px;">
+                <div class="text-truncate headline">{{ title }}</div>
+                <div class="text-truncate">{{ albumName }}</div>
+                <div>{{ albumDate ? `(${albumDate})` : ''}}</div>
             </div>
-        </v-card>
-    </transition>
+            <div class="pt-2">
+                <v-rating v-model="rating"
+                          @input="updateRating"
+                          color="secondary"
+                          background-color="secondary darken2"
+                          :size="24"
+                          :readonly="!currentTrack"
+                          dense half-increments hover></v-rating>
+            </div>
+        </v-flex>
+    </div>
 </template>
 
 <script>
-    import player from "$store/player/helpers/v2/player";
+    import playerControlsMixin from "$components/components/Player/playerControlsMixin";
+    import Vue from 'vue';
 
-    export default {
+    export default Vue.extend({
         name: "TrackInfo",
+        mixins: [playerControlsMixin],
         data() {
             return {
                 rating: null,
@@ -48,25 +47,16 @@
             },
         },
         computed: {
-            currentTrack() {
-                return player.currentTrack;
-            },
-            imageSrc() {
-                return this.currentTrack ? this.$root.getSpotifyImage(this.currentTrack.album, 'small') : null;
-            },
-            album() {
-                return this.currentTrack ? this.currentTrack.album : null;
-            },
             albumDate() {
                 if (!this.album) {
-                    return;
+                    return null;
                 }
                 const date = new Date(this.album.release_date);
 
                 return date.getFullYear();
             }
         }
-    }
+    });
 </script>
 
 <style scoped>

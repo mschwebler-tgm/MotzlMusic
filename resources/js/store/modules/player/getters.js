@@ -29,6 +29,20 @@ export default {
     artists() {
         return player.currentTrack ? player.currentTrack.artists.map(artist => artist.name).join(', ') : '-';
     },
+    album() {
+        if (!player.currentTrack || !player.currentTrack.album) {
+            return null;
+        }
+
+        return player.currentTrack.album;
+    },
+    albumName() {
+        if (!player.currentTrack || !player.currentTrack.album) {
+            return '-';
+        }
+
+        return player.currentTrack.album.name;
+    },
     albumCover() {
         if (!player.currentTrack || !player.currentTrack.album) {
             return window.playlistFallback;

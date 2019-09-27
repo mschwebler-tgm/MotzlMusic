@@ -78,7 +78,7 @@
         },
         watch: {
             subContent(content) {
-                localStorage.setItem('subContent', JSON.stringify(defaultSubContent));
+                localStorage.setItem('subContent', JSON.stringify(content));
             }
         },
         methods: {

@@ -24,7 +24,7 @@
                     <div class="mb-5 mr-5" v-for="contentItem in contentGroup.items" :key="contentItem.label" @mousedown="lastClickedComponent = contentItem.component">
                         <Container behaviour="copy" group-name="sub-content" :get-child-payload="getDndPayload">
                             <Draggable>
-                                <v-card class="elevation-10">
+                                <v-card class="elevation-10 move-cursor">
                                     <component :is="contentItem.component" v-once class="content-component"></component>
                                     <v-divider></v-divider>
                                     <v-system-bar lights-out window>

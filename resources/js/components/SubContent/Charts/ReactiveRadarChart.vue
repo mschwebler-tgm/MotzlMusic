@@ -1,5 +1,10 @@
 <template>
-    <div :id="chartId"></div>
+    <div :id="chartId"
+         style="
+        height: 320px;
+        width: 320px;
+        margin: 0 auto;"
+    ></div>
 </template>
 
 <script>
@@ -63,9 +68,5 @@
 </script>
 
 <style scoped>
-    #chart {
-        height: 320px;
-        width: 320px;
-        margin: 0 auto;
-    }
+
 </style>

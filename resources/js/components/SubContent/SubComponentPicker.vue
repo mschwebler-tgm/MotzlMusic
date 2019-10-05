@@ -23,7 +23,7 @@
                 <div class="d-flex flex-wrap">
                     <div class="mb-5 mr-5" v-for="contentItem in contentGroup.items" :key="contentItem.label">
                         <v-card class="elevation-10">
-                            <component :is="contentItem.component" v-once style="min-width: 380px;"></component>
+                            <component :is="contentItem.component" v-once class="content-component"></component>
                             <v-divider></v-divider>
                             <v-system-bar lights-out window>
                                 <div class="w-100 text-sm-center font-weight-regular">{{ contentItem.label }}</div>
@@ -97,6 +97,11 @@
         position: sticky;
         float: right;
         top: 5px;
+    }
+
+    .content-component {
+        min-width: 380px;
+        pointer-events: none;
     }
 
 </style>

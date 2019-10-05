@@ -6,6 +6,7 @@
                     <v-tooltip left>
                         <template v-slot:activator="{ on }">
                             <v-btn text icon v-on="on"
+                                   :disabled="isInEditMode"
                                    @click="activateEditMode"
                                    aria-label="Settings" class="mt-2 mb-3">
                                 <v-icon>settings</v-icon>

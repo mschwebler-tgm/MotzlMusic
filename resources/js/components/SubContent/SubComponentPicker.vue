@@ -22,8 +22,8 @@
                 <div class="display-1 mb-2 mt-2">{{ contentGroup.label }}</div>
                 <div class="d-flex flex-wrap">
                     <div class="mb-5 mr-5" v-for="contentItem in contentGroup.items" :key="contentItem.label">
-                        <v-card>
-                            <component :is="contentItem.component" v-once></component>
+                        <v-card class="elevation-10">
+                            <component :is="contentItem.component" v-once style="min-width: 380px;"></component>
                             <v-divider></v-divider>
                             <v-system-bar lights-out window>
                                 <div class="w-100 text-sm-center font-weight-regular">{{ contentItem.label }}</div>

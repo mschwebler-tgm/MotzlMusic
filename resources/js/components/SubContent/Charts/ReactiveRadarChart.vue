@@ -1,5 +1,5 @@
 <template>
-    <div id="chart"></div>
+    <div :id="chartId"></div>
 </template>
 
 <script>
@@ -29,6 +29,7 @@
         data() {
             return {
                 chart: null,
+                randomString: Math.random().toString(36).substring(7),
             }
         },
         created() {
@@ -38,7 +39,7 @@
             radarChartConfig.series[1].name = this.primaryLabel;
         },
         mounted() {
-            this.chart = Highcharts.chart('chart', radarChartConfig);
+            this.chart = Highcharts.chart(this.chartId, radarChartConfig);
         },
         methods: {
             updateSeries(dataIndex, data) {
@@ -52,6 +53,11 @@
             secondaryData(data) {
                 this.updateSeries(secondaryIndex, data);
             },
+        },
+        computed: {
+            chartId() {
+                return `radar-chart-${this.randomString}`;
+            }
         }
     }
 </script>

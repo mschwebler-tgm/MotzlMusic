@@ -15,11 +15,11 @@ export default {
         return axios.delete(`/api/my/tracks/${trackId}`)
             .then(() => commit('removeTrack', trackId))
             .then(() => app.statusInfo.show = false)
-            .then(() => app.showAlert('Track removed from Library', 'undo', () => {
+            .then(() => app.showAlert('Track removed from Library', 'info', 'undo', () => {
                 app.snackbar.show = false;
                 dispatch('restoreTrack', trackId)
             }))
-            .catch(() => app.showAlert('Failed to remove track from Library', null, null, 'error'));
+            .catch(() => app.showAlert('Failed to remove track from Library', 'error'));
     },
     restoreTrack({dispatch, commit}, trackId) {
         app.statusInfo.component = StatusInfos.GENERIC;

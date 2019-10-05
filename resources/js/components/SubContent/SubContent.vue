@@ -6,7 +6,7 @@
                     <v-tooltip left>
                         <template v-slot:activator="{ on }">
                             <v-btn text icon v-on="on"
-                                   @click="$root.subContentEditModeActive = !$root.subContentEditModeActive"
+                                   @click="activateEditMode"
                                    aria-label="Settings" class="mt-2 mb-3">
                                 <v-icon>settings</v-icon>
                             </v-btn>
@@ -18,13 +18,13 @@
         </v-flex>
         <v-flex grow fill-height>
             <v-layout column class="fill-height">
-                <Container @drop="moveContent" lock-axis="y" v-if="$root.subContentEditModeActive">
-                    <Draggable v-for="(content, index) in subContent"
+                <Container @drop="moveContent" lock-axis="y" v-if="isInEditMode">
+                    <Draggable v-for="(content, index) in subContentEditClone"
                                :key="content.component">
                         <v-flex shrink :class="{'pt-0': index === 0}">
                             <v-card>
                                 <component :is="content.component"></component>
-                                <v-overlay :value="$root.subContentEditModeActive" class="move-cursor" absolute color="primary"></v-overlay>
+                                <v-overlay :value="true" class="move-cursor" absolute color="primary"></v-overlay>
                             </v-card>
                         </v-flex>
                     </Draggable>
@@ -36,7 +36,6 @@
                             :class="{'pt-0': index === 0}">
                         <v-card>
                             <component :is="content.component"></component>
-                            <v-overlay :value="$root.subContentEditModeActive" class="move-cursor" absolute color="primary"></v-overlay>
                         </v-card>
                     </v-flex>
                 </template>
@@ -46,18 +45,6 @@
 </template>
 
 <script>
-    const defaultSubContent = [
-        {
-            component: 'audio-features',
-        },
-        {
-            component: 'player-controls',
-        },
-        {
-            component: 'track-info',
-        },
-    ];
-
     import AudioFeatures from "./Components/AudioFeatures";
     import PlayerControls from "./Components/PlayerControls";
     import TrackInfo from "./Components/TrackInfo";
@@ -66,25 +53,9 @@
     export default {
         name: "SubContent",
         components: {TrackInfo, PlayerControls, AudioFeatures, Container, Draggable},
-        data() {
-            return {
-                subContent: this.$root.user.sub_content || JSON.parse(localStorage.getItem('subContent')) || [],
-            }
-        },
-        created() {
-            if (!this.subContent || this.subContent.length === 0) {
-                this.subContent = defaultSubContent;
-            }
-        },
-        watch: {
-            subContent(content) {
-                localStorage.setItem('subContent', JSON.stringify(content));
-                this.saveSubContent(content);
-            },
-        },
         methods: {
             moveContent(dropResult) {
-                this.arrayMove(this.subContent, dropResult.removedIndex, dropResult.addedIndex);
+                this.arrayMove(this.subContentEditClone, dropResult.removedIndex, dropResult.addedIndex);
             },
             arrayMove(array, oldIndex, newIndex) {
                 if (newIndex >= array.length) {
@@ -95,10 +66,21 @@
                 }
                 array.splice(newIndex, 0, array.splice(oldIndex, 1)[0]);
             },
-            saveSubContent(subContent) {
-                axios.put('/api/my/subContent', {subContent})
+            activateEditMode() {
+                this.$store.commit('subContent/activateEditMode');
             }
-        }
+        },
+        computed: {
+            isInEditMode() {
+                return this.$store.getters['subContent/isInEditMode'];
+            },
+            subContent() {
+                return this.$store.getters['subContent/subContent'];
+            },
+            subContentEditClone() {
+                return this.$store.getters['subContent/subContentEditClone'];
+            },
+        },
     }
 </script>
 

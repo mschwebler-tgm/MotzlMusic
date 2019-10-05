@@ -40,7 +40,7 @@ const app = new Vue({
                 data: {},
             },
             mainContentHeaderComponent: MainContentHeaders.DEFAULT,
-            user: window.user,
+            user: window.currentUser,
             isTouch: false,
             isMobile: screen.width < 600,
             snackbar: {
@@ -50,13 +50,13 @@ const app = new Vue({
                 callback: () => this.snackbar.show = false,
                 color: undefined,
             },
-            subContentEditModeActive: false,
         }
     },
     created() {
         this.detectTouch();
         setSystemBarColor('accent');
         this.initHotkeys();
+        this.initSubContent();
     },
     methods: {
         detectTouch() {
@@ -83,7 +83,7 @@ const app = new Vue({
 
             return imageToReturn || window.playlistFallback;
         },
-        showAlert(text, buttonText = 'close', callback = () => this.snackbar.show = false, color = 'info') {
+        showAlert(text, color = 'info', buttonText = 'close', callback = () => this.snackbar.show = false) {
             this.snackbar.show = false;
             setTimeout(() => {
                 this.snackbar.buttonText = buttonText;
@@ -95,6 +95,10 @@ const app = new Vue({
         },
         initHotkeys() {
             hotkeys(shortcuts.QUEUE_NEXT, () => this.$store.dispatch('player/addSelectedToQueue'));
+        },
+        initSubContent() {
+            const subContent = this.user.sub_content || JSON.parse(localStorage.getItem('subContent')) || [];
+            this.$store.commit('subContent/setSubContent', subContent);
         }
     },
     watch: {

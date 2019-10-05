@@ -151,13 +151,13 @@
             <v-content class="content-container">
                 <v-container fluid grid-list-xl class="h-100">
                     <v-layout row wrap class="h-100">
-                        <sub-component-picker v-if="$root.subContentEditModeActive"></sub-component-picker>
+                        <sub-component-picker v-if="isSubContentInEditMode"></sub-component-picker>
                         <v-flex xs12 md12 lg12 xl9
                                 class="xs-p0 relative main-content-wrapper"
-                                :class="{editing: $root.subContentEditModeActive}"
+                                :class="{editing: isSubContentInEditMode}"
                                 style="max-height: 100%">
                             <v-fade-transition>
-                                <div class="main-content-edit-mode" v-show="$root.subContentEditModeActive">
+                                <div class="main-content-edit-mode" v-show="isSubContentInEditMode">
                                 </div>
                             </v-fade-transition>
                             <component :is="$root.mainContentHeaderComponent"></component>
@@ -248,6 +248,11 @@
                 this.$store.commit('fileUpload/setFiles', [...files].filter(file => file.type === 'audio/mp3'));
                 this.$store.dispatch('fileUpload/submit');
                 this.dragging = false;
+            }
+        },
+        computed: {
+            isSubContentInEditMode() {
+                return this.$store.getters['subContent/isInEditMode'];
             }
         }
     }

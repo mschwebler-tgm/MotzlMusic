@@ -4,12 +4,15 @@ return [
     'default-content' => [
         [
             'component' => 'audio-features',
+            'randomId' => 1,  // random id is used as key in vue. it has no other purposes
         ],
         [
             'component' => 'player-controls',
+            'randomId' => 2,
         ],
         [
             'component' => 'track-info',
+            'randomId' => 3,
         ],
     ],
     'available-content' => [

@@ -21,7 +21,7 @@
             <v-layout column class="fill-height">
                 <Container @drop="onDrop" lock-axis="y" v-if="isInEditMode" group-name="sub-content">
                     <Draggable v-for="(content, index) in subContentEditClone"
-                               :key="content.component">
+                               :key="content.randomId">
                         <v-flex shrink :class="{'pt-0': index === 0}">
                             <v-card>
                                 <component :is="content.component"></component>
@@ -32,7 +32,7 @@
                 </Container>
                 <template v-else>
                     <v-flex v-for="(content, index) in subContent"
-                            :key="content.component"
+                            :key="content.randomId"
                             shrink
                             :class="{'pt-0': index === 0}">
                         <v-card>
@@ -63,7 +63,11 @@
                 }
             },
             addComponent(index, component) {
-                this.subContentEditClone.splice(index, 0, {component});
+                const newComponent = {
+                    id: Math.random().toString(36).substring(7),
+                    component,
+                };
+                this.subContentEditClone.splice(index, 0, newComponent);
             },
             moveContent(fromIndex, toIndex) {
                 this.arrayMove(this.subContentEditClone, fromIndex, toIndex);

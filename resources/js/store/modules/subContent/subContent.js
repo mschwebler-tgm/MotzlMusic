@@ -4,7 +4,7 @@ import actions from './actions';
 
 const state = {
     focusedItems: [],
-    isInEditMode: false,
+    isInEditMode: true,
     subContent: [],
     subContentEditClone: [],
     subContentIsSaving: false,

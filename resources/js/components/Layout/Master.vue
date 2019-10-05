@@ -160,7 +160,7 @@
                                 <div class="main-content-edit-mode" v-show="isSubContentInEditMode">
                                 </div>
                             </v-fade-transition>
-                            <component :is="$root.mainContentHeaderComponent"></component>
+                            <component :is="$root.mainContentHeaderComponent" class="main-content-header"></component>
                             <!-- Main Content -->
                             <div class="main-content pb-4">
                                 <transition name="bounce" mode="out-in">
@@ -259,6 +259,7 @@
 </script>
 
 <style scoped lang="scss">
+    @import '../../../sass/variables';
 
     #drop-zone {
         content: '';
@@ -298,6 +299,10 @@
     .content-container {
         max-height: 100vh;
         overflow: hidden;
+    }
+
+    .main-content-header {
+        height: $main-content-header-height;
     }
 
     .main-content {

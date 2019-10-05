@@ -4,4 +4,5 @@ export default {
     subContent: state => state.subContent,
     subContentEditClone: state => state.subContentEditClone,
     subContentIsSaving: state => state.subContentIsSaving,
+    availableSubContent: state => state.availableSubContent,
 }

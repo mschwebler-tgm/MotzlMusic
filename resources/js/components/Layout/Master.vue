@@ -151,12 +151,14 @@
             <v-content class="content-container">
                 <v-container fluid grid-list-xl class="h-100">
                     <v-layout row wrap class="h-100">
+                        <sub-component-picker v-if="$root.subContentEditModeActive"></sub-component-picker>
                         <v-flex xs12 md12 lg12 xl9
                                 class="xs-p0 relative main-content-wrapper"
                                 :class="{editing: $root.subContentEditModeActive}"
                                 style="max-height: 100%">
                             <v-fade-transition>
-                                <div class="main-content-edit-mode" v-show="$root.subContentEditModeActive"></div>
+                                <div class="main-content-edit-mode" v-show="$root.subContentEditModeActive">
+                                </div>
                             </v-fade-transition>
                             <component :is="$root.mainContentHeaderComponent"></component>
                             <!-- Main Content -->
@@ -203,10 +205,12 @@
     import StatusInfo from "./StatusInfo/StatusInfo";
     import MainContentHeaderDefault from "./MainContentHeader/MainContentHeaderDefault";
     import MainContentHeaderMyLibraryNav from "./MainContentHeader/MainContentHeaderMyLibraryNav";
+    import SubComponentPicker from "$components/components/SubContent/SubComponentPicker";
 
     export default {
         name: "master",
         components: {
+            SubComponentPicker,
             MainContentHeaderDefault,
             MainContentHeaderMyLibraryNav,
             StatusInfo,

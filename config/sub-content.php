@@ -12,4 +12,33 @@ return [
             'component' => 'track-info',
         ],
     ],
+    'available-content' => [
+        [
+            'label' => 'Visualization',
+            'items' => [
+                [
+                    'label' => 'Audio Analysis (Spider Web)',
+                    'component' => 'audio-features',
+                ],
+            ],
+        ],
+        [
+            'label' => 'Player Controls',
+            'items' => [
+                [
+                    'label' => 'Medium Player',
+                    'component' => 'player-controls',
+                ],
+            ],
+        ],
+        [
+            'label' => 'Info',
+            'items' => [
+                [
+                    'label' => 'Track Information',
+                    'component' => 'track-info',
+                ],
+            ],
+        ],
+    ],
 ];

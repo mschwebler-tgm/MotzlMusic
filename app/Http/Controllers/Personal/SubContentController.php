@@ -12,4 +12,9 @@ class SubContentController extends Controller
     {
         $userDao->updateSubContent($request->get('subContent'));
     }
+
+    public function availableContent()
+    {
+        return config('sub-content.available-content');
+    }
 }

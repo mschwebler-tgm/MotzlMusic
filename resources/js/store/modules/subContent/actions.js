@@ -1,9 +1,11 @@
 import app from '$scripts/app';
 
 export default {
-    init() {
+    init({state}) {
+        axios.get('/api/my/subContent/available')
+            .then(res => state.availableSubContent = res.data);
     },
-    saveEdit({state, commit}) {
+    saveEdit({state}) {
         console.log('save sub content');
         state.subContentIsSaving = true;
         axios.put('/api/my/subContent', {subContent: state.subContentEditClone})

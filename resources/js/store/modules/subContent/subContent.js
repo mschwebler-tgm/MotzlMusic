@@ -8,6 +8,7 @@ const state = {
     subContent: [],
     subContentEditClone: [],
     subContentIsSaving: false,
+    availableSubContent: [],
 };
 
 export default {

@@ -20,6 +20,7 @@ Route::prefix('my')->namespace('Personal')->group(function () {
     Route::get('albums/byFirstLetter', 'MyLibraryController@getAlbumsByFirstLetter');
     Route::get('albums', 'MyLibraryController@getAlbums');
     Route::put('subContent', 'SubContentController@updateSubContent');
+    Route::get('/subContent/available', 'SubContentController@availableContent');
 });
 
 Route::prefix('settings')->namespace('\App\Components\UserSettings\Http')->group(function () {

@@ -19,7 +19,7 @@
         </v-flex>
         <v-flex grow fill-height>
             <v-layout column class="fill-height">
-                <Container @drop="moveContent" lock-axis="y" v-if="isInEditMode">
+                <Container @drop="onDrop" lock-axis="y" v-if="isInEditMode" group-name="sub-content">
                     <Draggable v-for="(content, index) in subContentEditClone"
                                :key="content.component">
                         <v-flex shrink :class="{'pt-0': index === 0}">
@@ -55,8 +55,18 @@
         name: "SubContent",
         components: {TrackInfo, PlayerControls, AudioFeatures, Container, Draggable},
         methods: {
-            moveContent(dropResult) {
-                this.arrayMove(this.subContentEditClone, dropResult.removedIndex, dropResult.addedIndex);
+            onDrop(dropResult) {
+                if (!dropResult.removedIndex) {
+                    this.addComponent(dropResult.addedIndex, dropResult.payload);
+                } else {
+                    this.moveContent(dropResult.removedIndex, dropResult.addedIndex);
+                }
+            },
+            addComponent(index, component) {
+                this.subContentEditClone.splice(index, 0, {component});
+            },
+            moveContent(fromIndex, toIndex) {
+                this.arrayMove(this.subContentEditClone, fromIndex, toIndex);
             },
             arrayMove(array, oldIndex, newIndex) {
                 if (newIndex >= array.length) {

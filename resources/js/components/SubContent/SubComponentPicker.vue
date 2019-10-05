@@ -21,14 +21,19 @@
             <div v-for="contentGroup in availableComponents" :key="contentGroup.label">
                 <div class="display-1 mb-2 mt-2">{{ contentGroup.label }}</div>
                 <div class="d-flex flex-wrap">
-                    <div class="mb-5 mr-5" v-for="contentItem in contentGroup.items" :key="contentItem.label">
-                        <v-card class="elevation-10">
-                            <component :is="contentItem.component" v-once class="content-component"></component>
-                            <v-divider></v-divider>
-                            <v-system-bar lights-out window>
-                                <div class="w-100 text-sm-center font-weight-regular">{{ contentItem.label }}</div>
-                            </v-system-bar>
-                        </v-card>
+                    <div class="mb-5 mr-5" v-for="contentItem in contentGroup.items" :key="contentItem.label" @mousedown="lastClickedComponent = contentItem.component">
+                        <Container behaviour="copy" group-name="sub-content" :get-child-payload="getDndPayload">
+                            <Draggable>
+                                <v-card class="elevation-10">
+                                    <component :is="contentItem.component" v-once class="content-component"></component>
+                                    <v-divider></v-divider>
+                                    <v-system-bar lights-out window>
+                                        <div class="w-100 text-sm-center font-weight-regular">{{ contentItem.label }}
+                                        </div>
+                                    </v-system-bar>
+                                </v-card>
+                            </Draggable>
+                        </Container>
                     </div>
                 </div>
             </div>
@@ -40,10 +45,16 @@
     import AudioFeatures from "$scripts/components/SubContent/Components/AudioFeatures";
     import PlayerControls from "$scripts/components/SubContent/Components/PlayerControls";
     import TrackInfo from "$scripts/components/SubContent/Components/TrackInfo";
+    import {Container, Draggable} from "vue-smooth-dnd";
 
     export default {
         name: "SubComponentPicker",
-        components: {AudioFeatures, PlayerControls, TrackInfo},
+        components: {Container, Draggable, AudioFeatures, PlayerControls, TrackInfo},
+        data() {
+            return {
+                lastClickedComponent: null,
+            }
+        },
         methods: {
             cancelEdit() {
                 this.$store.commit('subContent/cancelEditMode');
@@ -51,6 +62,9 @@
             save() {
                 this.$store.dispatch('subContent/saveEdit');
             },
+            getDndPayload() {
+                return this.lastClickedComponent;
+            }
         },
         computed: {
             isLoading() {

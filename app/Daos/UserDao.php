@@ -38,6 +38,7 @@ class UserDao
     public function createUser(array $options)
     {
         $options['profile_image'] = $options['profile_image'] ?? ProfileImageService::fromEmail($options['email']);
+        $options['sub_content'] = config('sub-content.default-content');
 
         return User::create($options);
     }

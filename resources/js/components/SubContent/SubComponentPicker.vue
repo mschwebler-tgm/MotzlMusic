@@ -1,7 +1,7 @@
 <template>
     <v-flex class="sub-component-picker h-100">
         <div class="main-content-header-spacer"></div>
-        <v-container class="sub-components relative">
+        <v-container class="sub-components relative pl-5">
             <div class="sub-component-picker-buttons mr-2">
                 <v-btn text outlined
                        @click="cancelEdit"
@@ -20,8 +20,8 @@
             </div>
             <div v-for="contentGroup in availableComponents" :key="contentGroup.label">
                 <div class="display-1 mb-2 mt-2">{{ contentGroup.label }}</div>
-                <div class="d-flex">
-                    <div class="mb-5" v-for="contentItem in contentGroup.items" :key="contentItem.label">
+                <div class="d-flex flex-wrap">
+                    <div class="mb-5 mr-5" v-for="contentItem in contentGroup.items" :key="contentItem.label">
                         <v-card>
                             <component :is="contentItem.component" v-once></component>
                             <v-divider></v-divider>

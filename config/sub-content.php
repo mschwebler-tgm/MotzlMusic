@@ -14,15 +14,6 @@ return [
     ],
     'available-content' => [
         [
-            'label' => 'Visualization',
-            'items' => [
-                [
-                    'label' => 'Audio Analysis (Spider Web)',
-                    'component' => 'audio-features',
-                ],
-            ],
-        ],
-        [
             'label' => 'Player Controls',
             'items' => [
                 [
@@ -37,6 +28,15 @@ return [
                 [
                     'label' => 'Track Information',
                     'component' => 'track-info',
+                ],
+            ],
+        ],
+        [
+            'label' => 'Visualization',
+            'items' => [
+                [
+                    'label' => 'Audio Analysis (Spider Web)',
+                    'component' => 'audio-features',
                 ],
             ],
         ],

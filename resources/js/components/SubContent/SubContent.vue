@@ -23,9 +23,9 @@
                     <Draggable v-for="(content, index) in subContentEditClone"
                                :key="content.randomId">
                         <v-flex shrink :class="{'pt-0': index === 0}">
-                            <v-card>
+                            <v-card class="relative">
                                 <component :is="content.component"></component>
-                                <v-overlay :value="true" class="move-cursor" absolute color="primary"></v-overlay>
+                                <div class="sub-content-overlay move-cursor"></div>
                             </v-card>
                         </v-flex>
                     </Draggable>
@@ -100,5 +100,13 @@
 </script>
 
 <style scoped>
-
+    .sub-content-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: var(--v-primary-base);
+        opacity: 0.46;
+    }
 </style>

@@ -19,7 +19,10 @@
         </v-flex>
         <v-flex grow fill-height>
             <v-layout column class="fill-height">
-                <Container @drop="onDrop" lock-axis="y" v-if="isInEditMode" group-name="sub-content">
+                <Container v-if="isInEditMode"
+                           remove-on-drop-out
+                           @drop="onDrop"
+                           group-name="sub-content">
                     <Draggable v-for="(content, index) in subContentEditClone"
                                :key="content.randomId">
                         <v-flex shrink :class="{'pt-0': index === 0}">
@@ -62,11 +65,16 @@
         components: {TrackInfo, PlayerControls, AudioFeatures, Container, Draggable},
         methods: {
             onDrop(dropResult) {
-                if (!dropResult.removedIndex) {
+                if (dropResult.removedIndex === null) {
                     this.addComponent(dropResult.addedIndex, dropResult.payload);
+                } else if (dropResult.addedIndex === null) {
+                    this.removeContent(dropResult.removedIndex);
                 } else {
                     this.moveContent(dropResult.removedIndex, dropResult.addedIndex);
                 }
+            },
+            removeContent(index) {
+                this.subContentEditClone.splice(index, 1);
             },
             addComponent(index, component) {
                 const newComponent = {
@@ -77,9 +85,6 @@
             },
             moveContent(fromIndex, toIndex) {
                 this.arrayMove(this.subContentEditClone, fromIndex, toIndex);
-            },
-            removeContent(index) {
-                this.subContentEditClone.splice(index, 1);
             },
             arrayMove(array, oldIndex, newIndex) {
                 if (newIndex >= array.length) {
@@ -108,6 +113,7 @@
     }
 </script>
 
+<!--suppress CssUnresolvedCustomProperty -->
 <style scoped>
     .sub-content-overlay {
         position: absolute;

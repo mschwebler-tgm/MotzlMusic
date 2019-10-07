@@ -25,7 +25,13 @@
                         <v-flex shrink :class="{'pt-0': index === 0}">
                             <v-card class="relative">
                                 <component :is="content.component"></component>
-                                <div class="sub-content-overlay move-cursor"></div>
+                                <div class="sub-content-overlay move-cursor">
+                                    <v-btn small
+                                           @click="removeContent(index)"
+                                           class="remove-content-button">
+                                        <v-icon small>close</v-icon>
+                                    </v-btn>
+                                </div>
                             </v-card>
                         </v-flex>
                     </Draggable>
@@ -72,6 +78,9 @@
             moveContent(fromIndex, toIndex) {
                 this.arrayMove(this.subContentEditClone, fromIndex, toIndex);
             },
+            removeContent(index) {
+                this.subContentEditClone.splice(index, 1);
+            },
             arrayMove(array, oldIndex, newIndex) {
                 if (newIndex >= array.length) {
                     let k = newIndex - array.length + 1;
@@ -108,5 +117,17 @@
         height: 100%;
         background-color: var(--v-primary-base);
         opacity: 0.46;
+        border-radius: inherit;
+    }
+
+    .sub-content-overlay:hover .remove-content-button {
+        display: block;
+    }
+
+    .remove-content-button {
+        display: none;
+        position: absolute;
+        top: 0;
+        right: 0;
     }
 </style>

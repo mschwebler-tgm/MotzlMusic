@@ -61,5 +61,8 @@ export default {
     },
     queuedTracks() {
         return player.queuedTracks;
-    }
+    },
+    trackList() {
+        return player.trackList;
+    },
 }

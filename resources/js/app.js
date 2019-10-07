@@ -13,8 +13,7 @@ import MainContentHeaders from './components/Layout/MainContentHeader/MainConten
 import {shortcuts} from "./helpers/shortcuts";
 import hotkeys from "hotkeys-js";
 
-Vue.component('auth-login', require('./components/Auth/Login').default);
-Vue.component('auth-register', require('./components/Auth/Register').default);
+require('./vue-components');
 
 Vue.use(VueRouter);
 Vue.use(Vuetify);

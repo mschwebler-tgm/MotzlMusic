@@ -42,14 +42,11 @@
 </template>
 
 <script>
-    import AudioFeatures from "$scripts/components/SubContent/Components/AudioFeatures";
-    import PlayerControls from "$scripts/components/SubContent/Components/PlayerControls";
-    import TrackInfo from "$scripts/components/SubContent/Components/TrackInfo";
     import {Container, Draggable} from "vue-smooth-dnd";
 
     export default {
         name: "SubComponentPicker",
-        components: {Container, Draggable, AudioFeatures, PlayerControls, TrackInfo},
+        components: {Container, Draggable},
         data() {
             return {
                 lastClickedComponent: null,

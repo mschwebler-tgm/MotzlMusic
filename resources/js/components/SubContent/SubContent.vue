@@ -55,22 +55,21 @@
 </template>
 
 <script>
-    import AudioFeatures from "./Components/AudioFeatures";
-    import PlayerControls from "./Components/PlayerControls";
-    import TrackInfo from "./Components/TrackInfo";
     import {Container, Draggable} from "vue-smooth-dnd";
 
     export default {
         name: "SubContent",
-        components: {TrackInfo, PlayerControls, AudioFeatures, Container, Draggable},
+        components: {Container, Draggable},
         methods: {
             onDrop(dropResult) {
-                if (dropResult.removedIndex === null) {
-                    this.addComponent(dropResult.addedIndex, dropResult.payload);
-                } else if (dropResult.addedIndex === null) {
-                    this.removeContent(dropResult.removedIndex);
-                } else {
-                    this.moveContent(dropResult.removedIndex, dropResult.addedIndex);
+                const removedIndex = dropResult.removedIndex;
+                const addedIndex = dropResult.addedIndex;
+                if (removedIndex === null && addedIndex !== null) {
+                    this.addComponent(addedIndex, dropResult.payload);
+                } else if (addedIndex === null && removedIndex !== null) {
+                    this.removeContent(removedIndex);
+                } else if (removedIndex !== null && addedIndex !== null) {
+                    this.moveContent(removedIndex, addedIndex);
                 }
             },
             removeContent(index) {

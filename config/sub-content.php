@@ -3,15 +3,15 @@
 return [
     'default-content' => [
         [
-            'component' => 'audio-features',
+            'component' => 'sub-content-audio-features',
             'randomId' => 1,  // random id is used as key in vue. it has no other purposes
         ],
         [
-            'component' => 'player-controls',
+            'component' => 'sub-content-player-controls',
             'randomId' => 2,
         ],
         [
-            'component' => 'track-info',
+            'component' => 'sub-content-track-info',
             'randomId' => 3,
         ],
     ],
@@ -21,7 +21,11 @@ return [
             'items' => [
                 [
                     'label' => 'Medium Player',
-                    'component' => 'player-controls',
+                    'component' => 'sub-content-player-controls',
+                ],
+                [
+                    'label' => 'Current Track Queue',
+                    'component' => 'sub-content-current-tracks',
                 ],
             ],
         ],
@@ -30,7 +34,7 @@ return [
             'items' => [
                 [
                     'label' => 'Track Information',
-                    'component' => 'track-info',
+                    'component' => 'sub-content-track-info',
                 ],
             ],
         ],
@@ -39,7 +43,7 @@ return [
             'items' => [
                 [
                     'label' => 'Audio Analysis (Spider Web)',
-                    'component' => 'audio-features',
+                    'component' => 'sub-content-audio-features',
                 ],
             ],
         ],

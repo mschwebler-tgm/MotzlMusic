@@ -65,4 +65,7 @@ export default {
     trackList() {
         return player.trackList;
     },
+    trackListRaw() {
+        return player.trackListRaw;
+    },
 }

@@ -1,5 +1,5 @@
-import DesktopClusterizer from "$scripts/components/TrackTable/Clusterizer/DesktopClusterizer";
-import {columns} from "$scripts/components/TrackTable/Clusterizer/DekstopClusterizerColumns";
+import DesktopClusterizer from "$scripts/components/TrackTable/Clusterizer/Desktop/DesktopClusterizer";
+import {columns} from "$scripts/components/TrackTable/Clusterizer/Desktop/columns";
 
 describe('DesktopClusterizer', () => {
     it('should generate a div container for a row', () => {

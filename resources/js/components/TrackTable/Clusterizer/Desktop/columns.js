@@ -1,4 +1,4 @@
-export default class RenderDesktopColumns {
+class RenderDesktopColumns {
     static trackTitle(rawTrack) {
         return `<div class="track-row-title">${rawTrack.trackData.name}</div>`;
     }

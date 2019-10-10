@@ -3,7 +3,7 @@ import {availableOptions, defaultOptions} from "$scripts/components/TrackTable/C
 export default class ClusterizeOptions {
 
     constructor() {
-        this._options = defaultOptions;
+        this._options = {...defaultOptions};
     }
 
     setOptions(options) {

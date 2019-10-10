@@ -6,12 +6,20 @@ class RenderDesktopColumns {
         }
         return `<div class="track-row-title">${content}</div>`;
     }
+
+    static trackAlbum(albumName) {
+        return `<div class="track-row-album">${albumName}</div>`;
+    }
 }
 
 const columns = {
     TRACK_TITLE: {
         label: 'Title',
         render: (rawTrack, options) => RenderDesktopColumns.trackTitle(rawTrack, options.is('showQueueIndicators'))
+    },
+    ALBUM_TITLE: {
+        label: 'Title',
+        render: rawTrack => RenderDesktopColumns.trackAlbum(rawTrack.trackData.album.name)
     },
 };
 

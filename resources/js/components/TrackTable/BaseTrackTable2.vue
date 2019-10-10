@@ -12,12 +12,16 @@
 <script>
     import Clusterize from "clusterize.js";
     import DesktopClusterizer from "$scripts/components/TrackTable/Clusterizer/Desktop/DesktopClusterizer";
-    import {columns} from "$scripts/components/TrackTable/Clusterizer/Desktop/columns";
+    import ClusterizeOptions from "$scripts/components/TrackTable/Clusterizer/ClusterizeOptions";
 
     export default {
         name: "BaseTrackTable2",
         props: {
             tracks: Array,
+            options: {
+                type: ClusterizeOptions,
+                default: () => new ClusterizeOptions(),
+            },
         },
         data() {
             return {
@@ -26,20 +30,12 @@
             }
         },
         created() {
-            this.initializeClusterizer();
+            this.clusterizer = new DesktopClusterizer(this.options);
         },
         mounted() {
             this.initializeTracksTable();
         },
         methods: {
-            initializeClusterizer() {
-                const clusterizer = new DesktopClusterizer();
-                clusterizer.configure({
-                    columns: columns.TRACK_TITLE,
-                });
-
-                this.clusterizer = clusterizer;
-            },
             initializeTracksTable() {
                 const rows = this.clusterizer.generateForTracks(this.tracks);
                 this._initClusterizeJs(rows);

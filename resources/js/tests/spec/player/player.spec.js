@@ -171,6 +171,16 @@ describe('Player', () => {
         expect(player.queuedTracks.length).toBe(2);
     });
 
+    it('should set queue index on tracks', () => {
+        const player = preparePlayer();
+        player.playList([{id: 1}, {id: 2}]);
+        player.queueTrack({id: 101});
+        player.queueTrack({id: 102});
+
+        expect(player.trackListRaw[1].queueIndex).toBe(0);
+        expect(player.trackListRaw[2].queueIndex).toBe(1);
+    });
+
     it('should play queued track', () => {
         const player = preparePlayer();
         player.playList([1, 2, 3], 1);

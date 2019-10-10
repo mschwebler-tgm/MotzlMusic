@@ -1,9 +1,10 @@
 import DesktopClusterizer from "$scripts/components/TrackTable/Clusterizer/DesktopClusterizer";
+import {columns} from "$scripts/components/TrackTable/Clusterizer/DekstopClusterizerColumns";
 
 describe('DesktopClusterizer', () => {
     it('should generate a div container for a row', () => {
         const clusterizer = new DesktopClusterizer();
-        const tracks = [{id: 1}];
+        const tracks = [{trackData: {id: 1}}];
 
         const htmlContent = clusterizer.generateForTracks(tracks);
 
@@ -25,5 +26,16 @@ describe('DesktopClusterizer', () => {
 
         expect(() => clusterizer.configure({iDoNotExist: true}))
             .toThrowError();
+    });
+
+    it('should render track title column', () => {
+        const clusterizer = new DesktopClusterizer();
+        clusterizer.configure({columns: [columns.TRACK_TITLE]});
+        const name = 'test track';
+
+        const htmlContent = clusterizer.generateForTracks([{trackData: {name}}]);
+
+        expect(htmlContent).toContain('track-row-title');
+        expect(htmlContent).toContain(name);
     });
 });

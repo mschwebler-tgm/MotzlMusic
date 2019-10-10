@@ -1,29 +1,20 @@
-import {defaultOptions, availableOptions} from "$scripts/components/TrackTable/Clusterizer/defaultOptions";
+import ClusterizeOptions from "$scripts/components/TrackTable/Clusterizer/ClusterizeOptions";
 
 export default class DesktopClusterizer {
 
     constructor() {
         this._dragContainerId = 'abc';
-        this._options = defaultOptions;
+        this._options = new ClusterizeOptions();
     }
 
     configure(options) {
-        Object.keys(options).forEach(optionKey => {
-            this._validateOptionKey(optionKey);
-            this._options[optionKey] = options[optionKey];
-        });
-    }
-
-    _validateOptionKey(optionKey) {
-        if (!availableOptions.includes(optionKey)) {
-            throw new Error(`[Clusterizer] Provided option '${optionKey}' is not valid. Available options: ${availableOptions.join(', ')}`);
-        }
+        this._options.setOptions(options);
     }
 
     generateForTracks(tracks) {
         const trackRows = tracks.map(() => '<div class="track-row"></div>');
         const rowsHtml = trackRows.join('');
-        if (this._options.draggable) {
+        if (this._options.is('draggable')) {
             return `<div id="${this._dragContainerId}">${rowsHtml}</div>`;
         }
         return rowsHtml;

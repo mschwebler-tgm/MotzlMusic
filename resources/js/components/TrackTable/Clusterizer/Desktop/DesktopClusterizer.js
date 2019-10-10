@@ -1,10 +1,10 @@
-import ClusterizeOptions from "$scripts/components/TrackTable/Clusterizer/ClusterizeOptions";
-
 export default class DesktopClusterizer {
 
-    constructor() {
-        this._dragContainerId = 'abc';
-        this._options = new ClusterizeOptions();
+    /**
+     * @param options ClusterizeOptions
+     */
+    constructor(options) {
+        this._options = options;
     }
 
     configure(options) {
@@ -12,12 +12,7 @@ export default class DesktopClusterizer {
     }
 
     generateForTracks(rawTracks) {
-        const trackRows = rawTracks.map(rawTrack => this._makeTrackRow(rawTrack));
-        const rowsHtml = trackRows.join('');
-        if (this._options.is('draggable')) {
-            return `<div id="${this._dragContainerId}">${rowsHtml}</div>`;
-        }
-        return rowsHtml;
+        return rawTracks.map(rawTrack => this._makeTrackRow(rawTrack));
     }
 
     _makeTrackRow(track) {

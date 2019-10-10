@@ -1,5 +1,5 @@
 const defaultOptions = {
-    draggable: false,
+    showQueueIndicators: true,
     columns: [],
 };
 

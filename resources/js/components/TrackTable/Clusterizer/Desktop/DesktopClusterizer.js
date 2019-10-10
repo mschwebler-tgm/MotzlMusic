@@ -20,6 +20,6 @@ export default class DesktopClusterizer {
     }
 
     _renderColumns(rawTrack) {
-        return this._options.getColumns().map(column => column.render(rawTrack)).join('');
+        return this._options.getColumns().map(column => column.render(rawTrack, this._options)).join('');
     }
 }

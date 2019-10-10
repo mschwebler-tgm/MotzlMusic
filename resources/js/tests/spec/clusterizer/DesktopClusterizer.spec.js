@@ -30,4 +30,16 @@ describe('DesktopClusterizer', () => {
         expect(htmlContent).toContain('track-row-title');
         expect(htmlContent).toContain(name);
     });
+
+    it('should show queue indicator on title column', () => {
+        const clusterizer = new DesktopClusterizer(new ClusterizeOptions());
+        clusterizer.configure({columns: [columns.TRACK_TITLE]});
+        const name = 'test track';
+        const queueIndex = 5;
+
+        const htmlContent = clusterizer.generateForTracks([{trackData: {name}, queueIndex}])[0];
+
+        expect(htmlContent).toContain('track-row-title-queue-indicator');
+        expect(htmlContent).toContain(queueIndex + 1);
+    });
 });

@@ -1,3 +1,5 @@
+import StarRating from "$scripts/components/_BaseComponents/StarRating";
+
 class RenderDesktopColumns {
     static trackTitle(rawTrack, showQueueIndicators) {
         let content = rawTrack.trackData.name;
@@ -18,6 +20,11 @@ class RenderDesktopColumns {
 
     static trackDuration(durationFormatted) {
         return `<div class="track-row-duration">${durationFormatted}</div>`;
+    }
+
+    static trackRating(rating) {
+        const stars = StarRating.getStarSVGs(rating);
+        return `<div class="track-row-rating">${stars.join('')}</div>`;
     }
 }
 
@@ -41,6 +48,10 @@ const columns = {
     DURATION: {
         label: '',
         render: rawTrack => RenderDesktopColumns.trackDuration(rawTrack.trackData.duration_formatted),
+    },
+    RATING: {
+        label: '',
+        render: rawTrack => RenderDesktopColumns.trackRating(rawTrack.trackData.rating),
     },
 };
 

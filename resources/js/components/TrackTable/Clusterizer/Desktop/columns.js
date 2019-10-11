@@ -1,6 +1,10 @@
 import StarRating from "$scripts/components/_BaseComponents/StarRating";
 
 class RenderDesktopColumns {
+    static trackIndex(index) {
+        return `<div class="track-row-number">${index + 1}</div>`;
+    }
+
     static trackTitle(rawTrack, showQueueIndicators) {
         let content = rawTrack.trackData.name;
         if (showQueueIndicators && rawTrack.queueIndex !== undefined) {
@@ -33,6 +37,10 @@ class RenderDesktopColumns {
 }
 
 const columns = {
+    INDEX: {
+        label: '#',
+        render: (rawTrack, options, index) => RenderDesktopColumns.trackIndex(index),
+    },
     TRACK_TITLE: {
         label: 'Title',
         render: (rawTrack, options) => RenderDesktopColumns.trackTitle(rawTrack, options.is('showQueueIndicators')),

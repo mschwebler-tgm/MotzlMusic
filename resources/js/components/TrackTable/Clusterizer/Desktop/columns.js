@@ -13,22 +13,26 @@ class RenderDesktopColumns {
 
     static trackArtists(artists) {
         const artistNames = artists.map(artist => artist.name).join(', ');
-        return `<div class="track-row-all-artists">${artistNames}</div>`;
+        return `<div class="track-row-artist">${artistNames}</div>`;
     }
 }
 
 const columns = {
     TRACK_TITLE: {
         label: 'Title',
-        render: (rawTrack, options) => RenderDesktopColumns.trackTitle(rawTrack, options.is('showQueueIndicators'))
+        render: (rawTrack, options) => RenderDesktopColumns.trackTitle(rawTrack, options.is('showQueueIndicators')),
     },
     ALBUM_TITLE: {
         label: 'Album',
-        render: rawTrack => RenderDesktopColumns.trackAlbum(rawTrack.trackData.album.name)
+        render: rawTrack => RenderDesktopColumns.trackAlbum(rawTrack.trackData.album.name),
     },
     ARTISTS: {
         label: 'Artists',
-        render: rawTrack => RenderDesktopColumns.trackArtists(rawTrack.trackData.artists)
+        render: rawTrack => RenderDesktopColumns.trackArtists(rawTrack.trackData.artists),
+    },
+    ARTIST: {
+        label: 'Artist',
+        render: rawTrack => RenderDesktopColumns.trackArtists([rawTrack.trackData.artists[0]]),
     },
 };
 

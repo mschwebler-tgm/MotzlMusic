@@ -15,6 +15,10 @@ class RenderDesktopColumns {
         const artistNames = artists.map(artist => artist.name).join(', ');
         return `<div class="track-row-artist">${artistNames}</div>`;
     }
+
+    static trackDuration(durationFormatted) {
+        return `<div class="track-row-duration">${durationFormatted}</div>`;
+    }
 }
 
 const columns = {
@@ -33,6 +37,10 @@ const columns = {
     ARTIST: {
         label: 'Artist',
         render: rawTrack => RenderDesktopColumns.trackArtists([rawTrack.trackData.artists[0]]),
+    },
+    DURATION: {
+        label: '',
+        render: rawTrack => RenderDesktopColumns.trackDuration(rawTrack.trackData.duration_formatted),
     },
 };
 

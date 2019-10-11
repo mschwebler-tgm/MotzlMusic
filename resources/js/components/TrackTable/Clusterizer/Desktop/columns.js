@@ -13,6 +13,10 @@ class RenderDesktopColumns {
         return `<div class="track-row-album">${albumName}</div>`;
     }
 
+    static albumImage(imageSrc) {
+        return `<div class="track-row-image"><img src="${imageSrc}" alt=""></div>`;
+    }
+
     static trackArtists(artists) {
         const artistNames = artists.map(artist => artist.name).join(', ');
         return `<div class="track-row-artist">${artistNames}</div>`;
@@ -37,6 +41,10 @@ const columns = {
         label: 'Album',
         render: rawTrack => RenderDesktopColumns.trackAlbum(rawTrack.trackData.album.name),
     },
+    ALBUM_IMAGE: {
+        label: '',
+        render: rawTrack => RenderDesktopColumns.albumImage(rawTrack.trackData.album.spotify_image_small),
+    },
     ARTISTS: {
         label: 'Artists',
         render: rawTrack => RenderDesktopColumns.trackArtists(rawTrack.trackData.artists),
@@ -50,7 +58,7 @@ const columns = {
         render: rawTrack => RenderDesktopColumns.trackDuration(rawTrack.trackData.duration_formatted),
     },
     RATING: {
-        label: '',
+        label: 'Rating',
         render: rawTrack => RenderDesktopColumns.trackRating(rawTrack.trackData.rating),
     },
 };

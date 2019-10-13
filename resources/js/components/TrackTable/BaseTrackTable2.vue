@@ -65,6 +65,7 @@
     import StarRating from "$scripts/components/_BaseComponents/StarRating";
     import hotkeys from "hotkeys-js";
     import {shortcuts} from "$scripts/helpers/shortcuts";
+    import MobileClusterizer from "$scripts/components/TrackTable/Clusterizer/Mobile/MobileClusterizer";
 
     export default {
         name: "BaseTrackTable2",
@@ -88,7 +89,11 @@
             }
         },
         created() {
-            this.clusterizer = new DesktopClusterizer(this.options);
+            if (this.options.is('desktop')) {
+                this.clusterizer = new DesktopClusterizer(this.options);
+            } else {
+                this.clusterizer = new MobileClusterizer(this.options);
+            }
         },
         mounted() {
             this.initializeTracksTable();
@@ -121,12 +126,12 @@
                 }
 
                 const focusedTrack = this._getTrackById(trackId);
-                this.$emit('track-selected', RenderDesktopColumns.getTrackData(focusedTrack));
+                this.$emit('track-selected', this._getTrackData(focusedTrack));
             },
             focusNextTrack() {
                 let nextTrackElement = document.activeElement.nextElementSibling;
                 if (this.contentAreaIsFocused()) {
-                    const firstTrack = RenderDesktopColumns.getTrackData(this.tracks[0]);
+                    const firstTrack = this._getTrackData(this.tracks[0]);
                     nextTrackElement = this.$refs.contentArea.querySelector(`[data-id="${firstTrack.id}"]`);
                 }
                 this.focusTrackRow(nextTrackElement);
@@ -150,9 +155,12 @@
             },
             playTrackFromEvent($event) {
                 if (this.options.is('playable')) {
-                    const track = RenderDesktopColumns.getTrackData(this._getTrackFromEvent($event))
+                    const track = this._getTrackData(this._getTrackFromEvent($event))
                     this.$emit('play-track', track);
                 }
+            },
+            _getTrackData(track) {
+                return RenderDesktopColumns.getTrackData(track);
             },
             _getTrackFromEvent($event) {
                 let trackId = null;
@@ -167,7 +175,7 @@
             },
             _getTrackById(trackId) {
                 trackId = parseInt(trackId);
-                return this.tracks.filter(track => RenderDesktopColumns.getTrackData(track).id === trackId)[0];
+                return this.tracks.filter(track => this._getTrackData(track).id === trackId)[0];
             },
             clusterChanged() {
                 this.initStarRatings();
@@ -181,7 +189,7 @@
                     let selectedRating = 0;
                     const mouseEnter = $event => {
                         const starWrapperElement = $event.target;
-                        const track = RenderDesktopColumns.getTrackData(self._getTrackFromEvent($event));
+                        const track = this._getTrackData(self._getTrackFromEvent($event));
                         const starRating = new StarRating(starWrapperElement);
                         element.removeEventListener('mouseenter', mouseEnter);
                         starRating.onRateHover(amount => starWrapperElement.innerHTML = StarRating.getStarSVGs(amount, true).join(''));
@@ -194,14 +202,14 @@
                     element.addEventListener('mouseenter', mouseEnter);
                     element.addEventListener('mouseleave', $event => {
                         const starWrapperElement = $event.target;
-                        const track = RenderDesktopColumns.getTrackData(self._getTrackFromEvent($event));
+                        const track = this._getTrackData(self._getTrackFromEvent($event));
                         starWrapperElement.innerHTML = StarRating.getStarSVGs(selectedRating || track.rating).join('')
                     });
                 })
             },
             initQueueListener() {
                 hotkeys(shortcuts.QUEUE_NEXT, $event => {
-                    const track = RenderDesktopColumns.getTrackData(this._getTrackFromEvent($event));
+                    const track = this._getTrackData(this._getTrackFromEvent($event));
                     this.$emit('queue-track', track);
                 });
             },
@@ -219,7 +227,7 @@
                 }
             },
             queueTrack() {
-                this.$emit('queue-track', RenderDesktopColumns.getTrackData(this.contextMenu.track));
+                this.$emit('queue-track', this._getTrackData(this.contextMenu.track));
             }
         },
         computed: {
@@ -234,12 +242,19 @@
 </script>
 
 <style lang="scss">
-    $row-height: 40px;
+    $desktop-row-height: 40px;
+    $mobile-row-height: 50px;
 
     .base-track-table {
 
+        .text-truncate {
+            white-space: nowrap !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+        }
+
         .track-row {
-            height: $row-height;
+            height: $desktop-row-height;
             display: flex;
             align-items: center;
             overflow: hidden;
@@ -271,6 +286,42 @@
                 }
             }
 
+            &.mobile {
+                height: $mobile-row-height !important;
+
+                .track-row-title-and-artist {
+                    flex: 1;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: flex-start;
+
+                    .track-row-title {
+                        width: 100%;
+                        font-size: 16px;
+                    }
+
+                    .track-row-artist {
+                        width: 100%;
+                        font-size: .75rem;
+                        font-weight: 100 !important;
+                    }
+
+                    /*display: flex;*/
+                }
+
+                .track-row-image {
+                    width: $mobile-row-height;
+                    height: $mobile-row-height;
+                    padding: 4px !important;
+
+                    > img {
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+            }
+
             &-title {
                 width: 300px;
                 display: flex;
@@ -296,8 +347,8 @@
             }
 
             &-image {
-                width: $row-height;
-                height: $row-height;
+                width: $desktop-row-height;
+                height: $desktop-row-height;
                 padding: 2px !important;
 
                 > img {

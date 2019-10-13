@@ -1,6 +1,7 @@
 const defaultOptions = {
     showQueueIndicators: true,
-    columns: [],
+    mobileColumns: [],
+    desktopColumns: [],
     activatable: true,
     contextMenu: true,
     playable: true,

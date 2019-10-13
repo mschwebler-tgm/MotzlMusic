@@ -24,6 +24,9 @@ export default class ClusterizeOptions {
     }
 
     getColumns() {
-        return this._options.columns;
+        if (this.is('desktop')) {
+            return this._options.desktopColumns;
+        }
+        return this._options.mobileColumns;
     }
 }

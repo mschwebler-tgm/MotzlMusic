@@ -8,9 +8,52 @@
                  @focusin="trackGotFocus"
                  @keydown.down.prevent="focusNextTrack"
                  @keydown.up.prevent="focusPreviousTrack"
-                 @keydown.enter="playTrackFromEvent">
+                 @keydown.enter="playTrackFromEvent"
+                 @contextmenu.prevent="showContextMenu">
             </div>
         </div>
+        <v-menu v-model="contextMenu.show"
+                :position-x="contextMenu.positionX"
+                :position-y="contextMenu.positionY"
+                v-if="options.is('desktop')"
+                offset-x
+                absolute>
+            <v-list light dense>
+                <v-list-item @click="queueTrack">
+                    <v-list-item-icon>
+                        <v-icon small>add_to_queue</v-icon>
+                    </v-list-item-icon>
+                    <v-list-item-title>
+                        Add to Queue
+                    </v-list-item-title>
+                </v-list-item>
+                <v-list-item>
+                    <v-list-item-icon>
+                        <v-icon small>playlist_add</v-icon>
+                    </v-list-item-icon>
+                    <v-list-item-title>
+                        Add to Playlist
+                    </v-list-item-title>
+                </v-list-item>
+                <v-divider></v-divider>
+                <v-list-item>
+                    <v-list-item-icon>
+                        <v-icon small>delete</v-icon>
+                    </v-list-item-icon>
+                    <v-list-item-title>
+                        Remove from your Library
+                    </v-list-item-title>
+                </v-list-item>
+                <v-list-item>
+                    <v-list-item-icon>
+                        <v-icon small>edit</v-icon>
+                    </v-list-item-icon>
+                    <v-list-item-title>
+                        Edit
+                    </v-list-item-title>
+                </v-list-item>
+            </v-list>
+        </v-menu>
     </div>
 </template>
 
@@ -36,6 +79,12 @@
             return {
                 tableId: 'table' + Math.random().toString(36).substring(7),
                 clusterizer: null,
+                contextMenu: {
+                    show: false,
+                    positionX: 0,
+                    positionY: 0,
+                    track: null,
+                }
             }
         },
         created() {
@@ -122,6 +171,9 @@
             },
             clusterChanged() {
                 this.initStarRatings();
+                if (this.options.is('contextMenu')) {
+                    this.initContextMenuListener();
+                }
             },
             initStarRatings() {
                 const self = this;
@@ -152,6 +204,22 @@
                     const track = RenderDesktopColumns.getTrackData(this._getTrackFromEvent($event));
                     this.$emit('queue-track', track);
                 });
+            },
+            initContextMenuListener() {
+                this.$refs.contentArea.querySelectorAll('.track-row-options').forEach(element => {
+                    element.addEventListener('click', $event => this.showContextMenu($event));
+                });
+            },
+            showContextMenu($event) {
+                if (this.options.is('contextMenu')) {
+                    this.contextMenu.positionX = $event.clientX;
+                    this.contextMenu.positionY = $event.clientY;
+                    this.contextMenu.show = true;
+                    this.contextMenu.track = this._getTrackFromEvent($event);
+                }
+            },
+            queueTrack() {
+                this.$emit('queue-track', RenderDesktopColumns.getTrackData(this.contextMenu.track));
             }
         },
         computed: {

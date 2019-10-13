@@ -42,6 +42,16 @@ class RenderDesktopColumns {
         const stars = StarRating.getStarSVGs(rating);
         return `<div class="track-row-rating">${stars.join('')}</div>`;
     }
+
+    static infoIcons(track) {
+        let icons = '';
+        if (track.provider === 'spotify') {
+            icons += '<div><span class="icon has-text-grey-light" title="From Spotify"><i class="mdi mdi-spotify mdi-24px"></i></span></div>';
+        }
+        // `<div class="track-list-options-trigger"><span class="icon has-text-grey-light" title="Subscribed from Timi Hendrix"><i class="mdi mdi-account-multiple mdi-24px"></i></span></div>`
+
+        return `<div class="track-list-info-icons">${icons}</div>`;
+    }
 }
 
 const columns = {
@@ -77,6 +87,10 @@ const columns = {
         label: 'Rating',
         render: rawTrack => RenderDesktopColumns.trackRating(RenderDesktopColumns.getTrackData(rawTrack).rating),
     },
+    INFO_ICONS: {
+        label: '',
+        render: rawTrack => RenderDesktopColumns.infoIcons(RenderDesktopColumns.getTrackData(rawTrack)),
+    }
 };
 
 export {columns};

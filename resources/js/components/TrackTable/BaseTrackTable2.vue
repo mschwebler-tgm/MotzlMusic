@@ -1,6 +1,7 @@
 <template>
     <div class="base-track-table">
         <div :id="scrollId"
+             :style="{'max-height': height}"
              class="clusterize-scroll">
             <div :id="contentId"
                  ref="contentArea"
@@ -9,15 +10,16 @@
                  @keydown.down.prevent="focusNextTrack"
                  @keydown.up.prevent="focusPreviousTrack"
                  @keydown.enter="playTrackFromEvent"
-                 @contextmenu.prevent="showContextMenu">
+                 @contextmenu.prevent="showContextMenu"
+                 v-on="$listeners">
             </div>
         </div>
         <component v-model="contextMenu.show"
-                :position-x="contextMenu.positionX"
-                :position-y="contextMenu.positionY"
-                :is="menuComponent"
-                offset-x
-                absolute>
+                   :position-x="contextMenu.positionX"
+                   :position-y="contextMenu.positionY"
+                   :is="menuComponent"
+                   offset-x
+                   absolute>
             <v-list light dense>
                 <v-list-item @click="queueTrack">
                     <v-list-item-icon>
@@ -61,7 +63,6 @@
     import Clusterize from "clusterize.js";
     import DesktopClusterizer from "$scripts/components/TrackTable/Clusterizer/Desktop/DesktopClusterizer";
     import ClusterizeOptions from "$scripts/components/TrackTable/Clusterizer/ClusterizeOptions";
-    import {RenderDesktopColumns} from "$scripts/components/TrackTable/Clusterizer/Desktop/columns";
     import StarRating from "$scripts/components/_BaseComponents/StarRating";
     import hotkeys from "hotkeys-js";
     import {shortcuts} from "$scripts/helpers/shortcuts";
@@ -75,6 +76,10 @@
                 type: ClusterizeOptions,
                 default: () => new ClusterizeOptions(),
             },
+            height: {
+                type: String,
+                default: '500px',
+            }
         },
         data() {
             return {
@@ -138,7 +143,7 @@
                 }
 
                 const focusedTrack = this._getTrackById(trackId);
-                this.$emit('track-selected', this._getTrackData(focusedTrack));
+                this.$emit('select-track', this._getTrackData(focusedTrack));
             },
             focusNextTrack() {
                 let nextTrackElement = document.activeElement.nextElementSibling;
@@ -272,6 +277,10 @@
 
     .base-track-table {
 
+        .clusterize-scroll {
+            overflow-y: scroll;
+        }
+
         .text-truncate {
             white-space: nowrap !important;
             overflow: hidden !important;
@@ -303,8 +312,8 @@
             }
 
             &-number {
-                width: 40px;
-                text-align: right;
+                width: 42px;
+                text-align: center;
 
                 &::after {
                     content: '.';

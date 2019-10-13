@@ -10,8 +10,8 @@
                     </div>
                 </div>
             </div>
-            <v-layout column class="clusterize" v-else>
-                <track-table :tracks="tracks" :render-function="renderFunction" height="612px"></track-table>
+            <v-layout column v-else>
+                <track-table :tracks="tracks" height="680px"></track-table>
             </v-layout>
         </v-container>
     </div>

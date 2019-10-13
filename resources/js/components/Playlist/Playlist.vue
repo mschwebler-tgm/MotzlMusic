@@ -88,10 +88,7 @@
                     </div>
                 </div>
             </div>
-            <track-table :tracks="tracks"
-                         :render-function="clusterizeFunction"
-                         :class="{'pa-3': !$root.isMobile}"
-                         height="470px"></track-table>
+            <track-table :tracks="tracks" height="444px" :class="{'pa-3': !$root.isMobile}"></track-table>
         </template>
     </div>
 </template>

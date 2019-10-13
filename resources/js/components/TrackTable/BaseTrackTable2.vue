@@ -136,6 +136,23 @@
 
             &-title {
                 width: 300px;
+                display: flex;
+                align-items: center;
+
+                &-queue-indicator {
+                    font-size: .7em;
+                    border: 1px solid;
+                    width: 1.5em;
+                    height: 1.5em;
+                    line-height: 1em;
+                    text-align: center;
+                    padding: .2em;
+                    -webkit-border-radius: 5px;
+                    -moz-border-radius: 5px;
+                    border-radius: 5px;
+                    margin-left: 5px;
+                    opacity: .5;
+                }
             }
 
             &-album {

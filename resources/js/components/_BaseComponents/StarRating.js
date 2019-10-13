@@ -31,7 +31,7 @@ export default class StarRating {
         const offsetLeft = $event.pageX - this._wrapperElementOffsetX;
         const halfStarsAmount = Math.ceil((offsetLeft - 2) / (starWidth / 2));  // -2px for usability reasons
 
-        return halfStarsAmount / 2;
+        return Math.min(halfStarsAmount / 2, 5);
     }
 
     _handleMouseClick() {

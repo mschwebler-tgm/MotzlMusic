@@ -19,6 +19,7 @@
     import DesktopClusterizer from "$scripts/components/TrackTable/Clusterizer/Desktop/DesktopClusterizer";
     import ClusterizeOptions from "$scripts/components/TrackTable/Clusterizer/ClusterizeOptions";
     import {RenderDesktopColumns} from "$scripts/components/TrackTable/Clusterizer/Desktop/columns";
+    import StarRating from "$scripts/components/_BaseComponents/StarRating";
 
     export default {
         name: "BaseTrackTable2",
@@ -55,7 +56,7 @@
                     contentId: this.contentId,
                     rows,
                     callbacks: {
-                        // clusterChanged: () => this.clusterChanged()
+                        clusterChanged: () => this.clusterChanged()
                     }
                 });
             },
@@ -113,6 +114,33 @@
             _getTrackById(trackId) {
                 trackId = parseInt(trackId);
                 return this.tracks.filter(track => RenderDesktopColumns.getTrackData(track).id === trackId)[0];
+            },
+            clusterChanged() {
+                this.initStarRatings();
+            },
+            initStarRatings() {
+                const self = this;
+                this.$refs.contentArea.querySelectorAll(`.track-row-rating`).forEach(element => {
+                    let selectedRating = 0;
+                    const mouseEnter = $event => {
+                        const starWrapperElement = $event.target;
+                        const track = RenderDesktopColumns.getTrackData(self._getTrackFromEvent($event));
+                        const starRating = new StarRating(starWrapperElement);
+                        element.removeEventListener('mouseenter', mouseEnter);
+                        starRating.onRateHover(amount => starWrapperElement.innerHTML = StarRating.getStarSVGs(amount, true).join(''));
+                        starRating.onRate(amount => {
+                            selectedRating = amount;
+                            self.$emit('rate-track', track, amount);
+                        });
+                    };
+
+                    element.addEventListener('mouseenter', mouseEnter);
+                    element.addEventListener('mouseleave', $event => {
+                        const starWrapperElement = $event.target;
+                        const track = RenderDesktopColumns.getTrackData(self._getTrackFromEvent($event));
+                        starWrapperElement.innerHTML = StarRating.getStarSVGs(selectedRating || track.rating).join('')
+                    });
+                })
             }
         },
         computed: {
@@ -214,7 +242,10 @@
             }
 
             &-rating {
-                width: 200px;
+                width: 130px;
+                height: 100%;
+                display: flex;
+                align-items: center;
             }
 
             &-info-icons {

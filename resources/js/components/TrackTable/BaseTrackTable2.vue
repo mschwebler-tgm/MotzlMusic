@@ -7,7 +7,8 @@
                  class="clusterize-content"
                  @focusin="trackGotFocus"
                  @keydown.down.prevent="focusNextTrack"
-                 @keydown.up.prevent="focusPreviousTrack">
+                 @keydown.up.prevent="focusPreviousTrack"
+                 @keydown.enter="playTrackFromEvent">
             </div>
         </div>
     </div>
@@ -39,6 +40,9 @@
         },
         mounted() {
             this.initializeTracksTable();
+            if (this.options.is('playable')) {
+                this.initPlayListeners();
+            }
         },
         methods: {
             initializeTracksTable() {
@@ -61,8 +65,8 @@
                     return;
                 }
 
-                const focusedTrack = this.tracks.filter(track => track.id === trackId)[0];
-                this.$emit('track-selected', focusedTrack);
+                const focusedTrack = this._getTrackById(trackId);
+                this.$emit('track-selected', RenderDesktopColumns.getTrackData(focusedTrack));
             },
             focusNextTrack() {
                 let nextTrackElement = document.activeElement.nextElementSibling;
@@ -83,6 +87,32 @@
             },
             contentAreaIsFocused() {
                 return this.$refs.contentArea === document.activeElement;
+            },
+            initPlayListeners() {
+                if (this.options.is('desktop')) {
+                    this.$refs.contentArea.addEventListener('dblclick', $event => this.playTrackFromEvent($event));
+                }
+            },
+            playTrackFromEvent($event) {
+                if (this.options.is('playable')) {
+                    const track = RenderDesktopColumns.getTrackData(this._getTrackFromEvent($event))
+                    this.$emit('play-track', track);
+                }
+            },
+            _getTrackFromEvent($event) {
+                let trackId = null;
+                for (let i = 0; i < $event.path.length; i++) {
+                    if ($event.path[i].classList.contains('track-row')) {
+                        trackId = parseInt($event.path[i].dataset.id);
+                        break;
+                    }
+                }
+
+                return this._getTrackById(trackId);
+            },
+            _getTrackById(trackId) {
+                trackId = parseInt(trackId);
+                return this.tracks.filter(track => RenderDesktopColumns.getTrackData(track).id === trackId)[0];
             }
         },
         computed: {

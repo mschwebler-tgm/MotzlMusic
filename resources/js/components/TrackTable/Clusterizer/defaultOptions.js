@@ -3,8 +3,9 @@ const defaultOptions = {
     columns: [],
     activatable: true,
     // hasContextMenu: true,
-    // playable: true,
+    playable: true,
     // queueable: true,
+    desktop: true,
 };
 
 const availableOptions = Object.keys(defaultOptions);

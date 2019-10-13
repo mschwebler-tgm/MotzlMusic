@@ -16,9 +16,9 @@ class RenderDesktopColumns {
     static trackTitle(rawTrack, options) {
         let content = RenderDesktopColumns.getTrackData(rawTrack).name;
         if (rawTrack instanceof Track && options.is('showQueueIndicators') && rawTrack.queueIndex !== undefined) {
-            content += ` <span class="track-row-title-queue-indicator">${rawTrack.queueIndex + 1}</span>`
+            content += ` <div class="track-row-title-queue-indicator">${rawTrack.queueIndex + 1}</div>`
         }
-        return `<div class="track-row-title">${content}</div>`;
+        return `<div class="track-row-title text-truncate">${content}</div>`;
     }
 
     static trackAlbum(albumName) {
@@ -31,7 +31,7 @@ class RenderDesktopColumns {
 
     static trackArtists(artists) {
         const artistNames = artists.map(artist => artist.name).join(', ');
-        return `<div class="track-row-artist">${artistNames}</div>`;
+        return `<div class="track-row-artist text-truncate">${artistNames}</div>`;
     }
 
     static trackDuration(durationFormatted) {

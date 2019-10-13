@@ -3,7 +3,7 @@
         <div :id="scrollId"
              class="clusterize-scroll">
             <div :id="contentId"
-                 class="clusterize-content">
+                 class="clusterize-content" @focusin="trackGotFocus">
             </div>
         </div>
     </div>
@@ -49,6 +49,15 @@
                         // clusterChanged: () => this.clusterChanged()
                     }
                 });
+            },
+            trackGotFocus($event) {
+                const trackId = $event.target.dataset.id;
+                if (!trackId) {
+                    return;
+                }
+
+                const focusedTrack = this.tracks.filter(track => track.id === trackId)[0];
+                this.$emit('track-selected', focusedTrack);
             }
         },
         computed: {
@@ -72,6 +81,11 @@
             display: flex;
             align-items: center;
             overflow: hidden;
+
+            &:focus {
+                background-color: var(--v-primary-lighten1) !important;
+                outline: none;
+            }
 
             > div {
                 padding-left: 5px;

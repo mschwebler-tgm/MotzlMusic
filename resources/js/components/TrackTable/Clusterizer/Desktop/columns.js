@@ -101,4 +101,4 @@ const columns = {
     },
 };
 
-export {columns};
+export {columns, RenderDesktopColumns};

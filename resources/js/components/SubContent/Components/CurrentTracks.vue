@@ -6,15 +6,9 @@
                     <span>Start playback to see a list of current tracks</span>
                 </div>
                 <div v-else>
-                    <div v-for="track in tracksRaw"
-                         :key="`${track.trackData.id}_${track.isQueued}`"
-                         class="track-row font-weight-light">
-                        <div class="playing-icon">
-                            <img src="/images/icons/volume_up.png" alt="playing" v-if="currentTrackId === track.trackData.id">
-                        </div>
-                        <div class="track-title text-truncate">{{ track.trackData.name }}</div>
-                        <div class="track-artist text-truncate">{{ track.trackData.artists[0].name }}</div>
-                    </div>
+                    <track-table :tracks="tracksRaw"
+                                 :config="tableConfig"
+                                 height="360px"></track-table>
                 </div>
             </v-fade-transition>
         </div>
@@ -22,14 +16,37 @@
 </template>
 
 <script>
+    import TrackTable from "$scripts/components/TrackTable/TrackTable";
+    import {columns as desktopColumns} from "$scripts/components/TrackTable/Clusterizer/Desktop/columns";
+    import ClusterizeOptions from "$scripts/components/TrackTable/Clusterizer/ClusterizeOptions";
+
     export default {
         name: "CurrentTracks",
+        components: {TrackTable},
         computed: {
             tracksRaw() {
                 return this.$store.getters['player/trackListRaw'];
             },
             currentTrackId() {
                 return this.$store.getters['player/currentTrackId'];
+            },
+            tableConfig() {
+                const options = new ClusterizeOptions();
+                options.setOptions({
+                    desktopColumns: [
+                        desktopColumns.TRACK_TITLE,
+                        desktopColumns.DURATION,
+                        desktopColumns.ARTISTS,
+                    ],
+                    showQueueIndicators: true,
+                    activatable: true,
+                    contextMenu: false,
+                    playable: true,
+                    queueable: false,
+                    desktop: true,
+                });
+
+                return options;
             }
         },
     }

@@ -1,7 +1,7 @@
 <template>
     <base-track-table
             :tracks="tracks"
-            :options="tableConfig"
+            :options="config || tableConfig"
             @select-track="selectTrack"
             @play-track="playTrack"
             @rate-track="rateTrack"
@@ -24,6 +24,7 @@
         props: {
             tracks: Array,
             height: String,
+            config: Object,
         },
         methods: {
             resetSelectedTracks() {

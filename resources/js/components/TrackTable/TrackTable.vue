@@ -1,5 +1,5 @@
 <template>
-    <base-track-table2
+    <base-track-table
             :tracks="tracks"
             :options="tableConfig"
             @select-track="selectTrack"
@@ -8,11 +8,11 @@
             @queue-track="queueTrack"
             @focusout="resetSelectedTracks"
             :height="height">
-    </base-track-table2>
+    </base-track-table>
 </template>
 
 <script>
-    import BaseTrackTable2 from "./BaseTrackTable2";
+    import BaseTrackTable from "./BaseTrackTable";
     import {columns as mobileColumns} from "$scripts/components/TrackTable/Clusterizer/Mobile/columns";
     import {columns as desktopColumns} from "$scripts/components/TrackTable/Clusterizer/Desktop/columns";
     import ClusterizeOptions from "$scripts/components/TrackTable/Clusterizer/ClusterizeOptions";
@@ -20,7 +20,7 @@
 
     export default {
         name: "TrackTable",
-        components: {BaseTrackTable2},
+        components: {BaseTrackTable},
         props: {
             tracks: Array,
             height: String,

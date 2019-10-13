@@ -279,6 +279,20 @@
 
         .clusterize-scroll {
             overflow-y: scroll;
+
+
+            &::-webkit-scrollbar {
+                background: transparent;
+                width: 7px;
+            }
+
+            &::-webkit-scrollbar-button {
+                display: none;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background: rgba(127, 127, 127, 0.5);
+            }
         }
 
         .text-truncate {

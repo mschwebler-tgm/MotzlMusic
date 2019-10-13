@@ -20,6 +20,8 @@
     import ClusterizeOptions from "$scripts/components/TrackTable/Clusterizer/ClusterizeOptions";
     import {RenderDesktopColumns} from "$scripts/components/TrackTable/Clusterizer/Desktop/columns";
     import StarRating from "$scripts/components/_BaseComponents/StarRating";
+    import hotkeys from "hotkeys-js";
+    import {shortcuts} from "$scripts/helpers/shortcuts";
 
     export default {
         name: "BaseTrackTable2",
@@ -43,6 +45,9 @@
             this.initializeTracksTable();
             if (this.options.is('playable')) {
                 this.initPlayListeners();
+            }
+            if (this.options.is('queueable')) {
+                this.initQueueListener();
             }
         },
         methods: {
@@ -141,6 +146,12 @@
                         starWrapperElement.innerHTML = StarRating.getStarSVGs(selectedRating || track.rating).join('')
                     });
                 })
+            },
+            initQueueListener() {
+                hotkeys(shortcuts.QUEUE_NEXT, $event => {
+                    const track = RenderDesktopColumns.getTrackData(this._getTrackFromEvent($event));
+                    this.$emit('queue-track', track);
+                });
             }
         },
         computed: {

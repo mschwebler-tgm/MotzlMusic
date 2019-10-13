@@ -4,7 +4,7 @@ const defaultOptions = {
     activatable: true,
     // hasContextMenu: true,
     playable: true,
-    // queueable: true,
+    queueable: true,
     desktop: true,
 };
 

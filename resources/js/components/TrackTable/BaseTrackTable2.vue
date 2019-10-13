@@ -3,7 +3,11 @@
         <div :id="scrollId"
              class="clusterize-scroll">
             <div :id="contentId"
-                 class="clusterize-content" @focusin="trackGotFocus">
+                 ref="contentArea"
+                 class="clusterize-content"
+                 @focusin="trackGotFocus"
+                 @keydown.down.prevent="focusNextTrack"
+                 @keydown.up.prevent="focusPreviousTrack">
             </div>
         </div>
     </div>
@@ -13,6 +17,7 @@
     import Clusterize from "clusterize.js";
     import DesktopClusterizer from "$scripts/components/TrackTable/Clusterizer/Desktop/DesktopClusterizer";
     import ClusterizeOptions from "$scripts/components/TrackTable/Clusterizer/ClusterizeOptions";
+    import {RenderDesktopColumns} from "$scripts/components/TrackTable/Clusterizer/Desktop/columns";
 
     export default {
         name: "BaseTrackTable2",
@@ -58,6 +63,26 @@
 
                 const focusedTrack = this.tracks.filter(track => track.id === trackId)[0];
                 this.$emit('track-selected', focusedTrack);
+            },
+            focusNextTrack() {
+                let nextTrackElement = document.activeElement.nextElementSibling;
+                if (this.contentAreaIsFocused()) {
+                    const firstTrack = RenderDesktopColumns.getTrackData(this.tracks[0]);
+                    nextTrackElement = this.$refs.contentArea.querySelector(`[data-id="${firstTrack.id}"]`);
+                }
+                this.focusTrackRow(nextTrackElement);
+            },
+            focusPreviousTrack() {
+                let previousTrackElement = document.activeElement.previousElementSibling;
+                this.focusTrackRow(previousTrackElement);
+            },
+            focusTrackRow(trackElement) {
+                if (trackElement) {
+                    trackElement.focus();
+                }
+            },
+            contentAreaIsFocused() {
+                return this.$refs.contentArea === document.activeElement;
             }
         },
         computed: {

@@ -54,7 +54,6 @@ const app = new Vue({
     created() {
         this.detectTouch();
         setSystemBarColor('accent');
-        this.initHotkeys();
         this.initSubContent();
     },
     methods: {
@@ -91,9 +90,6 @@ const app = new Vue({
                 this.snackbar.show = true;
                 this.snackbar.color = color;
             });
-        },
-        initHotkeys() {
-            hotkeys(shortcuts.QUEUE_NEXT, () => this.$store.dispatch('player/addSelectedToQueue'));
         },
         initSubContent() {
             const subContent = this.user.sub_content || JSON.parse(localStorage.getItem('subContent')) || [];

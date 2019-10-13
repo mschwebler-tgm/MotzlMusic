@@ -72,7 +72,7 @@
 </script>
 
 <style lang="scss">
-    $row-height: 50px;
+    $row-height: 40px;
 
     .base-track-table {
 
@@ -129,6 +129,12 @@
 
             &-artist {
                 width: 250px;
+                opacity: .5;
+                cursor: pointer;
+
+                &:hover {
+                    text-decoration: underline;
+                }
             }
 
             &-duration {

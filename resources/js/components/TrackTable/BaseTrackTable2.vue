@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="base-track-table">
         <div :id="scrollId"
              class="clusterize-scroll">
             <div :id="contentId"
@@ -62,6 +62,88 @@
     }
 </script>
 
-<style scoped>
+<style lang="scss">
+    $row-height: 50px;
 
+    .base-track-table {
+
+        .track-row {
+            height: $row-height;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+
+            > div {
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+
+            &:nth-child(odd) {
+                background-color: rgba(255, 255, 255, 0.04);
+            }
+
+            &:hover {
+                background-color: rgba(255, 255, 255, 0.11);
+            }
+
+            &-number {
+                width: 40px;
+                text-align: right;
+
+                &::after {
+                    content: '.';
+                }
+            }
+
+            &-title {
+                width: 300px;
+            }
+
+            &-album {
+            }
+
+            &-image {
+                width: $row-height;
+                height: $row-height;
+                padding: 2px !important;
+
+                > img {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+
+            &-artist {
+                width: 250px;
+            }
+
+            &-duration {
+                width: 42px;
+            }
+
+            &-rating {
+                width: 200px;
+            }
+
+            &-info-icons {
+                flex: 1;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            &-options {
+                -webkit-transition: .1s ease-in-out;
+                -moz-transition: .1s ease-in-out;
+                -ms-transition: .1s ease-in-out;
+                -o-transition: .1s ease-in-out;
+                transition: .1s ease-in-out;
+                width: 0;
+            }
+
+            .track-row-info-icons:hover ~ .track-row-options, .track-row-options:hover {
+                width: 40px;
+            }
+        }
+    }
 </style>

@@ -1,13 +1,21 @@
 import StarRating from "$scripts/components/_BaseComponents/StarRating";
+import Track from "$store/player/helpers/v2/Track";
 
 class RenderDesktopColumns {
+    static getTrackData(rawTrack) {
+        if (rawTrack instanceof Track) {
+            return rawTrack.trackData;
+        }
+        return rawTrack;
+    }
+
     static trackIndex(index) {
         return `<div class="track-row-number">${index + 1}</div>`;
     }
 
-    static trackTitle(rawTrack, showQueueIndicators) {
-        let content = rawTrack.trackData.name;
-        if (showQueueIndicators && rawTrack.queueIndex !== undefined) {
+    static trackTitle(rawTrack, options) {
+        let content = RenderDesktopColumns.getTrackData(rawTrack).name;
+        if (rawTrack instanceof Track && options.is('showQueueIndicators') && rawTrack.queueIndex !== undefined) {
             content += ` <span class="track-row-title-queue-indicator">${rawTrack.queueIndex + 1}</span>`
         }
         return `<div class="track-row-title">${content}</div>`;
@@ -43,31 +51,31 @@ const columns = {
     },
     TRACK_TITLE: {
         label: 'Title',
-        render: (rawTrack, options) => RenderDesktopColumns.trackTitle(rawTrack, options.is('showQueueIndicators')),
+        render: (rawTrack, options) => RenderDesktopColumns.trackTitle(rawTrack, options),
     },
     ALBUM_TITLE: {
         label: 'Album',
-        render: rawTrack => RenderDesktopColumns.trackAlbum(rawTrack.trackData.album.name),
+        render: rawTrack => RenderDesktopColumns.trackAlbum(RenderDesktopColumns.getTrackData(rawTrack).album.name),
     },
     ALBUM_IMAGE: {
         label: '',
-        render: rawTrack => RenderDesktopColumns.albumImage(rawTrack.trackData.album.spotify_image_small),
+        render: rawTrack => RenderDesktopColumns.albumImage(RenderDesktopColumns.getTrackData(rawTrack).album.spotify_image_small),
     },
     ARTISTS: {
         label: 'Artists',
-        render: rawTrack => RenderDesktopColumns.trackArtists(rawTrack.trackData.artists),
+        render: rawTrack => RenderDesktopColumns.trackArtists(RenderDesktopColumns.getTrackData(rawTrack).artists),
     },
     ARTIST: {
         label: 'Artist',
-        render: rawTrack => RenderDesktopColumns.trackArtists([rawTrack.trackData.artists[0]]),
+        render: rawTrack => RenderDesktopColumns.trackArtists([RenderDesktopColumns.getTrackData(rawTrack).artists[0]]),
     },
     DURATION: {
         label: '',
-        render: rawTrack => RenderDesktopColumns.trackDuration(rawTrack.trackData.duration_formatted),
+        render: rawTrack => RenderDesktopColumns.trackDuration(RenderDesktopColumns.getTrackData(rawTrack).duration_formatted),
     },
     RATING: {
         label: 'Rating',
-        render: rawTrack => RenderDesktopColumns.trackRating(rawTrack.trackData.rating),
+        render: rawTrack => RenderDesktopColumns.trackRating(RenderDesktopColumns.getTrackData(rawTrack).rating),
     },
 };
 

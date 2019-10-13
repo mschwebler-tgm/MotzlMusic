@@ -15,8 +15,8 @@ export default class DesktopClusterizer {
         return rawTracks.map((rawTrack, trackIndex) => this._makeTrackRow(rawTrack, trackIndex));
     }
 
-    _makeTrackRow(track, trackIndex) {
-        return `<div class="track-row">${this._renderColumns(track, trackIndex)}</div>`;
+    _makeTrackRow(rawTrack, trackIndex) {
+        return `<div class="track-row">${this._renderColumns(rawTrack, trackIndex)}</div>`;
     }
 
     _renderColumns(rawTrack, trackIndex) {

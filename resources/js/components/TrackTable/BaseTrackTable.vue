@@ -92,6 +92,7 @@
                     track: null,
                 },
                 touchDragging: false,
+                activeTrackRowElement: null,
             }
         },
         created() {
@@ -104,7 +105,17 @@
         watch: {
             tracks() {
                 this.initializeTracksTable();
-            }
+            },
+            currentTrackId(trackId) {
+                if (!trackId) {
+                    return;
+                }
+                if (this.activeTrackRowElement) {
+                    this.activeTrackRowElement.classList.remove('active');
+                }
+                this.activeTrackRowElement = this.$refs.contentArea.querySelector(`[data-id="${trackId}"]`);
+                this.activeTrackRowElement.classList.add('active');
+            },
         },
         mounted() {
             this.initializeTracksTable();
@@ -267,6 +278,9 @@
             menuComponent() {
                 return this.options.is('desktop') ? 'v-menu' : 'v-bottom-sheet';
             },
+            currentTrackId() {
+                return this.$store.getters['player/currentTrackId'];
+            },
         }
     }
 </script>
@@ -310,6 +324,10 @@
             &:focus {
                 background-color: var(--v-primary-lighten1) !important;
                 outline: none;
+            }
+
+            &.active {
+                background-color: var(--v-primary-base) !important;
             }
 
             > div {

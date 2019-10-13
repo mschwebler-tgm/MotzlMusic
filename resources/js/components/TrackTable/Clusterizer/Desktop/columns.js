@@ -50,7 +50,11 @@ class RenderDesktopColumns {
         }
         // `<div class="track-list-options-trigger"><span class="icon has-text-grey-light" title="Subscribed from Timi Hendrix"><i class="mdi mdi-account-multiple mdi-24px"></i></span></div>`
 
-        return `<div class="track-list-info-icons">${icons}</div>`;
+        return `<div class="track-row-info-icons">${icons}</div>`;
+    }
+
+    static trackOptions() {
+        return `<div class="track-row-options"><span class="icon has-text-grey-light pointer" title="More options"><i class="mdi mdi-dots-vertical mdi-24px track-options"></i></span></div>`;
     }
 }
 
@@ -90,7 +94,11 @@ const columns = {
     INFO_ICONS: {
         label: '',
         render: rawTrack => RenderDesktopColumns.infoIcons(RenderDesktopColumns.getTrackData(rawTrack)),
-    }
+    },
+    TRACK_OPTIONS: {
+        label: '',
+        render: () => RenderDesktopColumns.trackOptions(),
+    },
 };
 
 export {columns};

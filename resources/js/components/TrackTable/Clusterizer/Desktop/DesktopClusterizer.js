@@ -1,21 +1,7 @@
 import {RenderDesktopColumns} from "$scripts/components/TrackTable/Clusterizer/Desktop/columns";
+import Clusterizer from "$scripts/components/TrackTable/Clusterizer/Clusterizer";
 
-export default class DesktopClusterizer {
-
-    /**
-     * @param options ClusterizeOptions
-     */
-    constructor(options) {
-        this._options = options;
-    }
-
-    configure(options) {
-        this._options.setOptions(options);
-    }
-
-    generateForTracks(rawTracks) {
-        return rawTracks.map((rawTrack, trackIndex) => this._makeTrackRow(rawTrack, trackIndex));
-    }
+export default class DesktopClusterizer extends Clusterizer {
 
     _makeTrackRow(rawTrack, trackIndex) {
         const tabIndex = this._getTabIndex();
@@ -30,12 +16,7 @@ export default class DesktopClusterizer {
         return '';
     }
 
-    _renderColumns(rawTrack, trackIndex) {
-        return this._options.getColumns().map(column => column.render(rawTrack, this._options, trackIndex)).join('');
-    }
-
-    _getTrackId(rawTrack) {
-        const id = RenderDesktopColumns.getTrackData(rawTrack).id;
-        return `data-id="${id}"`;
+    get columnRenderClass() {
+        return RenderDesktopColumns;
     }
 }

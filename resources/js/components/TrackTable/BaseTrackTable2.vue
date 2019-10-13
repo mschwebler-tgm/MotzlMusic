@@ -12,10 +12,10 @@
                  @contextmenu.prevent="showContextMenu">
             </div>
         </div>
-        <v-menu v-model="contextMenu.show"
+        <component v-model="contextMenu.show"
                 :position-x="contextMenu.positionX"
                 :position-y="contextMenu.positionY"
-                v-if="options.is('desktop')"
+                :is="menuComponent"
                 offset-x
                 absolute>
             <v-list light dense>
@@ -53,7 +53,7 @@
                     </v-list-item-title>
                 </v-list-item>
             </v-list>
-        </v-menu>
+        </component>
     </div>
 </template>
 
@@ -85,7 +85,8 @@
                     positionX: 0,
                     positionY: 0,
                     track: null,
-                }
+                },
+                touchDragging: false,
             }
         },
         created() {
@@ -105,6 +106,12 @@
             }
         },
         methods: {
+            clusterChanged() {
+                this.initStarRatings();
+                if (this.options.is('contextMenu')) {
+                    this.initContextMenuListener();
+                }
+            },
             initializeTracksTable() {
                 const rows = this.clusterizer.generateForTracks(this.tracks);
                 this._initClusterizeJs(rows);
@@ -151,11 +158,19 @@
             initPlayListeners() {
                 if (this.options.is('desktop')) {
                     this.$refs.contentArea.addEventListener('dblclick', $event => this.playTrackFromEvent($event));
+                } else {
+                    this.$refs.contentArea.addEventListener('touchend', $event => {
+                        if (!this.touchDragging && !this.contextMenu.show && !$event.target.classList.contains('track-row-options-mobile')) {
+                            this.playTrackFromEvent($event)
+                        }
+                    });
+                    this.$refs.contentArea.addEventListener('touchstart', () => this.touchDragging = false);
+                    this.$refs.contentArea.addEventListener('touchmove', () => this.touchDragging = true);
                 }
             },
             playTrackFromEvent($event) {
                 if (this.options.is('playable')) {
-                    const track = this._getTrackData(this._getTrackFromEvent($event))
+                    const track = this._getTrackData(this._getTrackFromEvent($event));
                     this.$emit('play-track', track);
                 }
             },
@@ -176,12 +191,6 @@
             _getTrackById(trackId) {
                 trackId = parseInt(trackId);
                 return this.tracks.filter(track => this._getTrackData(track).id === trackId)[0];
-            },
-            clusterChanged() {
-                this.initStarRatings();
-                if (this.options.is('contextMenu')) {
-                    this.initContextMenuListener();
-                }
             },
             initStarRatings() {
                 const self = this;
@@ -217,6 +226,13 @@
                 this.$refs.contentArea.querySelectorAll('.track-row-options').forEach(element => {
                     element.addEventListener('click', $event => this.showContextMenu($event));
                 });
+                this.$refs.contentArea.querySelectorAll('.track-row-options-mobile').forEach(element => {
+                    element.addEventListener('touchend', $event => {
+                        $event.stopPropagation();
+                        $event.preventDefault();
+                        this.showContextMenu($event)
+                    });
+                });
             },
             showContextMenu($event) {
                 if (this.options.is('contextMenu')) {
@@ -227,6 +243,7 @@
                 }
             },
             queueTrack() {
+                this.contextMenu.show = false;
                 this.$emit('queue-track', this._getTrackData(this.contextMenu.track));
             }
         },
@@ -236,6 +253,9 @@
             },
             contentId() {
                 return this.tableId + '-content';
+            },
+            menuComponent() {
+                return this.options.is('desktop') ? 'v-menu' : 'v-bottom-sheet';
             },
         }
     }

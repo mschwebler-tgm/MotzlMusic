@@ -96,6 +96,11 @@
                 this.clusterizer = new MobileClusterizer(this.options);
             }
         },
+        watch: {
+            tracks() {
+                this.initializeTracksTable();
+            }
+        },
         mounted() {
             this.initializeTracksTable();
             if (this.options.is('playable')) {
@@ -175,7 +180,7 @@
                 }
             },
             _getTrackData(track) {
-                return RenderDesktopColumns.getTrackData(track);
+                return this.clusterizer.columnRenderClass.getTrackData(track);
             },
             _getTrackFromEvent($event) {
                 let trackId = null;

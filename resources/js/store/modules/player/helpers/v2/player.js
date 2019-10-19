@@ -173,14 +173,6 @@ export class Player {
             currentTrack.isQueued = false;
             this._updateQueueIndexes();
         }
-        this._updateActiveClasses(currentTrack);
-    }
-
-    _updateActiveClasses(currentTrack) {
-        const oldTrackRows = [...document.getElementsByClassName('track')];
-        oldTrackRows.forEach($row => $row.classList.remove('active'));
-        const trackRows = [...document.getElementsByClassName(`track-row-${currentTrack.trackData.id}`)];
-        trackRows.forEach($row => $row.classList.add('active'));
     }
 
     _setTrackList() {

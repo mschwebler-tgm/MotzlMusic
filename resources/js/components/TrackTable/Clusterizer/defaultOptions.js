@@ -1,5 +1,6 @@
 const defaultOptions = {
     showQueueIndicators: true,
+    activeByPlayingTrackListIndex: false,
     mobileColumns: [],
     desktopColumns: [],
     activatable: true,

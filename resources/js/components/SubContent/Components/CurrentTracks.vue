@@ -39,6 +39,7 @@
                         desktopColumns.ARTISTS,
                     ],
                     showQueueIndicators: true,
+                    activeByPlayingTrackListIndex: true,
                     activatable: true,
                     contextMenu: false,
                     playable: true,

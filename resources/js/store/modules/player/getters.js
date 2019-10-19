@@ -71,4 +71,7 @@ export default {
     trackListRaw() {
         return player.trackListRaw;
     },
+    currentTrackIndex() {
+        return player.currentTrackIndex;
+    },
 }

@@ -110,11 +110,7 @@
                 if (!trackId) {
                     return;
                 }
-                if (this.activeTrackRowElement) {
-                    this.activeTrackRowElement.classList.remove('active');
-                }
-                this.activeTrackRowElement = this.$refs.contentArea.querySelector(`[data-id="${trackId}"]`);
-                this.activeTrackRowElement.classList.add('active');
+                this.setActiveClass();
             },
             queuedTracksRaw(newTracks, oldQueuedTracks) {
                 if (this.options.is('showQueueIndicators')) {
@@ -142,6 +138,7 @@
         methods: {
             clusterChanged() {
                 this.initStarRatings();
+                this.setActiveClass();
                 if (this.options.is('contextMenu')) {
                     this.initContextMenuListener();
                 }
@@ -159,6 +156,19 @@
                         clusterChanged: () => this.clusterChanged()
                     }
                 });
+            },
+            setActiveClass() {
+                if (this.activeTrackRowElement) {
+                    this.activeTrackRowElement.classList.remove('active');
+                }
+                if (this.options.is('activeByPlayingTrackListIndex')) {
+                    this.activeTrackRowElement = this.$refs.contentArea.querySelectorAll('.track-row')[this.currentTrackIndex];
+                } else {
+                    this.activeTrackRowElement = this.$refs.contentArea.querySelector(`[data-id="${this.currentTrackId}"]`);
+                }
+                if (this.activeTrackRowElement) {
+                    this.activeTrackRowElement.classList.add('active');
+                }
             },
             trackGotFocus($event) {
                 const trackId = $event.target.dataset.id;
@@ -296,6 +306,9 @@
             },
             queuedTracksRaw() {
                 return this.$store.getters['player/queuedTracksRaw'];
+            },
+            currentTrackIndex() {
+                return this.$store.getters['player/currentTrackIndex'];
             }
         }
     }

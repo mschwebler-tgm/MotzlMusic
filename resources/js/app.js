@@ -7,11 +7,8 @@ import 'vuetify/dist/vuetify.min.css';
 
 import Vue from 'vue';
 import Vuetify from 'vuetify'
-import theme from './theme';
-import {setSystemBarColor} from './theme';
+import theme, {setSystemBarColor} from './theme';
 import MainContentHeaders from './components/Layout/MainContentHeader/MainContentHeaders';
-import {shortcuts} from "./helpers/shortcuts";
-import hotkeys from "hotkeys-js";
 
 require('./vue-components');
 
@@ -31,8 +28,6 @@ const app = new Vue({
     data() {
         return {
             showSpotifyImport: false,
-            isDarkTheme: localStorage.getItem('useDarkTheme') === '1',
-            useExtraDarkTheme: false,
             statusInfo: {
                 show: false,
                 component: null,
@@ -97,9 +92,19 @@ const app = new Vue({
         }
     },
     watch: {
-        isDarkTheme(isDark) {
-            this.$vuetify.theme.isDark = isDark;
-            localStorage.setItem('useDarkTheme', 0 + isDark);
+        isDarkTheme: {
+            handler(isDark) {
+                this.$vuetify.theme.isDark = isDark;
+            },
+            immediate: true,
+        }
+    },
+    computed: {
+        isDarkTheme() {
+            return this.user.settings.appearance.theme !== 'light';
+        },
+        useExtraDarkTheme() {
+            return this.user.settings.appearance.theme === 'extra dark';
         }
     }
 });

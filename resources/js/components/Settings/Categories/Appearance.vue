@@ -41,7 +41,7 @@
                     .then(res => {
                         this.success = true;
                         this.error = false;
-                        this.$root.user.theme = res.data.theme;
+                        this.$root.user.settings.appearance = res.data.appearance;
                         setTimeout(() => this.success = false, 5000);
                     })
                     .catch(err => {

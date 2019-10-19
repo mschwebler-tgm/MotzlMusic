@@ -1,5 +1,13 @@
 <template>
     <div class="base-track-table">
+        <div v-if="showLoading">
+            <v-skeleton-loader type="list-item-avatar-two-line"></v-skeleton-loader>
+            <v-skeleton-loader type="list-item-avatar-two-line"></v-skeleton-loader>
+            <v-skeleton-loader type="list-item-avatar-two-line"></v-skeleton-loader>
+            <v-skeleton-loader type="list-item-avatar-two-line"></v-skeleton-loader>
+            <v-skeleton-loader type="list-item-avatar-two-line"></v-skeleton-loader>
+            <v-skeleton-loader type="list-item-avatar-two-line"></v-skeleton-loader>
+        </div>
         <div :id="scrollId"
              :style="{'max-height': height}"
              class="clusterize-scroll">
@@ -93,6 +101,7 @@
                 },
                 touchDragging: false,
                 activeTrackRowElement: null,
+                isInitialized: false,
             }
         },
         created() {
@@ -137,6 +146,7 @@
         },
         methods: {
             clusterChanged() {
+                this.isInitialized = true;
                 this.initStarRatings();
                 this.setActiveClass();
                 if (this.options.is('contextMenu')) {
@@ -309,7 +319,10 @@
             },
             currentTrackIndex() {
                 return this.$store.getters['player/currentTrackIndex'];
-            }
+            },
+            showLoading() {
+                return this.tracks.length === 0 || !this.isInitialized;
+            },
         }
     }
 </script>

@@ -9,6 +9,7 @@ import SettingsDeleteAccount from './components/Settings/Categories/DeleteAccoun
 import SettingsNotifications from './components/Settings/Categories/Notifications';
 import SettingsPrivacy from './components/Settings/Categories/Privacy';
 import SettingsProfile from './components/Settings/Categories/Profile';
+import SettingsAppearance from "$scripts/components/Settings/Categories/Appearance";
 import SpotifyImport from './components/SpotifyImport/SpotifyImport';
 import Upload from './components/Upload/Upload';
 import MyLibrary from './components/MyLibrary/MyLibrary';
@@ -49,6 +50,11 @@ export default new VueRouter({
                             path: 'general',
                             name: 'General',
                             component: SettingsGeneral,
+                        },
+                        {
+                            path: 'appearance',
+                            name: 'Appearance',
+                            component: SettingsAppearance,
                         },
                         {
                             path: 'notifications',

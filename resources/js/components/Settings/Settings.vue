@@ -26,6 +26,10 @@
                     <v-expansion-panel-content><general></general></v-expansion-panel-content>
                 </v-expansion-panel>
                 <v-expansion-panel>
+                    <v-expansion-panel-header>Appearance</v-expansion-panel-header>
+                    <v-expansion-panel-content><appearance></appearance></v-expansion-panel-content>
+                </v-expansion-panel>
+                <v-expansion-panel>
                     <v-expansion-panel-header>Notifications</v-expansion-panel-header>
                     <v-expansion-panel-content><notifications></notifications></v-expansion-panel-content>
                 </v-expansion-panel>
@@ -52,16 +56,21 @@
     import Privacy from "./Categories/Privacy";
     import Profile from "../Profile/Profile";
     import DeleteAccount from "./Categories/DeleteAccount";
+    import Appearance from "$scripts/components/Settings/Categories/Appearance";
 
     export default {
         name: "Settings",
-        components: {DeleteAccount, Profile, Privacy, Notifications, General},
+        components: {Appearance, DeleteAccount, Profile, Privacy, Notifications, General},
         data() {
             return {
                 settings: [
                     {
                         name: 'General',
                         to: '/settings/general',
+                    },
+                    {
+                        name: 'Appearance',
+                        to: '/settings/appearance',
                     },
                     {
                         name: 'Notifications',

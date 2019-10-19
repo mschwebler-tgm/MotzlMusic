@@ -15,7 +15,10 @@ return [
             'post_uploads' => true,
             'show_name_on_posts' => false,
             'profile_visibility' => 'friends',
-        ]
+        ],
+        'appearance' => [
+            'theme' => 'dark',
+        ],
     ],
 
 ];

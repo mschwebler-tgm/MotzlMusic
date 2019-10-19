@@ -2,6 +2,7 @@
 
 namespace App\Components\UserSettings\Http;
 
+use App\Components\UserSettings\Http\Requests\UserSettingsAppearanceRequest;
 use App\Components\UserSettings\Http\Requests\UserNameChangeRequest;
 use App\Components\UserSettings\Http\Requests\UserSettingsNotificationsRequest;
 use App\Components\UserSettings\Http\Requests\UserSettingsPrivacyRequest;
@@ -26,6 +27,11 @@ class SettingsController extends Controller
     public function storePrivacySettings(UserSettingsPrivacyRequest $request)
     {
         return $this->settingsDao->updatePrivacySettingsForUser(apiUser(), $request->getPrivacySettings());
+    }
+
+    public function storeAppearanceSettings(UserSettingsAppearanceRequest $request)
+    {
+        return $this->settingsDao->updateAppearanceSettings(apiUser(), $request->getAppearanceSettings());
     }
 
     public function storeUserNickname(UserNameChangeRequest $request, UserDao $userDao)

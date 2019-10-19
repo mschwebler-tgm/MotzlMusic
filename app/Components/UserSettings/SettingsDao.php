@@ -11,7 +11,8 @@ class SettingsDao
     {
         $user->settings = new UserSettings(
             $notificationSettings,
-            $user->settings->getPrivacySettings()
+            $user->settings->getPrivacySettings(),
+            $user->settings->getAppearanceSettings()
         );
         $user->save();
 
@@ -22,7 +23,20 @@ class SettingsDao
     {
         $user->settings = new UserSettings(
             $user->settings->getNotificationSettings(),
-            $privacySettings
+            $privacySettings,
+            $user->settings->getAppearanceSettings()
+        );
+        $user->save();
+
+        return $user->settings;
+    }
+
+    public function updateAppearanceSettings(User $user, UserSettingsAppearance $getAppearanceSettings)
+    {
+        $user->settings = new UserSettings(
+            $user->settings->getNotificationSettings(),
+            $user->settings->getPrivacySettings(),
+            $getAppearanceSettings
         );
         $user->save();
 

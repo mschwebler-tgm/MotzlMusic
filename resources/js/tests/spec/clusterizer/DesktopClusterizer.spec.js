@@ -1,6 +1,7 @@
 import DesktopClusterizer from "$scripts/components/TrackTable/Clusterizer/Desktop/DesktopClusterizer";
 import {columns} from "$scripts/components/TrackTable/Clusterizer/Desktop/columns";
 import ClusterizeOptions from "$scripts/components/TrackTable/Clusterizer/ClusterizeOptions";
+import Track from "$store/player/helpers/v2/Track";
 
 describe('DesktopClusterizer', () => {
     it('should generate a div container for a row', () => {
@@ -10,7 +11,7 @@ describe('DesktopClusterizer', () => {
         const htmlContent = clusterizer.generateForTracks(tracks)[0];
 
         expect(htmlContent).toContain('div');
-        expect(htmlContent).toContain('class="track-row"');
+        expect(htmlContent).toContain('class="track-row');
     });
 
     it('should throw error if invalid option is provided', () => {
@@ -22,10 +23,10 @@ describe('DesktopClusterizer', () => {
 
     it('should render track title column', () => {
         const clusterizer = new DesktopClusterizer(new ClusterizeOptions());
-        clusterizer.configure({columns: [columns.TRACK_TITLE]});
+        clusterizer.configure({desktopColumns: [columns.TRACK_TITLE]});
         const name = 'test track';
 
-        const htmlContent = clusterizer.generateForTracks([{trackData: {name}}])[0];
+        const htmlContent = clusterizer.generateForTracks([new Track({name})])[0];
 
         expect(htmlContent).toContain('track-row-title');
         expect(htmlContent).toContain(name);
@@ -33,11 +34,11 @@ describe('DesktopClusterizer', () => {
 
     it('should show queue indicator on title column', () => {
         const clusterizer = new DesktopClusterizer(new ClusterizeOptions());
-        clusterizer.configure({columns: [columns.TRACK_TITLE]});
+        clusterizer.configure({desktopColumns: [columns.TRACK_TITLE]});
         const name = 'test track';
         const queueIndex = 5;
 
-        const htmlContent = clusterizer.generateForTracks([{trackData: {name}, queueIndex}])[0];
+        const htmlContent = clusterizer.generateForTracks([new Track({name}, true, queueIndex)])[0];
 
         expect(htmlContent).toContain('track-row-title-queue-indicator');
         expect(htmlContent).toContain(queueIndex + 1);

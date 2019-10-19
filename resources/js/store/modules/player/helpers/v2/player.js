@@ -171,6 +171,7 @@ export class Player {
         const currentTrack = this._currentTrackList[this._currentTrackIndex];
         if (currentTrack.isQueued) {
             currentTrack.isQueued = false;
+            this._updateQueueIndexes();
         }
         this._updateActiveClasses(currentTrack);
     }

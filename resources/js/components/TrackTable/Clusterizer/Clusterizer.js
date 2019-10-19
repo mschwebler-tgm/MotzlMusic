@@ -1,5 +1,3 @@
-import {RenderDesktopColumns} from "$scripts/components/TrackTable/Clusterizer/Desktop/columns";
-
 export default class Clusterizer {
     /**
      * @param options ClusterizeOptions
@@ -34,6 +32,10 @@ export default class Clusterizer {
     _getTrackId(rawTrack) {
         const id = this.columnRenderClass['getTrackData'](rawTrack).id;
         return `data-id="${id}"`;
+    }
+
+    _getQueuedStatus(rawTrack) {
+        return rawTrack.isQueued === true ? 'queued' : '';
     }
 
     get columnRenderClass() {

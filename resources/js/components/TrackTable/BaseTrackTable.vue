@@ -116,6 +116,19 @@
                 this.activeTrackRowElement = this.$refs.contentArea.querySelector(`[data-id="${trackId}"]`);
                 this.activeTrackRowElement.classList.add('active');
             },
+            queuedTracksRaw(newTracks, oldQueuedTracks) {
+                if (this.options.is('showQueueIndicators')) {
+                    const queuedTrackElements = this.$refs.contentArea.querySelectorAll('.track-row.queued');
+                    queuedTrackElements.forEach(element => {
+                        const trackId = parseInt(element.dataset.id);
+                        const titleElement = element.querySelector('.track-row-title');
+                        const track = oldQueuedTracks.find(rawTrack => rawTrack.trackData.id === trackId);
+                        if (track) {
+                            titleElement.outerHTML = this.clusterizer.columnRenderClass.trackTitle(track, this.options);
+                        }
+                    });
+                }
+            }
         },
         mounted() {
             this.initializeTracksTable();
@@ -211,7 +224,7 @@
             },
             _getTrackById(trackId) {
                 trackId = parseInt(trackId);
-                return this.tracks.filter(track => this._getTrackData(track).id === trackId)[0];
+                return this.tracks.find(track => this._getTrackData(track).id === trackId);
             },
             initStarRatings() {
                 const self = this;
@@ -281,6 +294,9 @@
             currentTrackId() {
                 return this.$store.getters['player/currentTrackId'];
             },
+            queuedTracksRaw() {
+                return this.$store.getters['player/queuedTracksRaw'];
+            }
         }
     }
 </script>

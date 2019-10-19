@@ -15,7 +15,7 @@ class RenderDesktopColumns {
 
     static trackTitle(rawTrack, options) {
         let content = RenderDesktopColumns.getTrackData(rawTrack).name;
-        if (rawTrack instanceof Track && options.is('showQueueIndicators') && rawTrack.queueIndex !== undefined) {
+        if (rawTrack instanceof Track && options.is('showQueueIndicators') && rawTrack.isQueued) {
             content += ` <div class="track-row-title-queue-indicator">${rawTrack.queueIndex + 1}</div>`
         }
         return `<div class="track-row-title text-truncate">${content}</div>`;

@@ -11,7 +11,7 @@ class RenderMobileColumns {
     static titleAndArtist(rawTrack, options) {
         const trackData = RenderMobileColumns.getTrackData(rawTrack);
         let title = trackData.name;
-        if (rawTrack instanceof Track && options.is('showQueueIndicators') && rawTrack.queueIndex !== undefined) {
+        if (rawTrack instanceof Track && options.is('showQueueIndicators') && rawTrack.isQueued) {
             title += ` <div class="track-row-title-queue-indicator">${rawTrack.queueIndex + 1}</div>`
         }
         const artistNames = trackData.artists.map(artist => artist.name).join(', ');

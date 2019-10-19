@@ -168,7 +168,7 @@
                                 </transition>
                             </div>
                         </v-flex>
-                        <v-flex xl3 class="hidden-lg-and-down">
+                        <v-flex xl3 class="hidden-lg-and-down h-100">
                             <sub-content></sub-content>
                             <!-- Side Content -->
                         </v-flex>

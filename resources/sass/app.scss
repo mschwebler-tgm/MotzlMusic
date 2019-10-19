@@ -8,7 +8,7 @@
 @import "mobileHelpers";
 
 html {
-  overflow-y: auto;
+  overflow-y: hidden !important;
 }
 
 .invert--color {
@@ -22,6 +22,14 @@ html {
 
 .w-100 {
   width: 100%;
+}
+
+.y-scroll {
+    overflow-y: scroll;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
 }
 
 .flex-column {

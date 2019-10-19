@@ -17,12 +17,13 @@
                 </v-flex>
             </v-layout>
         </v-flex>
-        <v-flex grow fill-height>
+        <v-flex grow fill-height class="y-scroll">
             <v-layout column class="fill-height">
                 <Container v-if="isInEditMode"
                            remove-on-drop-out
                            @drop="onDrop"
-                           group-name="sub-content">
+                           group-name="sub-content"
+                           class="h-100">
                     <Draggable v-for="(content, index) in subContentEditClone"
                                :key="content.randomId">
                         <v-flex shrink :class="{'pt-0': index === 0}">

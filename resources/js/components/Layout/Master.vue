@@ -104,7 +104,6 @@
                     <!--                    <v-btn text>Link One</v-btn>-->
                     <!--                    <v-btn text>Link Two</v-btn>-->
                     <v-menu transition="slide-y-transition"
-                            :close-delay="500"
                             bottom left open-on-hover offset-y>
                         <template v-slot:activator="{on: menu}">
                             <v-btn v-on="menu" color="primary" depressed :ripple="false" aria-label="Profile">
@@ -123,7 +122,7 @@
                                 <v-list-item-icon>
                                     <v-icon class="grey--text">settings</v-icon>
                                 </v-list-item-icon>
-                                <v-list-item-title>Settings</v-list-item-title>
+                                <v-list-item-title>Preferences</v-list-item-title>
                             </v-list-item>
                             <v-divider></v-divider>
                             <v-list-item @click="$root.isDarkTheme = !$root.isDarkTheme">

@@ -5,7 +5,7 @@
             <v-switch v-model="settings.incognito" class="incognito" :disabled="loading">
                 <template slot="label">
                     I want to be a ghost&nbsp;&nbsp;
-                    <v-icon disabled>perm_identity</v-icon>
+                    <v-icon disabled>mdi-ghost</v-icon>
                 </template>
             </v-switch>
         </div>

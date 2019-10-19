@@ -15,22 +15,30 @@
             <img src="/images/403.svg" alt="403" width="400">
         </div>
 
+        <div class="d-flex pa-3" v-if="loading">
+            <v-skeleton-loader type="image" width="190"></v-skeleton-loader>
+            <v-skeleton-loader type="sentences" width="400" class="ml-3 d-flex"></v-skeleton-loader>
+            <div class="flex-1 d-flex justify-end align-end">
+                <v-skeleton-loader type="button" width="80"></v-skeleton-loader>
+                <v-skeleton-loader type="button"></v-skeleton-loader>
+            </div>
+        </div>
         <!-- PLAYLIST -->
         <template v-if="playlist">
             <!-- HEADER DESKTOP -->
             <div class="hidden-sm-and-down">
                 <div class="d-flex pa-3">
                     <v-img
-                            :src="$root.getSpotifyImage(playlist, 'medium')"
-                            :lazy-src="$root.getSpotifyImage(playlist, 'small')"
-                            aspect-ratio="1"
-                            class="grey lighten-2 playlist-image">
+                        :src="$root.getSpotifyImage(playlist, 'medium')"
+                        :lazy-src="$root.getSpotifyImage(playlist, 'small')"
+                        aspect-ratio="1"
+                        class="grey lighten-2 playlist-image">
                         <template v-slot="placeholder">
                             <v-layout
-                                    fill-height
-                                    align-center
-                                    justify-center
-                                    ma-0>
+                                fill-height
+                                align-center
+                                justify-center
+                                ma-0>
                                 <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
                             </v-layout>
                         </template>
@@ -50,17 +58,17 @@
             <div class="hidden-md-and-up">
                 <div class="relative">
                     <v-img
-                            :src="$root.getSpotifyImage(playlist, 'medium')"
-                            :lazy-src="$root.getSpotifyImage(playlist, 'small')"
-                            aspect-ratio="1"
-                            min-width="100%"
-                            class="grey lighten-2 playlist-image">
+                        :src="$root.getSpotifyImage(playlist, 'medium')"
+                        :lazy-src="$root.getSpotifyImage(playlist, 'small')"
+                        aspect-ratio="1"
+                        min-width="100%"
+                        class="grey lighten-2 playlist-image">
                         <template v-slot="placeholder">
                             <v-layout
-                                    fill-height
-                                    align-center
-                                    justify-center
-                                    ma-0>
+                                fill-height
+                                align-center
+                                justify-center
+                                ma-0>
                                 <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
                             </v-layout>
                         </template>
@@ -88,8 +96,8 @@
                     </div>
                 </div>
             </div>
-            <track-table :tracks="tracks" height="444px" :class="{'pa-3': !$root.isMobile}"></track-table>
         </template>
+        <track-table :tracks="tracks" height="444px" :class="{'pa-3': !$root.isMobile}"></track-table>
     </div>
 </template>
 
@@ -111,6 +119,7 @@
                 errorResponse: null,
                 tracks: [],
                 clusterizeFunction: this.$root.isMobile ? clusterizeTracksMobile : clusterizeTracks,
+                loading: false,
             }
         },
         created() {
@@ -121,9 +130,11 @@
         methods: {
             loadPlaylistIfNeeded() {
                 if (!this.playlist) {
+                    this.loading = true;
                     axios.get(`/api/playlist/${this.id}`)
                         .then(res => this.$store.commit('cache/setSelectedPlaylist', res.data))
-                        .catch(err => this.handleError(err));
+                        .catch(err => this.handleError(err))
+                        .finally(() => this.loading = false);
                 }
             },
             loadTracks() {

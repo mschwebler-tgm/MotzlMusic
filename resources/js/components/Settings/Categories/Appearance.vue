@@ -12,10 +12,17 @@
             </ul>
         </v-alert>
         <v-select label="Theme"
-                  v-model="theme"
+                  v-model="$root.user.settings.appearance.theme"
                   :items="themeOptions"
                   filled
                   style="width: 200px"></v-select>
+        <v-slider label="Brightness"
+                  prepend-icon="mdi-lightbulb-outline"
+                  append-icon="mdi-lightbulb-on-outline"
+                  v-model="$root.user.settings.appearance.brightness"
+                  min="0"
+                  max="100"
+                  style="width: 400px"></v-slider>
         <v-divider class="mb-3 mt-3"></v-divider>
         <v-btn color="accent" @click="save" :loading="loading">Save</v-btn>
     </div>
@@ -26,18 +33,16 @@
         name: "Appearance",
         data() {
             return {
-                user: {...this.$root.user},
                 loading: false,
                 success: false,
                 error: false,
-                theme: this.$root.user.settings.appearance.theme,
                 themeOptions: ['light', 'dark', 'extra dark'],
             }
         },
         methods: {
             save() {
                 this.loading = true;
-                axios.post('/api/settings/appearance', {theme: this.theme.toLowerCase()})
+                axios.post('/api/settings/appearance', {...this.$root.user.settings.appearance})
                     .then(res => {
                         this.success = true;
                         this.error = false;

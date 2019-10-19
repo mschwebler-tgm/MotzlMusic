@@ -15,7 +15,7 @@ class AddSettingsToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('settings')->default(UserSettings::defaultSettingsJSON());
+            $table->string('settings', 13000)->default(UserSettings::defaultSettingsJSON());
         });
     }
 
@@ -27,7 +27,7 @@ class AddSettingsToUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('settings');
+            $table->text('settings');
         });
     }
 }

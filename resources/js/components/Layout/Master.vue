@@ -1,5 +1,5 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
-    <div id="master" @dragenter="dragging = true" :class="{'extra-dark': $root.isDarkTheme && $root.useExtraDarkTheme}">
+    <div id="master" @dragenter="dragging = true" :class="{'extra-dark': $root.isDarkTheme && $root.useExtraDarkTheme}" :style="brightnessStyle">
         <div v-show="dragging"
              @dragover="dragOver"
              @drop="drop"
@@ -252,6 +252,11 @@
         computed: {
             isSubContentInEditMode() {
                 return this.$store.getters['subContent/isInEditMode'];
+            },
+            brightnessStyle() {
+                return {
+                    filter: `brightness(${this.$root.user.settings.appearance.brightness / 100})`
+                }
             }
         }
     }

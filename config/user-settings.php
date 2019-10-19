@@ -18,6 +18,7 @@ return [
         ],
         'appearance' => [
             'theme' => 'dark',
+            'brightness' => 100,
         ],
     ],
 

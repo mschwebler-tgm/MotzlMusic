@@ -7,16 +7,19 @@ use Illuminate\Support\Str;
 class UserSettingsAppearance
 {
     private $theme;
+    private $brightness;
 
-    public function __construct($theme)
+    public function __construct($theme, $brightness)
     {
         $this->theme = $theme;
+        $this->brightness = $brightness;
     }
 
     public static function fromArray(array $appearanceSettings)
     {
         return new self(
-            $appearanceSettings['theme']
+            $appearanceSettings['theme'],
+            $appearanceSettings['brightness']
         );
     }
 

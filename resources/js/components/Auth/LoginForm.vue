@@ -21,6 +21,7 @@
                       @click:append="showPassword = !showPassword">
         </v-text-field>
         <v-checkbox
+                dark
                 name="remember"
                 id="remember"
                 label="'member me">
@@ -28,12 +29,12 @@
         <v-layout justify-space-between align-center row class="pa-3">
             <v-progress-linear :indeterminate="true" v-show="loading"></v-progress-linear>
             <div v-show="!loading">
-                <v-btn class="primary"
+                <v-btn color="primary"
                        type="submit"
                        aria-label="Login"
                        @click="loading = true">Login</v-btn>
                 <v-btn tag="a"
-                       class="primary"
+                       color="primary"
                        href="/register"
                        aria-label="Register"
                        outlined>Register

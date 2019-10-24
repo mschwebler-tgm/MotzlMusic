@@ -11,7 +11,7 @@
                     </auth-login>
                 </v-layout>
             </v-content>
-            <v-footer app color="primary darken-4">
+            <v-footer app dark color="primary darken-4">
                 <v-layout justify-center row align-center>
                     <div class="text-center">
                         &copy;2019 - <strong>motzlmusic</strong>

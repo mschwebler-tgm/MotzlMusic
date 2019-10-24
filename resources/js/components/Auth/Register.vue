@@ -1,5 +1,5 @@
 <template>
-    <v-flex lg4 md8 sm8 xs12>
+    <v-flex lg4 md8 sm8 xs12 class="white--text">
         <div class="item elevation-24 pa-4 login-card grey darken-4 register-panel">
             <h1 class="display-2 font-weight-light text-center">Register</h1>
             <v-divider class="mb-3 mt-3"></v-divider>
@@ -43,13 +43,13 @@
                 </v-text-field>
                 <v-progress-linear :indeterminate="true" v-show="loading" color="success"></v-progress-linear>
                 <div v-show="!loading">
-                    <v-btn class="success"
+                    <v-btn class="success black--text"
                            type="submit"
                            @click="loading = true">Register
                     </v-btn>
                     <v-btn tag="a"
-                           class="success"
                            href="/login"
+                           color="success"
                            outlined>Already have an account?
                     </v-btn>
                 </div>

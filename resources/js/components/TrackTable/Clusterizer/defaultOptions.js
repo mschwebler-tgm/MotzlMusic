@@ -8,6 +8,8 @@ const defaultOptions = {
     playable: true,
     queueable: true,
     desktop: true,
+    draggable: false,
+    draggableOptions: {},
 };
 
 const availableOptions = Object.keys(defaultOptions);

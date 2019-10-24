@@ -7,7 +7,12 @@ export default class DesktopClusterizer extends Clusterizer {
         const tabIndex = this._getTabIndex();
         const trackId = this._getTrackId(rawTrack);
         const queuedStatus = this._getQueuedStatus(rawTrack);
-        return `<div class="track-row ${queuedStatus}" ${tabIndex} ${trackId}>${this._renderColumns(rawTrack, trackIndex)}</div>`;
+        const trackRow = `<div class="track-row ${queuedStatus}" ${tabIndex} ${trackId}>${this._renderColumns(rawTrack, trackIndex)}</div>`;
+
+        if (this._options.is('draggable')) {
+            return `<div class="smooth-dnd-draggable-wrapper">${trackRow}</div>`;
+        }
+        return trackRow;
     }
 
     _getTabIndex() {

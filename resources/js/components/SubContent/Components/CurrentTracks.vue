@@ -38,12 +38,13 @@
                         desktopColumns.DURATION,
                         desktopColumns.ARTISTS,
                     ],
-                    showQueueIndicators: true,
                     activeByPlayingTrackListIndex: true,
-                    activatable: true,
+                    showQueueIndicators: true,
                     contextMenu: false,
-                    playable: true,
+                    activatable: true,
                     queueable: false,
+                    draggable: false,
+                    playable: true,
                     desktop: true,
                 });
 

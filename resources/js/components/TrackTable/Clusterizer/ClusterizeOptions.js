@@ -20,7 +20,11 @@ export default class ClusterizeOptions {
     }
 
     is(optionKey) {
-        return this._options[optionKey] === true;
+        return this.get(optionKey) === true;
+    }
+
+    get(optionKey) {
+        return this._options[optionKey];
     }
 
     getColumns() {

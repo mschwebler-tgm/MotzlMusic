@@ -15,7 +15,7 @@ class UserBoundSpotifyApi extends SpotifyWebAPI
 {
     /** @var User */
     private $user;
-    private $session;
+    protected $session;
 
     public function __construct($request = null)
     {

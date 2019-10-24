@@ -12,7 +12,7 @@
         "barryvdh/laravel-ide-helper": "^2.5",
         "doctrine/dbal": "^2.8",
         "fideloper/proxy": "^4.0",
-        "jwilsson/spotify-web-api-php": "^2.6",
+        "jwilsson/spotify-web-api-php": "2.6",
         "laravel/framework": "^6.0",
         "laravel/passport": "^7.0",
         "laravel/socialite": "^4.0",

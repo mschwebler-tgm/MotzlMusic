@@ -7,7 +7,7 @@ use SpotifyWebAPI\SpotifyWebAPI;
 
 class SpotifyApi extends SpotifyWebAPI
 {
-    protected $session;
+    private $session;
 
     public function __construct($request = null)
     {

@@ -11,10 +11,12 @@ export default class Cache {
         if (!this._tracks[track.id]) {
             this._tracks[track.id] = track;
         }
+        return Promise.resolve();
     }
 
     putTracks(tracks) {
         tracks.forEach(track => this.putTrack(track));
+        return Promise.resolve();
     }
 
     getTrack(id) {

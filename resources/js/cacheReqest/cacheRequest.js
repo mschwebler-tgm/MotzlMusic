@@ -11,10 +11,8 @@ class CacheRequest {
         this.requestClient = requestClient;
     }
 
-    addTracks(...tracks) {
-        tracks.forEach(track => {
-            this.cache.putTrack(track);
-        });
+    cacheTracks(...tracks) {
+        return this.cache.putTracks(tracks);
     }
 
     async getTrack(id) {
@@ -23,7 +21,7 @@ class CacheRequest {
             return cachedTrack;
         } else {
             const track = await this.requestClient.fetchTrack(id);
-            this.cache.putTrack(track);
+            await this.cache.putTrack(track);
             return track;
         }
     }
@@ -35,7 +33,7 @@ class CacheRequest {
         } else {
             const remainingIds = this._getMissingIds(ids, tracks);
             const fetchedTracks = await this.requestClient.fetchTracks(remainingIds);
-            this.cache.putTracks(fetchedTracks);
+            await this.cache.putTracks(fetchedTracks);
             return this.cache.getTracks(ids);
         }
     }

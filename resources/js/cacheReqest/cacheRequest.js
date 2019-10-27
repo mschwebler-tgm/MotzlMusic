@@ -1,16 +1,14 @@
 import Cache from "$scripts/cacheReqest/Cache";
+import RequestClient from "$scripts/cacheReqest/RequestClient";
 
 class CacheRequest {
     /**
      * @param cache Cache
+     * @param requestClient RequestClient
      */
-    constructor(cache) {
+    constructor(cache, requestClient) {
         this.cache = cache;
-    }
-
-    resetCache() {
-        delete this.cache;
-        this.cache = new Cache();
+        this.requestClient = requestClient;
     }
 
     addTracks(...tracks) {
@@ -19,13 +17,21 @@ class CacheRequest {
         });
     }
 
-    getTrack(id) {
-        return this.cache.getTrack(id);
+    async getTrack(id) {
+        const cachedTrack = await this.cache.getTrack(id);
+        if (cachedTrack) {
+            return cachedTrack;
+        } else {
+            const track = await this.requestClient.fetchTrack(id);
+            this.cache.putTrack(track);
+            return track;
+        }
     }
 
-    getTracks(ids) {
+    async getTracks(ids) {
         return this.cache.getTracks(ids);
     }
 }
 
-export default new CacheRequest(new Cache());
+export {CacheRequest};
+export default new CacheRequest(new Cache(), new RequestClient());

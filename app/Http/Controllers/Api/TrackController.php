@@ -9,9 +9,9 @@ use App\SpotifyAudioFeature;
 
 class TrackController extends Controller
 {
-    public function getDetails($id, TrackDao $trackDao)
+    public function get($id, TrackDao $trackDao)
     {
-        return $trackDao->trackDetails($id);
+        return $trackDao->get($id);
     }
 
     public function audioFeatures($id)

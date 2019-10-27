@@ -23,11 +23,6 @@ class TrackDao
         return $track;
     }
 
-    public function trackDetails($id)
-    {
-        return Track::with('artists', 'album')->find($id);
-    }
-
     public function updateLocalPath(Track $track, $path)
     {
         if (!file_exists(storage_path("app/$path"))) {

@@ -1,8 +1,10 @@
-import cacheRequest from '$scripts/cacheReqest/cacheRequest';
+import {CacheRequest} from '$scripts/cacheReqest/cacheRequest';
+import Cache from '$scripts/cacheReqest/Cache';
 
 describe('CacheRequest', () => {
+    let cacheRequest;
     beforeEach(() => {
-        cacheRequest.resetCache();
+        cacheRequest = new CacheRequest(new Cache());
     });
 
     it('should return cached track as Promise', async done => {
@@ -34,10 +36,37 @@ describe('CacheRequest', () => {
 
         const retrievedTracks = await cacheRequest.getTracks([1, 2]);
 
-        console.log(retrievedTracks);
-
         expect(retrievedTracks[0]).toBe(track1);
         expect(retrievedTracks[1]).toBe(track2);
         done();
+    });
+
+    describe('Fetching data', () => {
+        let fetchedTracks = [];
+        const clientMock = {
+            fetchTrack(id) {
+                fetchedTracks = [id];
+                return Promise.resolve({id});
+            }
+        };
+        beforeEach(() => {
+            cacheRequest = new CacheRequest(new Cache(), clientMock);
+        });
+
+        it('should fetch track if it is not present in cache', async done => {
+            await cacheRequest.getTrack(1);
+
+            expect(fetchedTracks[0]).toBe(1);
+            done();
+        });
+
+        it('should not fetch track if it is present in cache', async done => {
+            await cacheRequest.getTrack(1);
+            fetchedTracks = [];
+            await cacheRequest.getTrack(1);
+
+            expect(fetchedTracks.length).toBe(0);
+            done();
+        });
     });
 });

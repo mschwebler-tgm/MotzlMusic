@@ -1,27 +1,31 @@
+import Cache from "$scripts/cacheReqest/Cache";
+
 class CacheRequest {
-    constructor() {
-        this.initCache()
+    /**
+     * @param cache Cache
+     */
+    constructor(cache) {
+        this.cache = cache;
     }
 
-    initCache() {
-        this._cachedTracks = {};
+    resetCache() {
+        delete this.cache;
+        this.cache = new Cache();
     }
 
     addTracks(...tracks) {
         tracks.forEach(track => {
-            if (!this._cachedTracks[track.id]) {
-                this._cachedTracks[track.id] = track;
-            }
+            this.cache.putTrack(track);
         });
     }
 
     getTrack(id) {
-        return Promise.resolve(this._cachedTracks[id]);
+        return this.cache.getTrack(id);
     }
 
     getTracks(ids) {
-        return Promise.resolve(ids.map(id => this._cachedTracks[id]));
+        return this.cache.getTracks(ids);
     }
 }
 
-export default new CacheRequest();
+export default new CacheRequest(new Cache());

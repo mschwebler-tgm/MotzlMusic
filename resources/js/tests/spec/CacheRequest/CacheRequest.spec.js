@@ -2,7 +2,7 @@ import cacheRequest from '$scripts/cacheReqest/cacheRequest';
 
 describe('CacheRequest', () => {
     beforeEach(() => {
-        cacheRequest.initCache();
+        cacheRequest.resetCache();
     });
 
     it('should return cached track as Promise', async done => {

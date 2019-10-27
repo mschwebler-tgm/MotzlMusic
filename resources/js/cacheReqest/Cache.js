@@ -13,11 +13,21 @@ export default class Cache {
         }
     }
 
+    putTracks(tracks) {
+        tracks.forEach(track => this.putTrack(track));
+    }
+
     getTrack(id) {
         return Promise.resolve(this._tracks[id]);
     }
 
     getTracks(ids) {
-        return Promise.resolve(ids.map(id => this._tracks[id]));
+        const tracks = [];
+        ids.forEach(id => {
+            if (this._tracks[id]) {
+                tracks.push(this._tracks[id]);
+            }
+        });
+        return Promise.resolve(tracks);
     }
 }

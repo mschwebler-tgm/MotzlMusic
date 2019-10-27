@@ -47,9 +47,14 @@ describe('CacheRequest', () => {
             fetchTrack(id) {
                 fetchedTracks = [id];
                 return Promise.resolve({id});
+            },
+            fetchTracks(ids) {
+                fetchedTracks = ids;
+                return Promise.resolve(ids.map(id => ({id})));
             }
         };
         beforeEach(() => {
+            fetchedTracks = [];
             cacheRequest = new CacheRequest(new Cache(), clientMock);
         });
 
@@ -68,5 +73,24 @@ describe('CacheRequest', () => {
             expect(fetchedTracks.length).toBe(0);
             done();
         });
+
+        it('should fetch multiple tracks at once if not present in cache', async done => {
+            const tracks = await cacheRequest.getTracks([1, 2, 3]);
+
+            expect(fetchedTracks.join(',')).toBe('1,2,3');
+            expect(tracks.map(track => track.id).join(',')).toBe('1,2,3');
+            done();
+        });
+
+        it('should fetch only fetch remaining tracks that are not present in cache', async done => {
+            await cacheRequest.getTrack(1);
+            fetchedTracks = [];
+            const tracks = await cacheRequest.getTracks([1, 2, 3]);
+
+            expect(fetchedTracks.join(',')).toBe('2,3');
+            expect(tracks.map(track => track.id).join(',')).toBe('1,2,3');
+            done();
+        });
+
     });
 });

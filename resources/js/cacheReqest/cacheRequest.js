@@ -29,7 +29,26 @@ class CacheRequest {
     }
 
     async getTracks(ids) {
-        return this.cache.getTracks(ids);
+        const tracks = await this.cache.getTracks(ids);
+        if (tracks.length === ids.length) {
+            return tracks;
+        } else {
+            const remainingIds = this._getMissingIds(ids, tracks);
+            const fetchedTracks = await this.requestClient.fetchTracks(remainingIds);
+            this.cache.putTracks(fetchedTracks);
+            return this.cache.getTracks(ids);
+        }
+    }
+
+    _getMissingIds(ids, objects) {
+        const requestedIds = [...ids];
+        objects.forEach(object => {
+            let requestedIdIndex = requestedIds.indexOf(object.id);
+            if (requestedIdIndex !== -1) {
+                requestedIds.splice(requestedIdIndex, 1);
+            }
+        });
+        return requestedIds;
     }
 }
 

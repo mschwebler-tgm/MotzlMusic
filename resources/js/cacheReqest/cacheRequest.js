@@ -1,5 +1,9 @@
 class CacheRequest {
     constructor() {
+        this.initCache()
+    }
+
+    initCache() {
         this._cachedTracks = {};
     }
 
@@ -13,6 +17,10 @@ class CacheRequest {
 
     getTrack(id) {
         return Promise.resolve(this._cachedTracks[id]);
+    }
+
+    getTracks(ids) {
+        return Promise.resolve(ids.map(id => this._cachedTracks[id]));
     }
 }
 

@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Personal;
 
+use App\Album;
 use App\Artist;
-use App\Components\MyLibrary\AlbumByLetterOccurrence;
 use App\Components\MyLibrary\AlbumDao;
 use App\Components\MyLibrary\ArtistDao;
 use App\Components\MyLibrary\MyLibraryDao;
-use App\DTOs\AlbumDTO;
 use App\DTOs\PlaylistDTO;
 use App\Http\Controllers\Controller;
+use App\Transformer\AlbumTransformer;
 use App\Transformer\ArtistTransformer;
 use App\Transformer\TrackTransformer;
 
@@ -56,12 +56,15 @@ class MyLibraryController extends Controller
         return $albumDao->getAlbums();
     }
 
-    public function getAlbumsByFirstLetter(AlbumDao $albumDao)
+    public function getAlbumsByFirstLetter(AlbumDao $albumDao, AlbumTransformer $transformer)
     {
         $albumsByLetter = $albumDao->getItemsByFirstLetter();
-        $albumsByLetter->map(function (AlbumByLetterOccurrence $albumByLetter) {
-            $albumByLetter->setItems(AlbumDTO::toApiResponse($albumByLetter->getItems()));
-        });
+        foreach ($albumsByLetter as &$albumByLetter) {
+            $transformedItems = $albumByLetter->getItems()->map(function (Album $album) use ($transformer) {
+                return $transformer->transform($album);
+            });
+            $albumByLetter->setItems($transformedItems);
+        }
 
         return $albumsByLetter;
     }

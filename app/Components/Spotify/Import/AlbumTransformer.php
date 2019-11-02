@@ -6,18 +6,9 @@ namespace App\Components\Spotify\Import;
 use App\Service\GenericTransformer;
 use App\Transformer\Transformable;
 
-class AlbumTransformer implements Transformable
+class AlbumTransformer extends Transformable
 {
-    public function transform($albums)
-    {
-        $transformedItems = [];
-        foreach ($albums as $album) {
-            $transformedItems[] = $this->transformItem($album);
-        }
-        return $transformedItems;
-    }
-
-    private function transformItem($album)
+    protected function transformItem($album)
     {
         $resultFormatter = new GenericTransformer($album);
         return $resultFormatter->get(

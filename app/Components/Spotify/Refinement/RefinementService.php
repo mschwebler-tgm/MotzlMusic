@@ -4,9 +4,9 @@ namespace App\Components\Spotify\Refinement;
 
 use App\Components\Spotify\Api\SpotifyApi;
 use App\Components\Spotify\SpotifyDao;
-use App\DTOs\AlbumDTO;
-use App\DTOs\ArtistDTO;
-use App\DTOs\AudioFeatureDTO;
+use App\Components\Spotify\DTOs\AlbumDTO;
+use App\Components\Spotify\DTOs\ArtistDTO;
+use App\Components\Spotify\DTOs\AudioFeatureDTO;
 
 class RefinementService
 {

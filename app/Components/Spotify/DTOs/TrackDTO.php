@@ -1,10 +1,8 @@
 <?php
 
-namespace App\DTOs;
+namespace App\Components\Spotify\DTOs;
 
 use App\Components\Spotify\Models\Track as SpotifyTrack;
-use App\Track;
-use Illuminate\Support\Collection;
 
 class TrackDTO implements SpotifyDTO
 {

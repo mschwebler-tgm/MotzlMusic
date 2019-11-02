@@ -1,10 +1,8 @@
 <?php
 
-namespace App\DTOs;
+namespace App\Components\Spotify\DTOs;
 
-use App\Artist;
 use App\Components\Spotify\Models\Artist as SpotifyArtist;
-use Illuminate\Database\Eloquent\Collection;
 
 class ArtistDTO implements SpotifyDTO
 {

@@ -9,7 +9,7 @@ use App\Components\Spotify\Models\AudioFeatures as SpotifyAudioFeatures;
 use App\Components\Spotify\Models\Artist as SpotifyArtist;
 use App\Components\Spotify\Models\Track as SpotifyTrack;
 use App\Components\Spotify\Models\Playlist as SpotifyPlaylist;
-use App\DTOs\TrackDTO;
+use App\Components\Spotify\DTOs\TrackDTO;
 use App\Playlist;
 use App\SpotifyAudioFeature;
 use App\Track;

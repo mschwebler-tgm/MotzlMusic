@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use App\Daos\UserResourceDao;
-use App\DTOs\TrackDTO;
 use App\Http\Controllers\Controller;
 use App\Transformer\PlaylistTransformer;
 use App\Transformer\TrackTransformer;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DTOs;
+namespace App\Components\Spotify\DTOs;
 
 use App\Components\Spotify\Models\BaseModel as SpotifyBaseModel;
 use Illuminate\Support\Collection;

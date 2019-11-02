@@ -2,7 +2,7 @@
 
 namespace App\Components\Spotify\Import\Importers;
 
-use App\DTOs\AlbumDTO;
+use App\Components\Spotify\DTOs\AlbumDTO;
 use Illuminate\Support\Collection;
 
 class SpotifyAlbumImporter extends SpotifyImporter

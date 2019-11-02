@@ -2,7 +2,7 @@
 
 namespace App\Components\Spotify\Import\Importers;
 
-use App\DTOs\TrackDTO;
+use App\Components\Spotify\DTOs\TrackDTO;
 
 class SpotifyTrackImporter extends SpotifyImporter
 {

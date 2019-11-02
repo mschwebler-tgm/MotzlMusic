@@ -1,10 +1,8 @@
 <?php
 
-namespace App\DTOs;
+namespace App\Components\Spotify\DTOs;
 
-use App\Album;
 use App\Components\Spotify\Models\Album as SpotifyAlbum;
-use Illuminate\Support\Collection;
 
 class AlbumDTO implements SpotifyDTO
 {

@@ -4,7 +4,7 @@ namespace App\Components\Upload;
 
 use App\Components\Spotify\SpotifyDao;
 use App\Components\Spotify\Models\Track as SpotifyTrack;
-use App\DTOs\TrackDTO;
+use App\Components\Spotify\DTOs\TrackDTO;
 use App\Track;
 use App\User;
 use App\UserHasTrack;

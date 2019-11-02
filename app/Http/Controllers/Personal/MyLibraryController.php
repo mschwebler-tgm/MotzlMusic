@@ -8,8 +8,8 @@ use App\Components\MyLibrary\ArtistDao;
 use App\Components\MyLibrary\MyLibraryDao;
 use App\DTOs\AlbumDTO;
 use App\DTOs\PlaylistDTO;
-use App\DTOs\TrackDTO;
 use App\Http\Controllers\Controller;
+use App\Transformer\TrackTransformer;
 
 class MyLibraryController extends Controller
 {
@@ -32,9 +32,9 @@ class MyLibraryController extends Controller
         ];
     }
 
-    public function myTracks()
+    public function myTracks(TrackTransformer $transformer)
     {
-        return TrackDTO::toApiResponse($this->libraryDao->getAllTracks());
+        return $transformer->transform($this->libraryDao->getAllTracks());
     }
 
     public function getArtistsByFirstLetter(ArtistDao $artistDao)

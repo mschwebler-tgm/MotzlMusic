@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Daos\UserResourceDao;
 use App\DTOs\TrackDTO;
 use App\Http\Controllers\Controller;
+use App\Transformer\TrackTransformer;
 
 class PlaylistController extends Controller
 {
@@ -13,9 +14,9 @@ class PlaylistController extends Controller
         return $userResourceDao->getPlaylist($id);
     }
 
-    public function tracks($id, UserResourceDao $userResourceDao)
+    public function tracks($id, UserResourceDao $userResourceDao, TrackTransformer $transformer)
     {
         $tracks = $userResourceDao->getPlaylistTracks($id);
-        return TrackDTO::toApiResponse($tracks);
+        return $transformer->transform($tracks);
     }
 }

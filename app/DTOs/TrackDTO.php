@@ -20,38 +20,6 @@ class TrackDTO implements SpotifyDTO
         return new SpotifyTrack($trackResponse->track);
     }
 
-    public static function toApiResponse($tracks)
-    {
-        if ($tracks instanceof Track) {
-            return self::singleTrackToApiResponse($tracks);
-        }
-
-        /** @var $tracks Collection */
-        return $tracks->reduce(function ($acc, Track $track) {
-            $acc[] = self::singleTrackToApiResponse($track);
-            return $acc;
-        }, []);
-    }
-
-    public static function singleTrackToApiResponse(Track $track)
-    {
-        return [
-            'id' => $track->id,
-            'name' => $track->name,
-            'popularity' => $track->popularity,
-            'duration' => $track->duration,
-            'duration_formatted' => formatDuration($track->duration),
-            'album' => AlbumDTO::singleAlbumToApiResponse($track->album),
-            'artists' => ArtistDTO::toApiResponse($track->artists),
-            'audio_features' => AudioFeatureDTO::singleAudioFeatureToApiResponse($track->audioFeatures),
-            'rating' => $track->rating->rating ?? null,
-            'spotify_id' => $track->spotify_id,
-            'provider' => $track->provider,
-            'spotify_track_number' => $track->spotify_track_number,
-            'type' => 'track',
-        ];
-    }
-
     /**
      * @param SpotifyTrack $spotifyTrack
      * @param null $albumId

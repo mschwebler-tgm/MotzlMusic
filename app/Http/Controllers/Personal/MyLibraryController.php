@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Personal;
 
+use App\Artist;
 use App\Components\MyLibrary\AlbumByLetterOccurrence;
 use App\Components\MyLibrary\AlbumDao;
 use App\Components\MyLibrary\ArtistDao;
@@ -9,6 +10,7 @@ use App\Components\MyLibrary\MyLibraryDao;
 use App\DTOs\AlbumDTO;
 use App\DTOs\PlaylistDTO;
 use App\Http\Controllers\Controller;
+use App\Transformer\ArtistTransformer;
 use App\Transformer\TrackTransformer;
 
 class MyLibraryController extends Controller
@@ -37,9 +39,16 @@ class MyLibraryController extends Controller
         return $transformer->transform($this->libraryDao->getAllTracks());
     }
 
-    public function getArtistsByFirstLetter(ArtistDao $artistDao)
+    public function getArtistsByFirstLetter(ArtistDao $artistDao, ArtistTransformer $transformer)
     {
-        return $artistDao->getItemsByFirstLetter();
+        $artistsByLetter = $artistDao->getItemsByFirstLetter();
+        foreach ($artistsByLetter as &$artistByLetter) {
+            $transformedItems = $artistByLetter->getItems()->map(function (Artist $artist) use ($transformer) {
+                return $transformer->transform($artist);
+            });
+            $artistByLetter->setItems($transformedItems);
+        }
+        return $artistsByLetter;
     }
 
     public function getAlbums(AlbumDao $albumDao)

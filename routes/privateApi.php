@@ -12,13 +12,13 @@ Route::prefix('spotify')->namespace('Spotify')->group(function () {
 });
 
 Route::prefix('my')->namespace('Personal')->group(function () {
-    Route::get('playlists', 'MyLibraryController@myPlaylists');
-    Route::get('tracks', 'MyLibraryController@myTracks');
+    Route::get('playlists', 'MyLibraryController@myPlaylists')->name('getMyPlaylists');
+    Route::get('tracks', 'MyLibraryController@myTracks')->name('getMyTracks');
     Route::delete('tracks/{id}', 'MyLibraryController@removeTrack');
     Route::put('tracks/{id}', 'MyLibraryController@addTrack');
     Route::get('artists/byFirstLetter', 'MyLibraryController@getArtistsByFirstLetter');
     Route::get('albums/byFirstLetter', 'MyLibraryController@getAlbumsByFirstLetter');
-    Route::get('albums', 'MyLibraryController@getAlbums');
+    Route::get('albums', 'MyLibraryController@getAlbums')->name('getMyAlbums');
     Route::put('subContent', 'SubContentController@updateSubContent');
     Route::get('/subContent/available', 'SubContentController@availableContent');
 });
@@ -35,11 +35,12 @@ Route::prefix('player')->namespace('Player')->group(function () {
 });
 
 Route::namespace('Api')->group(function () {
-    Route::get('/playlist/{id}', 'PlaylistController@playlist');
-    Route::get('/playlist/{id}/tracks', 'PlaylistController@tracks');
-    Route::get('/track/{id}/audio-features', 'TrackController@audioFeatures');
+    Route::get('/playlist/{id}', 'PlaylistController@playlist')->name('getPlaylist');
+    Route::get('/playlist/{id}/tracks', 'PlaylistController@tracks')->name('getPlaylistTracks');
+    Route::get('/track/{id}/audio-features', 'TrackController@audioFeatures')->name('getTrackAudioFeatures');
     Route::put('/track/{id}/rate', 'TrackController@rateTrack');
-    Route::get('/track/{id}', 'TrackController@get');
+    Route::get('/track/{id}', 'TrackController@get')->name('getTrack');
+    Route::get('/artists/{ids}', 'ArtistController@getMutltiple')->name('getArtists');
 });
 
 Route::post('/uploadTrack', 'UploadController@uploadTrack');

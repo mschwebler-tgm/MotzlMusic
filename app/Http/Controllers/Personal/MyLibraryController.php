@@ -11,6 +11,7 @@ use App\DTOs\PlaylistDTO;
 use App\Http\Controllers\Controller;
 use App\Transformer\AlbumTransformer;
 use App\Transformer\ArtistTransformer;
+use App\Transformer\PlaylistTransformer;
 use App\Transformer\TrackTransformer;
 
 class MyLibraryController extends Controller
@@ -22,15 +23,15 @@ class MyLibraryController extends Controller
         $this->libraryDao = $libraryDao;
     }
 
-    public function myPlaylists()
+    public function myPlaylists(PlaylistTransformer $transformer)
     {
         $recent = $this->libraryDao->getRecentPlaylists(3);
         $spotify = $this->libraryDao->getSpotifyPlaylists();
         $remaining = $this->libraryDao->getAllPlaylistsExcept($recent->pluck('id')->merge($spotify->pluck('id'))->toArray());
         return [
-            'recent' => PlaylistDTO::toApiResponse($recent),
-            'spotify' => PlaylistDTO::toApiResponse($spotify),
-            'ungrouped' => PlaylistDTO::toApiResponse($remaining),
+            'recent' => $transformer->transform($recent),
+            'spotify' => $transformer->transform($spotify),
+            'ungrouped' => $transformer->transform($remaining),
         ];
     }
 

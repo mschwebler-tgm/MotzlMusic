@@ -16,8 +16,8 @@ Route::prefix('my')->namespace('Personal')->group(function () {
     Route::get('tracks', 'MyLibraryController@myTracks')->name('getMyTracks');
     Route::delete('tracks/{id}', 'MyLibraryController@removeTrack');
     Route::put('tracks/{id}', 'MyLibraryController@addTrack');
-    Route::get('artists/byFirstLetter', 'MyLibraryController@getArtistsByFirstLetter');
-    Route::get('albums/byFirstLetter', 'MyLibraryController@getAlbumsByFirstLetter');
+    Route::get('artists/byFirstLetter', 'MyLibraryController@getArtistsByFirstLetter')->name('getArtistsByLetter');
+    Route::get('albums/byFirstLetter', 'MyLibraryController@getAlbumsByFirstLetter')->name('getAlbumsByLetter');
     Route::get('albums', 'MyLibraryController@getAlbums')->name('getMyAlbums');
     Route::put('subContent', 'SubContentController@updateSubContent');
     Route::get('/subContent/available', 'SubContentController@availableContent');
@@ -40,7 +40,11 @@ Route::namespace('Api')->group(function () {
     Route::get('/track/{id}/audio-features', 'TrackController@audioFeatures')->name('getTrackAudioFeatures');
     Route::put('/track/{id}/rate', 'TrackController@rateTrack');
     Route::get('/track/{id}', 'TrackController@get')->name('getTrack');
-    Route::get('/artists/{ids}', 'ArtistController@getMutltiple')->name('getArtists');
+    Route::get('/artists/{ids}', 'ArtistController@artists')->name('getArtists');
+    Route::get('/artist/{id}/tracks', 'ArtistController@tracks')->name('getArtistTracks');
+    Route::get('/album/{id}', 'AlbumController@album')->name('getAlbum');
+    Route::get('/albums/{ids}', 'AlbumController@albums')->name('getAlbums');
+    Route::get('/album/{id}/tracks', 'AlbumController@tracks')->name('getAlbumTracks');
 });
 
 Route::post('/uploadTrack', 'UploadController@uploadTrack');

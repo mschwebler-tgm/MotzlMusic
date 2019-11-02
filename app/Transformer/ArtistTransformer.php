@@ -13,6 +13,7 @@ class ArtistTransformer extends Transformable
     protected function transformItem($artist)
     {
         $routePrefix = request()->route()->getPrefix();
+        $albumIds = $artist->albums->pluck('id')->toArray();
         if ($routePrefix === 'api/my') {
             $trackIds = $artist->tracks()->ofCurrentUser()->get()->pluck('id')->toArray();
         } else {
@@ -31,6 +32,8 @@ class ArtistTransformer extends Transformable
             'audio_features' => $artist->audio_features ?? null,
             'tracks' => $trackIds,
             'tracks_url' => route('getArtistTracks', ['id' => $artist->id]),
+            'albums' => $albumIds,
+            'albums_url' => route('getAlbums', implode(',', $albumIds)),
         ];
     }
 }

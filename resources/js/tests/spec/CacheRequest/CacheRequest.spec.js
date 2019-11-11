@@ -1,5 +1,5 @@
 import {CacheRequest} from '$scripts/cacheReqest/cacheRequest';
-import MemoryCache from '$scripts/cacheReqest/Cache';
+import MemoryCache from '$scripts/cacheReqest/MemoryCache';
 
 describe('CacheRequest', () => {
     let cacheRequest;

@@ -19,7 +19,6 @@
 
 <script>
     import TrackTable from "../../TrackTable/TrackTable";
-    import renderFunction from '../../../store/modules/myLibrary/helpers/clusterizeTracks';
     import {mapGetters} from "vuex";
     import ClusterizeOptions from "$scripts/components/TrackTable/Clusterizer/ClusterizeOptions";
     import {columns as mobileColumns} from "$scripts/components/TrackTable/Clusterizer/Mobile/columns";
@@ -28,11 +27,6 @@
     export default {
         name: "Tracks",
         components: {TrackTable},
-        data() {
-            return {
-                renderFunction,
-            }
-        },
         computed: {
             ...mapGetters('myLibrary', [
                 'tracks',

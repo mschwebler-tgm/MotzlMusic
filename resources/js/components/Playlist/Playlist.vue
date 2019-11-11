@@ -103,7 +103,6 @@
 
 <script>
     import TrackTable from "../TrackTable/TrackTable";
-    import clusterizeTracks, {clusterizeTracksMobile} from '../../store/modules/myLibrary/helpers/clusterizeTracks';
     import PlaylistActions from "./PlaylistActions";
     import player from "$store/player/helpers/v2/player";
 
@@ -118,7 +117,6 @@
             return {
                 errorResponse: null,
                 tracks: [],
-                clusterizeFunction: this.$root.isMobile ? clusterizeTracksMobile : clusterizeTracks,
                 loading: false,
             }
         },

@@ -1,4 +1,4 @@
-import {starEmpty, starFull, starHalf} from "../../store/modules/myLibrary/helpers/starsSVGs";
+import {starEmpty, starFull, starHalf} from "./starsSVGs";
 
 export default class StarRating {
 

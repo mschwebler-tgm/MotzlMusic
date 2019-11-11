@@ -26,7 +26,7 @@
                            class="h-100">
                     <Draggable v-for="(content, index) in subContentEditClone"
                                :key="content.randomId">
-                        <v-flex shrink :class="{'pt-0': index === 0}">
+                        <v-flex shrink :class="{'pt-0': index === 0}" class="sub-content-item">
                             <v-card class="relative">
                                 <component :is="content.component"></component>
                                 <div class="sub-content-overlay move-cursor">
@@ -44,6 +44,7 @@
                     <v-flex v-for="(content, index) in subContent"
                             :key="content.randomId"
                             shrink
+                            class="sub-content-item"
                             :class="{'pt-0': index === 0}">
                         <v-card>
                             <component :is="content.component"></component>
@@ -135,5 +136,9 @@
         position: absolute;
         top: 0;
         right: 0;
+    }
+
+    .sub-content-item:last-child {
+        margin-bottom: 20px;
     }
 </style>

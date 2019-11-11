@@ -24,12 +24,20 @@
                 const audioAnalytics = await cacheRequest.getAudioAnalytics(track.id);
                 this.playingTrackAudioAnalytics = this.getAudioFeaturesAsArray(audioAnalytics);
             },
-            async focusedItems(tracks) {
-                if (tracks.length === 1) {
-                    const audioAnalytics = await cacheRequest.getAudioAnalytics(tracks[0].id);
-                    this.focusedTrackAudioAnalytics = this.getAudioFeaturesAsArray(audioAnalytics);
+            async focusedItems(items) {
+                if (items.length === 0) {
+                    this.focusedTrackAudioAnalytics = [0, 0, 0, 0, 0, 0];
+                    return;
                 }
-                // TODO multiple tracks (show avg)
+
+                const item = items[0];
+                let audioAnalytics;
+                if (item.id) {
+                    audioAnalytics = await cacheRequest.getAudioAnalytics(item.id);
+                } else if (item.valence) {  // when hovering a playlist there is no specific track, just avg audio features
+                    audioAnalytics = item;
+                }
+                this.focusedTrackAudioAnalytics = this.getAudioFeaturesAsArray(audioAnalytics);
             },
         },
         computed: {

@@ -65,7 +65,7 @@
                 }
             },
             showAudioFeatures() {
-                this.$store.commit('subContent/setFocusedItems', [this.item]);
+                this.$store.commit('subContent/setFocusedItems', [{...this.item.audio_features}]);
             },
             hideAudioFeatures() {
                 this.$store.commit('subContent/setFocusedItems', []);

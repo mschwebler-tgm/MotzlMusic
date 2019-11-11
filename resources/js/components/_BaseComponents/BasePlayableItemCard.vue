@@ -39,6 +39,7 @@
 <script>
     import {slugify} from "../../helpers";
     import player from "$store/player/helpers/v2/player";
+    import cacheRequest from "$scripts/cacheReqest/cacheRequest";
 
     export default {
         name: "BasePlayableItemCard",
@@ -52,17 +53,13 @@
                 this.$store.commit(`cache/setSelected${typeCapitalized}`, this.item);
                 this.$router.push(`/my-library/${this.item.type}/${slugify(this.item.name)}/${this.item.id}`);
             },
-            playItem($event) {
+            async playItem($event) {
                 $event.stopPropagation();
-                if (!this.item.tracks) {
-                    player.forceLoading(true);
-                    axios.get(`/api/${this.item.type}/${this.item.id}/tracks`)
-                        .then(res => this.item.tracks = res.data)
-                        .then(() => player.playList(this.item.tracks))
-                        .finally(() => player.forceLoading(false));
-                } else {
-                    player.playList(this.item.tracks);
-                }
+                player.forceLoading(true);
+                const trackIds = this.item.tracks.map(track => track.id);
+                const tracks = await cacheRequest.getTracks(trackIds, this.item.tracks_url);
+                player.playList(tracks);
+                player.forceLoading(false);
             },
             showAudioFeatures() {
                 this.$store.commit('subContent/setFocusedItems', [{...this.item.audio_features}]);

@@ -15,10 +15,12 @@ class AlbumTransformer extends Transformable
         $routePrefix = request()->route()->getPrefix();
         $artistIds = $album->artists()->get()->pluck('id')->toArray();
         if ($routePrefix === 'api/my') {
-            $trackIds = $album->tracks()->ofCurrentUser()->get()->pluck('id')->toArray();
+            $tracks = $album->tracks()->ofCurrentUser()->get();
         } else {
-            $trackIds = $album->tracks->pluck('id')->toArray();
+            $tracks = $album->tracks;
         }
+        $tracks = $this->pluckIdAndName($tracks);
+        $artists = $this->pluckIdAndName($album->artists);
 
         return [
             'id' => $album->id,
@@ -31,9 +33,9 @@ class AlbumTransformer extends Transformable
             'spotify_image_medium' => $album->spotify_image_medium,
             'spotify_image_large' => $album->spotify_image_large,
             'audio_features' => $album->audio_features ?? null,
-            'tracks' => $trackIds,
+            'tracks' => $tracks,
             'tracks_url' => route('getAlbumTracks', ['id' => $album->id]),
-            'artists' => $artistIds,
+            'artists' => $artists,
             'artists_url' => route('getArtists', ['ids' => join(',', $artistIds)]),
         ];
     }

@@ -14,10 +14,11 @@ class PlaylistTransformer extends Transformable
     {
         $routePrefix = request()->route()->getPrefix();
         if ($routePrefix === 'api/my') {
-            $trackIds = $playlist->tracks()->ofCurrentUser()->get()->pluck('id')->toArray();
+            $tracks = $playlist->tracks()->ofCurrentUser()->get();
         } else {
-            $trackIds = $playlist->tracks->pluck('id')->toArray();
+            $tracks = $playlist->tracks;
         }
+        $tracks = $this->pluckIdAndName($tracks);
 
         return [
             'type' => 'playlist',
@@ -31,7 +32,7 @@ class PlaylistTransformer extends Transformable
             'spotify_image_medium' => $playlist->spotify_image_medium,
             'spotify_image_large' => $playlist->spotify_image_large,
             'audio_features' => $playlist->audio_features ?? null,
-            'tracks' => $trackIds,
+            'tracks' => $tracks,
             'tracks_url' => route('getPlaylistTracks', ['id' => $playlist->id]),
         ];
     }

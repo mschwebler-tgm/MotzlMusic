@@ -2,6 +2,8 @@
 
 namespace App\Transformer;
 
+use Illuminate\Support\Collection;
+
 abstract class Transformable
 {
     public function transform($content) {
@@ -15,6 +17,16 @@ abstract class Transformable
         }
 
         return $data;
+    }
+
+    protected function pluckIdAndName(Collection $items)
+    {
+        return $items->map(function ($item) {
+            return [
+                'id' => $item->id,
+                'name' => $item->name,
+            ];
+        })->toArray();
     }
 
     abstract protected function transformItem($item);

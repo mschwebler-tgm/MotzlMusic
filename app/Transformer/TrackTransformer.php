@@ -14,9 +14,14 @@ class TrackTransformer extends Transformable
     {
         $data = $track->toArray();
         $artistIds = $track->artists->pluck('id')->toArray();
-        $data['album'] = $track->album->id;
+        $artists = $this->pluckIdAndName($track->artists);
+
+        $data['album'] = [
+            'id' => $track->album->id,
+            'name' => $track->album->name,
+        ];
         $data['album_url'] = route('getAlbum', ['id' => $track->album->id]);
-        $data['artists'] = $artistIds;
+        $data['artists'] = $artists;
         $data['artists_url'] = route('getArtists', ['ids' => implode(',', $artistIds)]);
         $data['audio_features_url'] = route('getTrackAudioFeatures', ['id' => $track->id]);
         $data['duration_formatted'] = formatDuration($track->duration);

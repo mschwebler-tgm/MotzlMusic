@@ -20,10 +20,10 @@ class TrackTransformer extends Transformable
             'id' => $track->album->id,
             'name' => $track->album->name,
         ];
-        $data['album_url'] = route('getAlbum', ['id' => $track->album->id]);
+        $data['album_url'] = route('getAlbum', ['id' => $track->album->id], false);
         $data['artists'] = $artists;
-        $data['artists_url'] = route('getArtists', ['ids' => implode(',', $artistIds)]);
-        $data['audio_features_url'] = route('getTrackAudioFeatures', ['id' => $track->id]);
+        $data['artists_url'] = route('getArtists', ['ids' => implode(',', $artistIds)], false);
+        $data['audio_features_url'] = route('getTrackAudioFeatures', ['id' => $track->id], false);
         $data['duration_formatted'] = formatDuration($track->duration);
         $data['rating'] = $track->rating->rating ?? null;
         $data['type'] = 'track';

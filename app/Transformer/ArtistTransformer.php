@@ -33,9 +33,9 @@ class ArtistTransformer extends Transformable
             'spotify_image_large' => $artist->spotify_image_large,
             'audio_features' => $artist->audio_features ?? null,
             'tracks' => $tracks,
-            'tracks_url' => route('getArtistTracks', ['id' => $artist->id]),
+            'tracks_url' => route('getArtistTracks', ['id' => $artist->id], false),
             'albums' => $albums,
-            'albums_url' => route('getAlbums', implode(',', $albumIds)),
+            'albums_url' => route('getAlbums', implode(',', $albumIds), false),
         ];
     }
 }

@@ -33,7 +33,7 @@ class PlaylistTransformer extends Transformable
             'spotify_image_large' => $playlist->spotify_image_large,
             'audio_features' => $playlist->audio_features ?? null,
             'tracks' => $tracks,
-            'tracks_url' => route('getPlaylistTracks', ['id' => $playlist->id]),
+            'tracks_url' => route('getPlaylistTracks', ['id' => $playlist->id], false),
         ];
     }
 }

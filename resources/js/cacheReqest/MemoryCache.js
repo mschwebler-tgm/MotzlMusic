@@ -5,6 +5,7 @@ export default class MemoryCache {
 
     init() {
         this._tracks = {};
+        this._audioAnalytics = {};
     }
 
     putTrack(track) {
@@ -31,5 +32,14 @@ export default class MemoryCache {
             }
         });
         return Promise.resolve(tracks);
+    }
+
+    putAudioAnalytics(analytics) {
+        this._audioAnalytics[analytics.track_id] = analytics;
+        return Promise.resolve();
+    }
+
+    getAudioAnalytics(trackId) {
+        return Promise.resolve(this._audioAnalytics[trackId]);
     }
 }

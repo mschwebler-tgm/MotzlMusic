@@ -38,6 +38,17 @@ class CacheRequest {
         }
     }
 
+    async getAudioAnalytics(trackId) {
+        let audioAnalytics = await this.cache.getAudioAnalytics(trackId);
+        if (audioAnalytics) {
+            return audioAnalytics;
+        } else {
+            audioAnalytics = await this.requestClient.fetchAudioAnalytics(trackId);
+            await this.cache.putAudioAnalytics(audioAnalytics);
+            return audioAnalytics;
+        }
+    }
+
     _getMissingIds(ids, objects) {
         const requestedIds = [...ids];
         objects.forEach(object => {

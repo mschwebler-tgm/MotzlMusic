@@ -9,6 +9,7 @@
 
 <script>
     import ReactiveRadarChart from "../Charts/ReactiveRadarChart";
+    import cacheRequest from "$scripts/cacheReqest/cacheRequest";
 
     export default {
         name: "AudioFeatures",

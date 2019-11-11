@@ -23,6 +23,12 @@ class TrackController extends Controller
         return $transformer->transform($trackDao->get($id));
     }
 
+    public function tracks($ids, TrackDao $trackDao, TrackTransformer $transformer)
+    {
+        $ids = explode(',', $ids);
+        return $transformer->transform($trackDao->tracks($ids));
+    }
+
     public function audioFeatures($id)
     {
         return SpotifyAudioFeature::where('track_id', $id)->first();

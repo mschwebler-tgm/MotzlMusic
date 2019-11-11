@@ -40,6 +40,7 @@ Route::namespace('Api')->group(function () {
     Route::get('/track/{id}/audio-features', 'TrackController@audioFeatures')->name('getTrackAudioFeatures');
     Route::put('/track/{id}/rate', 'TrackController@rateTrack');
     Route::get('/track/{id}', 'TrackController@get')->name('getTrack');
+    Route::get('/tracks/{ids}', 'TrackController@tracks')->name('getTracks');
     Route::get('/artists/{ids}', 'ArtistController@artists')->name('getArtists');
     Route::get('/artist/{id}/tracks', 'ArtistController@tracks')->name('getArtistTracks');
     Route::get('/album/{id}', 'AlbumController@album')->name('getAlbum');

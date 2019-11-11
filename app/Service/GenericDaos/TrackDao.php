@@ -23,6 +23,11 @@ class TrackDao
         return $track;
     }
 
+    public function tracks(array $ids)
+    {
+        return Track::whereIn('id', $ids)->get();
+    }
+
     public function updateLocalPath(Track $track, $path)
     {
         if (!file_exists(storage_path("app/$path"))) {

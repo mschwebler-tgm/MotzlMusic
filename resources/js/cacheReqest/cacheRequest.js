@@ -26,13 +26,13 @@ class CacheRequest {
         }
     }
 
-    async getTracks(ids) {
+    async getTracks(ids, fetchUrl = null) {
         const tracks = await this.cache.getTracks(ids);
         if (tracks.length === ids.length) {
             return tracks;
         } else {
             const remainingIds = this._getMissingIds(ids, tracks);
-            const fetchedTracks = await this.requestClient.fetchTracks(remainingIds);
+            const fetchedTracks = await this.requestClient.fetchTracks(remainingIds, fetchUrl);
             await this.cache.putTracks(fetchedTracks);
             return this.cache.getTracks(ids);
         }

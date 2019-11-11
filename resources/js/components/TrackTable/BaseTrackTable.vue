@@ -75,7 +75,6 @@
     import hotkeys from "hotkeys-js";
     import {shortcuts} from "$scripts/helpers/shortcuts";
     import MobileClusterizer from "$scripts/components/TrackTable/Clusterizer/Mobile/MobileClusterizer";
-    import {smoothDnD} from 'smooth-dnd';
 
     export default {
         name: "BaseTrackTable2",
@@ -103,7 +102,6 @@
                 touchDragging: false,
                 activeTrackRowElement: null,
                 isInitialized: false,
-                dragContainer: null,
             }
         },
         created() {
@@ -155,12 +153,8 @@
                     this.initContextMenuListener();
                 }
                 if (this.options.is('draggable')) {
-                    this.dragContainer = smoothDnD(this.$refs.contentArea, this.options.get('draggableOptions'));
-                }
-            },
-            clusterWillChange() {
-                if (this.dragContainer) {
-                    this.dragContainer.dispose();
+                    // TODO init draggable
+                    // this.dragContainer = smoothDnD(this.$refs.contentArea, this.options.get('draggableOptions'));
                 }
             },
             initializeTracksTable() {
@@ -174,7 +168,6 @@
                     rows,
                     callbacks: {
                         clusterChanged: () => this.clusterChanged(),
-                        clusterWillChange: () => this.clusterWillChange(),
                     }
                 });
             },

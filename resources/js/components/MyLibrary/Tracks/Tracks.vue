@@ -60,7 +60,7 @@
                     playable: true,
                     queueable: true,
                     desktop: !this.$root.isMobile,
-                    draggable: true,
+                    draggable: false,
                     draggableOptions: {}
                 });
 

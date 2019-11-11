@@ -1,3 +1,5 @@
+import cacheRequest from "$scripts/cacheReqest/cacheRequest";
+
 const validateArray = function (toCheck) {
     return Array.isArray(toCheck) ? toCheck : [];
 };
@@ -9,6 +11,7 @@ export default {
     },
     setMyTracks(state, tracks) {
         state.tracks = validateArray(tracks);
+        cacheRequest.cacheTracks(...tracks);
         state.tracksInitialized = true;
     },
     setMyArtists(state, artists) {

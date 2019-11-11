@@ -1,10 +1,10 @@
 import {CacheRequest} from '$scripts/cacheReqest/cacheRequest';
-import Cache from '$scripts/cacheReqest/Cache';
+import MemoryCache from '$scripts/cacheReqest/Cache';
 
 describe('CacheRequest', () => {
     let cacheRequest;
     beforeEach(() => {
-        cacheRequest = new CacheRequest(new Cache());
+        cacheRequest = new CacheRequest(new MemoryCache());
     });
 
     it('should return cached track as Promise', async done => {
@@ -55,7 +55,7 @@ describe('CacheRequest', () => {
         };
         beforeEach(() => {
             fetchedTracks = [];
-            cacheRequest = new CacheRequest(new Cache(), clientMock);
+            cacheRequest = new CacheRequest(new MemoryCache(), clientMock);
         });
 
         it('should fetch track if it is not present in cache', async done => {

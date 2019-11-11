@@ -1,4 +1,4 @@
-import Cache from "$scripts/cacheReqest/Cache";
+import MemoryCache from "$scripts/cacheReqest/MemoryCache";
 import RequestClient from "$scripts/cacheReqest/RequestClient";
 
 class CacheRequest {
@@ -51,4 +51,4 @@ class CacheRequest {
 }
 
 export {CacheRequest};
-export default new CacheRequest(new Cache(), new RequestClient());
+export default new CacheRequest(new MemoryCache(), new RequestClient());

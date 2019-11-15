@@ -63,6 +63,7 @@
 
 <script>
     import BasePlayableItemCard from "../../_BaseComponents/BasePlayableItemCard";
+    import cacheRequest from "$scripts/cacheReqest/cacheRequest";
 
     export default {
         name: "Albums",

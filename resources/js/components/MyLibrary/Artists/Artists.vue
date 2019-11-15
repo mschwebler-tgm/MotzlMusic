@@ -25,7 +25,14 @@
                     <span class="subheading">{{ totalArtistCount }} Artist{{ totalArtistCount > 1 ? 's' : ''}}</span>
                 </div>
                 <v-divider></v-divider>
-                <v-layout row wrap class="mt-2">
+                <v-layout row wrap class="mt-2" v-if="loading">
+                    <v-flex v-for="item in 6"
+                            :key="item"
+                            xs6 sm4 md4 lg3 xl2 d-block justify-center>
+                        <v-skeleton-loader type="card"></v-skeleton-loader>
+                    </v-flex>
+                </v-layout>
+                <v-layout row wrap class="mt-2" v-else>
                     <v-flex v-for="artist in artistsToShow"
                             :key="artist.id"
                             xs6 sm4 md4 lg3 xl2 d-block justify-center>
@@ -67,6 +74,7 @@
                 selectedLetter: sessionStorage.getItem('myLibrarySelectedLetter') || '#',
                 hideSingleTrackArtists: localStorage.getItem('myLibraryHideArtistsWithOneTrack') === 'true',
                 selectedArtists: [],
+                loading: false,
             }
         },
         watch: {
@@ -126,7 +134,9 @@
                 }
 
                 const artistIds = artistsByLetter.items;
+                this.loading = true;
                 this.selectedArtists = await cacheRequest.getArtists(artistIds);
+                this.loading = false;
             }
         }
     }

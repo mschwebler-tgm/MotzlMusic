@@ -3,9 +3,9 @@
         <v-container>
             <div class="d-flex justify-center" v-if="!albumsInitialized">
                 <v-progress-circular
-                        v-if="!albumsInitialized"
-                        color="primary"
-                        indeterminate>
+                    v-if="!albumsInitialized"
+                    color="primary"
+                    indeterminate>
                 </v-progress-circular>
             </div>
 
@@ -25,7 +25,14 @@
                     <span class="subheading">{{ totalAlbumCount }} Album{{ totalAlbumCount > 1 ? 's' : ''}}</span>
                 </div>
                 <v-divider></v-divider>
-                <v-layout row wrap class="mt-2">
+                <v-layout row wrap class="mt-2" v-if="loading">
+                    <v-flex v-for="item in 6"
+                            :key="item"
+                            xs6 sm4 md4 lg3 xl2 d-block justify-center>
+                        <v-skeleton-loader type="card"></v-skeleton-loader>
+                    </v-flex>
+                </v-layout>
+                <v-layout row wrap class="mt-2" v-else>
                     <v-flex v-for="album in albumsToShow"
                             :key="album.id"
                             xs6 sm4 md4 lg3 xl2 d-block justify-center>
@@ -65,6 +72,7 @@
                 selectedLetter: sessionStorage.getItem('myLibraryAlbumsLetter') || '#',
                 hideSingles: localStorage.getItem('myLibraryHideSingles') === 'true',
                 selectedAlbums: [],
+                loading: false,
             }
         },
         watch: {
@@ -94,7 +102,9 @@
                 }
 
                 const albumIds = albumsByLetter.items;
+                this.loading = true;
                 this.selectedAlbums = await cacheRequest.getAlbums(albumIds);
+                this.loading = false;
             },
         },
         computed: {

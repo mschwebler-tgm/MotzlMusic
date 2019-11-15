@@ -21,7 +21,7 @@
             }
         },
         watch: {
-            async playingTrack(trackId) {
+            async playingTrackId(trackId) {
                 const audioAnalytics = await cacheRequest.getAudioAnalytics(trackId);
                 this.playingTrackAudioAnalytics = this.getAudioFeaturesAsArray(audioAnalytics);
             },

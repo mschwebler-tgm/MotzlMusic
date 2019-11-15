@@ -12,6 +12,7 @@ const state = {
     tracks: [],
     tracksInitialized: false,
     artists: [],
+    artistsSingleTracks: [],
     artistsInitialized: false,
     albums: [],
     albumsSingleTracks: [],

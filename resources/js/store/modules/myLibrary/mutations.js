@@ -18,6 +18,10 @@ export default {
         state.artists = validateArray(artists);
         state.artistsInitialized = true;
     },
+    setMyArtistsSingleTracks(state, tracks) {
+        cacheRequest.cacheTracks(...tracks);
+        state.artistsSingleTracks = tracks.map(track => ({name: track.name, id: track.id}));
+    },
     setMyAlbums(state, albums) {
         albums = validateArray(albums);
         state.albums = albums;

@@ -40,16 +40,16 @@
                     <span class="subheading text-center">No artists here. Check filters and try again.</span>
                 </div>
                 <v-divider class="mt-3 mb-3"></v-divider>
-<!--                <v-layout>-->
-<!--                    <v-flex xs6 sm4 md4 lg3 xl2 d-block justify-center>-->
-<!--                        <base-playable-item-card :item="artistsWithOneTrack">-->
-<!--                            &lt;!&ndash; Artist with one track&ndash;&gt;-->
-<!--                            <span slot="footer" class="caption grey&#45;&#45;text">-->
-<!--                                {{ artistsWithOneTrack.tracks.length }} track{{ artistsWithOneTrack.tracks.length > 1 ? 's' : '' }}-->
-<!--                            </span>-->
-<!--                        </base-playable-item-card>-->
-<!--                    </v-flex>-->
-<!--                </v-layout>-->
+                <v-layout>
+                    <v-flex xs6 sm4 md4 lg3 xl2 d-block justify-center>
+                        <base-playable-item-card :item="artistsWithOneTrack">
+                            <!-- Artist with one track-->
+                            <span slot="footer" class="caption grey--text">
+                                {{ artistsWithOneTrack.tracks.length }} track{{ artistsWithOneTrack.tracks.length > 1 ? 's' : '' }}
+                            </span>
+                        </base-playable-item-card>
+                    </v-flex>
+                </v-layout>
             </div>
         </v-container>
     </div>
@@ -107,21 +107,16 @@
             totalArtistCount() {
                 return this.artistsByLetters.reduce((total, artistByLetter) => artistByLetter.count + total, 0);
             },
-            // artistsWithOneTrack() {
-            //     const singleTracks = this.artistsByLetters
-            //         .map(artistsByLetter => artistsByLetter.items)
-            //         .flat()
-            //         .filter(artist => artist.tracks.length === 1)
-            //         .map(artist => artist.tracks)
-            //         .flat();
-            //
-            //     return {
-            //         name: 'My one hit wonders',
-            //         id: 'myLibrarySingles',
-            //         total_tracks: singleTracks.length,
-            //         tracks: singleTracks,
-            //     };
-            // }
+            artistsWithOneTrack() {
+                const singleTracksIds = this.$store.getters['myLibrary/artistsSingleTracks'];
+
+                return {
+                    name: 'My one hit wonders',
+                    id: 'myLibraryArtistSingles',
+                    total_tracks: singleTracksIds.length,
+                    tracks: singleTracksIds,
+                };
+            }
         },
         methods: {
             async showArtistsForLetter(selectedLetter) {

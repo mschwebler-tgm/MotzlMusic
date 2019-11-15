@@ -121,7 +121,7 @@
 
                 return {
                     name: 'All Singles',
-                    id: 'myLibrarySingles',
+                    id: 'myLibraryAlbumSingles',
                     total_tracks: singleTrackIds.length,
                     tracks: singleTrackIds,
                 };

@@ -45,6 +45,13 @@ class MyLibraryController extends Controller
         return $artistDao->getItemsByFirstLetter();
     }
 
+    public function getArtistsSingleTracks(ArtistDao $artistDao, TrackTransformer $trackTransformer)
+    {
+        $tracks = $artistDao->getSingleTracks();
+
+        return $trackTransformer->transform($tracks);
+    }
+
     public function getAlbums(AlbumDao $albumDao)
     {
         return $albumDao->getAlbums();

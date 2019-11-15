@@ -6,6 +6,7 @@ export default {
         axios.get('/api/my/playlists').then(res => commit('setMyPlaylists', res.data));
         axios.get('/api/my/tracks').then(res => commit('setMyTracks', res.data));
         axios.get('/api/my/artists/byFirstLetter').then(res => commit('setMyArtists', res.data));
+        axios.get('/api/my/artists/singleTracks').then(res => commit('setMyArtistsSingleTracks', res.data));
         axios.get('/api/my/albums/byFirstLetter').then(res => commit('setMyAlbums', res.data));
         axios.get('/api/my/albums/singleTracks').then(res => commit('setMyAlbumsSingleTracks', res.data));
     },

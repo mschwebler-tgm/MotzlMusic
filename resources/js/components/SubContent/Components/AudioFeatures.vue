@@ -21,8 +21,8 @@
             }
         },
         watch: {
-            async playingTrack(track) {
-                const audioAnalytics = await cacheRequest.getAudioAnalytics(track.id);
+            async playingTrack(trackId) {
+                const audioAnalytics = await cacheRequest.getAudioAnalytics(trackId);
                 this.playingTrackAudioAnalytics = this.getAudioFeaturesAsArray(audioAnalytics);
             },
             async focusedItems(items) {
@@ -42,8 +42,8 @@
             },
         },
         computed: {
-            playingTrack() {
-                return this.$store.getters['player/currentTrack'];
+            playingTrackId() {
+                return this.$store.getters['player/currentTrackId'];
             },
             focusedItems() {
                 return this.$store.getters['subContent/focusedItems'];

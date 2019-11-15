@@ -1,16 +1,19 @@
 import player from '$store/player/helpers/v2/player';
 import { mapGetters } from 'vuex'
+import cacheRequest from "$scripts/cacheReqest/cacheRequest";
 
 export default {
     data() {
         return {
             progressInterval: null,
             progressMs: 0,
+            currentTrack: null,
+            album: null,
         }
     },
     computed: {
         ...mapGetters({
-            currentTrack: 'player/currentTrack',
+            currentTrackId: 'player/currentTrackId',
             playing: 'player/playing',
             trackDuration: 'player/trackDuration',
             noNextTrack: 'player/noNextTrack',
@@ -18,9 +21,8 @@ export default {
             loading: 'player/loading',
             title: 'player/title',
             artists: 'player/artists',
-            album: 'player/album',
+            trackAlbum: 'player/album',
             albumName: 'player/albumName',
-            albumCover: 'player/albumCover',
             playerProgress: 'player/playerProgress',
             playerProgressPercent: 'player/playerProgressPercent',
             durationFormatted: 'player/durationFormatted',
@@ -43,6 +45,27 @@ export default {
             seconds = seconds < 10 ? `0${seconds}` : seconds;
 
             return `${minutes}:${seconds}`;
+        },
+        albumCover() {
+            return this.$root.getSpotifyImage(this.album, 'small');
+        }
+    },
+    watch: {
+        async currentTrackId(trackId) {
+            this.currentTrack = await cacheRequest.getTrack(trackId);
+        },
+        async trackAlbum(albumNameAndId) {
+            this.album = await cacheRequest.getAlbum(albumNameAndId.id);
+        },
+        playing(playing) {
+            if (playing) {
+                this.setProgressInterval();
+            } else {
+                clearInterval(this.progressInterval);
+            }
+        },
+        playerProgress(progress) {
+            this.progressMs = progress;
         }
     },
     methods: {
@@ -62,17 +85,5 @@ export default {
         setProgressInterval() {
             this.progressInterval = setInterval(() => this.progressMs += 100, 100);
         },
-    },
-    watch: {
-        playing(playing) {
-            if (playing) {
-                this.setProgressInterval();
-            } else {
-                clearInterval(this.progressInterval);
-            }
-        },
-        playerProgress(progress) {
-            this.progressMs = progress;
-        }
     },
 }

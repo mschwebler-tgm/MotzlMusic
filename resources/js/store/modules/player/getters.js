@@ -1,5 +1,4 @@
 import player from "$store/player/helpers/v2/player";
-import app from "$components/app";
 
 export default {
     currentTrack() {
@@ -42,13 +41,6 @@ export default {
         }
 
         return player.currentTrack.album.name;
-    },
-    albumCover() {
-        if (!player.currentTrack || !player.currentTrack.album) {
-            return window.playlistFallback;
-        }
-
-        return app.$root.getSpotifyImage(player.currentTrack.album, 'small');
     },
     playerProgress() {
         return player.progress;

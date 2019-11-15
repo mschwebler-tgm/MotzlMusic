@@ -62,6 +62,10 @@ const app = new Vue({
             }
         },
         getSpotifyImage(playlist, minResolution = 'large') {
+            if (!playlist) {
+                return window.playlistFallback;
+            }
+
             let imageToReturn = null;
             const indexByResolution = {'small': 0, 'medium': 1, 'large': 2};
             const images = [

@@ -72,6 +72,29 @@ class CacheRequest {
         }
     }
 
+    async getArtist(artistId) {
+        const cachedArtist = await this.cache.getArtist(artistId);
+        if (cachedArtist) {
+            return cachedArtist;
+        } else {
+            const artist = await this.requestClient.fetchArtist(artistId);
+            await this.cache.putArtist(artist);
+            return artist;
+        }
+    }
+
+    async getArtists(ids, fetchUrl) {
+        const artists = await this.cache.getArtists(ids);
+        if (artists.length === ids.length) {
+            return artists;
+        } else {
+            const remainingIds = this._getMissingIds(ids, artists);
+            const fetchedArtists = await this.requestClient.fetchArtists(remainingIds, fetchUrl);
+            await this.cache.putArtists(fetchedArtists);
+            return this.cache.getArtists(ids);
+        }
+    }
+
     _getMissingIds(ids, objects) {
         const requestedIds = [...ids];
         objects.forEach(object => {

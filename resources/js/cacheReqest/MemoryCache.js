@@ -7,6 +7,7 @@ export default class MemoryCache {
         this._tracks = {};
         this._audioAnalytics = {};
         this._albums = {};
+        this._artists = {};
     }
 
     putTrack(track) {
@@ -65,6 +66,30 @@ export default class MemoryCache {
 
     putAlbums(albums) {
         albums.forEach(album => this.putAlbum(album));
+        return Promise.resolve();
+    }
+
+    getArtist(id) {
+        return Promise.resolve(this._artists[id]);
+    }
+
+    getArtists(ids) {
+        const artists = [];
+        ids.forEach(id => {
+            if (this._artists[id]) {
+                artists.push(this._artists[id]);
+            }
+        });
+        return Promise.resolve(artists);
+    }
+
+    putArtist(artist) {
+        this._artists[artist.id] = artist;
+        return Promise.resolve();
+    }
+
+    putArtists(albums) {
+        albums.forEach(artists => this.putArtist(artists));
         return Promise.resolve();
     }
 }

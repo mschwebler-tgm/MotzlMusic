@@ -11,22 +11,22 @@
 
             <div v-else>
                 <div class="text-center artist-letters">
-                    <div v-for="artistsByLetter in artistsByLetters"
-                         :key="artistsByLetter.letter"
+                    <div v-for="letter in availableLetters"
+                         :key="letter"
                          v-ripple
-                         @click="clickedArtists = artistsByLetter"
-                         :class="{active: selectedArtists.letter === artistsByLetter.letter}"
+                         @click="selectedLetter = letter"
+                         :class="{active: letter === selectedLetter}"
                          class="pa-2 subheading artist-letter">
-                        {{ artistsByLetter.letter }}
+                        {{ letter }}
                     </div>
                 </div>
                 <div class="tools">
                     <v-checkbox v-model="hideSingleTrackArtists" label="Hide artists with single track"></v-checkbox>
-                    <span class="subheading">{{ artistCount }} Artist{{ artistCount > 1 ? 's' : ''}}</span>
+                    <span class="subheading">{{ totalArtistCount }} Artist{{ totalArtistCount > 1 ? 's' : ''}}</span>
                 </div>
                 <v-divider></v-divider>
                 <v-layout row wrap class="mt-2">
-                    <v-flex v-for="artist in selectedArtists.items"
+                    <v-flex v-for="artist in artistsToShow"
                             :key="artist.id"
                             xs6 sm4 md4 lg3 xl2 d-block justify-center>
                         <base-playable-item-card :item="artist" rounded>
@@ -36,20 +36,20 @@
                         </base-playable-item-card>
                     </v-flex>
                 </v-layout>
-                <div class="d-flex pa-3 mt-2" v-if="!selectedArtists.items.length">
+                <div class="d-flex pa-3 mt-2" v-if="!artistsToShow.length">
                     <span class="subheading text-center">No artists here. Check filters and try again.</span>
                 </div>
                 <v-divider class="mt-3 mb-3"></v-divider>
-                <v-layout>
-                    <v-flex xs6 sm4 md4 lg3 xl2 d-block justify-center>
-                        <base-playable-item-card :item="artistsWithOneTrack">
-                            <!-- Artist with one track-->
-                            <span slot="footer" class="caption grey--text">
-                                {{ artistsWithOneTrack.tracks.length }} track{{ artistsWithOneTrack.tracks.length > 1 ? 's' : '' }}
-                            </span>
-                        </base-playable-item-card>
-                    </v-flex>
-                </v-layout>
+<!--                <v-layout>-->
+<!--                    <v-flex xs6 sm4 md4 lg3 xl2 d-block justify-center>-->
+<!--                        <base-playable-item-card :item="artistsWithOneTrack">-->
+<!--                            &lt;!&ndash; Artist with one track&ndash;&gt;-->
+<!--                            <span slot="footer" class="caption grey&#45;&#45;text">-->
+<!--                                {{ artistsWithOneTrack.tracks.length }} track{{ artistsWithOneTrack.tracks.length > 1 ? 's' : '' }}-->
+<!--                            </span>-->
+<!--                        </base-playable-item-card>-->
+<!--                    </v-flex>-->
+<!--                </v-layout>-->
             </div>
         </v-container>
     </div>
@@ -57,22 +57,35 @@
 
 <script>
     import BasePlayableItemCard from "../../_BaseComponents/BasePlayableItemCard";
+    import cacheRequest from "$scripts/cacheReqest/cacheRequest";
 
     export default {
         name: "Artists",
         components: {BasePlayableItemCard},
         data() {
             return {
-                clickedArtists: JSON.parse(sessionStorage.getItem('myLibraryClickedArtist')) || {},
-                hideSingleTrackArtists: JSON.parse(localStorage.getItem('myLibraryHideArtistsWithOneTrack')),
+                selectedLetter: sessionStorage.getItem('myLibrarySelectedLetter') || '#',
+                hideSingleTrackArtists: localStorage.getItem('myLibraryHideArtistsWithOneTrack') === 'true',
+                selectedArtists: [],
             }
         },
         watch: {
+            selectedLetter(selectedLetter) {
+                sessionStorage.setItem('myLibraryClickedArtist', selectedLetter);
+                this.showArtistsForLetter(selectedLetter);
+            },
             hideSingleTrackArtists() {
                 localStorage.setItem('myLibraryHideArtistsWithOneTrack', this.hideSingleTrackArtists);
             },
-            clickedArtists() {
-                sessionStorage.setItem('myLibraryClickedArtist', JSON.stringify(this.clickedArtists));
+            artistsInitialized(isInitialized) {
+                if (isInitialized) {
+                    this.showArtistsForLetter(this.selectedLetter);
+                }
+            }
+        },
+        created() {
+            if (this.artistsInitialized) {
+                this.showArtistsForLetter(this.selectedLetter);
             }
         },
         computed: {
@@ -82,47 +95,43 @@
             artistsByLetters() {
                 return this.$store.getters['myLibrary/artists'] || [];
             },
-            selectedArtists() {
-                let artistsByLetter = [];
-                if (this.clickedArtists.letter) {
-                    artistsByLetter = this.clickedArtists;
-                } else if (this.artistsByLetters.length > 0) {
-                    // noinspection JSPotentiallyInvalidTargetOfIndexedPropertyAccess
-                    artistsByLetter = this.artistsByLetters[0];
-                }
-
+            artistsToShow() {
                 if (this.hideSingleTrackArtists) {
-                    artistsByLetter = {
-                        ...artistsByLetter,
-                        items: artistsByLetter.items.filter(artist => artist.tracks.length > 1),
-                    };
+                    return this.selectedArtists.filter(artists => artists.tracks.length > 1);
+                }
+                return this.selectedArtists;
+            },
+            availableLetters() {
+                return this.artistsByLetters.map(byLetter => byLetter.letter);
+            },
+            totalArtistCount() {
+                return this.artistsByLetters.reduce((total, artistByLetter) => artistByLetter.count + total, 0);
+            },
+            // artistsWithOneTrack() {
+            //     const singleTracks = this.artistsByLetters
+            //         .map(artistsByLetter => artistsByLetter.items)
+            //         .flat()
+            //         .filter(artist => artist.tracks.length === 1)
+            //         .map(artist => artist.tracks)
+            //         .flat();
+            //
+            //     return {
+            //         name: 'My one hit wonders',
+            //         id: 'myLibrarySingles',
+            //         total_tracks: singleTracks.length,
+            //         tracks: singleTracks,
+            //     };
+            // }
+        },
+        methods: {
+            async showArtistsForLetter(selectedLetter) {
+                const artistsByLetter = this.artistsByLetters.find(byLetter => byLetter.letter === selectedLetter);
+                if (!artistsByLetter) {
+                    return [];
                 }
 
-                return artistsByLetter;
-            },
-            artistCount() {
-                return this.artistsByLetters.reduce((count, artistsByLetter) => {
-                    let artists = artistsByLetter.items;
-                    if (this.hideSingleTrackArtists) {
-                        artists = artists.filter(artist => artist.tracks.length > 1);
-                    }
-                    return count + artists.length;
-                }, 0);
-            },
-            artistsWithOneTrack() {
-                const singleTracks = this.artistsByLetters
-                    .map(artistsByLetter => artistsByLetter.items)
-                    .flat()
-                    .filter(artist => artist.tracks.length === 1)
-                    .map(artist => artist.tracks)
-                    .flat();
-
-                return {
-                    name: 'My one hit wonders',
-                    id: 'myLibrarySingles',
-                    total_tracks: singleTracks.length,
-                    tracks: singleTracks,
-                };
+                const artistIds = artistsByLetter.items;
+                this.selectedArtists = await cacheRequest.getArtists(artistIds);
             }
         }
     }

@@ -9,6 +9,13 @@ use App\Transformer\TrackTransformer;
 
 class ArtistController extends Controller
 {
+    public function artist($id, ArtistDao $artistDao, ArtistTransformer $transformer)
+    {
+        $artist = $artistDao->get($id);
+
+        return $transformer->transform($artist);
+    }
+
     public function artists($ids, ArtistDao $artistDao, ArtistTransformer $transformer)
     {
         $ids = explode(',', $ids);

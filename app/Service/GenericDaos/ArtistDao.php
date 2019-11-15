@@ -6,6 +6,11 @@ use App\Artist;
 
 class ArtistDao
 {
+    public function get($id)
+    {
+        return Artist::findOrFail($id);
+    }
+
     public function getMultiple(array $ids)
     {
         return Artist::with('tracks')->whereIn('id', $ids)->get();

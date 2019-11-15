@@ -31,4 +31,14 @@ export default class RequestClient {
         const response = await axios.get(`/api/albums/${albumIds.join(',')}`);
         return response.data;
     }
+
+    async fetchArtist(artistId) {
+        const response = await axios.get(`/api/artist/${artistId}`);
+        return response.data;
+    }
+
+    async fetchArtists(artistIds, url = null) {
+        const response = await axios.get(`/api/artists/${artistIds.join(',')}`);
+        return response.data;
+    }
 }

@@ -26,4 +26,9 @@ export default class RequestClient {
         const response = await axios.get(`/api/album/${albumId}`);
         return response.data;
     }
+
+    async fetchAlbums(albumIds, url = null) {
+        const response = await axios.get(`/api/albums/${albumIds.join(',')}`);
+        return response.data;
+    }
 }

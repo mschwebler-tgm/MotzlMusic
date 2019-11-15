@@ -48,8 +48,23 @@ export default class MemoryCache {
         return Promise.resolve(this._albums[id]);
     }
 
+    getAlbums(ids) {
+        const albums = [];
+        ids.forEach(id => {
+            if (this._albums[id]) {
+                albums.push(this._albums[id]);
+            }
+        });
+        return Promise.resolve(albums);
+    }
+
     putAlbum(album) {
         this._albums[album.id] = album;
+        return Promise.resolve();
+    }
+
+    putAlbums(albums) {
+        albums.forEach(album => this.putAlbum(album));
         return Promise.resolve();
     }
 }

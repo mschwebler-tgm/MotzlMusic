@@ -60,6 +60,18 @@ class CacheRequest {
         }
     }
 
+    async getAlbums(ids, fetchUrl) {
+        const albums = await this.cache.getAlbums(ids);
+        if (albums.length === ids.length) {
+            return albums;
+        } else {
+            const remainingIds = this._getMissingIds(ids, albums);
+            const fetchedAlbums = await this.requestClient.fetchAlbums(remainingIds, fetchUrl);
+            await this.cache.putAlbums(fetchedAlbums);
+            return this.cache.getAlbums(ids);
+        }
+    }
+
     _getMissingIds(ids, objects) {
         const requestedIds = [...ids];
         objects.forEach(object => {

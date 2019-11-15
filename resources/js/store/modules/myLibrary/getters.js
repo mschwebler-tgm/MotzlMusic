@@ -6,5 +6,6 @@ export default {
     artists: state => state.artists,
     artistsInitialized: state => state.artistsInitialized,
     albums: state => state.albums,
+    albumsSingleTracks: state => state.albumsSingleTracks,
     albumsInitialized: state => state.albumsInitialized,
 }

@@ -1,5 +1,5 @@
-import app from '../../../app';
-import StatusInfos from "../../../components/Layout/StatusInfo/StatusInfos";
+import app from '$scripts/app';
+import StatusInfos from "$components/components/Layout/StatusInfo/StatusInfos";
 
 export default {
     init({commit}) {
@@ -7,6 +7,7 @@ export default {
         axios.get('/api/my/tracks').then(res => commit('setMyTracks', res.data));
         axios.get('/api/my/artists/byFirstLetter').then(res => commit('setMyArtists', res.data));
         axios.get('/api/my/albums/byFirstLetter').then(res => commit('setMyAlbums', res.data));
+        axios.get('/api/my/albums/singleTracks').then(res => commit('setMyAlbumsSingleTracks', res.data));
     },
     removeTrack({state, commit, dispatch}, trackId) {
         app.statusInfo.component = StatusInfos.GENERIC;

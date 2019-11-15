@@ -19,8 +19,13 @@ export default {
         state.artistsInitialized = true;
     },
     setMyAlbums(state, albums) {
-        state.albums = validateArray(albums);
+        albums = validateArray(albums);
+        state.albums = albums;
         state.albumsInitialized = true;
+    },
+    setMyAlbumsSingleTracks(state, tracks) {
+        cacheRequest.cacheTracks(...tracks);
+        state.albumsSingleTracks = tracks.map(track => ({name: track.name, id: track.id}));
     },
     removeTrack(state, trackId) {
         const removeTrack = track => track.id !== trackId;

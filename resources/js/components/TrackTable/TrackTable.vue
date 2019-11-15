@@ -28,10 +28,10 @@
         },
         methods: {
             resetSelectedTracks() {
-                this.$store.commit('subContent/setFocusedItems', []);
+                this.$store.commit('subContent/setAudioFeatures', null);
             },
             selectTrack(track) {
-                this.$store.commit('subContent/setFocusedItems', [track]);
+                this.$store.commit('subContent/setAudioFeatures', track.audio_features_url);
             },
             playTrack(track) {
                 player.playList(this.tracks, this.tracks.findIndex(listTrack => listTrack.id === track.id))

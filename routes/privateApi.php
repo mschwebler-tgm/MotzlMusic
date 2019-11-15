@@ -39,16 +39,19 @@ Route::prefix('player')->namespace('Player')->group(function () {
 Route::namespace('Api')->group(function () {
     Route::get('/playlist/{id}', 'PlaylistController@playlist')->name('getPlaylist');
     Route::get('/playlist/{id}/tracks', 'PlaylistController@tracks')->name('getPlaylistTracks');
-    Route::get('/track/{id}/audio-features', 'TrackController@audioFeatures')->name('getTrackAudioFeatures');
-    Route::put('/track/{id}/rate', 'TrackController@rateTrack');
+    Route::get('/playlist/{id}/audio-features', 'PlaylistController@audioFeatures')->name('getPlaylistAudioFeatures');
     Route::get('/track/{id}', 'TrackController@get')->name('getTrack');
+    Route::put('/track/{id}/rate', 'TrackController@rateTrack');
+    Route::get('/track/{id}/audio-features', 'TrackController@audioFeatures')->name('getTrackAudioFeatures');
     Route::get('/tracks/{ids}', 'TrackController@tracks')->name('getTracks');
-    Route::get('/artist/{id}', 'ArtistController@artist')->name('getArtist');
-    Route::get('/artists/{ids}', 'ArtistController@artists')->name('getArtists');
+    Route::get('/artist/{id}', 'ArtistController@audioFeatures')->name('getArtist');
     Route::get('/artist/{id}/tracks', 'ArtistController@tracks')->name('getArtistTracks');
+    Route::get('/artist/{id}/audio-features', 'ArtistController@audioFeatures')->name('getArtistAudioFeatures');
+    Route::get('/artists/{ids}', 'ArtistController@artists')->name('getArtists');
     Route::get('/album/{id}', 'AlbumController@album')->name('getAlbum');
-    Route::get('/albums/{ids}', 'AlbumController@albums')->name('getAlbums');
     Route::get('/album/{id}/tracks', 'AlbumController@tracks')->name('getAlbumTracks');
+    Route::get('/album/{id}/audio-features', 'AlbumController@audioFeatures')->name('getAlbumAudioFeatures');
+    Route::get('/albums/{ids}', 'AlbumController@albums')->name('getAlbums');
 });
 
 Route::post('/uploadTrack', 'UploadController@uploadTrack');

@@ -31,7 +31,7 @@ class PlaylistTransformer extends Transformable
             'spotify_image_small' => $playlist->spotify_image_small,
             'spotify_image_medium' => $playlist->spotify_image_medium,
             'spotify_image_large' => $playlist->spotify_image_large,
-            'audio_features' => $playlist->audio_features ?? null,
+            'audio_features_url' => route('getPlaylistAudioFeatures', ['id' => $playlist->id], false),
             'tracks' => $tracks,
             'tracks_url' => route('getPlaylistTracks', ['id' => $playlist->id], false),
         ];

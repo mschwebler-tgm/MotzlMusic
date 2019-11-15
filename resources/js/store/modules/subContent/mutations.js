@@ -1,6 +1,6 @@
 export default {
-    setFocusedItems(state, items) {
-        state.focusedItems = items;
+    setAudioFeatures(state, url) {
+        state.audioFeaturesUrl = url;
     },
     activateEditMode(state) {
         state.subContentEditClone = [...state.subContent];

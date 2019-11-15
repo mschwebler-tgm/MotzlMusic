@@ -25,28 +25,22 @@
                 const audioAnalytics = await cacheRequest.getAudioAnalytics(trackId);
                 this.playingTrackAudioAnalytics = this.getAudioFeaturesAsArray(audioAnalytics);
             },
-            async focusedItems(items) {
-                if (items.length === 0) {
+            async audioFeaturesUrl(url) {
+                if (!url) {
                     this.focusedTrackAudioAnalytics = [0, 0, 0, 0, 0, 0];
                     return;
                 }
 
-                const item = items[0];
-                let audioAnalytics;
-                if (item.id) {
-                    audioAnalytics = await cacheRequest.getAudioAnalytics(item.id);
-                } else if (item.valence) {  // when hovering a playlist there is no specific track, just avg audio features
-                    audioAnalytics = item;
-                }
-                this.focusedTrackAudioAnalytics = this.getAudioFeaturesAsArray(audioAnalytics);
+                const response = await axios.get(url);
+                this.focusedTrackAudioAnalytics = this.getAudioFeaturesAsArray(response.data);
             },
         },
         computed: {
             playingTrackId() {
                 return this.$store.getters['player/currentTrackId'];
             },
-            focusedItems() {
-                return this.$store.getters['subContent/focusedItems'];
+            audioFeaturesUrl() {
+                return this.$store.getters['subContent/audioFeaturesUrl'];
             },
         },
         methods: {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Daos;
+namespace App\Service\GenericDaos;
 
 use App\HasTracks;
 use App\SpotifyAudioFeature;
@@ -11,21 +11,10 @@ use Illuminate\Support\Facades\Cache;
 class AudioFeatureDao
 {
     /**
-     * @param Collection $hasTracksModels
-     * @return Collection
-     */
-    public function addAverageAudioFeaturesTo(Collection $hasTracksModels)
-    {
-        return $hasTracksModels->map(function (Model $hasTracksModel) {
-            return $hasTracksModel->setAttribute('audio_features', $this->getCachedAverageAudioFeatures($hasTracksModel));
-        });
-    }
-
-    /**
      * @param HasTracks|Model $hasTracksModel
-     * @return mixed
+     * @return SpotifyAudioFeature
      */
-    private function getCachedAverageAudioFeatures(HasTracks $hasTracksModel)
+    public function getCachedAverageAudioFeatures(HasTracks $hasTracksModel)
     {
         $cacheKey = __METHOD__ . "_" . get_class($hasTracksModel) . "_{$hasTracksModel->id}";
         $audioFeatures = Cache::get($cacheKey);

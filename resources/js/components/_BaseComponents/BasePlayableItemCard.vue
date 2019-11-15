@@ -62,10 +62,10 @@
                 player.forceLoading(false);
             },
             showAudioFeatures() {
-                this.$store.commit('subContent/setFocusedItems', [{...this.item.audio_features}]);
+                this.$store.commit('subContent/setAudioFeatures', this.item.audio_features_url);
             },
             hideAudioFeatures() {
-                this.$store.commit('subContent/setFocusedItems', []);
+                this.$store.commit('subContent/setAudioFeatures', null);
             },
         },
         computed: {

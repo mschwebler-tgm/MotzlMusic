@@ -3,7 +3,7 @@ import getters from './getters';
 import actions from './actions';
 
 const state = {
-    focusedItems: [],
+    audioFeaturesUrl: null,
     isInEditMode: false,
     subContent: [],
     subContentEditClone: [],

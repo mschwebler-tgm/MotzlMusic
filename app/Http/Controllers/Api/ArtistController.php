@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Service\GenericDaos\ArtistDao;
+use App\Service\GenericDaos\AudioFeatureDao;
 use App\Transformer\ArtistTransformer;
 use App\Transformer\TrackTransformer;
 
@@ -29,5 +30,11 @@ class ArtistController extends Controller
         $tracks = $artistDao->tracksForArtist($id);
 
         return $transformer->transform($tracks);
+    }
+
+    public function audioFeatures($id, ArtistDao $artistDao, AudioFeatureDao $audioFeatureDao)
+    {
+        $artist = $artistDao->get($id);
+        return $audioFeatureDao->getCachedAverageAudioFeatures($artist);
     }
 }

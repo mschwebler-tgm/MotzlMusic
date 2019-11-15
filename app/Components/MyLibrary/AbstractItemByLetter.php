@@ -16,7 +16,7 @@ abstract class AbstractItemByLetter implements \JsonSerializable
         $this->count = $firstLetterOccurrence->count;
     }
 
-    abstract public function loadItems();
+    abstract public function loadIds();
 
     public function getLetter()
     {

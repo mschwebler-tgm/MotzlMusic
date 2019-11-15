@@ -42,14 +42,7 @@ class MyLibraryController extends Controller
 
     public function getArtistsByFirstLetter(ArtistDao $artistDao, ArtistTransformer $transformer)
     {
-        $artistsByLetter = $artistDao->getItemsByFirstLetter();
-        foreach ($artistsByLetter as &$artistByLetter) {
-            $transformedItems = $artistByLetter->getItems()->map(function (Artist $artist) use ($transformer) {
-                return $transformer->transform($artist);
-            });
-            $artistByLetter->setItems($transformedItems);
-        }
-        return $artistsByLetter;
+        return $artistDao->getItemsByFirstLetter();
     }
 
     public function getAlbums(AlbumDao $albumDao)
@@ -59,15 +52,14 @@ class MyLibraryController extends Controller
 
     public function getAlbumsByFirstLetter(AlbumDao $albumDao, AlbumTransformer $transformer)
     {
-        $albumsByLetter = $albumDao->getItemsByFirstLetter();
-        foreach ($albumsByLetter as &$albumByLetter) {
-            $transformedItems = $albumByLetter->getItems()->map(function (Album $album) use ($transformer) {
-                return $transformer->transform($album);
-            });
-            $albumByLetter->setItems($transformedItems);
-        }
+        return $albumDao->getItemsByFirstLetter();
+    }
 
-        return $albumsByLetter;
+    public function getAlbumsSingleTracks(AlbumDao $albumDao, TrackTransformer $trackTransformer)
+    {
+        $tracks = $albumDao->getSingleTracks();
+
+        return $trackTransformer->transform($tracks);
     }
 
     public function addTrack($id)

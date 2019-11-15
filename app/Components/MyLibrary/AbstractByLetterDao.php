@@ -21,8 +21,8 @@ abstract class AbstractByLetterDao
     {
         $alphaLetterOccurrences = $this->getAlphaLetterOccurrences();
         $nonAlphaLetterOccurrences = $this->getNonAlphaLetterOccurrences();
-        $this->loadItemsForOccurrences($alphaLetterOccurrences);
-        $this->loadItemsForOccurrences($nonAlphaLetterOccurrences);
+        $this->loadItemIdsForOccurrences($alphaLetterOccurrences);
+        $this->loadItemIdsForOccurrences($nonAlphaLetterOccurrences);
 
         return $alphaLetterOccurrences->prepend($nonAlphaLetterOccurrences)->filter();
     }
@@ -55,7 +55,7 @@ abstract class AbstractByLetterDao
             AbstractItemByLetter $concatOccurrence = null,
             AbstractItemByLetter $occurrence
         ) {
-            $occurrence->loadItems();
+            $occurrence->loadIds();
             $occurrence->setLetter('#');
             if ($concatOccurrence) {
                 $occurrence->setCount($concatOccurrence->getCount() + $occurrence->getCount());
@@ -67,7 +67,7 @@ abstract class AbstractByLetterDao
         return $nonAlphaLetterOccurrences;
     }
 
-    private function loadItemsForOccurrences($occurrences)
+    private function loadItemIdsForOccurrences($occurrences)
     {
         if (!$occurrences) {
             return;
@@ -75,7 +75,7 @@ abstract class AbstractByLetterDao
 
         /** @var ArtistByLetterOccurrence $occurrence */
         foreach ($occurrences as $occurrence) {
-            $occurrence->loadItems();
+            $occurrence->loadIds();
         }
     }
 }

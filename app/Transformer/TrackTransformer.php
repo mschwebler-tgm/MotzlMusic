@@ -12,22 +12,23 @@ class TrackTransformer extends Transformable
      */
     protected function transformItem($track)
     {
-        $data = $track->toArray();
         $artistIds = $track->artists->pluck('id')->toArray();
         $artists = $this->pluckIdAndName($track->artists);
 
-        $data['album'] = [
-            'id' => $track->album->id,
-            'name' => $track->album->name,
+        return [
+            'type' => 'track',
+            'id' => $track->id,
+            'name' => $track->name,
+            'provider' => $track->provider,
+            'spotify_id' => $track->spotify_id,
+            'album' => ['id' => $track->album->id, 'name' => $track->album->name],
+            'album_url' => route('getAlbum', ['id' => $track->album->id], false),
+            'artists' => $artists,
+            'artists_url' => route('getArtists', ['ids' => implode(',', $artistIds)], false),
+            'audio_features_url' => route('getTrackAudioFeatures', ['id' => $track->id], false),
+            'duration' => $track->duration,
+            'duration_formatted' => formatDuration($track->duration),
+            'rating' => $track->rating->rating ?? null,
         ];
-        $data['album_url'] = route('getAlbum', ['id' => $track->album->id], false);
-        $data['artists'] = $artists;
-        $data['artists_url'] = route('getArtists', ['ids' => implode(',', $artistIds)], false);
-        $data['audio_features_url'] = route('getTrackAudioFeatures', ['id' => $track->id], false);
-        $data['duration_formatted'] = formatDuration($track->duration);
-        $data['rating'] = $track->rating->rating ?? null;
-        $data['type'] = 'track';
-
-        return $data;
     }
 }

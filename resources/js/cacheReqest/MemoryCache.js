@@ -6,6 +6,7 @@ export default class MemoryCache {
     init() {
         this._tracks = {};
         this._audioAnalytics = {};
+        this._albums = {};
     }
 
     putTrack(track) {
@@ -41,5 +42,14 @@ export default class MemoryCache {
 
     getAudioAnalytics(trackId) {
         return Promise.resolve(this._audioAnalytics[trackId]);
+    }
+
+    getAlbum(id) {
+        return Promise.resolve(this._albums[id]);
+    }
+
+    putAlbum(album) {
+        this._albums[album.id] = album;
+        return Promise.resolve();
     }
 }

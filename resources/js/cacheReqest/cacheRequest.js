@@ -49,6 +49,17 @@ class CacheRequest {
         }
     }
 
+    async getAlbum(albumId) {
+        const cachedAlbum = await this.cache.getAlbum(albumId);
+        if (cachedAlbum) {
+            return cachedAlbum;
+        } else {
+            const album = await this.requestClient.fetchAlbum(albumId);
+            await this.cache.putAlbum(album);
+            return album;
+        }
+    }
+
     _getMissingIds(ids, objects) {
         const requestedIds = [...ids];
         objects.forEach(object => {

@@ -21,4 +21,9 @@ export default class RequestClient {
         const response = await axios.get(`/api/track/${trackId}/audio-features`);
         return response.data;
     }
+
+    async fetchAlbum(albumId) {
+        const response = await axios.get(`/api/album/${albumId}`);
+        return response.data;
+    }
 }

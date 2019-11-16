@@ -19,6 +19,7 @@ export class Player {
     }
 
     playList(tracks = [], startIndex = 0) {
+        console.log(this)
         this._currentTrackList = tracks.map(track => new Track(track));
         this._currentTrackIndex = startIndex;
         this._playCurrentTrack();
@@ -44,6 +45,17 @@ export class Player {
 
         this._currentTrackIndex--;
         this._playCurrentTrack();
+    }
+
+    playIndex(index) {
+        if (!this._currentTrackList[index]) {
+            _log(`Tried to play index [${index}] on list of size ${this._currentTrackList.length}.`);
+            return;
+        }
+
+        this._currentTrackIndex = index;
+        this._playCurrentTrack();
+        this._setTrackList();
     }
 
     pause() {

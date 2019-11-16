@@ -26,6 +26,7 @@
             tracks: Array,
             height: String,
             config: Object,
+            useRawTracks: Boolean
         },
         methods: {
             resetSelectedTracks() {
@@ -35,7 +36,12 @@
                 this.$store.commit('subContent/setAudioFeatures', track.audio_features_url);
             },
             playTrack(track) {
-                player.playList(this.tracks, this.tracks.findIndex(listTrack => listTrack.id === track.id))
+                if (this.useRawTracks) {
+                    const tracks = this.tracks.map(track => track.trackData);
+                    player.playIndex(tracks.findIndex(listTrack => listTrack.id === track.id))
+                } else {
+                    player.playList(this.tracks, this.tracks.findIndex(listTrack => listTrack.id === track.id))
+                }
             },
             rateTrack(track, rating) {
                 this.$store.dispatch('tracks/rateTrack', {track, rating});

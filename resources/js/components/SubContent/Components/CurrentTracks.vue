@@ -8,6 +8,7 @@
                 <div v-else>
                     <track-table :tracks="tracksRaw"
                                  :config="tableConfig"
+                                 use-raw-tracks
                                  height="360px"></track-table>
                 </div>
             </v-fade-transition>

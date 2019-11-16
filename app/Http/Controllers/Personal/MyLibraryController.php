@@ -40,16 +40,14 @@ class MyLibraryController extends Controller
         return $transformer->transform($this->libraryDao->getAllTracks());
     }
 
-    public function getArtistsByFirstLetter(ArtistDao $artistDao, ArtistTransformer $transformer)
+    public function getArtistsByFirstLetter(ArtistDao $artistDao)
     {
         return $artistDao->getItemsByFirstLetter();
     }
 
-    public function getArtistsSingleTracks(ArtistDao $artistDao, TrackTransformer $trackTransformer)
+    public function getArtistsSingleTracks(ArtistDao $artistDao)
     {
-        $tracks = $artistDao->getSingleTracks();
-
-        return $trackTransformer->transform($tracks);
+        return $artistDao->getSingleTracksIds();
     }
 
     public function getAlbums(AlbumDao $albumDao)
@@ -57,21 +55,19 @@ class MyLibraryController extends Controller
         return $albumDao->getAlbums();
     }
 
-    public function getAlbumsByFirstLetter(AlbumDao $albumDao, AlbumTransformer $transformer)
+    public function getAlbumsByFirstLetter(AlbumDao $albumDao)
     {
         return $albumDao->getItemsByFirstLetter();
     }
 
-    public function getAlbumsSingleTracks(AlbumDao $albumDao, TrackTransformer $trackTransformer)
+    public function getAlbumsSingleTracks(AlbumDao $albumDao)
     {
-        $tracks = $albumDao->getSingleTracks();
-
-        return $trackTransformer->transform($tracks);
+        return $albumDao->getSingleTrackIds();
     }
 
     public function addTrack($id)
     {
-        return $this->libraryDao->addTrack($id);
+        $this->libraryDao->addTrack($id);
     }
 
     public function removeTrack($id)

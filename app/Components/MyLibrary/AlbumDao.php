@@ -15,9 +15,9 @@ class AlbumDao extends AbstractByLetterDao
             ->get();
     }
 
-    public function getSingleTracks()
+    public function getSingleTrackIds()
     {
-        $trackIds = Album::ofCurrentUser()
+        return Album::ofCurrentUser()
             ->join('tracks', 'tracks.album_id', '=', 'albums.id')
             ->selectRaw('COUNT(tracks.id) AS track_amount')
             ->addSelect(\DB::raw('MAX(tracks.id) as track_id'))
@@ -26,10 +26,6 @@ class AlbumDao extends AbstractByLetterDao
             ->get('track_id')
             ->pluck('track_id')
             ->toArray();
-
-        return Track::ofCurrentUser()
-            ->whereIn('id', $trackIds)
-            ->get();
     }
 
     protected function getByLetterOccurrenceClass()

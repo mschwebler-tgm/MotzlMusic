@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Builder;
 
 class ArtistDao extends AbstractByLetterDao
 {
-    public function getSingleTracks()
+    public function getSingleTracksIds()
     {
-        $trackIds = Artist::ofCurrentUser()
+        return Artist::ofCurrentUser()
             ->join('track_has_artist', 'track_has_artist.artist_id', '=', 'artists.id')
             ->join('tracks', 'track_has_artist.track_id', '=', 'tracks.id')
             ->selectRaw('COUNT(tracks.id) AS track_amount')
@@ -20,10 +20,6 @@ class ArtistDao extends AbstractByLetterDao
             ->get('track_id')
             ->pluck('track_id')
             ->toArray();
-
-        return Track::ofCurrentUser()
-            ->whereIn('id', $trackIds)
-            ->get();
     }
 
     /** @return string AbstractItemByLetter::class */

@@ -18,8 +18,8 @@ export default {
         state.artists = validateArray(artists);
         state.artistsInitialized = true;
     },
-    setMyArtistsSingleTracks(state, tracks) {
-        cacheRequest.cacheTracks(...tracks);
+    async setMyArtistsSingleTracks(state, tracksIds) {
+        const tracks = await cacheRequest.getTracks(tracksIds);
         state.artistsSingleTracks = tracks.map(track => ({name: track.name, id: track.id}));
     },
     setMyAlbums(state, albums) {
@@ -27,8 +27,8 @@ export default {
         state.albums = albums;
         state.albumsInitialized = true;
     },
-    setMyAlbumsSingleTracks(state, tracks) {
-        cacheRequest.cacheTracks(...tracks);
+    async setMyAlbumsSingleTracks(state, tracksIds) {
+        const tracks = await cacheRequest.getTracks(tracksIds);
         state.albumsSingleTracks = tracks.map(track => ({name: track.name, id: track.id}));
     },
     removeTrack(state, trackId) {

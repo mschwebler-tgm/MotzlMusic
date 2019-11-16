@@ -7,12 +7,10 @@
             @mouseleave="hideAudioFeatures"
             class="overlay-play-icon-toggle">
         <div class="relative">
-            <v-img
-                    :class="{'image-rounded': rounded}"
-                    :src="fullResolutionImage"
-                    :lazy-src="intermediateImage"
-                    :alt="item.name"
-                    aspect-ratio="1">
+            <v-img :class="{'image-rounded': rounded}"
+                   :src="fullResolutionImage"
+                   :alt="item.name"
+                   aspect-ratio="1">
             </v-img>
             <v-btn fab absolute depressed bottom right small
                    v-if="!isPlaying"

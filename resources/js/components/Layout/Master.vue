@@ -313,6 +313,7 @@
         max-height: 100%;
         overflow-y: scroll;
 
+        scrollbar-width: none;
         &::-webkit-scrollbar {
             display: none;
         }

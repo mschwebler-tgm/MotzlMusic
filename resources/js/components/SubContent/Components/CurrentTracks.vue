@@ -60,6 +60,7 @@
         height: 360px;
         overflow-y: scroll;
 
+        scrollbar-width: none;
         &::-webkit-scrollbar {
             display: none;
         }

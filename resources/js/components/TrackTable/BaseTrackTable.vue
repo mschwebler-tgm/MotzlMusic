@@ -238,9 +238,10 @@
             },
             _getTrackFromEvent($event) {
                 let trackId = null;
-                for (let i = 0; i < $event.path.length; i++) {
-                    if ($event.path[i].classList.contains('track-row')) {
-                        trackId = parseInt($event.path[i].dataset.id);
+                const $eventPath = $event.path || $event.composedPath && $event.composedPath();
+                for (let i = 0; i < $eventPath.length; i++) {
+                    if ($eventPath[i].classList.contains('track-row')) {
+                        trackId = parseInt($eventPath[i].dataset.id);
                         break;
                     }
                 }

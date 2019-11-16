@@ -111,7 +111,7 @@
     }
 
     .content-component {
-        min-width: 380px;
+        width: 380px;
         pointer-events: none;
     }
 

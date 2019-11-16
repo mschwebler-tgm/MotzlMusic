@@ -20,7 +20,7 @@
                   prepend-icon="mdi-lightbulb-outline"
                   append-icon="mdi-lightbulb-on-outline"
                   v-model="$root.user.settings.appearance.brightness"
-                  min="0"
+                  min="30"
                   max="100"
                   style="width: 400px"></v-slider>
         <v-divider class="mb-3 mt-3"></v-divider>

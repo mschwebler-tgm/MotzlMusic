@@ -29,16 +29,16 @@
             <div class="hidden-sm-and-down">
                 <div class="d-flex pa-3">
                     <v-img
-                        :src="$root.getSpotifyImage(playlist, 'medium')"
-                        :lazy-src="$root.getSpotifyImage(playlist, 'small')"
-                        aspect-ratio="1"
-                        class="grey lighten-2 playlist-image">
+                            :src="$root.getSpotifyImage(playlist, 'medium')"
+                            :lazy-src="$root.getSpotifyImage(playlist, 'small')"
+                            aspect-ratio="1"
+                            class="grey lighten-2 playlist-image">
                         <template v-slot="placeholder">
                             <v-layout
-                                fill-height
-                                align-center
-                                justify-center
-                                ma-0>
+                                    fill-height
+                                    align-center
+                                    justify-center
+                                    ma-0>
                                 <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
                             </v-layout>
                         </template>
@@ -58,17 +58,17 @@
             <div class="hidden-md-and-up">
                 <div class="relative">
                     <v-img
-                        :src="$root.getSpotifyImage(playlist, 'medium')"
-                        :lazy-src="$root.getSpotifyImage(playlist, 'small')"
-                        aspect-ratio="1"
-                        min-width="100%"
-                        class="grey lighten-2 playlist-image">
+                            :src="$root.getSpotifyImage(playlist, 'medium')"
+                            :lazy-src="$root.getSpotifyImage(playlist, 'small')"
+                            aspect-ratio="1"
+                            min-width="100%"
+                            class="grey lighten-2 playlist-image">
                         <template v-slot="placeholder">
                             <v-layout
-                                fill-height
-                                align-center
-                                justify-center
-                                ma-0>
+                                    fill-height
+                                    align-center
+                                    justify-center
+                                    ma-0>
                                 <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
                             </v-layout>
                         </template>
@@ -97,7 +97,10 @@
                 </div>
             </div>
         </template>
-        <track-table :tracks="tracks" height="444px" :class="{'pa-3': !$root.isMobile}"></track-table>
+        <track-table :tracks="tracks"
+                     :class="{'pa-3': !$root.isMobile}"
+                     height="444px"
+                     @clusterChanged.once="initArrowListeners"></track-table>
     </div>
 </template>
 
@@ -123,7 +126,6 @@
         created() {
             this.loadPlaylistIfNeeded();
             this.loadTracks();
-            this.initArrowListeners();
         },
         methods: {
             loadPlaylistIfNeeded() {
@@ -152,7 +154,7 @@
             },
             initArrowListeners() {
                 const handleKeyDown = $event => {
-                    let somethingIsFocused = this.$store.getters['subContent/focusedItems'].length > 0;
+                    let somethingIsFocused = this.$store.getters['subContent/audioFeaturesUrl'] !== null;
                     let shouldRemoveEventListener = somethingIsFocused || $event.key === 'ArrowUp' || $event.key === 'ArrowDown';
                     if (shouldRemoveEventListener) {
                         $event.preventDefault();
@@ -169,7 +171,7 @@
                 document.addEventListener('keydown', handleKeyDown);
             },
             getTrackElements() {
-                const trackHolderElement = this.$el.querySelector('.track-table .clusterize-content');
+                const trackHolderElement = this.$el.querySelector('.base-track-table .clusterize-content');
                 return trackHolderElement.childNodes;
             },
             selectFirstTrack() {

@@ -156,6 +156,7 @@
                     // TODO init draggable
                     // this.dragContainer = smoothDnD(this.$refs.contentArea, this.options.get('draggableOptions'));
                 }
+                this.$emit('clusterChanged');
             },
             initializeTracksTable() {
                 const rows = this.clusterizer.generateForTracks(this.tracks);

@@ -2,12 +2,13 @@
     <base-track-table
             :tracks="tracks"
             :options="config || tableConfig"
+            :height="height"
             @select-track="selectTrack"
             @play-track="playTrack"
             @rate-track="rateTrack"
             @queue-track="queueTrack"
             @focusout="resetSelectedTracks"
-            :height="height">
+            v-on="$listeners">
     </base-track-table>
 </template>
 

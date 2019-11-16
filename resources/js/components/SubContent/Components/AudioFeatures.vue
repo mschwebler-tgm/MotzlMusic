@@ -21,9 +21,16 @@
             }
         },
         watch: {
-            async playingTrackId(trackId) {
-                const audioAnalytics = await cacheRequest.getAudioAnalyticsForTrackId(trackId);
-                this.playingTrackAudioAnalytics = this.getAudioFeaturesAsArray(audioAnalytics);
+            playingTrackId: {
+                async handler(trackId) {
+                    if (!trackId) {
+                        return;
+                    }
+
+                    const audioAnalytics = await cacheRequest.getAudioAnalyticsForTrackId(trackId);
+                    this.playingTrackAudioAnalytics = this.getAudioFeaturesAsArray(audioAnalytics);
+                },
+                immediate: true,
             },
             async audioFeaturesUrl(url) {
                 if (!url) {

@@ -49,7 +49,7 @@ class CacheRequest {
             return audioAnalytics;
         } else {
             audioAnalytics = await this.requestClient.fetchAudioAnalytics(url);
-            await this.cache.putAudioAnalytics(audioAnalytics);
+            await this.cache.putAudioAnalytics(url, audioAnalytics);
             return audioAnalytics;
         }
     }

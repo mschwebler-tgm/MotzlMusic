@@ -48,7 +48,7 @@ class CacheRequest {
         if (audioAnalytics) {
             return audioAnalytics;
         } else {
-            audioAnalytics = await this.requestClient.fetchAudioAnalytics(trackId);
+            audioAnalytics = await this.requestClient.fetchAudioAnalytics(url);
             await this.cache.putAudioAnalytics(audioAnalytics);
             return audioAnalytics;
         }

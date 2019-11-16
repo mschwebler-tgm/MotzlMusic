@@ -73,7 +73,7 @@ const columns = {
     },
     ALBUM_IMAGE: {
         label: '',
-        render: rawTrack => RenderDesktopColumns.albumImage(RenderDesktopColumns.getTrackData(rawTrack).album.spotify_image_small),
+        render: rawTrack => RenderDesktopColumns.albumImage(RenderDesktopColumns.getTrackData(rawTrack).album.image),
     },
     ARTISTS: {
         label: 'Artists',

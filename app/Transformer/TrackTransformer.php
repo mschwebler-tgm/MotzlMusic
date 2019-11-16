@@ -21,7 +21,11 @@ class TrackTransformer extends Transformable
             'name' => $track->name,
             'provider' => $track->provider,
             'spotify_id' => $track->spotify_id,
-            'album' => ['id' => $track->album->id, 'name' => $track->album->name],
+            'album' => [
+                'id' => $track->album->id,
+                'name' => $track->album->name,
+                'image' => $track->album->spotify_image_small,
+            ],
             'album_url' => route('getAlbum', ['id' => $track->album->id], false),
             'artists' => $artists,
             'artists_url' => route('getArtists', ['ids' => implode(',', $artistIds)], false),

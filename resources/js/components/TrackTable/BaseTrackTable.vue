@@ -390,6 +390,10 @@
                 background-color: rgba(255, 255, 255, 0.11);
             }
 
+            &.playable {
+                cursor: default;
+            }
+
             &-number {
                 width: 42px;
                 text-align: center;

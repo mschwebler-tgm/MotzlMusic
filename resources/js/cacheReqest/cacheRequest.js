@@ -9,6 +9,7 @@ class CacheRequest {
     constructor(cache, requestClient) {
         this.cache = cache;
         this.requestClient = requestClient;
+        process.env !== 'production' && console.log(this);
     }
 
     cacheTracks(...tracks) {

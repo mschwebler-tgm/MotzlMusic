@@ -1,7 +1,7 @@
 import PlayerClient from "./playerClient";
 import Track from "./Track";
 
-const DEBUG = true;
+const DEBUG = process.env !== 'production';
 const KEEP_PAST_TRACKS = 15;
 const LISTENER_BLACKLIST = ['on'];
 
@@ -16,10 +16,10 @@ export class Player {
         this._onListeners = {};
         this._onceListeners = {};
         this._loadingForced = false;
+        process.env !== 'production' && console.log(this);
     }
 
     playList(tracks = [], startIndex = 0) {
-        console.log(this)
         this._currentTrackList = tracks.map(track => new Track(track));
         this._currentTrackIndex = startIndex;
         this._playCurrentTrack();
@@ -157,12 +157,6 @@ export class Player {
 
     forceLoading(force) {
         this._loadingForced = force;
-    }
-
-    playTrackIndex(index) {
-        this._currentTrackIndex = index;
-        this._playCurrentTrack();
-        this._setTrackList();
     }
 
     _insertTrackAfter(index, track) {

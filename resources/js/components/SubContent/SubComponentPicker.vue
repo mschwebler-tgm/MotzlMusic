@@ -18,7 +18,7 @@
                     Save
                 </v-btn>
             </div>
-            <div v-for="contentGroup in availableComponents" :key="contentGroup.label">
+            <div v-for="(contentGroup, index) in availableComponents" :key="contentGroup.label">
                 <div class="display-1 mb-2 mt-2">{{ contentGroup.label }}</div>
                 <div class="d-flex flex-wrap">
                     <div class="mb-5 mr-5" v-for="contentItem in contentGroup.items" :key="contentItem.label" @mousedown="lastClickedComponent = contentItem.component">
@@ -36,6 +36,7 @@
                         </Container>
                     </div>
                 </div>
+                <v-divider v-if="index < availableComponents.length - 1"></v-divider>
             </div>
         </v-container>
     </v-flex>

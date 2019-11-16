@@ -320,11 +320,16 @@
     }
 
     .main-content-wrapper {
-        filter: blur(0);
+        filter: blur(0) brightness(100%);
+        -webkit-transition: filter .2s;
+        -moz-transition: filter .2s;
+        -ms-transition: filter .2s;
+        -o-transition: filter .2s;
+        transition: filter .2s;
     }
 
     .main-content-wrapper.editing {
-        filter: blur(10px);
+        filter: blur(10px) brightness(50%);
     }
 
     .main-content-edit-mode {

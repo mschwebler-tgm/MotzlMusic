@@ -22,7 +22,7 @@
         },
         watch: {
             async playingTrackId(trackId) {
-                const audioAnalytics = await cacheRequest.getAudioAnalytics(trackId);
+                const audioAnalytics = await cacheRequest.getAudioAnalyticsForTrackId(trackId);
                 this.playingTrackAudioAnalytics = this.getAudioFeaturesAsArray(audioAnalytics);
             },
             async audioFeaturesUrl(url) {
@@ -31,8 +31,8 @@
                     return;
                 }
 
-                const response = await axios.get(url);
-                this.focusedTrackAudioAnalytics = this.getAudioFeaturesAsArray(response.data);
+                const audioFeatures = await cacheRequest.getAudioAnalytics(url);
+                this.focusedTrackAudioAnalytics = this.getAudioFeaturesAsArray(audioFeatures);
             },
         },
         computed: {

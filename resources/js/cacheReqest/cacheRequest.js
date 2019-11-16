@@ -38,13 +38,18 @@ class CacheRequest {
         }
     }
 
-    async getAudioAnalytics(trackId) {
-        let audioAnalytics = await this.cache.getAudioAnalytics(trackId);
+    async getAudioAnalyticsForTrackId(trackId) {
+        const url = `/api/track/${trackId}/audio-features`;
+        return this.getAudioAnalytics(url);
+    }
+
+    async getAudioAnalytics(url) {
+        let audioAnalytics = await this.cache.getAudioAnalytics(url);
         if (audioAnalytics) {
             return audioAnalytics;
         } else {
-            audioAnalytics = await this.requestClient.fetchAudioAnalytics(trackId);
-            this.cache.putAudioAnalytics(audioAnalytics);
+            audioAnalytics = await this.requestClient.fetchAudioAnalytics(url);
+            this.cache.putAudioAnalytics(url, audioAnalytics);
             return audioAnalytics;
         }
     }

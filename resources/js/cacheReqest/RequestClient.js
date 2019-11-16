@@ -17,8 +17,8 @@ export default class RequestClient {
         return response.data;
     }
 
-    async fetchAudioAnalytics(trackId) {
-        const response = await axios.get(`/api/track/${trackId}/audio-features`);
+    async fetchAudioAnalytics(url) {
+        const response = await axios.get(url);
         return response.data;
     }
 

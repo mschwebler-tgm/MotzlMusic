@@ -21,7 +21,7 @@ class CacheRequest {
             return cachedTrack;
         } else {
             const track = await this.requestClient.fetchTrack(id);
-            this.cache.putTrack(track);
+            await this.cache.putTrack(track);
             return track;
         }
     }
@@ -33,7 +33,7 @@ class CacheRequest {
         } else {
             const remainingIds = this._getMissingIds(ids, tracks);
             const fetchedTracks = await this.requestClient.fetchTracks(remainingIds, fetchUrl);
-            this.cache.putTracks(fetchedTracks);
+            await this.cache.putTracks(fetchedTracks);
             return this.cache.getTracks(ids);
         }
     }
@@ -48,8 +48,8 @@ class CacheRequest {
         if (audioAnalytics) {
             return audioAnalytics;
         } else {
-            audioAnalytics = await this.requestClient.fetchAudioAnalytics(url);
-            this.cache.putAudioAnalytics(url, audioAnalytics);
+            audioAnalytics = await this.requestClient.fetchAudioAnalytics(trackId);
+            await this.cache.putAudioAnalytics(audioAnalytics);
             return audioAnalytics;
         }
     }
@@ -60,7 +60,7 @@ class CacheRequest {
             return cachedAlbum;
         } else {
             const album = await this.requestClient.fetchAlbum(albumId);
-            this.cache.putAlbum(album);
+            await this.cache.putAlbum(album);
             return album;
         }
     }
@@ -72,7 +72,7 @@ class CacheRequest {
         } else {
             const remainingIds = this._getMissingIds(ids, albums);
             const fetchedAlbums = await this.requestClient.fetchAlbums(remainingIds, fetchUrl);
-            this.cache.putAlbums(fetchedAlbums);
+            await this.cache.putAlbums(fetchedAlbums);
             return this.cache.getAlbums(ids);
         }
     }
@@ -83,7 +83,7 @@ class CacheRequest {
             return cachedArtist;
         } else {
             const artist = await this.requestClient.fetchArtist(artistId);
-            this.cache.putArtist(artist);
+            await this.cache.putArtist(artist);
             return artist;
         }
     }
@@ -95,7 +95,7 @@ class CacheRequest {
         } else {
             const remainingIds = this._getMissingIds(ids, artists);
             const fetchedArtists = await this.requestClient.fetchArtists(remainingIds, fetchUrl);
-            this.cache.putArtists(fetchedArtists);
+            await this.cache.putArtists(fetchedArtists);
             return this.cache.getArtists(ids);
         }
     }

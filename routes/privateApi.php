@@ -18,6 +18,7 @@ Route::prefix('my')->namespace('Personal')->group(function () {
     Route::put('tracks/{id}', 'MyLibraryController@addTrack');
     Route::get('artists/byFirstLetter', 'MyLibraryController@getArtistsByFirstLetter')->name('getArtistsByLetter');
     Route::get('artists/singleTracks', 'MyLibraryController@getArtistsSingleTracks')->name('getArtistsSingleTracks');
+    Route::get('artist/{id}/tracksIds', 'MyLibraryController@getArtistTrackIds')->name('getMyArtistTrackIds');
     Route::get('albums/byFirstLetter', 'MyLibraryController@getAlbumsByFirstLetter')->name('getAlbumsByLetter');
     Route::get('albums/singleTracks', 'MyLibraryController@getAlbumsSingleTracks')->name('getAlbumsSingleTracks');
     Route::get('albums', 'MyLibraryController@getAlbums')->name('getMyAlbums');

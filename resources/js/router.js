@@ -18,6 +18,7 @@ import Tracks from './components/MyLibrary/Tracks/Tracks';
 import Albums from './components/MyLibrary/Albums/Albums';
 import Artists from './components/MyLibrary/Artists/Artists';
 import PlaylistView from './components/Playlist/Playlist';
+import Artist from "$scripts/components/Artist/Artist";
 
 export default new VueRouter({
     mode: 'history',
@@ -113,6 +114,12 @@ export default new VueRouter({
                             path: 'albums',
                             name: 'Albums',
                             component: Albums,
+                        },
+                        {
+                            path: 'artist/:name/:id',
+                            name: 'artist',
+                            component: Artist,
+                            props: route => ({onlyOwnTracks: true, ...route.params})
                         },
                         {
                             path: 'artists',

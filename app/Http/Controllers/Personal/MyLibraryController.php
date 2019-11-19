@@ -2,15 +2,10 @@
 
 namespace App\Http\Controllers\Personal;
 
-use App\Album;
-use App\Artist;
 use App\Components\MyLibrary\AlbumDao;
 use App\Components\MyLibrary\ArtistDao;
 use App\Components\MyLibrary\MyLibraryDao;
-use App\DTOs\PlaylistDTO;
 use App\Http\Controllers\Controller;
-use App\Transformer\AlbumTransformer;
-use App\Transformer\ArtistTransformer;
 use App\Transformer\PlaylistTransformer;
 use App\Transformer\TrackTransformer;
 
@@ -48,6 +43,11 @@ class MyLibraryController extends Controller
     public function getArtistsSingleTracks(ArtistDao $artistDao)
     {
         return $artistDao->getSingleTracksIds();
+    }
+
+    public function getArtistTrackIds($id, ArtistDao $artistDao)
+    {
+        return $artistDao->getTracksForArtist($id)->pluck('id');
     }
 
     public function getAlbums(AlbumDao $albumDao)

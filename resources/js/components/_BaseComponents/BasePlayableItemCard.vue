@@ -47,8 +47,9 @@
         },
         methods: {
             openItemDetails() {
-                const typeCapitalized = this.item.type.charAt(0).toUpperCase() + this.item.type.slice(1);
-                this.$store.commit(`cache/setSelected${typeCapitalized}`, this.item);
+                if (this.item.type === 'playlist') {
+                    this.$store.commit(`cache/setSelectedPlaylist`, this.item);
+                }
                 this.$router.push(`/my-library/${this.item.type}/${slugify(this.item.name)}/${this.item.id}`);
             },
             async playItem($event) {

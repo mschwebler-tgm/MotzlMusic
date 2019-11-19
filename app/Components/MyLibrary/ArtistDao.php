@@ -3,11 +3,17 @@
 namespace App\Components\MyLibrary;
 
 use App\Artist;
-use App\Track;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Collection;
 
 class ArtistDao extends AbstractByLetterDao
 {
+    public function getTracksForArtist($id): Collection
+    {
+        $artist = Artist::findOrFail($id);
+        return $artist->tracks()->ofCurrentUser()->get();
+    }
+
     public function getSingleTracksIds()
     {
         return Artist::ofCurrentUser()

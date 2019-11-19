@@ -44,7 +44,7 @@ Route::namespace('Api')->group(function () {
     Route::put('/track/{id}/rate', 'TrackController@rateTrack');
     Route::get('/track/{id}/audio-features', 'TrackController@audioFeatures')->name('getTrackAudioFeatures');
     Route::get('/tracks/{ids}', 'TrackController@tracks')->name('getTracks');
-    Route::get('/artist/{id}', 'ArtistController@audioFeatures')->name('getArtist');
+    Route::get('/artist/{id}', 'ArtistController@artist')->name('getArtist');
     Route::get('/artist/{id}/tracks', 'ArtistController@tracks')->name('getArtistTracks');
     Route::get('/artist/{id}/audio-features', 'ArtistController@audioFeatures')->name('getArtistAudioFeatures');
     Route::get('/artists/{ids}', 'ArtistController@artists')->name('getArtists');

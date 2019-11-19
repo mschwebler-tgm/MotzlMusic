@@ -114,11 +114,4 @@
     .overlay-play-icon-toggle:hover .overlay-play-icon {
         display: block;
     }
-
-    .image-rounded {
-        -webkit-border-radius: 100%;
-        -moz-border-radius: 100%;
-        border-radius: 100%;
-        overflow: hidden;
-    }
 </style>

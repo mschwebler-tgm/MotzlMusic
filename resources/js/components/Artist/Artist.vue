@@ -1,5 +1,34 @@
 <template>
     <v-container>
+        <div class="d-flex" v-if="loading">
+            <v-skeleton-loader type="image" width="190"></v-skeleton-loader>
+            <v-skeleton-loader type="sentences" width="400" class="ml-3 d-flex"></v-skeleton-loader>
+            <div class="flex-1 d-flex justify-end align-end">
+                <v-skeleton-loader type="button" width="80"></v-skeleton-loader>
+                <v-skeleton-loader type="button"></v-skeleton-loader>
+            </div>
+        </div>
+        <div class="d-flex pa-3" v-else>
+            <v-img :src="$root.getSpotifyImage(artist, 'medium')"
+                   aspect-ratio="1"
+                   max-width="190px"
+                   min-width="190px"
+                   class="image-rounded"></v-img>
+            <div class="d-flex flex-column pa-3 ml-3">
+                <div class="d-flex">
+                    <h1 class="display-3 font-weight-thin">{{ artist.name }}</h1>
+                    <v-btn color="secondary"
+                           aria-label="Start Artist Playback"
+                           class="ml-4"
+                           fab outlined>
+                        <v-icon large>play_arrow</v-icon>
+                    </v-btn>
+                </div>
+                <div class="caption grey--text mt-1" v-if="tracks.length">
+                    {{ tracks.length }} track{{ tracks.length > 1 ? 's' : ''}}
+                </div>
+            </div>
+        </div>
         <track-table :tracks="tracks"
                      :class="{'pa-3': !$root.isMobile}"
                      height="444px"></track-table>
@@ -20,6 +49,7 @@
         },
         data() {
             return {
+                loading: false,
                 artist: null,
                 tracks: [],
             }
@@ -30,7 +60,9 @@
         },
         methods: {
             async loadArtist() {
+                this.loading = true;
                 this.artist = await cacheRequest.getArtist(this.id);
+                this.loading = false;
             },
             async loadTracks() {
                 let trackIds = [];

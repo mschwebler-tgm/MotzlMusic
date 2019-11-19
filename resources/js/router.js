@@ -90,6 +90,12 @@ export default new VueRouter({
                     component: Upload,
                 },
                 {
+                    path: 'artist/:name/:id',
+                    name: 'artist',
+                    component: Artist,
+                    props: true,
+                },
+                {
                     path: 'my-library',
                     name: 'myLibrary',
                     component: MyLibrary,

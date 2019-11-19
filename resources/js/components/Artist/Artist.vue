@@ -27,6 +27,13 @@
                 <div class="caption grey--text mt-1" v-if="tracks.length">
                     {{ tracks.length }} track{{ tracks.length > 1 ? 's' : ''}}
                 </div>
+                <div class="mt-auto">
+                    <v-switch
+                        v-model="showAllTracks"
+                        label="Show all tracks (from global library)"
+                        hide-details
+                    ></v-switch>
+                </div>
             </div>
         </div>
         <track-table :tracks="tracks"
@@ -52,6 +59,18 @@
                 loading: false,
                 artist: null,
                 tracks: [],
+                showAllTracks: !this.onlyOwnTracks,
+                ownTrackIds: [],
+            }
+        },
+        watch: {
+            async showAllTracks(showAll) {
+                if (showAll) {
+                    const trackIds = this.artist.tracks.map(track => track.id);
+                    this.tracks = await cacheRequest.getTracks(trackIds, this.artist.tracks_url);
+                } else {
+                    this.tracks = await cacheRequest.getTracks(this.ownTrackIds);
+                }
             }
         },
         async created() {
@@ -69,6 +88,7 @@
                 if (this.onlyOwnTracks) {
                     const response = await axios.get(`/api/my/artist/${this.id}/tracksIds`);
                     trackIds = response.data;
+                    this.ownTrackIds = trackIds;
                 } else {
                     trackIds = this.artist.tracks.map(track => track.id);
                 }

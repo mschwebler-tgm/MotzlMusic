@@ -52,6 +52,9 @@ const app = new Vue({
         setSystemBarColor('accent');
         this.initSubContent();
     },
+    mounted() {
+        this.removePreloader();
+    },
     methods: {
         detectTouch() {
             try {
@@ -94,6 +97,9 @@ const app = new Vue({
         initSubContent() {
             const subContent = this.user.sub_content || JSON.parse(localStorage.getItem('subContent')) || [];
             this.$store.commit('subContent/setSubContent', subContent);
+        },
+        removePreloader() {
+            document.getElementById('preloader').remove();
         }
     },
     watch: {

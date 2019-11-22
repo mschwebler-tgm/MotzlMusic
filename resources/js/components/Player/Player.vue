@@ -107,6 +107,8 @@
 <style lang="scss">
     .footer-height {
         height: 36px;
+        position: relative;
+        width: 99%;
 
         .player-wrapper {
             position: absolute;

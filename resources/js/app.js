@@ -99,7 +99,9 @@ const app = new Vue({
             this.$store.commit('subContent/setSubContent', subContent);
         },
         removePreloader() {
-            document.getElementById('preloader').remove();
+            const loader = document.getElementById('preloader');
+            loader.classList.add('out');
+            // loader.addEventListener('animationend', () => loader.remove());
         }
     },
     watch: {

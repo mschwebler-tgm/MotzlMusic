@@ -10,6 +10,13 @@
     align-items: center;
     background: white;
     z-index: 9999999;
+    will-change: clip-path;
+    clip-path: circle(75%);
+    transition: clip-path .3s ease-out;
+}
+
+#preloader.out {
+    clip-path: circle(0);
 }
 
 .preloader--text {

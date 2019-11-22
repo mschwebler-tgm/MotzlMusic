@@ -2,7 +2,7 @@ import app from '$scripts/app';
 
 export default {
     init({state}) {
-        axios.get('/api/my/subContent/available')
+        return axios.get('/api/my/subContent/available')
             .then(res => state.availableSubContent = res.data);
     },
     saveEdit({state}) {

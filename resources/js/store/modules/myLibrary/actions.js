@@ -3,15 +3,18 @@ import StatusInfos from "$components/components/Layout/StatusInfo/StatusInfos";
 
 export default {
     init({commit}) {
-        axios.get('/api/my/tracks')
+        const requests = [];
+        requests.push(axios.get('/api/my/tracks')
             .then(res => commit('setMyTracks', res.data))
             .then(() => {
                 axios.get('/api/my/artists/singleTracks').then(res => commit('setMyArtistsSingleTracks', res.data));
                 axios.get('/api/my/albums/singleTracks').then(res => commit('setMyAlbumsSingleTracks', res.data));
-            });
-        axios.get('/api/my/playlists').then(res => commit('setMyPlaylists', res.data));
-        axios.get('/api/my/artists/byFirstLetter').then(res => commit('setMyArtists', res.data));
-        axios.get('/api/my/albums/byFirstLetter').then(res => commit('setMyAlbums', res.data));
+            }));
+        requests.push(axios.get('/api/my/playlists').then(res => commit('setMyPlaylists', res.data)));
+        requests.push(axios.get('/api/my/artists/byFirstLetter').then(res => commit('setMyArtists', res.data)));
+        requests.push(axios.get('/api/my/albums/byFirstLetter').then(res => commit('setMyAlbums', res.data)));
+
+        return Promise.all(requests);
     },
     removeTrack({state, commit, dispatch}, trackId) {
         app.statusInfo.component = StatusInfos.GENERIC;

@@ -99,9 +99,19 @@ const app = new Vue({
             this.$store.commit('subContent/setSubContent', subContent);
         },
         removePreloader() {
-            const loader = document.getElementById('preloader');
-            loader.classList.add('out');
-            // loader.addEventListener('animationend', () => loader.remove());
+            const initActions = Object.keys(this.$store._actions).filter(action => action.endsWith('/init'));
+            const doneActions = [];
+            this.$store.subscribeAction({
+                after: action => {
+                    doneActions.push(action);
+                    if (doneActions.length === initActions.length) {
+                        Vue.nextTick(() => {
+                            this.$el.classList.add('out');
+                            document.getElementById('preloader').remove();
+                        });
+                    }
+                }
+            });
         }
     },
     watch: {

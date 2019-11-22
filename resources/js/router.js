@@ -91,7 +91,7 @@ export default new VueRouter({
                 },
                 {
                     path: 'artist/:name/:id',
-                    name: 'artist',
+                    name: 'Artist',
                     component: Artist,
                     props: true,
                 },
@@ -123,7 +123,7 @@ export default new VueRouter({
                         },
                         {
                             path: 'artist/:name/:id',
-                            name: 'artist',
+                            name: 'Artist',
                             component: Artist,
                             props: route => ({onlyOwnTracks: true, ...route.params})
                         },

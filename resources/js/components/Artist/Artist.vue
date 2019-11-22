@@ -20,11 +20,12 @@
                     <v-btn color="secondary"
                            aria-label="Start Artist Playback"
                            class="ml-4"
+                           @click="playArtist"
                            fab outlined>
                         <v-icon large>play_arrow</v-icon>
                     </v-btn>
                 </div>
-                <div class="caption grey--text mt-1" v-if="tracks.length">
+                <div class="body-1 grey--text mt-1" v-if="tracks.length">
                     {{ tracks.length }} track{{ tracks.length > 1 ? 's' : ''}}
                 </div>
                 <div class="mt-auto">
@@ -46,6 +47,7 @@
     import cacheRequest from "$scripts/cacheReqest/cacheRequest";
     import axios from 'axios';
     import TrackTable from "$scripts/components/TrackTable/TrackTable";
+    import player from "$store/player/helpers/v2/player";
 
     export default {
         name: "Artist",
@@ -93,6 +95,9 @@
                     trackIds = this.artist.tracks.map(track => track.id);
                 }
                 this.tracks = await cacheRequest.getTracks(trackIds);
+            },
+            playArtist() {
+                player.playList(this.tracks);
             }
         }
     }

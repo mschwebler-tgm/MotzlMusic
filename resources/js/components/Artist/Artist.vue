@@ -73,6 +73,11 @@
                 } else {
                     this.tracks = await cacheRequest.getTracks(this.ownTrackIds);
                 }
+            },
+            async id() {
+                this.tracks = [];
+                await this.loadArtist();
+                this.loadTracks();
             }
         },
         async created() {

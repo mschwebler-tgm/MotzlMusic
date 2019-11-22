@@ -75,6 +75,8 @@
     import hotkeys from "hotkeys-js";
     import {shortcuts} from "$scripts/helpers/shortcuts";
     import MobileClusterizer from "$scripts/components/TrackTable/Clusterizer/Mobile/MobileClusterizer";
+    import cacheRequest from "$scripts/cacheReqest/cacheRequest";
+    import {slugify} from "$scripts/helpers";
 
     export default {
         name: "BaseTrackTable2",
@@ -143,6 +145,7 @@
             if (this.options.is('queueable')) {
                 this.initQueueListener();
             }
+            this.initToArtistListener();
         },
         methods: {
             clusterChanged() {
@@ -280,6 +283,24 @@
                 hotkeys(shortcuts.QUEUE_NEXT, $event => {
                     const track = this._getTrackData(this._getTrackFromEvent($event));
                     this.$emit('queue-track', track);
+                });
+            },
+            initToArtistListener() {
+                this.$refs.contentArea.addEventListener('click', async $event => {
+                    const target = $event.target;
+                    if (target.classList.contains('to-artist')) {
+                        const artistId = target.dataset.id;
+                        if (this.$route.name === 'Artist' && this.$route.params.id === artistId) {
+                            return;
+                        }
+                        let prefix = '';
+                        if (this.$route.matched.map(route => route.path).includes('/my-library')) {
+                            prefix = '/my-library';
+                        }
+                        const artist = await cacheRequest.getArtist(artistId);
+
+                        this.$router.push(`${prefix}/artist/${slugify(artist.name)}/${artist.id}`);
+                    }
                 });
             },
             initContextMenuListener() {
@@ -480,7 +501,7 @@
                 opacity: .5;
                 cursor: pointer;
 
-                &:hover {
+                .to-artist:hover {
                     text-decoration: underline;
                 }
             }

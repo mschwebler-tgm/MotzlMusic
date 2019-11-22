@@ -30,7 +30,7 @@ class RenderDesktopColumns {
     }
 
     static trackArtists(artists) {
-        const artistNames = artists.map(artist => artist.name).join(', ');
+        const artistNames = artists.map(artist => `<span data-id="${artist.id}" class="to-artist">${artist.name}</span>`).join(', ');
         return `<div class="track-row-artist text-truncate">${artistNames}</div>`;
     }
 

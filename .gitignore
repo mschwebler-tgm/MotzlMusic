@@ -2,10 +2,15 @@
 /public/hot
 /public/storage
 /public/js/app.js
+/public/js/app.js.map
+/public/js/chunks/*
 /public/css/app.css
+/public/css/app.css.map
+/public/statistics.html
 /public/mix-manifest.json
 /storage/*.key
 /vendor
+/coverage
 /.idea
 /.vscode
 /.vagrant

@@ -8,6 +8,16 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 const webpackConfig = {
+    output: {
+        chunkFilename: 'js/chunks/[name].js',
+    },
+    optimization: {
+        splitChunks: {
+            // include all types of chunks
+            chunks: 'all',
+            name: 'vendors',
+        }
+    },
     resolve: {
         alias: {
             '$components': path.resolve('resources/js'),

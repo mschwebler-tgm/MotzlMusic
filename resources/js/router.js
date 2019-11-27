@@ -1,24 +1,24 @@
 import VueRouter from 'vue-router';
 
 import Master from './components/Layout/Master';
-import Home from './components/Home/Home';
-import Profile from './components/Profile/Profile';
-import Settings from './components/Settings/Settings';
-import SettingsGeneral from './components/Settings/Categories/General';
-import SettingsDeleteAccount from './components/Settings/Categories/DeleteAccount';
-import SettingsNotifications from './components/Settings/Categories/Notifications';
-import SettingsPrivacy from './components/Settings/Categories/Privacy';
-import SettingsProfile from './components/Settings/Categories/Profile';
-import SettingsAppearance from "$scripts/components/Settings/Categories/Appearance";
-import SpotifyImport from './components/SpotifyImport/SpotifyImport';
-import Upload from './components/Upload/Upload';
-import MyLibrary from './components/MyLibrary/MyLibrary';
-import Playlists from './components/MyLibrary/Playlists/Playlists';
-import Tracks from './components/MyLibrary/Tracks/Tracks';
-import Albums from './components/MyLibrary/Albums/Albums';
-import Artists from './components/MyLibrary/Artists/Artists';
-import PlaylistView from './components/Playlist/Playlist';
-import Artist from "$scripts/components/Artist/Artist";
+const Home = () => import('./components/Home/Home');
+const Profile = () => import('./components/Profile/Profile');
+const Settings = () => import('./components/Settings/Settings');
+const SettingsGeneral = () => import('./components/Settings/Categories/General');
+const SettingsDeleteAccount = () => import('./components/Settings/Categories/DeleteAccount');
+const SettingsNotifications = () => import('./components/Settings/Categories/Notifications');
+const SettingsPrivacy = () => import('./components/Settings/Categories/Privacy');
+const SettingsProfile = () => import('./components/Settings/Categories/Profile');
+const SettingsAppearance = () => import("./components/Settings/Categories/Appearance");
+const SpotifyImport = () => import('./components/SpotifyImport/SpotifyImport');
+const Upload = () => import('./components/Upload/Upload');
+const MyLibrary = () => import('./components/MyLibrary/MyLibrary');
+const Playlists = () => import('./components/MyLibrary/Playlists/Playlists');
+const Tracks = () => import('./components/MyLibrary/Tracks/Tracks');
+const Albums = () => import('./components/MyLibrary/Albums/Albums');
+const Artists = () => import('./components/MyLibrary/Artists/Artists');
+const PlaylistView = () => import('./components/Playlist/Playlist');
+const Artist = () => import("./components/Artist/Artist");
 
 export default new VueRouter({
     mode: 'history',

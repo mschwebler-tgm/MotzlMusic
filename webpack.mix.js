@@ -1,10 +1,14 @@
 const mix = require('laravel-mix');
 const webpackConfig = require('./webpack.config');
+const Visualizer = require('webpack-visualizer-plugin');
+
+const isProduction = process.env.NODE_ENV === 'production';
+const isTesting = process.env.APP_ENV === 'testing';
 
 mix.js('resources/js/app.js', 'public/js')
     .webpackConfig(webpackConfig);
 
-if (process.env.APP_ENV !== 'testing') {
+if (!isTesting) {
     mix.sass('resources/sass/app.scss', 'public/css')
         .browserSync({
             files: [
@@ -27,10 +31,25 @@ if (process.env.APP_ENV !== 'testing') {
                     }
                 ]
             },
+            plugins: getPlugins(),
         })
         .babelConfig({
             plugins: ['@babel/plugin-syntax-dynamic-import'],
         })
         .version()
-        .sourceMaps();
+}
+
+if (!isProduction) {
+    mix.sourceMaps();
+}
+
+function getPlugins() {
+    const plugins = [];
+    if (!isProduction) {
+        plugins.push(new Visualizer({
+            filename: './statistics.html'
+        }));
+    }
+
+    return plugins;
 }

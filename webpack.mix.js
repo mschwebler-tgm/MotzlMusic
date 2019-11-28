@@ -39,6 +39,10 @@ if (!isTesting) {
         .version()
 }
 
+mix.options({
+    extractVueStyles: true
+});
+
 if (!isProduction) {
     mix.sourceMaps();
 }

@@ -52,4 +52,15 @@ class MyLibraryDao
     {
         apiUser()->tracks()->detach([$id]);
     }
+
+    public function getPlaylist($id)
+    {
+        return Playlist::findOrFail($id);
+    }
+
+    public function getPlaylistTracks($id)
+    {
+        $playlist = $this->getPlaylist($id);
+        return $playlist->tracks;
+    }
 }

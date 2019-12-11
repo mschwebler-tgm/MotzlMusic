@@ -104,7 +104,7 @@ export default new VueRouter({
                         {
                             path: 'playlist/:name/:id',
                             component: PlaylistView,
-                            props: true,
+                            props: route => ({onlyOwnTracks: true, ...route.params})
                         },
                         {
                             path: 'playlists',

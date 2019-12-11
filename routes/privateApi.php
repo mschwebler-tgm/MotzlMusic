@@ -13,6 +13,8 @@ Route::prefix('spotify')->namespace('Spotify')->group(function () {
 
 Route::prefix('my')->middleware('library.private')->namespace('Personal')->group(function () {
     Route::get('playlists', 'MyLibraryController@myPlaylists')->name('getMyPlaylists');
+    Route::get('playlist/{id}', 'MyLibraryController@getPlaylist')->name('getMyPlaylist');
+    Route::get('playlist/{id}/tracks', 'MyLibraryController@getPlaylistTracks')->name('getMyPlaylistsTracks');
     Route::get('tracks', 'MyLibraryController@myTracks')->name('getMyTracks');
     Route::delete('tracks/{id}', 'MyLibraryController@removeTrack');
     Route::put('tracks/{id}', 'MyLibraryController@addTrack');

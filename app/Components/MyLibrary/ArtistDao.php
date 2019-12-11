@@ -11,13 +11,12 @@ class ArtistDao extends AbstractByLetterDao
     public function getTracksForArtist($id): Collection
     {
         $artist = Artist::findOrFail($id);
-        return $artist->tracks()->ofCurrentUser()->get();
+        return $artist->tracks;
     }
 
     public function getSingleTracksIds()
     {
-        return Artist::ofCurrentUser()
-            ->join('track_has_artist', 'track_has_artist.artist_id', '=', 'artists.id')
+        return Artist::join('track_has_artist', 'track_has_artist.artist_id', '=', 'artists.id')
             ->join('tracks', 'track_has_artist.track_id', '=', 'tracks.id')
             ->selectRaw('COUNT(tracks.id) AS track_amount')
             ->addSelect(\DB::raw('MAX(tracks.id) as track_id'))
@@ -34,9 +33,8 @@ class ArtistDao extends AbstractByLetterDao
         return ArtistByLetterOccurrence::class;
     }
 
-    /** @return Builder */
     protected function baseQuery()
     {
-        return Artist::ofCurrentUser();
+        return Artist::query();
     }
 }

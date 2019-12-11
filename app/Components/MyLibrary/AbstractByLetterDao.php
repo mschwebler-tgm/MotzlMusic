@@ -3,7 +3,6 @@
 
 namespace App\Components\MyLibrary;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 
 abstract class AbstractByLetterDao
@@ -32,14 +31,13 @@ abstract class AbstractByLetterDao
      */
     private function getAlphaLetterOccurrences()
     {
-        $alphaLetterOccurrences = $this->baseQuery()
+        return $this->baseQuery()
             ->selectRaw('substr(UPPER(name), 1, 1) as firstLetter, count(id) as count')
             ->groupBy('firstLetter')
             ->orderBy('firstLetter', 'asc')
             ->havingRaw('firstLetter REGEXP "^[A-Z]"')
-            ->get()->mapInto($this->getByLetterOccurrenceClass());
-
-        return $alphaLetterOccurrences;
+            ->get()
+            ->mapInto($this->getByLetterOccurrenceClass());
     }
 
     private function getNonAlphaLetterOccurrences()
@@ -49,7 +47,8 @@ abstract class AbstractByLetterDao
             ->groupBy('firstLetter')
             ->orderBy('firstLetter', 'asc')
             ->havingRaw('firstLetter NOT REGEXP "^[A-Z]"')
-            ->get()->mapInto($this->getByLetterOccurrenceClass());
+            ->get()
+            ->mapInto($this->getByLetterOccurrenceClass());
 
         $nonAlphaLetterOccurrences = $nonAlphaLetterOccurrences->reduce(function (
             AbstractItemByLetter $concatOccurrence = null,

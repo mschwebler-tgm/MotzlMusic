@@ -11,7 +11,7 @@ Route::prefix('spotify')->namespace('Spotify')->group(function () {
     Route::get('/access', 'AuthController@getAccessToken');
 });
 
-Route::prefix('my')->namespace('Personal')->group(function () {
+Route::prefix('my')->middleware('library.private')->namespace('Personal')->group(function () {
     Route::get('playlists', 'MyLibraryController@myPlaylists')->name('getMyPlaylists');
     Route::get('tracks', 'MyLibraryController@myTracks')->name('getMyTracks');
     Route::delete('tracks/{id}', 'MyLibraryController@removeTrack');

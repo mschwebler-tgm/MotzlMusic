@@ -2,6 +2,7 @@
 
 namespace App\Transformer;
 
+use App\ModelScopes\TracksCurrentUserScope;
 use App\Playlist;
 
 class PlaylistTransformer extends Transformable
@@ -12,12 +13,7 @@ class PlaylistTransformer extends Transformable
      */
     protected function transformItem($playlist)
     {
-        $routePrefix = request()->route()->getPrefix();
-        if ($routePrefix === 'api/my') {
-            $tracks = $playlist->tracks()->ofCurrentUser()->get();
-        } else {
-            $tracks = $playlist->tracks;
-        }
+        $tracks = $playlist->tracks()->withoutGlobalScope(TracksCurrentUserScope::class)->get();
         $tracks = $this->pluckIdAndName($tracks);
 
         return [

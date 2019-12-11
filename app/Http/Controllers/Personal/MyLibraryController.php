@@ -45,18 +45,6 @@ class MyLibraryController extends Controller
         return $artistDao->getSingleTracksIds();
     }
 
-    public function getPlaylist($id, PlaylistTransformer $transformer)
-    {
-        $playlist = $this->libraryDao->getPlaylist($id);
-        return $transformer->transform($playlist);
-    }
-
-    public function getPlaylistTracks($id, TrackTransformer $transformer)
-    {
-        $tracks = $this->libraryDao->getPlaylistTracks($id);
-        return $transformer->transform($tracks);
-    }
-
     public function getArtistTrackIds($id, ArtistDao $artistDao)
     {
         return $artistDao->getTracksForArtist($id)->pluck('id');

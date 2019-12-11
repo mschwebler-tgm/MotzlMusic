@@ -2,7 +2,6 @@
 
 namespace App\Transformer;
 
-use App\ModelScopes\PlaylistsCurrentUserScope;
 use App\Playlist;
 
 class PlaylistTransformer extends Transformable
@@ -13,10 +12,13 @@ class PlaylistTransformer extends Transformable
      */
     protected function transformItem($playlist)
     {
-        $tracks = $this->pluckIdAndName($playlist->tracks);
-        $tracksUrl = Playlist::hasGlobalScope(PlaylistsCurrentUserScope::class) ?
-            route('getMyPlaylistsTracks', ['id' => $playlist->id], false) :
-            route('getPlaylistTracks', ['id' => $playlist->id], false);
+        $routePrefix = request()->route()->getPrefix();
+        if ($routePrefix === 'api/my') {
+            $tracks = $playlist->tracks()->ofCurrentUser()->get();
+        } else {
+            $tracks = $playlist->tracks;
+        }
+        $tracks = $this->pluckIdAndName($tracks);
 
         return [
             'type' => 'playlist',
@@ -31,7 +33,7 @@ class PlaylistTransformer extends Transformable
             'spotify_image_large' => $playlist->spotify_image_large,
             'audio_features_url' => route('getPlaylistAudioFeatures', ['id' => $playlist->id], false),
             'tracks' => $tracks,
-            'tracks_url' => $tracksUrl,
+            'tracks_url' => route('getPlaylistTracks', ['id' => $playlist->id], false),
         ];
     }
 }

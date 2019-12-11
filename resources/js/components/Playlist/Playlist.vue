@@ -115,7 +115,6 @@
         props: {
             name: String,
             id: String,
-            onlyOwnTracks: Boolean,
         },
         data() {
             return {
@@ -124,26 +123,22 @@
                 loading: false,
             }
         },
-        async created() {
-            await this.loadPlaylistIfNeeded();
+        created() {
+            this.loadPlaylistIfNeeded();
             this.loadTracks();
         },
         methods: {
-            async loadPlaylistIfNeeded() {
+            loadPlaylistIfNeeded() {
                 if (!this.playlist) {
                     this.loading = true;
-                    let url = `/api/playlist/${this.id}`;
-                    if (this.onlyOwnTracks) {
-                        url = `/api/my/playlist/${this.id}`;
-                    }
-                    await axios.get(url)
+                    axios.get(`/api/playlist/${this.id}`)
                         .then(res => this.$store.commit('cache/setSelectedPlaylist', res.data))
                         .catch(err => this.handleError(err))
                         .finally(() => this.loading = false);
                 }
             },
             loadTracks() {
-                axios.get(this.playlist.tracks_url)
+                axios.get(`/api/playlist/${this.id}/tracks`)
                     .then(res => this.tracks = res.data)
                     .catch(err => this.handleError(err));
             },

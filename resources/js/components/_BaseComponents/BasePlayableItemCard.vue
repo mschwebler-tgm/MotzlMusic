@@ -1,5 +1,6 @@
 <template>
     <v-card tile
+            v-bind="$attrs"
             :hover="!rounded"
             :flat="rounded"
             @click="openItemDetails"

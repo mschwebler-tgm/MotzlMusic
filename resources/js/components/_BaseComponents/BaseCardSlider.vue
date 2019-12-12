@@ -13,7 +13,7 @@
             :key="item.id"
             v-slot:default="{ active, toggle }"
         >
-            <base-playable-item-card :item="item" width="150px" class="ma-3"></base-playable-item-card>
+            <base-playable-item-card :item="item" width="150px" class="ma-3" v-bind="$attrs"></base-playable-item-card>
         </v-slide-item>
     </v-slide-group>
 </template>

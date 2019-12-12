@@ -37,13 +37,18 @@
         <v-divider></v-divider>
         <template v-if="albums.length > 0 || !albumsLoaded">
             <div class="pl-3 pt-3 grey--text body-1">Albums
-                <template v-if="albumsLoaded">
+                <span class="caption grey--text" v-if="albumsLoaded">
                     ({{ albums.length }})
-                </template>
+                </span>
             </div>
             <base-card-slider :items="albums" :loading="!albumsLoaded"></base-card-slider>
         </template>
-        <div class="pl-3 pt-3 grey--text body-1">Tracks ({{ tracks.length }})</div>
+        <div class="pl-3 pt-3 grey--text body-1">
+            Tracks
+            <span class="caption grey--text">
+                ({{ tracks.length }})
+            </span>
+        </div>
         <track-table :tracks="tracks"
                      :class="{'pa-3': !$root.isMobile}"
                      height="444px"></track-table>

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Personal;
 
-use App\Components\MyLibrary\AlbumDao;
 use App\Components\MyLibrary\MyLibraryDao;
 use App\Http\Controllers\Controller;
+use App\Service\GenericDaos\AlbumDao;
 use App\Service\GenericDaos\ArtistDao;
 use App\Service\GenericDaos\PlaylistDao;
 use App\Service\GenericDaos\TrackDao;

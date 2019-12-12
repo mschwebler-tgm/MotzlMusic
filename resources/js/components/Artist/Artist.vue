@@ -25,9 +25,6 @@
                         <v-icon large>play_arrow</v-icon>
                     </v-btn>
                 </div>
-                <div class="body-1 grey--text mt-1" v-if="tracks.length">
-                    {{ tracks.length }} track{{ tracks.length > 1 ? 's' : ''}}
-                </div>
                 <div class="mt-auto">
                     <v-switch
                         v-model="showAllTracks"
@@ -38,9 +35,15 @@
             </div>
         </div>
         <v-divider></v-divider>
-        <div class="pl-3 pt-3 grey--text body-1">Albums</div>
-        <base-card-slider :items="albums" :loading="!albumsLoaded"></base-card-slider>
-        <div class="pl-3 pt-3 grey--text body-1">Tracks</div>
+        <template v-if="albums.length > 0 || !albumsLoaded">
+            <div class="pl-3 pt-3 grey--text body-1">Albums
+                <template v-if="albumsLoaded">
+                    ({{ albums.length }})
+                </template>
+            </div>
+            <base-card-slider :items="albums" :loading="!albumsLoaded"></base-card-slider>
+        </template>
+        <div class="pl-3 pt-3 grey--text body-1">Tracks ({{ tracks.length }})</div>
         <track-table :tracks="tracks"
                      :class="{'pa-3': !$root.isMobile}"
                      height="444px"></track-table>

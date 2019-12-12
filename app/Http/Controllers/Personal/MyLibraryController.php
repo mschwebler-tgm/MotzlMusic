@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Personal;
 
 use App\Components\MyLibrary\AlbumDao;
-use App\Components\MyLibrary\ArtistDao;
 use App\Components\MyLibrary\MyLibraryDao;
 use App\Http\Controllers\Controller;
+use App\Service\GenericDaos\ArtistDao;
 use App\Service\GenericDaos\PlaylistDao;
 use App\Transformer\PlaylistTransformer;
 use App\Transformer\TrackTransformer;
@@ -19,6 +19,8 @@ class MyLibraryController extends Controller
         $this->libraryDao = $libraryDao;
     }
 
+    // Playlists
+
     public function myPlaylists(PlaylistDao $playlistDao, PlaylistTransformer $transformer)
     {
         $recent = $playlistDao->getRecentPlaylists(3);
@@ -31,10 +33,24 @@ class MyLibraryController extends Controller
         ];
     }
 
+    // Tracks
+
     public function myTracks(TrackTransformer $transformer)
     {
         return $transformer->transform($this->libraryDao->getAllTracks());
     }
+
+    public function addTrack($id)
+    {
+        $this->libraryDao->addTrack($id);
+    }
+
+    public function removeTrack($id)
+    {
+        $this->libraryDao->removeTrack($id);
+    }
+
+    // Artists
 
     public function getArtistsByFirstLetter(ArtistDao $artistDao)
     {
@@ -48,8 +64,10 @@ class MyLibraryController extends Controller
 
     public function getArtistTrackIds($id, ArtistDao $artistDao)
     {
-        return $artistDao->getTracksForArtist($id)->pluck('id');
+        return $artistDao->tracksForArtist($id)->pluck('id');
     }
+
+    // Albums
 
     public function getAlbumsByFirstLetter(AlbumDao $albumDao)
     {
@@ -59,15 +77,5 @@ class MyLibraryController extends Controller
     public function getAlbumsSingleTracks(AlbumDao $albumDao)
     {
         return $albumDao->getSingleTrackIds();
-    }
-
-    public function addTrack($id)
-    {
-        $this->libraryDao->addTrack($id);
-    }
-
-    public function removeTrack($id)
-    {
-        $this->libraryDao->removeTrack($id);
     }
 }

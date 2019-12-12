@@ -16,12 +16,6 @@ class MyLibraryDao
         $this->user = apiUser();
     }
 
-    public function getAllTracks()
-    {
-        return Track::with('artists', 'album', 'audioFeatures')
-            ->orderBy('name', 'asc')->get();
-    }
-
     public function addTrack($id)
     {
         apiUser()->tracks()->attach($id);

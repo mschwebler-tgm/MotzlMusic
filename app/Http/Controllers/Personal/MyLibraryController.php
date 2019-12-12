@@ -7,6 +7,7 @@ use App\Components\MyLibrary\MyLibraryDao;
 use App\Http\Controllers\Controller;
 use App\Service\GenericDaos\ArtistDao;
 use App\Service\GenericDaos\PlaylistDao;
+use App\Service\GenericDaos\TrackDao;
 use App\Transformer\PlaylistTransformer;
 use App\Transformer\TrackTransformer;
 
@@ -35,9 +36,9 @@ class MyLibraryController extends Controller
 
     // Tracks
 
-    public function myTracks(TrackTransformer $transformer)
+    public function myTracks(TrackDao $trackDao, TrackTransformer $transformer)
     {
-        return $transformer->transform($this->libraryDao->getAllTracks());
+        return $transformer->transform($trackDao->all());
     }
 
     public function addTrack($id)

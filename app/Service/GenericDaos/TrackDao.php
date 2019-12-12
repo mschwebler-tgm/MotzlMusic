@@ -28,6 +28,13 @@ class TrackDao
         return Track::whereIn('id', $ids)->get();
     }
 
+    public function all()
+    {
+        return Track::with('artists', 'album', 'audioFeatures')
+            ->orderBy('name', 'asc')
+            ->get();
+    }
+
     public function updateLocalPath(Track $track, $path)
     {
         if (!file_exists(storage_path("app/$path"))) {

@@ -23,6 +23,7 @@ class AlbumTransformer extends Transformable
         $artists = $this->pluckIdAndName($album->artists);
 
         return [
+            'type' => 'album',
             'id' => $album->id,
             'name' => $album->name,
             'popularity' => $album->popularity,

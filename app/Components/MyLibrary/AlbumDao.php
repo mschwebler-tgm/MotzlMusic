@@ -6,13 +6,6 @@ use App\Album;
 
 class AlbumDao extends AbstractByLetterDao
 {
-    public function getAlbums()
-    {
-        return Album::with('artists')
-            ->orderBy('name', 'asc')
-            ->get();
-    }
-
     public function getSingleTrackIds()
     {
         return Album::join('tracks', 'tracks.album_id', '=', 'albums.id')

@@ -50,11 +50,6 @@ class MyLibraryController extends Controller
         return $artistDao->getTracksForArtist($id)->pluck('id');
     }
 
-    public function getAlbums(AlbumDao $albumDao)
-    {
-        return $albumDao->getAlbums();
-    }
-
     public function getAlbumsByFirstLetter(AlbumDao $albumDao)
     {
         return $albumDao->getItemsByFirstLetter();

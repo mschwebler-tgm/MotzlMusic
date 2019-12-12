@@ -25,6 +25,10 @@
             return {
                 loading: false,
                 album: null,
+                showAllTracks: !this.onlyOwnTracks,
+                tracks: [],
+                ownTrackIds: [],
+                ownTrackIdsInitialized: false,
             }
         },
         async created() {
@@ -33,11 +37,26 @@
         methods: {
             async loadContent() {
                 await this.loadAlbum();
+                this.loadTracks();
             },
             async loadAlbum() {
                 this.loading = true;
                 this.album = await cacheRequest.getAlbum(this.id);
                 this.loading = false;
+            },
+            async loadTracks() {
+                let trackIds = [];
+                if (this.showAllTracks) {
+                    trackIds = this.album.tracks.map(track => track.id);
+                } else if (this.ownTrackIdsInitialized) {
+                    trackIds = this.ownTrackIds;
+                } else {
+                    const response = await axios.get(`/api/my/album/${this.id}/tracksIds`);
+                    trackIds = response.data;
+                    this.ownTrackIds = trackIds;
+                    this.ownTrackIdsInitialized = true;
+                }
+                this.tracks = await cacheRequest.getTracks(trackIds);
             },
         }
     }

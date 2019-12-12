@@ -84,4 +84,9 @@ class MyLibraryController extends Controller
     {
         return $albumDao->getSingleTrackIds();
     }
+
+    public function getAlbumTrackIds($id, AlbumDao $albumDao)
+    {
+        return $albumDao->tracksForAlbum($id)->pluck('id');
+    }
 }

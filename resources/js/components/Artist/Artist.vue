@@ -37,7 +37,10 @@
                 </div>
             </div>
         </div>
-        <base-card-slider v-if="albums.length" :items="albums"></base-card-slider>
+        <v-divider></v-divider>
+        <div class="pl-3 pt-3 grey--text body-1">Albums</div>
+        <base-card-slider :items="albums" :loading="!albumsLoaded"></base-card-slider>
+        <div class="pl-3 pt-3 grey--text body-1">Tracks</div>
         <track-table :tracks="tracks"
                      :class="{'pa-3': !$root.isMobile}"
                      height="444px"></track-table>
@@ -66,6 +69,7 @@
                 ownTrackIds: [],
                 ownTrackIdsInitialized: false,
                 albums: [],
+                albumsLoaded: false,
                 ownAlbumIds: [],
                 ownAlbumIdsInitialized: false,
                 showAllTracks: !this.onlyOwnTracks,
@@ -122,6 +126,7 @@
                     this.ownAlbumIdsInitialized = true;
                 }
                 this.albums = await cacheRequest.getAlbums(albumIds);
+                this.albumsLoaded = true;
             },
             playArtist() {
                 player.playList(this.tracks);

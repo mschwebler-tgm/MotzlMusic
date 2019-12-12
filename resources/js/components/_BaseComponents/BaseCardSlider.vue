@@ -1,5 +1,13 @@
 <template>
-    <v-slide-group show-arrows>
+    <div class="d-flex pl-12 pr-12" v-if="loading">
+        <v-skeleton-loader type="card" width="150px" class="ma-3"></v-skeleton-loader>
+        <v-skeleton-loader type="card" width="150px" class="ma-3"></v-skeleton-loader>
+        <v-skeleton-loader type="card" width="150px" class="ma-3"></v-skeleton-loader>
+        <v-skeleton-loader type="card" width="150px" class="ma-3"></v-skeleton-loader>
+        <v-skeleton-loader type="card" width="150px" class="ma-3"></v-skeleton-loader>
+        <v-skeleton-loader type="card" width="150px" class="ma-3"></v-skeleton-loader>
+    </div>
+    <v-slide-group v-else show-arrows>
         <v-slide-item
             v-for="item in items"
             :key="item.id"
@@ -17,6 +25,7 @@
         components: {BasePlayableItemCard},
         props: {
             items: Array,
+            loading: Boolean,
         }
     }
 </script>

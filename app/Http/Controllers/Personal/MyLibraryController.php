@@ -89,4 +89,9 @@ class MyLibraryController extends Controller
     {
         return $albumDao->tracksForAlbum($id)->pluck('id');
     }
+
+    public function getAlbumArtistIds($id, AlbumDao $albumDao)
+    {
+        return $albumDao->artistsForAlbum($id)->pluck('id');
+    }
 }

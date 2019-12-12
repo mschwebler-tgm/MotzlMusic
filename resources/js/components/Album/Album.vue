@@ -29,6 +29,10 @@
                 tracks: [],
                 ownTrackIds: [],
                 ownTrackIdsInitialized: false,
+                artists: [],
+                ownArtistIds: [],
+                ownArtistIdsInitialized: false,
+                artistsLoaded: false,
             }
         },
         async created() {
@@ -38,6 +42,7 @@
             async loadContent() {
                 await this.loadAlbum();
                 this.loadTracks();
+                this.loadArtists();
             },
             async loadAlbum() {
                 this.loading = true;
@@ -57,6 +62,21 @@
                     this.ownTrackIdsInitialized = true;
                 }
                 this.tracks = await cacheRequest.getTracks(trackIds);
+            },
+            async loadArtists() {
+                let artistIds = [];
+                if (this.showAllTracks) {
+                    artistIds = this.album.artists.map(artist => artist.id);
+                } else if (this.ownArtistIdsInitialized) {
+                    artistIds = this.ownArtistIds;
+                } else {
+                    const response = await axios.get(`/api/my/album/${this.id}/artistIds`);
+                    artistIds = response.data;
+                    this.ownArtistIds = artistIds;
+                    this.ownArtistIdsInitialized = true;
+                }
+                this.artists = await cacheRequest.getAlbums(artistIds);
+                this.artistsLoaded = true;
             },
         }
     }

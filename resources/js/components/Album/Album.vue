@@ -14,7 +14,7 @@
                    max-width="190px"
                    min-width="190px"></v-img>
             <div class="d-flex flex-column pa-3 ml-3">
-                <div class="d-flex">
+                <div class="d-flex mb-3">
                     <h1 class="display-3 font-weight-thin">{{ album.name }}</h1>
                     <v-btn color="secondary"
                            aria-label="Start Artist Playback"
@@ -23,6 +23,26 @@
                            fab outlined>
                         <v-icon large>play_arrow</v-icon>
                     </v-btn>
+                </div>
+                <div class="body-2">
+                    <span class="grey--text">Artists: </span>
+                    <router-link v-for="artist in album.artists"
+                                 :key="artist.id"
+                                 :to="`/my-library/artist/${slugify(artist.name)}/${artist.id}`"
+                                 class="to-artist">
+                        {{ artist.name }}
+                    </router-link>
+                </div>
+                <div class="body-2 grey--text mt-2">
+                    <span>
+                        <v-icon x-small color="grey">calendar_today</v-icon>
+                        {{ releaseYear }}
+                    </span>
+                    &nbsp;&nbsp;
+                    <span>
+                        <v-icon x-small color="grey">timelapse</v-icon>
+                        {{ totalPlayTime }}
+                    </span>
                 </div>
                 <div class="mt-auto">
                     <v-switch
@@ -34,14 +54,6 @@
             </div>
         </div>
         <v-divider></v-divider>
-        <template v-if="artists.length > 0 || !artistsLoaded">
-            <div class="pl-3 pt-3 grey--text body-1">Artists
-                <span class="caption grey--text" v-if="artistsLoaded">
-                    ({{ artists.length }})
-                </span>
-            </div>
-            <base-card-slider :items="artists" :loading="!artistsLoaded" rounded></base-card-slider>
-        </template>
         <div class="pl-3 pt-3 grey--text body-1">
             Tracks
             <span class="caption grey--text">
@@ -49,6 +61,7 @@
             </span>
         </div>
         <track-table :tracks="tracks"
+                     :config="tableConfig"
                      :class="{'pa-3': !$root.isMobile}"
                      height="444px"></track-table>
     </v-container>
@@ -59,6 +72,10 @@
     import player from "$store/player/helpers/v2/player";
     import BaseCardSlider from "$scripts/components/_BaseComponents/BaseCardSlider";
     import TrackTable from "$scripts/components/TrackTable/TrackTable";
+    import {slugify} from "$scripts/helpers";
+    import {columns as mobileColumns} from "$scripts/components/TrackTable/Clusterizer/Mobile/columns";
+    import {columns as desktopColumns} from "$scripts/components/TrackTable/Clusterizer/Desktop/columns";
+    import ClusterizeOptions from "$scripts/components/TrackTable/Clusterizer/ClusterizeOptions";
 
     export default {
         name: "Album",
@@ -135,11 +152,70 @@
             },
             playAlbum() {
                 player.playList(this.tracks);
+            },
+            slugify(text) {
+                return slugify(text);
+            },
+        },
+        computed: {
+            releaseYear() {
+                if (this.album.release_date) {
+                    return this.album.release_date.substring(0, 4);
+                }
+
+                return 'Unknown';
+            },
+            totalPlayTime() {
+                let text = '';
+                const totalTimeMs = this.tracks.reduce((totalTime, track) => totalTime + track.duration, 0);
+                let minutes = Math.round(totalTimeMs / 60000);
+                let hours = Math.floor(minutes / 60);
+                minutes -= hours * 60;
+
+                if (hours) {
+                    text += `${hours}h `;
+                }
+                if (minutes) {
+                    text += `${minutes}min`;
+                }
+
+                return text;
+            },
+            tableConfig() {
+                const options = new ClusterizeOptions();
+                options.setOptions({
+                    mobileColumns: [
+                        mobileColumns.TITLE_AND_ARTIST,
+                        mobileColumns.DURATION,
+                        mobileColumns.TRACK_OPTIONS,
+                    ],
+                    desktopColumns: [
+                        desktopColumns.INDEX,
+                        desktopColumns.TRACK_TITLE,
+                        desktopColumns.DURATION,
+                        desktopColumns.ARTISTS,
+                        desktopColumns.RATING,
+                        desktopColumns.INFO_ICONS,
+                        desktopColumns.TRACK_OPTIONS,
+                    ],
+                    showQueueIndicators: true,
+                    activatable: true,
+                    contextMenu: true,
+                    playable: true,
+                    queueable: true,
+                    desktop: !this.$root.isMobile,
+                    draggable: false,
+                });
+
+                return options;
             }
         }
     }
 </script>
 
 <style scoped>
-
+    .to-artist:not(:last-child)::after {
+        content: ',';
+        text-decoration: none !important;
+    }
 </style>

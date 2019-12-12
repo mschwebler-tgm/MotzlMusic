@@ -7,7 +7,7 @@
         <v-skeleton-loader type="card" width="150px" class="ma-3"></v-skeleton-loader>
         <v-skeleton-loader type="card" width="150px" class="ma-3"></v-skeleton-loader>
     </div>
-    <v-slide-group v-else show-arrows>
+    <v-slide-group v-else :show-arrows="!$root.isTouch">
         <v-slide-item
             v-for="item in items"
             :key="item.id"

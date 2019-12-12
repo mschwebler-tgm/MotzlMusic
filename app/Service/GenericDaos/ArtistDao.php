@@ -23,6 +23,11 @@ class ArtistDao extends AbstractByLetterDao
         return Artist::with('tracks')->findOrFail($artistId)->tracks;
     }
 
+    public function albumsForArtist($artistId)
+    {
+        return Artist::with('albums')->findOrFail($artistId)->albums;
+    }
+
     public function getSingleTracksIds()
     {
         return Artist::join('track_has_artist', 'track_has_artist.artist_id', '=', 'artists.id')

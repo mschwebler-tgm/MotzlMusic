@@ -19,6 +19,7 @@ Route::prefix('my')->middleware('library.private')->namespace('Personal')->group
     Route::get('artists/byFirstLetter', 'MyLibraryController@getArtistsByFirstLetter')->name('getArtistsByLetter');
     Route::get('artists/singleTracks', 'MyLibraryController@getArtistsSingleTracks')->name('getArtistsSingleTracks');
     Route::get('artist/{id}/tracksIds', 'MyLibraryController@getArtistTrackIds')->name('getMyArtistTrackIds');
+    Route::get('artist/{id}/albumIds', 'MyLibraryController@getArtistAlbumIds')->name('getMyArtistAlbumIds');
     Route::get('albums/byFirstLetter', 'MyLibraryController@getAlbumsByFirstLetter')->name('getAlbumsByLetter');
     Route::get('albums/singleTracks', 'MyLibraryController@getAlbumsSingleTracks')->name('getAlbumsSingleTracks');
     Route::put('subContent', 'SubContentController@updateSubContent');

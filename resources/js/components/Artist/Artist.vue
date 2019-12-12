@@ -37,6 +37,7 @@
                 </div>
             </div>
         </div>
+        <base-card-slider v-if="albums.length" :items="albums"></base-card-slider>
         <track-table :tracks="tracks"
                      :class="{'pa-3': !$root.isMobile}"
                      height="444px"></track-table>
@@ -48,10 +49,11 @@
     import axios from 'axios';
     import TrackTable from "$scripts/components/TrackTable/TrackTable";
     import player from "$store/player/helpers/v2/player";
+    import BaseCardSlider from "$scripts/components/_BaseComponents/BaseCardSlider";
 
     export default {
         name: "Artist",
-        components: {TrackTable},
+        components: {BaseCardSlider, TrackTable},
         props: {
             id: [String, Number],
             onlyOwnTracks: Boolean,
@@ -61,30 +63,33 @@
                 loading: false,
                 artist: null,
                 tracks: [],
-                showAllTracks: !this.onlyOwnTracks,
                 ownTrackIds: [],
+                ownTrackIdsInitialized: false,
+                albums: [],
+                ownAlbumIds: [],
+                ownAlbumIdsInitialized: false,
+                showAllTracks: !this.onlyOwnTracks,
             }
         },
         watch: {
             async showAllTracks(showAll) {
-                if (showAll) {
-                    const trackIds = this.artist.tracks.map(track => track.id);
-                    this.tracks = await cacheRequest.getTracks(trackIds, this.artist.tracks_url);
-                } else {
-                    this.tracks = await cacheRequest.getTracks(this.ownTrackIds);
-                }
-            },
-            async id() {
-                this.tracks = [];
-                await this.loadArtist();
                 this.loadTracks();
+                this.loadAlbums();
+            },
+            id() {
+                this.loadContent();
             }
         },
         async created() {
-            await this.loadArtist();
-            this.loadTracks();
+            this.loadContent();
         },
         methods: {
+            async loadContent() {
+                this.tracks = [];
+                await this.loadArtist();
+                this.loadTracks();
+                this.loadAlbums();
+            },
             async loadArtist() {
                 this.loading = true;
                 this.artist = await cacheRequest.getArtist(this.id);
@@ -92,14 +97,31 @@
             },
             async loadTracks() {
                 let trackIds = [];
-                if (this.onlyOwnTracks) {
+                if (this.showAllTracks) {
+                    trackIds = this.artist.tracks.map(track => track.id);
+                } else if (this.ownTrackIdsInitialized) {
+                    trackIds = this.ownTrackIds;
+                } else {
                     const response = await axios.get(`/api/my/artist/${this.id}/tracksIds`);
                     trackIds = response.data;
                     this.ownTrackIds = trackIds;
-                } else {
-                    trackIds = this.artist.tracks.map(track => track.id);
+                    this.ownTrackIdsInitialized = true;
                 }
                 this.tracks = await cacheRequest.getTracks(trackIds);
+            },
+            async loadAlbums() {
+                let albumIds = [];
+                if (this.showAllTracks) {
+                    albumIds = this.artist.albums.map(track => track.id);
+                } else if (this.ownAlbumIdsInitialized) {
+                    albumIds = this.ownAlbumIds;
+                } else {
+                    const response = await axios.get(`/api/my/artist/${this.id}/albumIds`);
+                    albumIds = response.data;
+                    this.ownAlbumIds = albumIds;
+                    this.ownAlbumIdsInitialized = true;
+                }
+                this.albums = await cacheRequest.getAlbums(albumIds);
             },
             playArtist() {
                 player.playList(this.tracks);

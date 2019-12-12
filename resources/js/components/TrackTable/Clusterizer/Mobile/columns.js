@@ -42,7 +42,7 @@ const columns = {
     },
     ALBUM_IMAGE: {
         label: '',
-        render: rawTrack => RenderMobileColumns.albumImage(RenderMobileColumns.getTrackData(rawTrack).album.spotify_image_small),
+        render: rawTrack => RenderMobileColumns.albumImage(RenderMobileColumns.getTrackData(rawTrack).album.image),
     },
     DURATION: {
         label: '',

@@ -16,27 +16,6 @@ class MyLibraryDao
         $this->user = apiUser();
     }
 
-    public function getAllPlaylistsExcept(array $except = [])
-    {
-        return Playlist::orderBy('updated_at', 'desc')
-            ->whereNotIn('id', $except)
-            ->get();
-    }
-
-    public function getRecentPlaylists($amount)
-    {
-        return Playlist::orderBy('created_at', 'desc')
-            ->limit($amount)
-            ->get();
-    }
-
-    public function getSpotifyPlaylists()
-    {
-        return Playlist::orderBy('created_at', 'desc')
-            ->whereNotNull('spotify_id')
-            ->get();
-    }
-
     public function getAllTracks()
     {
         return Track::with('artists', 'album', 'audioFeatures')

@@ -6,6 +6,7 @@ use App\Components\MyLibrary\AlbumDao;
 use App\Components\MyLibrary\ArtistDao;
 use App\Components\MyLibrary\MyLibraryDao;
 use App\Http\Controllers\Controller;
+use App\Service\GenericDaos\PlaylistDao;
 use App\Transformer\PlaylistTransformer;
 use App\Transformer\TrackTransformer;
 
@@ -18,11 +19,11 @@ class MyLibraryController extends Controller
         $this->libraryDao = $libraryDao;
     }
 
-    public function myPlaylists(PlaylistTransformer $transformer)
+    public function myPlaylists(PlaylistDao $playlistDao, PlaylistTransformer $transformer)
     {
-        $recent = $this->libraryDao->getRecentPlaylists(3);
-        $spotify = $this->libraryDao->getSpotifyPlaylists();
-        $remaining = $this->libraryDao->getAllPlaylistsExcept($recent->pluck('id')->merge($spotify->pluck('id'))->toArray());
+        $recent = $playlistDao->getRecentPlaylists(3);
+        $spotify = $playlistDao->getSpotifyPlaylists();
+        $remaining = $playlistDao->getAllPlaylistsExcept($recent->pluck('id')->merge($spotify->pluck('id'))->toArray());
         return [
             'recent' => $transformer->transform($recent),
             'spotify' => $transformer->transform($spotify),

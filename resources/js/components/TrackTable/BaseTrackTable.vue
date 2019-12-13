@@ -146,6 +146,7 @@
                 this.initQueueListener();
             }
             this.initToArtistListener();
+            this.initToAlbumListener();
         },
         methods: {
             clusterChanged() {
@@ -300,6 +301,24 @@
                         const artist = await cacheRequest.getArtist(artistId);
 
                         this.$router.push(`${prefix}/artist/${slugify(artist.name)}/${artist.id}`);
+                    }
+                });
+            },
+            initToAlbumListener() {
+                this.$refs.contentArea.addEventListener('click', async $event => {
+                    const target = $event.target;
+                    if (target.classList.contains('to-album')) {
+                        const albumId = target.dataset.id;
+                        if (this.$route.name === 'Album' && this.$route.params.id === albumId) {
+                            return;
+                        }
+                        let prefix = '';
+                        if (this.$route.matched.map(route => route.path).includes('/my-library')) {
+                            prefix = '/my-library';
+                        }
+                        const album = await cacheRequest.getAlbum(albumId);
+
+                        this.$router.push(`${prefix}/album/${slugify(album.name)}/${album.id}`);
                     }
                 });
             },
@@ -482,9 +501,6 @@
                 }
             }
 
-            &-album {
-            }
-
             &-image {
                 width: $desktop-row-height;
                 height: $desktop-row-height;
@@ -502,6 +518,16 @@
                 cursor: pointer;
 
                 .to-artist:hover {
+                    text-decoration: underline;
+                }
+            }
+
+            &-album {
+                width: 250px;
+                opacity: .5;
+                cursor: pointer;
+
+                &:hover {
                     text-decoration: underline;
                 }
             }

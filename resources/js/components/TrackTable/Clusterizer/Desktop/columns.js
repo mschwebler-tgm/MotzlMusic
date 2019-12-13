@@ -21,8 +21,8 @@ class RenderDesktopColumns {
         return `<div class="track-row-title text-truncate">${content}</div>`;
     }
 
-    static trackAlbum(albumName) {
-        return `<div class="track-row-album">${albumName}</div>`;
+    static trackAlbum(album) {
+        return `<div class="track-row-album to-album text-truncate" data-id="${album.id}">${album.name}</div>`;
     }
 
     static albumImage(imageSrc) {
@@ -69,7 +69,7 @@ const columns = {
     },
     ALBUM_TITLE: {
         label: 'Album',
-        render: rawTrack => RenderDesktopColumns.trackAlbum(RenderDesktopColumns.getTrackData(rawTrack).album.name),
+        render: rawTrack => RenderDesktopColumns.trackAlbum(RenderDesktopColumns.getTrackData(rawTrack).album),
     },
     ALBUM_IMAGE: {
         label: '',

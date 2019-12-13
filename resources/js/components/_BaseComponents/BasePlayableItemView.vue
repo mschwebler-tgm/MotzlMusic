@@ -1,5 +1,5 @@
 <template>
-    <v-container>
+    <v-container :class="{'pa-3': !$root.isMobile}">
         <div class="d-flex" v-if="loading">
             <v-skeleton-loader type="image" width="190"></v-skeleton-loader>
             <v-skeleton-loader type="sentences" width="400" class="ml-3 d-flex"></v-skeleton-loader>
@@ -8,12 +8,15 @@
                 <v-skeleton-loader type="button"></v-skeleton-loader>
             </div>
         </div>
-        <div class="d-flex pa-3" v-else>
+        <div class="d-flex" v-else>
+            <!-- Image -->
             <v-img :src="$root.getSpotifyImage(item, 'medium')"
                    aspect-ratio="1"
                    max-width="190px"
                    min-width="190px"
                    :class="{'image-rounded': roundedImage}"></v-img>
+
+            <!-- Details -->
             <div class="d-flex flex-column pa-3 ml-3">
                 <div class="d-flex">
                     <h1 class="display-3 font-weight-thin">{{ item.name }}</h1>
@@ -44,10 +47,18 @@
                     ></v-switch>
                 </div>
             </div>
+
+            <!-- Actions -->
+            <div class="flex-grow-1 d-flex justify-end align-end">
+                <v-btn text @click="shufflePlay">
+                    <v-icon left>shuffle</v-icon>
+                    Shuffle
+                </v-btn>
+            </div>
         </div>
-        <v-divider></v-divider>
+        <v-divider class="mt-3 mb-3"></v-divider>
         <template v-if="relatedItems.length > 0 || !relatedItemsLoaded">
-            <div class="pl-3 pt-3 grey--text body-1">
+            <div class="grey--text body-1">
                 {{ cacheRequestGetRelatedMethod.slice(3) }}
                 <span class="caption grey--text" v-if="relatedItemsLoaded">
                     ({{ relatedItems.length }})
@@ -63,7 +74,6 @@
         </div>
         <track-table :tracks="tracks"
                      :config="tableConfig"
-                     :class="{'pa-3': !$root.isMobile}"
                      height="444px"></track-table>
     </v-container>
 </template>
@@ -163,7 +173,10 @@
             },
             playList() {
                 player.playList(this.tracks);
-            }
+            },
+            shufflePlay() {
+                player.playListShuffled(this.tracks);
+            },
         },
         computed: {
             cacheRequestGetRelatedMethod() {

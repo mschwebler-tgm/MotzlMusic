@@ -1,8 +1,8 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
     <div :class="{'playlist-actions': !$root.isMobile}">
-        <v-btn text class="hidden-sm-and-down">
-            <v-icon>shuffle</v-icon>
-            &nbsp;Shuffle
+        <v-btn text class="hidden-sm-and-down" @click="$emit('playShuffled')">
+            <v-icon left>shuffle</v-icon>
+            Shuffle
         </v-btn>
         <v-menu bottom left offset-x>
             <template v-slot:activator="{ on: menu }">

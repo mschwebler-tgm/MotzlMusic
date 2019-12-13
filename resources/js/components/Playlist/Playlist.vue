@@ -50,7 +50,7 @@
                                 {{ playlistTypeLabel }}
                             </v-chip>
                         </div>
-                        <playlist-actions :playlist-id="id"></playlist-actions>
+                        <playlist-actions :playlist-id="id" @playShuffled="playShuffled"></playlist-actions>
                     </div>
                 </div>
             </div>
@@ -92,7 +92,7 @@
                             <div class="body-2 font-weight-regular">{{ playlistTypeLabel }}</div>
                             <div class="caption font-weight-thin">{{ tracks.length }} Tracks</div>
                         </div>
-                        <playlist-actions :playlist-id="id"></playlist-actions>
+                        <playlist-actions :playlist-id="id" @playShuffled="playShuffled"></playlist-actions>
                     </div>
                 </div>
             </div>
@@ -185,6 +185,9 @@
                 if (trackElements.length) {
                     trackElements[trackElements.length - 1].focus();
                 }
+            },
+            playShuffled() {
+                player.playListShuffled(this.tracks);
             }
         },
         computed: {

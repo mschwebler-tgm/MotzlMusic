@@ -1,5 +1,6 @@
 import PlayerClient from "./playerClient";
 import Track from "./Track";
+import {shuffle} from "$scripts/helpers";
 
 const DEBUG = process.env !== 'production';
 const KEEP_PAST_TRACKS = 15;
@@ -24,6 +25,10 @@ export class Player {
         this._currentTrackIndex = startIndex;
         this._playCurrentTrack();
         this._setTrackList();
+    }
+
+    playListShuffled(tracks = []) {
+        this.playList(shuffle([...tracks]));
     }
 
     playNext() {

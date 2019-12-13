@@ -6,7 +6,11 @@
                 Back
             </v-btn>
             <v-divider class="mt-4 mb-4 ml-3" inset vertical></v-divider>
-            <v-breadcrumbs :items="breadcrumbs" divider="-" class="pa-0 pl-3 mr-auto"></v-breadcrumbs>
+            <v-breadcrumbs :items="breadcrumbs" divider="-" class="pa-0 pl-3 mr-auto">
+                <template v-slot:divider>
+                    <v-icon>chevron_right</v-icon>
+                </template>
+            </v-breadcrumbs>
             <div class="d-flex align-center justify-content-end ma-1">
                 <status-info></status-info>
             </div>

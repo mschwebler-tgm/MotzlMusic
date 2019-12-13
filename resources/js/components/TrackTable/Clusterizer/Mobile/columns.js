@@ -26,6 +26,10 @@ class RenderMobileColumns {
         return `<div class="track-row-image"><img src="${imageSrc}" alt=""></div>`;
     }
 
+    static trackAlbum(albumName) {
+        return `<div class="track-row-album">${albumName}</div>`;
+    }
+
     static trackDuration(durationFormatted) {
         return `<div class="track-row-duration">${durationFormatted}</div>`;
     }
@@ -43,6 +47,10 @@ const columns = {
     ALBUM_IMAGE: {
         label: '',
         render: rawTrack => RenderMobileColumns.albumImage(RenderMobileColumns.getTrackData(rawTrack).album.image),
+    },
+    ALBUM_TITLE: {
+        label: '',
+        render: rawTrack => RenderMobileColumns.trackAlbum(RenderMobileColumns.getTrackData(rawTrack).album.name),
     },
     DURATION: {
         label: '',

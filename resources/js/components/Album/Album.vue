@@ -101,7 +101,7 @@
         watch: {
             async showAllTracks() {
                 this.loadTracks();
-                this.loadAlbums();
+                this.loadArtists();
             },
             id() {
                 this.loadContent();

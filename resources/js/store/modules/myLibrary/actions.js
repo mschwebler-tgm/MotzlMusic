@@ -16,7 +16,7 @@ export default {
 
         return Promise.all(requests);
     },
-    removeTrack({state, commit, dispatch}, trackId) {
+    removeTrack({state, commit, dispatch}, {trackId, onRestore}) {
         app.statusInfo.component = StatusInfos.GENERIC;
         app.statusInfo.data.text = 'Removing track';
         app.statusInfo.show = true;
@@ -26,6 +26,7 @@ export default {
             .then(() => app.showAlert('Track removed from Library', 'info', 'undo', () => {
                 app.snackbar.show = false;
                 dispatch('restoreTrack', trackId)
+                    .then(onRestore);
             }))
             .catch(() => app.showAlert('Failed to remove track from Library', 'error'));
     },

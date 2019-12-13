@@ -7,6 +7,7 @@
             @play-track="playTrack"
             @rate-track="rateTrack"
             @queue-track="queueTrack"
+            @remove-track="removeTrack"
             @focusout="resetSelectedTracks"
             v-on="$listeners">
     </base-track-table>
@@ -49,6 +50,14 @@
             queueTrack(track) {
                 player.queueTrack(track);
             },
+            removeTrack(trackToRemove) {
+                const index = this.tracks.findIndex(track => track.id === trackToRemove.id);
+                this.$store.dispatch('myLibrary/removeTrack', {trackId: trackToRemove.id, onRestore: () => this.restoreTrack(trackToRemove, index)})
+                    .then(() => this.tracks.splice(index, 1));
+            },
+            restoreTrack(track, index) {
+                this.tracks.splice(index, 0, track);
+            }
         },
         computed: {
             tableConfig() {

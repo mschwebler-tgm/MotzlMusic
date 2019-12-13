@@ -46,7 +46,7 @@
                     </v-list-item-title>
                 </v-list-item>
                 <v-divider></v-divider>
-                <v-list-item>
+                <v-list-item @click="removeTrack">
                     <v-list-item-icon>
                         <v-icon small>delete</v-icon>
                     </v-list-item-icon>
@@ -345,6 +345,10 @@
             queueTrack() {
                 this.contextMenu.show = false;
                 this.$emit('queue-track', this._getTrackData(this.contextMenu.track));
+            },
+            removeTrack() {
+                this.contextMenu.show = false;
+                this.$emit('remove-track', this._getTrackData(this.contextMenu.track));
             }
         },
         computed: {

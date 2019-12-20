@@ -36,7 +36,7 @@
                     <v-flex v-for="artist in artistsToShow"
                             :key="artist.id"
                             xs6 sm4 md4 lg3 xl2 d-block justify-center>
-                        <base-playable-item-card :item="artist" rounded>
+                        <base-playable-item-card :item="artist" rounded transparent>
                             <span slot="footer" class="caption grey--text">
                                 {{ artist.tracks.length }} track{{ artist.tracks.length > 1 ? 's' : '' }}
                             </span>

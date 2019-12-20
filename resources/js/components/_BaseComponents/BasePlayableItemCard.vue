@@ -3,6 +3,7 @@
             v-bind="$attrs"
             :hover="!rounded"
             :flat="rounded"
+            :class="{transparent}"
             @click="openItemDetails"
             @mouseenter="showAudioFeatures"
             @mouseleave="hideAudioFeatures"
@@ -45,6 +46,7 @@
         props: {
             item: Object,
             rounded: Boolean,
+            transparent: Boolean,
         },
         methods: {
             openItemDetails() {

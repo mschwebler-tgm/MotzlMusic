@@ -27,7 +27,7 @@
                     <Draggable v-for="(content, index) in subContentEditClone"
                                :key="content.randomId">
                         <v-flex shrink :class="{'pt-0': index === 0}" class="sub-content-item">
-                            <v-card class="relative">
+                            <v-card class="relative" flat tile>
                                 <component :is="content.component"></component>
                                 <div class="sub-content-overlay move-cursor">
                                     <v-btn small
@@ -46,7 +46,7 @@
                             shrink
                             class="sub-content-item"
                             :class="{'pt-0': index === 0}">
-                        <v-card>
+                        <v-card flat tile>
                             <component :is="content.component"></component>
                         </v-card>
                     </v-flex>

@@ -7,6 +7,7 @@ use App\Components\Spotify\Refinement\RefinementQueue;
 use App\Components\Upload\Matcher\SpotifyMatcher;
 use App\Track;
 use Auth;
+use Illuminate\Support\Str;
 
 class UploadService
 {
@@ -32,7 +33,7 @@ class UploadService
             // TODO refactor: move to dao
             $track = $this->trackImportService->storeTrackForUser($spotifyTrack, Auth::user());
             $file = $request->getFile();
-            $filePath = $file->store(Auth::user()->getMp3StoragePath());
+            $filePath = $file->storeAs(Auth::user()->getMp3StoragePath(), Str::random(40) . '.mp3');
             $track->local_path = $filePath;
             $track->save();
             Track::setEventDispatcher($eventDispatcher);

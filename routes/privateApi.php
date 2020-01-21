@@ -56,5 +56,3 @@ Route::namespace('Api')->group(function () {
     Route::get('/album/{id}/audio-features', 'AlbumController@audioFeatures')->name('getAlbumAudioFeatures');
     Route::get('/albums/{ids}', 'AlbumController@albums')->name('getAlbums');
 });
-
-Route::post('/uploadTrack', 'UploadController@uploadTrack');

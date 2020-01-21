@@ -41,7 +41,7 @@ export default class Uploader {
             return;
         }
 
-        axios.post('/api/uploadTrack', Uploader._createFormDataForFile(file), {
+        axios.post('/file/uploadTrack', Uploader._createFormDataForFile(file), {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
@@ -55,7 +55,7 @@ export default class Uploader {
     }
 
     _createSingleFileUpload(file) {
-        axios.post('/api/uploadTrack', Uploader._createFormDataForFile(file), {
+        axios.post('/file/uploadTrack', Uploader._createFormDataForFile(file), {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }

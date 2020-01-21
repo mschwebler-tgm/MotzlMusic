@@ -4,6 +4,7 @@ namespace App\Service\GenericDaos;
 
 use App\Service\GenericDaos\Exceptions\TrackNotFoundException;
 use App\Track;
+use App\User;
 use App\UserTrackRating;
 
 class TrackDao
@@ -21,6 +22,14 @@ class TrackDao
         }
 
         return $track;
+    }
+
+    public function getForUser($id, User $user = null)
+    {
+        return $user
+            ->tracks()
+            ->where('id', '=', $id)
+            ->findOrFail($id);
     }
 
     public function tracks(array $ids)

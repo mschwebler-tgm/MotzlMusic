@@ -5,16 +5,15 @@ namespace App\Components\Upload;
 use App\Components\Spotify\Import\TrackImportService;
 use App\Components\Spotify\Refinement\RefinementQueue;
 use App\Components\Upload\Matcher\SpotifyMatcher;
+use App\Http\Controllers\FileController;
 use App\Track;
-use Auth;
+use App\User;
 use Illuminate\Support\Str;
 
 class UploadService
 {
     private $spotifyMatcher;
     private $trackImportService;
-
-    const TRACK_FILE_PATH = 'trackFiles';
 
     public function __construct(SpotifyMatcher $spotifyMatcher)
     {
@@ -25,7 +24,7 @@ class UploadService
         );
     }
 
-    public function storeFromRequest(SingleUploadRequest $request)
+    public function storeFromRequest(SingleUploadRequest $request, User $user)
     {
         $trackName = $request->getFileName();
         $spotifyTrack = $this->spotifyMatcher->getEstimatedSpotifyMatch($trackName);
@@ -33,9 +32,9 @@ class UploadService
             $eventDispatcher = Track::getEventDispatcher();
             Track::unsetEventDispatcher();
             // TODO refactor: move to dao
-            $track = $this->trackImportService->storeTrackForUser($spotifyTrack, Auth::user());
+            $track = $this->trackImportService->storeTrackForUser($spotifyTrack, $user);
             $file = $request->getFile();
-            $filePath = $file->storeAs(self::TRACK_FILE_PATH, Str::random(40) . '.mp3');
+            $filePath = $file->storeAs(FileController::PATH_TRACK_FILE, Str::random(40) . '.mp3');
             $track->local_path = $filePath;
             $track->save();
             Track::setEventDispatcher($eventDispatcher);

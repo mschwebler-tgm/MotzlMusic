@@ -56,11 +56,6 @@ class User extends Authenticatable implements HasTracks
         'sub_content' => 'array',
     ];
 
-    public function getMp3StoragePath()
-    {
-        return Str::snake("mp3s/{$this->name}");
-    }
-
     public function tracks()
     {
         return $this->belongsToMany(Track::class, 'user_has_track');

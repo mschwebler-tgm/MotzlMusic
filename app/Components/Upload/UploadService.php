@@ -14,6 +14,8 @@ class UploadService
     private $spotifyMatcher;
     private $trackImportService;
 
+    const TRACK_FILE_PATH = 'trackFiles';
+
     public function __construct(SpotifyMatcher $spotifyMatcher)
     {
         $this->spotifyMatcher = $spotifyMatcher;
@@ -33,7 +35,7 @@ class UploadService
             // TODO refactor: move to dao
             $track = $this->trackImportService->storeTrackForUser($spotifyTrack, Auth::user());
             $file = $request->getFile();
-            $filePath = $file->storeAs(Auth::user()->getMp3StoragePath(), Str::random(40) . '.mp3');
+            $filePath = $file->storeAs(self::TRACK_FILE_PATH, Str::random(40) . '.mp3');
             $track->local_path = $filePath;
             $track->save();
             Track::setEventDispatcher($eventDispatcher);

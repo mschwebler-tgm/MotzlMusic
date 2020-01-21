@@ -56,21 +56,23 @@
                 </v-container>
             </div>
             <spotify-player></spotify-player>
+            <local-player></local-player>
             <component :is="fullscreenVueComponent" :show.sync="showFullscreenPlayer"></component>
         </div>
     </div>
 </template>
 
 <script>
-    import SpotifyPlayer from "./Spotify/SpotifyPlayer";
+    import SpotifyPlayer from "./Providers/SpotifyPlayer";
     import player from '$store/player/helpers/v2/player';
     import playerControlsMixin from "./playerControlsMixin";
     import Vue from 'vue';
     import PlayerFullscreenMobile from "$components/components/Player/Fullscreen/Mobile/Player";
+    import LocalPlayer from "$scripts/components/Player/Providers/LocalPlayer";
 
     export default Vue.extend({
         name: "Player",
-        components: {PlayerFullscreenMobile, SpotifyPlayer},
+        components: {LocalPlayer, PlayerFullscreenMobile, SpotifyPlayer},
         mixins: [playerControlsMixin],
         data() {
             return {

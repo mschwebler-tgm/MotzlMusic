@@ -1,4 +1,4 @@
-All Providers must support following methods:
+All Providers must support following *async* methods:
 
 - +progress
 - +progressPercent

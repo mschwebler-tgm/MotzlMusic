@@ -5,7 +5,7 @@
                       v-model="progress"
                       :max="trackDuration"
                       class="player-progress-bar"
-                      color="secondary"></v-slider>
+                      color="secondary" />
             <div class="player-content">
                 <div class="player-controls">
                     <v-btn text icon aria-label="Play previous" :disabled="noPreviousTrack">
@@ -31,7 +31,7 @@
                                contain
                                aspect-ratio="1"
                                style="z-index: -1"
-                               class="hidden-md-and-up"></v-img>
+                               class="hidden-md-and-up" />
                         <v-flex xs9 class="flex-center pl-4 pr-4 player-track-text"
                                 @click="openFullscreenPlayer()">
                             <p class="ma-0 text-center w-100">
@@ -43,21 +43,24 @@
                             </p>
                         </v-flex>
                         <v-flex xs3 class="flex-center pl-4 pr-2 hidden-md-and-down">
+                            <v-icon @click="toggleMute">
+                                {{ isMuted ? 'volume_off' : 'volume_up' }}
+                            </v-icon>
                             <v-slider v-model="volume"
+                                      @blur="cacheVolume"
                                       hide-details
                                       thumb-label
                                       thumb-size="24"
                                       min="0"
                                       max="100"
-                                      prepend-icon="volume_up"
-                                      color="grey"></v-slider>
+                                      color="grey" />
                         </v-flex>
                     </v-layout>
                 </v-container>
             </div>
-            <spotify-player></spotify-player>
-            <local-player></local-player>
-            <component :is="fullscreenVueComponent" :show.sync="showFullscreenPlayer"></component>
+            <spotify-player />
+            <local-player />
+            <component :is="fullscreenVueComponent" :show.sync="showFullscreenPlayer" />
         </div>
     </div>
 </template>
@@ -76,24 +79,27 @@
         mixins: [playerControlsMixin],
         data() {
             return {
-                volumePercent: parseInt(localStorage.getItem('volume')) || 50,
+                volume: parseInt(localStorage.getItem('volume')) || 50,
+                manualMuted: false,
                 showFullscreenPlayer: false,
             }
         },
         computed: {
-            volume: {
-                get() {
-                    return this.volumePercent;
-                },
-                set(volume) {
-                    localStorage.setItem('volume', volume);
-                    player.setVolume(volume);
-                }
-            },
             fullscreenVueComponent() {
                 return 'player-fullscreen-mobile';
                 // TODO: implement desktop fullscreen player
                 // return screen.width < 960 ? 'player-fullscreen-mobile' : 'player-fullscreen';
+            },
+            isMuted() {
+                return this.manualMuted || this.volume === 0;
+            }
+        },
+        watch: {
+            volume(value) {
+                player.setVolume(value);
+                if (value > 0) {
+                    this.manualMuted = false;
+                }
             }
         },
         methods: {
@@ -101,7 +107,18 @@
                 if (screen.width < 960) {
                     this.showFullscreenPlayer = true;
                 }
-            }
+            },
+            toggleMute() {
+                this.manualMuted = !this.manualMuted;
+                if (this.manualMuted) {
+                    player.setVolume(0);
+                } else {
+                    player.setVolume(parseInt(localStorage.getItem('volume')));
+                }
+            },
+            cacheVolume() {
+                localStorage.setItem('volume', this.volume);
+            },
         }
     });
 </script>

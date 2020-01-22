@@ -3,6 +3,7 @@
             :tracks="tracks"
             :options="config || tableConfig"
             :height="height"
+            :hide-headers="hideHeaders"
             @select-track="selectTrack"
             @play-track="playTrack"
             @rate-track="rateTrack"
@@ -27,7 +28,8 @@
             tracks: Array,
             height: String,
             config: Object,
-            useRawTracks: Boolean
+            useRawTracks: Boolean,
+            hideHeaders: Boolean,
         },
         methods: {
             resetSelectedTracks() {

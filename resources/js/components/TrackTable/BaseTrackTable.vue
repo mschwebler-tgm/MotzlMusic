@@ -8,6 +8,16 @@
             <v-skeleton-loader type="list-item-avatar-two-line"></v-skeleton-loader>
             <v-skeleton-loader type="list-item-avatar-two-line"></v-skeleton-loader>
         </div>
+        <div v-if="showHeaders">
+            <div class="header d-flex align-center">
+                <div v-for="(column, index) in columns"
+                     :key="index"
+                     v-html="column.label"
+                     class="grey--text">
+                </div>
+            </div>
+            <v-divider />
+        </div>
         <div :id="scrollId"
              :style="{'max-height': height}"
              class="clusterize-scroll">
@@ -89,7 +99,8 @@
             height: {
                 type: String,
                 default: '500px',
-            }
+            },
+            hideHeaders: Boolean,
         },
         data() {
             return {
@@ -149,6 +160,9 @@
             this.initToAlbumListener();
         },
         methods: {
+            test() {
+                console.log('asasdasd');
+            },
             clusterChanged() {
                 this.isInitialized = true;
                 this.initStarRatings();
@@ -373,6 +387,12 @@
             showLoading() {
                 return this.tracks.length === 0 || !this.isInitialized;
             },
+            showHeaders() {
+                return !this.$root.isMobile && !this.showLoading && !this.hideHeaders;
+            },
+            columns() {
+                return this.options.getColumns();
+            }
         }
     }
 </script>
@@ -380,6 +400,13 @@
 <style lang="scss">
     $desktop-row-height: 40px;
     $mobile-row-height: 50px;
+
+    $numberWidth: 42px;
+    $titleWidth: 300px;
+    $artistWidth: 250px;
+    $albumWidth: 250px;
+    $durationWidth: 42px;
+    $ratingWidth: 130px;
 
     .base-track-table {
 
@@ -440,12 +467,18 @@
             }
 
             &-number {
-                width: 42px;
+                width: $numberWidth;
                 text-align: center;
 
                 &::after {
                     content: '.';
                 }
+            }
+
+            &-number__header {
+                width: $numberWidth;
+                text-align: center;
+                cursor: initial !important;
             }
 
             &.mobile {
@@ -485,7 +518,7 @@
             }
 
             &-title {
-                width: 300px;
+                width: $titleWidth;
                 display: flex;
                 align-items: center;
 
@@ -505,6 +538,10 @@
                 }
             }
 
+            &-title__header {
+                width: $titleWidth;
+            }
+
             &-image {
                 width: $desktop-row-height;
                 height: $desktop-row-height;
@@ -515,9 +552,12 @@
                     height: 100%;
                 }
             }
+            &-image__header {
+                width: $desktop-row-height;
+            }
 
             &-artist {
-                width: 250px;
+                width: $artistWidth;
                 opacity: .5;
                 cursor: pointer;
 
@@ -526,8 +566,12 @@
                 }
             }
 
+            &-artist__header {
+                width: $artistWidth;
+            }
+
             &-album {
-                width: 250px;
+                width: $albumWidth;
                 opacity: .5;
                 cursor: pointer;
 
@@ -536,15 +580,27 @@
                 }
             }
 
+            &-album__header {
+                width: $albumWidth;
+            }
+
             &-duration {
-                width: 42px;
+                width: $durationWidth;
+            }
+
+            &-duration__header {
+                width: $durationWidth;
             }
 
             &-rating {
-                width: 130px;
+                width: $ratingWidth;
                 height: 100%;
                 display: flex;
                 align-items: center;
+            }
+
+            &-rating__header {
+                width: $ratingWidth;
             }
 
             &-info-icons {
@@ -555,16 +611,18 @@
             }
 
             &-options {
-                -webkit-transition: .1s ease-in-out;
-                -moz-transition: .1s ease-in-out;
-                -ms-transition: .1s ease-in-out;
-                -o-transition: .1s ease-in-out;
                 transition: .1s ease-in-out;
                 width: 0;
             }
 
             .track-row-info-icons:hover ~ .track-row-options, .track-row-options:hover {
                 width: 40px;
+            }
+
+            &-header {
+                opacity: .5;
+                margin-bottom: 6px;
+                cursor: pointer;
             }
         }
     }

@@ -10,6 +10,7 @@
             @queue-track="queueTrack"
             @remove-track="removeTrack"
             @focusout="resetSelectedTracks"
+            @sort="sortTracks"
             v-on="$listeners">
     </base-track-table>
 </template>
@@ -64,6 +65,9 @@
             },
             restoreTrack(track, index) {
                 this.tableTracks.splice(index, 0, track);
+            },
+            sortTracks(sorting) {
+
             }
         },
         computed: {

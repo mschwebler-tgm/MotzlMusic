@@ -9,13 +9,7 @@
             <v-skeleton-loader type="list-item-avatar-two-line"></v-skeleton-loader>
         </div>
         <div v-if="showHeaders">
-            <div class="header d-flex align-center">
-                <div v-for="(column, index) in columns"
-                     :key="index"
-                     v-html="column.label"
-                     class="grey--text">
-                </div>
-            </div>
+            <base-track-table-headers v-model="sorting" :columns="columns"></base-track-table-headers>
             <v-divider />
         </div>
         <div :id="scrollId"
@@ -87,9 +81,11 @@
     import MobileClusterizer from "$scripts/components/TrackTable/Clusterizer/Mobile/MobileClusterizer";
     import cacheRequest from "$scripts/cacheReqest/cacheRequest";
     import {slugify} from "$scripts/helpers";
+    import BaseTrackTableHeaders from "$scripts/components/TrackTable/BaseTrackTableHeaders";
 
     export default {
         name: "BaseTrackTable2",
+        components: {BaseTrackTableHeaders},
         props: {
             tracks: Array,
             options: {
@@ -115,6 +111,7 @@
                 touchDragging: false,
                 activeTrackRowElement: null,
                 isInitialized: false,
+                sorting: [],
             }
         },
         created() {
@@ -146,6 +143,9 @@
                         }
                     });
                 }
+            },
+            sorting(value) {
+                this.$emit('sort', value);
             }
         },
         mounted() {
@@ -160,9 +160,6 @@
             this.initToAlbumListener();
         },
         methods: {
-            test() {
-                console.log('asasdasd');
-            },
             clusterChanged() {
                 this.isInitialized = true;
                 this.initStarRatings();
@@ -363,6 +360,9 @@
             removeTrack() {
                 this.contextMenu.show = false;
                 this.$emit('remove-track', this._getTrackData(this.contextMenu.track));
+            },
+            sortBy(identifier) {
+                this.$emit('sort', identifier);
             }
         },
         computed: {

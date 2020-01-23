@@ -65,10 +65,12 @@ const columns = {
     },
     TRACK_TITLE: {
         label: '<div class="track-row-header track-row-title__header">Title</div>',
+        sortIdentifier: 'name',
         render: (rawTrack, options) => RenderDesktopColumns.trackTitle(rawTrack, options),
     },
     ALBUM_TITLE: {
         label: '<div class="track-row-header track-row-album__header">Album</div>',
+        sortIdentifier: 'album',
         render: rawTrack => RenderDesktopColumns.trackAlbum(RenderDesktopColumns.getTrackData(rawTrack).album),
     },
     ALBUM_IMAGE: {
@@ -77,20 +79,24 @@ const columns = {
     },
     ARTISTS: {
         label: '<div class="track-row-header track-row-artist__header">Artists</div>',
+        sortIdentifier: 'artist',
         render: rawTrack => RenderDesktopColumns.trackArtists(RenderDesktopColumns.getTrackData(rawTrack).artists),
     },
     ARTIST: {
         label: '<div class="track-row-header track-row-artist__header">Artist</div>',
+        sortIdentifier: 'artist',
         render: rawTrack => RenderDesktopColumns.trackArtists([RenderDesktopColumns.getTrackData(rawTrack).artists[0]]),
     },
     DURATION: {
         label: `<div class="track-row-header track-row-duration__header">
 <i aria-hidden="true" class="v-icon notranslate mdi mdi-circle-slice-3 theme--dark grey--text" style="font-size: 16px;"></i>
 </div>`,
+        sortIdentifier: 'duration',
         render: rawTrack => RenderDesktopColumns.trackDuration(RenderDesktopColumns.getTrackData(rawTrack).duration_formatted),
     },
     RATING: {
         label: '<div class="track-row-header track-row-rating__header">Rating</div>',
+        sortIdentifier: 'rating',
         render: rawTrack => RenderDesktopColumns.trackRating(RenderDesktopColumns.getTrackData(rawTrack).rating),
     },
     INFO_ICONS: {

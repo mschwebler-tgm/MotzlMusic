@@ -9,8 +9,10 @@
             <v-skeleton-loader type="list-item-avatar-two-line"></v-skeleton-loader>
         </div>
         <div v-if="showHeaders">
-            <base-track-table-headers v-model="sorting" :columns="columns"></base-track-table-headers>
-            <v-divider />
+            <base-track-table-headers v-model="sorting"
+                                      :columns="columns"
+                                      :loading="loading"></base-track-table-headers>
+            <v-divider/>
         </div>
         <div :id="scrollId"
              :style="{'max-height': height}"
@@ -97,6 +99,7 @@
                 default: '500px',
             },
             hideHeaders: Boolean,
+            loading: Boolean,
         },
         data() {
             return {
@@ -555,6 +558,7 @@
                     height: 100%;
                 }
             }
+
             &-image__header {
                 width: $desktop-row-height;
             }

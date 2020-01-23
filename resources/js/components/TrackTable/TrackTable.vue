@@ -4,6 +4,7 @@
             :options="config || tableConfig"
             :height="height"
             :hide-headers="hideHeaders"
+            :loading="loading"
             @select-track="selectTrack"
             @play-track="playTrack"
             @rate-track="rateTrack"
@@ -35,6 +36,7 @@
         data() {
             return {
                 tableTracks: [...this.tracks],
+                loading: false,
             }
         },
         watch: {
@@ -76,7 +78,9 @@
                 if (this.useRawTracks) {
                     tracks = tracks.map(track => track.trackData);
                 }
+                this.loading = true;
                 const tracksSortedResponse = await axios.post('/api/sortTracks', {ids: tracks.map(track => track.id), sorting});
+                this.loading = false;
                 this.tableTracks = tracksSortedResponse.data;
             }
         },

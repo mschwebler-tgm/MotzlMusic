@@ -30,9 +30,8 @@ class TrackDao
 
     public function getSorted(array $ids, Collection $sorting)
     {
-        $query = Track::query()
-            ->whereIn('tracks.id', $ids)
-            ->select('tracks.*');
+        $query = Track::query()->whereIn('tracks.id', $ids);
+        $this->joinSortableColumns($query);
 
         /** @var Sort $sort */
         foreach ($sorting as $sort) {
@@ -40,6 +39,20 @@ class TrackDao
         }
 
         return $query->get();
+    }
+
+    private function joinSortableColumns(Builder $query)
+    {
+        $query
+            ->leftJoin('user_track_ratings', function (JoinClause $query) {
+                $query->on('tracks.id', '=', 'user_track_ratings.track_id');
+                $query->where('user_track_ratings.user_id', '=', apiUser()->id);
+            })
+            ->leftJoin('albums', 'albums.id', '=', 'tracks.album_id')
+            ->leftJoin('track_has_artist', 'track_has_artist.track_id', '=', 'tracks.id')
+            ->leftJoin('artists', 'artists.id', '=', 'track_has_artist.artist_id')
+            ->groupBy('tracks.id')
+            ->selectRaw('tracks.*, MAX(user_track_ratings.rating) as user_rating, albums.name as album_name, MAX(artists.name) as artist_name');
     }
 
     public function getForUser($id, User $user = null)

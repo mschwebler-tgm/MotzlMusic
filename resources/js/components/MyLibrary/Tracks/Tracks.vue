@@ -10,9 +10,7 @@
                     </div>
                 </div>
             </div>
-            <v-layout column v-else>
-                <track-table :tracks="tracks" :config="tableConfig" height="680px"></track-table>
-            </v-layout>
+            <track-table :tracks="tracks" :config="tableConfig" height="680px"></track-table>
         </v-container>
     </div>
 </template>

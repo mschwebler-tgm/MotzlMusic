@@ -31,6 +31,11 @@
             useRawTracks: Boolean,
             hideHeaders: Boolean,
         },
+        data() {
+            return {
+                tableTracks: [...this.tracks],
+            }
+        },
         methods: {
             resetSelectedTracks() {
                 this.$store.commit('subContent/setAudioFeatures', null);
@@ -40,10 +45,10 @@
             },
             playTrack(track) {
                 if (this.useRawTracks) {
-                    const tracks = this.tracks.map(track => track.trackData);
+                    const tracks = this.tableTracks.map(track => track.trackData);
                     player.playIndex(tracks.findIndex(listTrack => listTrack.id === track.id))
                 } else {
-                    player.playList(this.tracks, this.tracks.findIndex(listTrack => listTrack.id === track.id))
+                    player.playList(this.tableTracks, this.tableTracks.findIndex(listTrack => listTrack.id === track.id))
                 }
             },
             rateTrack(track, rating) {
@@ -53,12 +58,12 @@
                 player.queueTrack(track);
             },
             removeTrack(trackToRemove) {
-                const index = this.tracks.findIndex(track => track.id === trackToRemove.id);
+                const index = this.tableTracks.findIndex(track => track.id === trackToRemove.id);
                 this.$store.dispatch('myLibrary/removeTrack', {trackId: trackToRemove.id, onRestore: () => this.restoreTrack(trackToRemove, index)})
-                    .then(() => this.tracks.splice(index, 1));
+                    .then(() => this.tableTracks.splice(index, 1));
             },
             restoreTrack(track, index) {
-                this.tracks.splice(index, 0, track);
+                this.tableTracks.splice(index, 0, track);
             }
         },
         computed: {

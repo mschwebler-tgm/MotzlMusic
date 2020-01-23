@@ -50,13 +50,10 @@
                 this.$store.commit('subContent/setAudioFeatures', track.audio_features_url);
             },
             playTrack(track) {
-                console.log(track);
                 if (this.useRawTracks) {
                     const tracks = this.tableTracks.map(track => track.trackData);
                     player.playIndex(tracks.findIndex(listTrack => listTrack.id === track.id))
                 } else {
-                    console.log(this.tableTracks.findIndex(listTrack => listTrack.id === track.id));
-                    console.log(this.tableTracks);
                     player.playList(this.tableTracks, this.tableTracks.findIndex(listTrack => listTrack.id === track.id))
                 }
             },
@@ -79,8 +76,8 @@
                 if (this.useRawTracks) {
                     tracks = tracks.map(track => track.trackData);
                 }
-                const tracksSorted = axios.post('/api/sortTracks', {ids: tracks.map(track => track.id), sorting});
-                console.log(tracksSorted);
+                const tracksSortedResponse = await axios.post('/api/sortTracks', {ids: tracks.map(track => track.id), sorting});
+                this.tableTracks = tracksSortedResponse.data;
             }
         },
         computed: {

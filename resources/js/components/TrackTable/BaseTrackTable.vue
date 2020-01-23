@@ -144,8 +144,11 @@
                     });
                 }
             },
-            sorting(value) {
-                this.$emit('sort', value);
+            sorting: {
+                handler(value) {
+                    this.$emit('sort', value);
+                },
+                deep: true,
             }
         },
         mounted() {

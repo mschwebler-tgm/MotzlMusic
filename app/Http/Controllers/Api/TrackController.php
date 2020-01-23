@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RatingRequest;
+use App\Http\Requests\SortRequest;
 use App\Service\GenericDaos\Exceptions\TrackNotFoundException;
 use App\Service\GenericDaos\TrackDao;
 use App\SpotifyAudioFeature;
@@ -37,5 +38,12 @@ class TrackController extends Controller
     public function rateTrack($id, RatingRequest $request, TrackDao $trackDao)
     {
         $trackDao->setUserRating($id, apiUser()->id, $request->getRating());
+    }
+
+    public function sort(SortRequest $request, TrackDao $trackDao, TrackTransformer $transformer)
+    {
+        $tracks = $trackDao->getSorted($request->getTrackIds(), $request->getSorting());
+
+        return $transformer->transform($tracks);
     }
 }

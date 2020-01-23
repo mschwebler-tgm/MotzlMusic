@@ -1,6 +1,6 @@
 <template>
     <base-track-table
-            :tracks="tracks"
+            :tracks="tableTracks"
             :options="config || tableConfig"
             :height="height"
             :hide-headers="hideHeaders"
@@ -35,6 +35,11 @@
         data() {
             return {
                 tableTracks: [...this.tracks],
+            }
+        },
+        watch: {
+            tracks(tracks) {
+                this.tableTracks = [...tracks];
             }
         },
         methods: {
